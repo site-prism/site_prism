@@ -15,7 +15,7 @@ Make sure to add your project/company to https://github.com/natritmeyer/site_pri
 
 We love it when people want to get involved with our Open Source Project.
 
-We have a brief set of setup docs [HERE](https://github.com/natritmeyer/site_prism/blob/master/development_setup.md)
+We have a brief set of setup docs [HERE](https://github.com/site-prism/site_prism/blob/master/development_setup.md)
 
 ## Supported Rubies / Browsers
 
@@ -26,7 +26,7 @@ such as 2.5 or 2.6, if for any other reason, to get a noticeable speed boost!
 SitePrism should run on all major browsers. The gem's integration tests are ran on Chrome and Firefox.
 
 If you find you cannot integrate nicely with SitePrism, please open an
-[issue request](https://github.com/natritmeyer/site_prism/issues/new)
+[issue request](https://github.com/site-prism/site_prism/issues/new)
 
 ## Synopsis
 
