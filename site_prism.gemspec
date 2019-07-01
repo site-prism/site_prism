@@ -24,6 +24,7 @@ SitePrism implements the Page Object Model pattern on top of Capybara.'
   s.require_path = 'lib'
   s.add_dependency 'addressable', ['~> 2.5']
   s.add_dependency 'capybara', ['~> 3.3']
+  s.add_dependency 'site_prism-all_there', ['~> 0.1.0']
 
   s.add_development_dependency 'cucumber', ['~> 3.1']
   s.add_development_dependency 'rake', ['~> 12.3']
@@ -33,4 +34,8 @@ SitePrism implements the Page Object Model pattern on top of Capybara.'
   s.add_development_dependency 'selenium-webdriver', ['~> 3.7']
   s.add_development_dependency 'simplecov', ['~> 0.16']
   s.add_development_dependency 'webdrivers', ['~> 3.9.1']
+
+  s.post_install_message = 'site_prism has now moved to a new organisation to facilitate better
+management of the codebase. The new organisation link is available at www.github.com/site-prism
+and will house the site_prism gem plus new associated co-dependent gems.'
 end
