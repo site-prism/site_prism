@@ -1,4 +1,4 @@
-<!-- #392 - May 10th - Last update to this document -->
+<!-- #2 (New repo) - Jun 17th - Last update to this document -->
 ## [Unreleased]
 ### Removed
 
@@ -7,6 +7,37 @@
 ### Changed
 
 ### Fixed
+
+## [3.3] - 2019-07-01
+### Added
+- Initial `#all_there?` recursion logic
+  - For now only two options are valid (`:none` and `:one`)
+  - When setting it to `:none` (The default), the behaviour is identical
+  - When setting it to `:one`, `#all_there?` will recurse through every section and sections item
+  that has been defined, and run `#all_there?` on those items also.
+  
+  **NB: This is very much a working prototype, and additional refactors / tweaks will be forthcoming**
+([luke-hill])
+
+- Added a feature deprecator to allow easier deprecation / removal of obsolete or old parts of
+the codebase
+([luke-hill])
+
+### Changed
+- SitePrism is now hosted in it's own individual organisation! Special thanks to everyone who has helped
+out in the past, but now we're looking to host multiple co-dependent gems from this new organisation
+([luke-hill])
+
+- Capybara dependency has been slightly bumped from `3.2+` to `3.3+` to mitigate against a minor
+locator reference issue (None reported, but future-proofing)
+([luke-hill])
+
+### Fixed
+- README fixes
+([andyw8] & [TheSpartan1980])
+
+- Fix an issue where chrome wasn't building successfully due to the migration to W3C capabilities
+([luke-hill])
 
 ## [3.2] - 2019-05-14
 ### Added
@@ -891,7 +922,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[Unreleased]: https://github.com/natritmeyer/site_prism/compare/v3.2...master
+[Unreleased]: https://github.com/natritmeyer/site_prism/compare/v3.3...master
+[3.3]:        https://github.com/natritmeyer/site_prism/compare/v3.2...v3.3
 [3.2]:        https://github.com/natritmeyer/site_prism/compare/v3.1...v3.2
 [3.1]:        https://github.com/natritmeyer/site_prism/compare/v3.0.3...v3.1
 [3.0.3]:      https://github.com/natritmeyer/site_prism/compare/v3.0.2...v3.0.3
