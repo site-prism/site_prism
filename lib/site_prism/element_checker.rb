@@ -24,7 +24,7 @@ module SitePrism
       if recursion == :none
         elements_to_check.all? { |name| there?(name) }
       elsif recursion == :one
-        RecursionChecker.new(self).all_there?
+        all_there_with_recursion
       else
         SitePrism.logger.debug("Input value '#{recursion}'. Valid values are :none or :one.")
         SitePrism.logger.error('Invalid recursion setting, Will not run #all_there?.')
@@ -36,6 +36,14 @@ module SitePrism
     end
 
     private
+
+    def all_there_with_recursion
+      if SitePrism.use_all_there_gem
+        SitePrism::AllThere::RecursionChecker.new(self).all_there?
+      else
+        RecursionChecker.new(self).all_there?
+      end
+    end
 
     # If the page or section has expected_items set, return expected_items that are mapped
     # otherwise just return the list of all mapped_items

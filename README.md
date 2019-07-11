@@ -695,6 +695,28 @@ end
 @test_page.elements_present #=> [:address_field]
 ```
 
+If you are specifying a highly nested set of sections inside a Page and need to recurse
+through them to find out if all of your items are present then you can also do this.
+
+Simply pass a recursion parameter to the `#all_there?` check. Note that the only valid values
+for this at the moment are `:none` and `:one`
+
+Passing `:none` in (default), will not change the functionality. However passing in `:one` will cause
+site_prism to recurse through all section / sections items defined in your current scope.
+
+Work alongside developing this functionality further is being continued in the
+[site_prism-all_there](http://www.github.com/site-prism/site_prism-all_there) repo. So head on over
+there if you're interested in how this feature will work going forwards
+
+NB: At the moment a "primitive" but working copy of this is hosted inside this gem. But if you wish to
+use the bleeding edge version of the logic. Then simply set the following configuration parameter
+
+```rb
+SitePrism.use_all_there_gem = true
+```
+
+Make sure as well to require the gem code by doing `require 'site_prism_at'`
+
 ## Sections
 
 SitePrism allows you to model sections of a page that appear on multiple

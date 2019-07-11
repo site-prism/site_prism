@@ -5,6 +5,8 @@
 ### Added
 
 ### Changed
+- `#all_there?` now can be used both internally by site_prism and by the all_there gem
+  - Users can set `SitePrism.use_all_there_gem` to use the latest bleeding edge logic
 
 ### Fixed
 
