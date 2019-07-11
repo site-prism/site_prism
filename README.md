@@ -715,7 +715,7 @@ use the bleeding edge version of the logic. Then simply set the following config
 SitePrism.use_all_there_gem = true
 ```
 
-Make sure as well to require the gem code by doing `require 'site_prism_at'`
+Make sure as well to require the gem code by doing `require 'site_prism/all_there'`
 
 ## Sections
 
