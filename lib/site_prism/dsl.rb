@@ -76,6 +76,7 @@ module SitePrism
       attr_reader :expected_items
 
       def element(name, *find_args)
+        SitePrism::Deprecator.deprecate('Passing a block to :element') if block_given?
         build(:element, name, *find_args) do
           define_method(name) do |*runtime_args, &element_block|
             raise_if_block(self, name, !element_block.nil?, :element)
@@ -85,6 +86,7 @@ module SitePrism
       end
 
       def elements(name, *find_args)
+        SitePrism::Deprecator.deprecate('Passing a block to :elements') if block_given?
         build(:elements, name, *find_args) do
           define_method(name) do |*runtime_args, &element_block|
             raise_if_block(self, name, !element_block.nil?, :elements)
@@ -120,6 +122,7 @@ module SitePrism
       end
 
       def iframe(name, klass, *args)
+        SitePrism.logger.debug('Block passed into iFrame construct at build time') if block_given?
         element_find_args = deduce_iframe_element_find_args(args)
         scope_find_args = deduce_iframe_scope_find_args(args)
         build(:iframe, name, *element_find_args) do
@@ -197,9 +200,7 @@ module SitePrism
 
         RSpec::Matchers.define "have_#{element_name}" do |*args|
           match { |actual| actual.public_send(matcher, *args) }
-          match_when_negated do |actual|
-            actual.public_send(negated_matcher, *args)
-          end
+          match_when_negated { |actual| actual.public_send(negated_matcher, *args) }
         end
       end
 
