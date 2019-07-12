@@ -248,7 +248,7 @@ module SitePrism
       end
 
       def create_error_method(name)
-        SitePrism.logger.error("#{name} has come from an item with 0 locators.")
+        SitePrism.logger.error("#{name} has come from an item with no locators.")
         define_method(name) { raise SitePrism::InvalidElementError }
       end
 
@@ -274,7 +274,7 @@ module SitePrism
         return unless looks_like_xpath?(args[0])
 
         SitePrism.logger.warn('The arguments passed in look like xpath. Check your locators.')
-        SitePrism.logger.debug("Default locator: #{Capybara.default_selector}")
+        SitePrism.logger.debug("Default locator strategy: #{Capybara.default_selector}")
       end
 
       def looks_like_xpath?(arg)
