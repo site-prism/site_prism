@@ -109,6 +109,7 @@ describe SitePrism do
   end
 
   describe '.use_all_there_gem' do
+    after(:each) { SitePrism.use_all_there_gem = nil }
     subject { SitePrism.use_all_there_gem }
 
     context 'by default' do
@@ -116,7 +117,7 @@ describe SitePrism do
     end
 
     context 'after being changed to true' do
-      before { SitePrism.log_level = true }
+      before { SitePrism.use_all_there_gem = true }
 
       it { is_expected.to be true }
     end
