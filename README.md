@@ -1,6 +1,6 @@
 # SitePrism
 [![Gem Version](https://badge.fury.io/rb/site_prism.svg)](https://badge.fury.io/rb/site_prism)
-[![Build Status](https://travis-ci.org/natritmeyer/site_prism.png)](https://travis-ci.org/natritmeyer/site_prism)
+[![Build Status](https://travis-ci.org/site-prism/site_prism.png)](https://travis-ci.org/site-prism/site_prism)
 
 _A Page Object Model DSL for Capybara_
 
@@ -1419,7 +1419,7 @@ the validations will be performed in the following order:
 **NB:** `SitePrism::Page` **used to** include a default load validation on
 `page.displayed?` however for v3 this has been removed. It is therefore
 necessary to re-define this if you want to retain the behaviour
-from site_prism v2. See [UPGRADING.md](https://github.com/natritmeyer/site_prism/blob/master/UPGRADING.md#default-load-validations)
+from site_prism v2. See [UPGRADING.md](https://github.com/site-prism/site_prism/blob/master/UPGRADING.md#default-load-validations)
 for more info on this.
 
 ## Using Capybara Query Options
