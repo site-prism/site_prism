@@ -26,7 +26,7 @@ module SitePrism
         raise(
           SitePrism::FrozenInTimeError,
           'Time appears to be frozen. For more info, see ' \
-          'https://github.com/natritmeyer/site_prism/blob/master/lib/site_prism/error.rb'
+          'https://github.com/site-prism/site_prism/blob/master/lib/site_prism/error.rb'
         )
       end
     end

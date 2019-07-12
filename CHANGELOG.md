@@ -93,7 +93,7 @@ impending major rubocop release
 
 - The SitePrism Logger has been massively refactored
   - It now almost entirely mimics the Full Ruby Logger API
-  - The full list of delegated methods can be found [HERE](https://github.com/natritmeyer/site_prism/blob/v3.1/lib/site_prism.rb)
+  - The full list of delegated methods can be found [HERE](https://github.com/site-prism/site_prism/blob/v3.1/lib/site_prism.rb)
   - Consequently, the minimum Ruby Version for the suite has been bumped to `2.3`
   - Alongside this higher ruby requirement, changes have been made to Capybara/Rubocop/Test code
 ([luke-hill])
@@ -924,52 +924,52 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[Unreleased]: https://github.com/natritmeyer/site_prism/compare/v3.3...master
-[3.3]:        https://github.com/natritmeyer/site_prism/compare/v3.2...v3.3
-[3.2]:        https://github.com/natritmeyer/site_prism/compare/v3.1...v3.2
-[3.1]:        https://github.com/natritmeyer/site_prism/compare/v3.0.3...v3.1
-[3.0.3]:      https://github.com/natritmeyer/site_prism/compare/v3.0.2...v3.0.3
-[3.0.2]:      https://github.com/natritmeyer/site_prism/compare/v3.0.1...v3.0.2
-[3.0.1]:      https://github.com/natritmeyer/site_prism/compare/v3.0...v3.0.1
-[3.0]:        https://github.com/natritmeyer/site_prism/compare/v3.0.beta...v3.0
-[3.0.beta]:   https://github.com/natritmeyer/site_prism/compare/v2.17.1...v3.0.beta
-[2.17.1]:     https://github.com/natritmeyer/site_prism/compare/v2.17...v2.17.1
-[2.17]:       https://github.com/natritmeyer/site_prism/compare/v2.16...v2.17
-[2.16]:       https://github.com/natritmeyer/site_prism/compare/v2.15.1...v2.16
-[2.15.1]:     https://github.com/natritmeyer/site_prism/compare/v2.15...v2.15.1
-[2.15]:       https://github.com/natritmeyer/site_prism/compare/v2.14...v2.15
-[2.14]:       https://github.com/natritmeyer/site_prism/compare/v2.13...v2.14
-[2.13]:       https://github.com/natritmeyer/site_prism/compare/v2.12...v2.13
-[2.12]:       https://github.com/natritmeyer/site_prism/compare/v2.11...v2.12
-[2.11]:       https://github.com/natritmeyer/site_prism/compare/v2.10...v2.11
-[2.10]:       https://github.com/natritmeyer/site_prism/compare/v2.9.1...v2.10
-[2.9.1]:      https://github.com/natritmeyer/site_prism/compare/v2.9...v2.9.1
-[2.9]:        https://github.com/natritmeyer/site_prism/compare/v2.8...v2.9
-[2.8]:        https://github.com/natritmeyer/site_prism/compare/v2.7...v2.8
-[2.7]:        https://github.com/natritmeyer/site_prism/compare/v2.6...v2.7
-[2.6]:        https://github.com/natritmeyer/site_prism/compare/v2.5...v2.6
-[2.5]:        https://github.com/natritmeyer/site_prism/compare/v2.4...v2.5
-[2.4]:        https://github.com/natritmeyer/site_prism/compare/v2.3...v2.4
-[2.3]:        https://github.com/natritmeyer/site_prism/compare/v2.2...v2.3
-[2.2]:        https://github.com/natritmeyer/site_prism/compare/v2.1...v2.2
-[2.1]:        https://github.com/natritmeyer/site_prism/compare/v2.0...v2.1
-[2.0]:        https://github.com/natritmeyer/site_prism/compare/v1.4...v2.0
-[1.4]:        https://github.com/natritmeyer/site_prism/compare/v1.3...v1.4
-[1.3]:        https://github.com/natritmeyer/site_prism/compare/v1.2...v1.3
-[1.2]:        https://github.com/natritmeyer/site_prism/compare/v1.1.1...v1.2
-[1.1.1]:      https://github.com/natritmeyer/site_prism/compare/v1.1...v1.1.1
-[1.1]:        https://github.com/natritmeyer/site_prism/compare/v1.0...v1.1
-[1.0]:        https://github.com/natritmeyer/site_prism/compare/v0.9.9...v1.0
-[0.9.9]:      https://github.com/natritmeyer/site_prism/compare/v0.9.8...v0.9.9
-[0.9.8]:      https://github.com/natritmeyer/site_prism/compare/v0.9.7...v0.9.8
-[0.9.7]:      https://github.com/natritmeyer/site_prism/compare/v0.9.6...v0.9.7
-[0.9.6]:      https://github.com/natritmeyer/site_prism/compare/v0.9.5...v0.9.6
-[0.9.5]:      https://github.com/natritmeyer/site_prism/compare/v0.9.4...v0.9.5
-[0.9.4]:      https://github.com/natritmeyer/site_prism/compare/v0.9.3...v0.9.4
-[0.9.3]:      https://github.com/natritmeyer/site_prism/compare/v0.9.2...v0.9.3
-[0.9.2]:      https://github.com/natritmeyer/site_prism/compare/v0.9.1...v0.9.2
-[0.9.1]:      https://github.com/natritmeyer/site_prism/compare/v0.9...v0.9.1
-[0.9]:        https://github.com/natritmeyer/site_prism/compare/7b15706...v0.9
+[Unreleased]: https://github.com/site-prism/site_prism/compare/v3.3...master
+[3.3]:        https://github.com/site-prism/site_prism/compare/v3.2...v3.3
+[3.2]:        https://github.com/site-prism/site_prism/compare/v3.1...v3.2
+[3.1]:        https://github.com/site-prism/site_prism/compare/v3.0.3...v3.1
+[3.0.3]:      https://github.com/site-prism/site_prism/compare/v3.0.2...v3.0.3
+[3.0.2]:      https://github.com/site-prism/site_prism/compare/v3.0.1...v3.0.2
+[3.0.1]:      https://github.com/site-prism/site_prism/compare/v3.0...v3.0.1
+[3.0]:        https://github.com/site-prism/site_prism/compare/v3.0.beta...v3.0
+[3.0.beta]:   https://github.com/site-prism/site_prism/compare/v2.17.1...v3.0.beta
+[2.17.1]:     https://github.com/site-prism/site_prism/compare/v2.17...v2.17.1
+[2.17]:       https://github.com/site-prism/site_prism/compare/v2.16...v2.17
+[2.16]:       https://github.com/site-prism/site_prism/compare/v2.15.1...v2.16
+[2.15.1]:     https://github.com/site-prism/site_prism/compare/v2.15...v2.15.1
+[2.15]:       https://github.com/site-prism/site_prism/compare/v2.14...v2.15
+[2.14]:       https://github.com/site-prism/site_prism/compare/v2.13...v2.14
+[2.13]:       https://github.com/site-prism/site_prism/compare/v2.12...v2.13
+[2.12]:       https://github.com/site-prism/site_prism/compare/v2.11...v2.12
+[2.11]:       https://github.com/site-prism/site_prism/compare/v2.10...v2.11
+[2.10]:       https://github.com/site-prism/site_prism/compare/v2.9.1...v2.10
+[2.9.1]:      https://github.com/site-prism/site_prism/compare/v2.9...v2.9.1
+[2.9]:        https://github.com/site-prism/site_prism/compare/v2.8...v2.9
+[2.8]:        https://github.com/site-prism/site_prism/compare/v2.7...v2.8
+[2.7]:        https://github.com/site-prism/site_prism/compare/v2.6...v2.7
+[2.6]:        https://github.com/site-prism/site_prism/compare/v2.5...v2.6
+[2.5]:        https://github.com/site-prism/site_prism/compare/v2.4...v2.5
+[2.4]:        https://github.com/site-prism/site_prism/compare/v2.3...v2.4
+[2.3]:        https://github.com/site-prism/site_prism/compare/v2.2...v2.3
+[2.2]:        https://github.com/site-prism/site_prism/compare/v2.1...v2.2
+[2.1]:        https://github.com/site-prism/site_prism/compare/v2.0...v2.1
+[2.0]:        https://github.com/site-prism/site_prism/compare/v1.4...v2.0
+[1.4]:        https://github.com/site-prism/site_prism/compare/v1.3...v1.4
+[1.3]:        https://github.com/site-prism/site_prism/compare/v1.2...v1.3
+[1.2]:        https://github.com/site-prism/site_prism/compare/v1.1.1...v1.2
+[1.1.1]:      https://github.com/site-prism/site_prism/compare/v1.1...v1.1.1
+[1.1]:        https://github.com/site-prism/site_prism/compare/v1.0...v1.1
+[1.0]:        https://github.com/site-prism/site_prism/compare/v0.9.9...v1.0
+[0.9.9]:      https://github.com/site-prism/site_prism/compare/v0.9.8...v0.9.9
+[0.9.8]:      https://github.com/site-prism/site_prism/compare/v0.9.7...v0.9.8
+[0.9.7]:      https://github.com/site-prism/site_prism/compare/v0.9.6...v0.9.7
+[0.9.6]:      https://github.com/site-prism/site_prism/compare/v0.9.5...v0.9.6
+[0.9.5]:      https://github.com/site-prism/site_prism/compare/v0.9.4...v0.9.5
+[0.9.4]:      https://github.com/site-prism/site_prism/compare/v0.9.3...v0.9.4
+[0.9.3]:      https://github.com/site-prism/site_prism/compare/v0.9.2...v0.9.3
+[0.9.2]:      https://github.com/site-prism/site_prism/compare/v0.9.1...v0.9.2
+[0.9.1]:      https://github.com/site-prism/site_prism/compare/v0.9...v0.9.1
+[0.9]:        https://github.com/site-prism/site_prism/compare/7b15706...v0.9
 
 <!-- Contributors in chronological order -->
 [natritmeyer]:    https://github.com/natritmeyer
