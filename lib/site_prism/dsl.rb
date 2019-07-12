@@ -142,10 +142,11 @@ module SitePrism
       private
 
       def old_mapped_items
-        SitePrism.logger.debug("Calling .mapped_items on a class is changing!
-The structure will soon be changing format. This will allow #all_there? to
-recurse through section / sections going forwards. The old format will remain
-until a v5 has been released (And will be deprecated in v4 of site_prism")
+        SitePrism::Deprecator.soft_deprecate(
+          '.mapped_items on a class',
+          'To allow easier recursion through the items in conjunction with #all_there?',
+          '.mapped_items(legacy: false)'
+        )
         @old_mapped_items ||= []
       end
 
