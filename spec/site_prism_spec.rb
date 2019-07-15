@@ -4,6 +4,26 @@ describe SitePrism do
   # Stop the $stdout process leaking cross-tests
   before(:each) { wipe_logger! }
 
+  describe '.configure' do
+    it 'can configure the logger in a configure block' do
+      expect(SitePrism).to receive(:configure).once
+
+      SitePrism.configure { |_| :foo }
+    end
+
+    it 'yields the configured options' do
+      expect(SitePrism).to receive(:logger)
+      expect(SitePrism).to receive(:log_level)
+      expect(SitePrism).to receive(:log_level=)
+
+      SitePrism.configure do |config|
+        config.logger
+        config.log_level
+        config.log_level = :WARN
+      end
+    end
+  end
+
   describe '.logger' do
     context 'at default severity' do
       it 'does not log messages below UNKNOWN' do
@@ -43,46 +63,6 @@ describe SitePrism do
     end
   end
 
-  describe '.log_level' do
-    subject { SitePrism.log_level }
-
-    context 'by default' do
-      it { is_expected.to eq(:UNKNOWN) }
-    end
-
-    context 'after being changed to INFO' do
-      before { SitePrism.log_level = :INFO }
-
-      it { is_expected.to eq(:INFO) }
-    end
-  end
-
-  describe '.log_level=' do
-    it 'can alter the log level' do
-      expect(SitePrism).to respond_to(:log_level=)
-    end
-  end
-
-  describe '.configure' do
-    it 'can configure the logger in a configure block' do
-      expect(SitePrism).to receive(:configure).once
-
-      SitePrism.configure { |_| :foo }
-    end
-
-    it 'yields the configured options' do
-      expect(SitePrism).to receive(:logger)
-      expect(SitePrism).to receive(:log_level)
-      expect(SitePrism).to receive(:log_level=)
-
-      SitePrism.configure do |config|
-        config.logger
-        config.log_level
-        config.log_level = :WARN
-      end
-    end
-  end
-
   describe '.log_path=' do
     context 'to a file' do
       let(:filename) { 'sample.log' }
@@ -105,6 +85,47 @@ describe SitePrism do
           SitePrism.logger.unknown('This is sent to $stderr')
         end.to output(/This is sent to \$stderr/).to_stderr
       end
+    end
+  end
+
+  describe '.log_level=' do
+    it 'can alter the log level' do
+      expect(SitePrism).to respond_to(:log_level=)
+    end
+  end
+
+  describe '.log_level' do
+    subject { SitePrism.log_level }
+
+    context 'by default' do
+      it { is_expected.to eq(:UNKNOWN) }
+    end
+
+    context 'after being changed to INFO' do
+      before { SitePrism.log_level = :INFO }
+
+      it { is_expected.to eq(:INFO) }
+    end
+  end
+
+  describe '.use_all_there_gem' do
+    after(:each) { SitePrism.use_all_there_gem = nil }
+    subject { SitePrism.use_all_there_gem }
+
+    context 'by default' do
+      it { is_expected.to be nil }
+    end
+
+    context 'after being changed to true' do
+      before { SitePrism.use_all_there_gem = true }
+
+      it { is_expected.to be true }
+    end
+  end
+
+  describe '.use_all_there_gem=' do
+    it 'can alter whether site_prism uses the new gem to run #all_there?' do
+      expect(SitePrism).to respond_to(:use_all_there_gem=)
     end
   end
 end
