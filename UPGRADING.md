@@ -38,7 +38,7 @@ end
 ## Error Classes
 
 The entire set of error names have been re-written.
-Check [error.rb](https://github.com/natritmeyer/site_prism/blob/master/lib/site_prism/error.rb)
+Check [error.rb](https://github.com/site-prism/site_prism/blob/master/lib/site_prism/error.rb)
 for previous names.
 
 ## Configuration Options

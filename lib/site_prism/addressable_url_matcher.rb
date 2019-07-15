@@ -98,7 +98,7 @@ module SitePrism
       begin
         Addressable::URI.parse(url)
       rescue Addressable::URI::InvalidURIError
-        SitePrism.logger.warn("Ensure you don't use templated port numbers.")
+        SitePrism.logger.fatal("Ensure you don't use templated port numbers.")
         raise SitePrism::InvalidUrlMatcherError
       end
     end
