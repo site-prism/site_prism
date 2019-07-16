@@ -126,6 +126,20 @@ require 'selenium-webdriver'
 require 'site_prism'
 ```
 
+The driver creation is identical to how you would normally create a Capybara driver,
+a sample Selenium one could look something like this...
+
+```ruby
+Capybara.register_driver :site_prism do |app|
+  browser = ENV.fetch('browser', 'firefox').to_sym
+  Capybara::Selenium::Driver.new(app, browser: browser, desired_capabilities: capabilities)
+end
+
+Capybara.configure do |config|
+  config.default_driver = :site_prism
+end
+```
+
 ### Using SitePrism with RSpec
 
 If you're using rspec instead, here's what needs requiring:
@@ -136,6 +150,8 @@ require 'capybara/rspec'
 require 'selenium-webdriver'
 require 'site_prism'
 ```
+
+And again, as above, a sample driver is no different to a normal driver instantiation in Capybara.
 
 ## Introduction to the Page Object Model
 
@@ -158,7 +174,7 @@ multiple pages, or many times on a page using the concept of sections.
 As you might be able to guess from the name, pages are fairly central to
 the Page Object Model. Here's how SitePrism models them:
 
-### Creating a Page Model
+### Creating your first Page using the Page Object Model
 
 The simplest page is one that has nothing defined in it. Here's an
 example of how to begin modelling a home page:
@@ -168,7 +184,7 @@ class Home < SitePrism::Page
 end
 ```
 
-The above has nothing useful defined, only the name.
+The above has nothing useful defined, so to start with lets give it some properties.
 
 ### Adding a URL
 
@@ -177,7 +193,7 @@ you'll need to set its URL. Here's how:
 
 ```ruby
 class Home < SitePrism::Page
-  set_url 'http://www.google.com'
+  set_url 'http://www.mysite.com/home.htm'
 end
 ```
 
