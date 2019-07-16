@@ -1673,6 +1673,9 @@ end
 There's a SitePrism plugin called `site_prism.vcr` that lets you use
 SitePrism with the VCR gem. Check it out [HERE](https://github.com/dnesteryuk/site_prism.vcr)
 
+Note that as of 2016 this plugin doesn't appear to have been under active development. Also it is
+still pinned to the `2.x` series of site_prism so use it of your own accord.
+
 # Epilogue
 
 So, we've seen how to use SitePrism to put together page objects made up
