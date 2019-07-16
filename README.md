@@ -9,7 +9,7 @@ for use with Capybara in automated acceptance testing.
 
 Find the pretty documentation here: http://rdoc.info/gems/site_prism/frames
 
-Make sure to add your project/company to https://github.com/natritmeyer/site_prism/wiki/Who-is-using-SitePrism
+Make sure to add your project/company to https://github.com/site-prism/site_prism/wiki/Who-is-using-SitePrism
 
 ## Developing / Contributing to SitePrism
 
