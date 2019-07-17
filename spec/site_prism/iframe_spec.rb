@@ -11,37 +11,24 @@ describe 'iFrame' do
     describe 'A Page with an iFrame contained within' do
       it 'uses #within_frame delegated through Capybara.current_session' do
         expect(Capybara.current_session)
-          .to receive(:within_frame)
-          .with(*frame_caller_args)
-          .and_yield
+          .to receive(:within_frame).with(*frame_caller_args).and_yield
 
         expect_any_instance_of(frame_class)
-          .to receive(:_find)
-          .with(*element_caller_args)
-          .and_return(locator)
+          .to receive(:_find).with(*element_caller_args).and_return(locator)
 
         page.iframe(&:element_one)
       end
     end
 
     describe 'A Section with an iFrame contained within' do
-      before do
-        allow(page)
-          .to receive(:_find)
-          .with(*section_locator)
-          .and_return(locator)
-      end
+      before { allow(page).to receive(:_find).with(*section_locator).and_return(locator) }
 
       it 'uses #within_frame delegated through Capybara.current_session' do
         expect(Capybara.current_session)
-          .to receive(:within_frame)
-          .with(*frame_caller_args)
-          .and_yield
+          .to receive(:within_frame).with(*frame_caller_args).and_yield
 
         expect_any_instance_of(frame_class)
-          .to receive(:_find)
-          .with(*element_caller_args)
-          .and_return(locator)
+          .to receive(:_find).with(*element_caller_args).and_return(locator)
 
         page.section_one.iframe(&:element_one)
       end

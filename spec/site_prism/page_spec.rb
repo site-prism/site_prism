@@ -125,9 +125,7 @@ is called before the matcher has been set" do
     end
 
     it 'should allow expansions if the url has them' do
-      expect do
-        page_with_uri_template.load(username: 'foobar')
-      end.not_to raise_error
+      expect { page_with_uri_template.load(username: 'foobar') }.not_to raise_error
 
       expect(
         page_with_uri_template

@@ -29,9 +29,6 @@ describe SitePrism do
       it 'does not log messages below UNKNOWN' do
         log_messages = capture_stdout do
           SitePrism.logger.debug('DEBUG')
-          SitePrism.logger.info('INFO')
-          SitePrism.logger.warn('WARN')
-          SitePrism.logger.error('ERROR')
           SitePrism.logger.fatal('FATAL')
         end
 
@@ -40,7 +37,6 @@ describe SitePrism do
 
       it 'logs UNKNOWN level messages' do
         log_messages = capture_stdout do
-          SitePrism.logger.info('INFO')
           SitePrism.logger.unknown('UNKNOWN')
         end
 
@@ -55,10 +51,9 @@ describe SitePrism do
 
           SitePrism.logger.debug('DEBUG')
           SitePrism.logger.info('INFO')
-          SitePrism.logger.warn('WARN')
         end
 
-        expect(lines(log_messages)).to eq(3)
+        expect(lines(log_messages)).to eq(2)
       end
     end
   end
