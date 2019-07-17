@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe SitePrism::Page do
+describe SitePrism::Section do
   subject { Page.new }
 
   class PluralSections < SitePrism::Section; end

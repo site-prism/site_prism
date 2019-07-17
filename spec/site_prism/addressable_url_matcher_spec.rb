@@ -105,10 +105,6 @@ describe SitePrism::AddressableUrlMatcher do
       ).to be true
     end
 
-    it 'passes on no path' do
-      expect_matches('//bazzle.com').to be true
-    end
-
     it "doesn't match on root path" do
       expect_matches('//bazzle.com/').to be false
     end

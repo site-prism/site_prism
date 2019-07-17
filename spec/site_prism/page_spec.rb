@@ -12,7 +12,7 @@ describe SitePrism::Page do
     set_url_matcher(/bob/)
   end
 
-  let!(:locator) { instance_double('Capybara::Node::Element') }
+  let(:locator) { instance_double('Capybara::Node::Element') }
   let(:blank_page) { BlankPage.new }
   let(:page_with_url) { PageWithUrl.new }
   let(:page_with_uri_template) { PageWithUriTemplate.new }
