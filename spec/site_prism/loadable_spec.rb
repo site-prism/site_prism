@@ -141,9 +141,9 @@ when all load validations pass" do
 
   describe '#loaded?' do
     # We want to test with multiple inheritance
-    let(:inheriting_loadable) { Class.new(loadable) }
-
     subject { inheriting_loadable.new }
+
+    let(:inheriting_loadable) { Class.new(loadable) }
 
     it 'returns true if loaded value is cached' do
       validation_spy1 = spy(valid?: true)

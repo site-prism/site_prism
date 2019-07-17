@@ -65,8 +65,9 @@ describe SitePrism::ElementChecker do
 
       context 'with recursion set to an invalid value' do
         # This stops the stdout process leaking between tests
-        before(:each) { wipe_logger! }
         subject { page.all_there?(recursion: 'go nuts') }
+
+        before { wipe_logger! }
 
         it 'does not check any elements' do
           expect(page).not_to receive(:there?)

@@ -2,7 +2,7 @@
 
 describe SitePrism do
   # Stop the $stdout process leaking cross-tests
-  before(:each) { wipe_logger! }
+  before { wipe_logger! }
 
   describe '.configure' do
     it 'can configure the logger in a configure block' do
@@ -109,8 +109,9 @@ describe SitePrism do
   end
 
   describe '.use_all_there_gem' do
-    after(:each) { SitePrism.use_all_there_gem = nil }
     subject { SitePrism.use_all_there_gem }
+
+    after { SitePrism.use_all_there_gem = nil }
 
     context 'by default' do
       it { is_expected.to be nil }

@@ -2,7 +2,7 @@
 
 describe SitePrism::Deprecator do
   # This stops the stdout process leaking between tests
-  before(:each) { wipe_logger! }
+  before { wipe_logger! }
 
   describe '.deprecate' do
     it 'fires warning messages' do

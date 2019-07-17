@@ -2,7 +2,7 @@
 
 describe 'Element' do
   # This stops the stdout process leaking between tests
-  before(:each) { wipe_logger! }
+  before { wipe_logger! }
   let(:expected_elements) { SitePrism::SpecHelper.present_on_page }
 
   shared_examples 'an element' do
@@ -59,19 +59,19 @@ describe 'Element' do
   end
 
   context 'defined as css' do
+    subject { page }
+
     let(:page) { CSSPage.new }
     let(:klass) { CSSPage }
-
-    subject { page }
 
     it_behaves_like 'an element'
   end
 
   context 'defined as xpath' do
+    subject { page }
+
     let(:page) { XPathPage.new }
     let(:klass) { XPathPage }
-
-    subject { page }
 
     it_behaves_like 'an element'
   end
