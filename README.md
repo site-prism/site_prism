@@ -1,6 +1,6 @@
 # SitePrism
 [![Gem Version](https://badge.fury.io/rb/site_prism.svg)](https://badge.fury.io/rb/site_prism)
-[![Build Status](https://travis-ci.org/site-prism/site_prism.png)](https://travis-ci.org/site-prism/site_prism)
+[![Build Status](https://travis-ci.com/site-prism/site_prism.png)](https://travis-ci.com/site-prism/site_prism)
 
 _A Page Object Model DSL for Capybara_
 
@@ -9,7 +9,7 @@ for use with Capybara in automated acceptance testing.
 
 Find the pretty documentation here: http://rdoc.info/gems/site_prism/frames
 
-Make sure to add your project/company to https://github.com/natritmeyer/site_prism/wiki/Who-is-using-SitePrism
+Make sure to add your project/company to https://github.com/site-prism/site_prism/wiki/Who-is-using-SitePrism
 
 ## Developing / Contributing to SitePrism
 
@@ -42,14 +42,14 @@ class Home < SitePrism::Page
   element :search_field, 'input[name="q"]'
   element :search_button, 'button[name="btnK"]'
   elements :footer_links, '#footer a'
-  section :menu, MenuSection, '#gbx3'
+  section :menu, Menu, '#gbx3'
 end
 
 class SearchResults < SitePrism::Page
   set_url_matcher(/google.com\/results\?.*/)
 
-  section :menu, MenuSection, '#gbx3'
-  sections :search_results, SearchResultSection, '#results li'
+  section :menu, Menu, '#gbx3'
+  sections :search_results, SearchResults, '#results li'
 
   def search_result_links
     search_results.map { |result| result.title['href'] }
@@ -58,13 +58,13 @@ end
 
 # define sections used on multiple pages or multiple times on one page
 
-class MenuSection < SitePrism::Section
+class Menu < SitePrism::Section
   element :search, 'a.search'
   element :images, 'a.image-search'
   element :maps, 'a.map-search'
 end
 
-class SearchResultSection < SitePrism::Section
+class SearchResults < SitePrism::Section
   element :title, 'a.title'
   element :blurb, 'span.result-description'
 end
@@ -126,6 +126,20 @@ require 'selenium-webdriver'
 require 'site_prism'
 ```
 
+The driver creation is identical to how you would normally create a Capybara driver,
+a sample Selenium one could look something like this...
+
+```ruby
+Capybara.register_driver :site_prism do |app|
+  browser = ENV.fetch('browser', 'firefox').to_sym
+  Capybara::Selenium::Driver.new(app, browser: browser, desired_capabilities: capabilities)
+end
+
+Capybara.configure do |config|
+  config.default_driver = :site_prism
+end
+```
+
 ### Using SitePrism with RSpec
 
 If you're using rspec instead, here's what needs requiring:
@@ -136,6 +150,8 @@ require 'capybara/rspec'
 require 'selenium-webdriver'
 require 'site_prism'
 ```
+
+And again, as above, a sample driver is no different to a normal driver instantiation in Capybara.
 
 ## Introduction to the Page Object Model
 
@@ -158,7 +174,7 @@ multiple pages, or many times on a page using the concept of sections.
 As you might be able to guess from the name, pages are fairly central to
 the Page Object Model. Here's how SitePrism models them:
 
-### Creating a Page Model
+### Creating your first Page using the Page Object Model
 
 The simplest page is one that has nothing defined in it. Here's an
 example of how to begin modelling a home page:
@@ -168,7 +184,7 @@ class Home < SitePrism::Page
 end
 ```
 
-The above has nothing useful defined, only the name.
+The above has nothing useful defined, so to start with lets give it some properties.
 
 ### Adding a URL
 
@@ -177,7 +193,7 @@ you'll need to set its URL. Here's how:
 
 ```ruby
 class Home < SitePrism::Page
-  set_url 'http://www.google.com'
+  set_url 'http://www.mysite.com/home.htm'
 end
 ```
 
@@ -332,7 +348,7 @@ end
 SitePrism's `#displayed?` predicate method allows for semantic code in your tests:
 
 ```ruby
-Then /^the account page is displayed$/ do
+Then(/^the account page is displayed$/) do
   expect(@account_page).to be_displayed
   expect(@some_other_page).not_to be_displayed
 end
@@ -431,7 +447,7 @@ end
 #### Testing for the existence of the element
 
 Another method added to the Page class by the `element` method is the
-`has_<element name>?` method. Using the same example as above:
+`has_<element_name>?` method. Using the same example as above:
 
 ```ruby
 class Home < SitePrism::Page
@@ -452,7 +468,7 @@ end
 ...which makes for nice test code:
 
 ```ruby
-Then /^the search field exists$/ do
+Then(/^the search field exists$/) do
   expect(@home).to have_search_field
 end
 ```
@@ -472,7 +488,7 @@ that should be used to test for non-existence. Using the above example:
 ...which makes for nice test code:
 
 ```ruby
-Then /^the search field exists$/ do
+Then(/^the search field exists$/)do
   expect(@home).to have_no_search_field #NB: NOT => expect(@home).not_to have_search_field
 end
 ```
@@ -619,7 +635,7 @@ Then the following method is available:
 This in turn allows the following nice test code
 
 ```ruby
-Then /^there should be some names listed on the page$/ do
+Then(/^there should be some names listed on the page$/) do
   expect(@friends_page).to have_names #=> This only passes if there is at least one `name`
 end
 ```
@@ -660,7 +676,7 @@ are present in the browser and `false` if they're not all there.
 
 # and...
 
-Then /^the friends page contains all the expected elements$/ do
+Then(/^the friends page contains all the expected elements$/) do
   expect(@friends_page).to be_all_there
 end
 ```
@@ -772,7 +788,7 @@ class People < SitePrism::Section
   element :footer, 'h4'
 end
 
-class HomePage < SitePrism::Page
+class Home < SitePrism::Page
   # section people_with_block will have `headline` and
   # `footer` elements in it
   section :people_with_block, People do
@@ -892,7 +908,7 @@ end
 This then leads to some pretty test code ...
 
 ```ruby
-Then /^the home page menu contains a link to the various search functions$/ do
+Then(/^the home page menu contains a link to the various search functions$/) do
   expect(@home.menu).to have_search
   expect(@home.menu.search['href']).to include('google.com')
   expect(@home.menu).to have_images
@@ -908,7 +924,7 @@ particularly with nested sections. Some of this test code can be
 made a little prettier by simply passing a block in.
 
 ```ruby
-Then /^the home page menu contains a link to the various search functions$/ do
+Then(/^the home page menu contains a link to the various search functions$/) do
   @home.menu do |menu|
     expect(menu).to have_search
     expect(menu.search['href']).to include('google.com')
@@ -924,27 +940,27 @@ It is possible to ask a section for its parent (page, or section if this
 section is a subsection). For example, given the following setup:
 
 ```ruby
-class MySubSection < SitePrism::Section
-  element :some_element, 'abc'
+class DestinationFilters < SitePrism::Section
+  element :morocco, 'abc'
 end
 
-class MySection < SitePrism::Section
-  section :my_subsection, MySubSection, 'def'
+class FilterPanel < SitePrism::Section
+  section :destination_filters, DestinationFilters, 'def'
 end
 
-class MyPage < SitePrism::Page
-  section :my_section, MySection, 'ghi'
+class Home < SitePrism::Page
+  section :filter_panel, FilterPanel, 'ghi'
 end
 ```
 
 Then calling `#parent` will return the following:
 
 ```ruby
-@my_page = MyPage.new
-@my_page.load
+@home = Home.new
+@home.load
 
-@my_page.my_section.parent #=> returns @my_page
-@my_page.my_section.my_subsection.parent #=> returns @my_page.my_section
+@home.filter_panel.parent #=> returns @home
+@home.filter_panel.destination_filters.parent #=> returns @home.filter_panel
 ```
 
 #### Getting a section's parent page
@@ -1065,7 +1081,7 @@ end
 
 # how to login (fatuous, but demonstrates the point):
 
-Then /^I sign in$/ do
+Then(/^I sign in$/) do
   @home = Home.new
   @home.load
   expect(@home).to have_login_and_registration
@@ -1077,7 +1093,7 @@ end
 
 # how to sign up:
 
-When /^I enter my name into the home page's registration form$/ do
+When(/^I enter my name into the home page's registration form$/) do
   @home = Home.new
   @home.load
   expect(@home.login_and_registration).to have_first_name
@@ -1154,7 +1170,7 @@ end
 This allows for pretty tests ...
 
 ```ruby
-Then /^there are lots of search_results$/ do
+Then(/^there are lots of search_results$/) do
   expect(@results_page.search_results.size).to eq(10)
   
   @home.search_results.each do |result|
@@ -1165,7 +1181,7 @@ end
 ```
 
 The css selector that is passed as the 3rd argument to the
-`sections` method ("#results li") is used to find a number of capybara
+`sections` method (`#results li`) is used to find a number of capybara
 elements. Each capybara element found using the css selector is used to
 create a new instance of `SearchResults` and becomes its root
 element. So if the css selector finds 3 `li` elements, calling
@@ -1218,7 +1234,7 @@ Here's how to test for the existence of the section:
 This allows for some pretty tests ...
 
 ```ruby
-Then /^there are search results on the page$/ do
+Then(/^there are search results on the page$/) do
   expect(@home).to have_search_results
 end
 ```
@@ -1469,7 +1485,7 @@ Now we can write pretty, non-failing tests without hard coding these options
 into our page and section classes:
 
 ```ruby
-Then /^there are search results on the page$/ do
+Then(/^there are search results on the page$/) do
   expect(@results_page).to have_search_results(count: 25)
 end
 ```
@@ -1602,7 +1618,7 @@ class Home < SitePrism::Page
 end
 
 # cucumber step that performs login
-When /^I log in$/ do
+When(/^I log in$/) do
   @home = Home.new
   @home.load
 
@@ -1633,8 +1649,8 @@ as per the code below
 
 ```ruby
 Capybara.configure do |config|
-  config.default_max_wait_time = 11 #=> Wait up to 11 seconds for all querys to fail
-  # or alternatively, if you don't want to ever wait
+  config.default_max_wait_time = 11 #=> Wait up to 11 seconds for all queries to fail
+  # or if you don't want to ever wait
   config.default_max_wait_time = 0 #=> Don't ever wait! 
 end
 ```
@@ -1656,6 +1672,9 @@ end
 
 There's a SitePrism plugin called `site_prism.vcr` that lets you use
 SitePrism with the VCR gem. Check it out [HERE](https://github.com/dnesteryuk/site_prism.vcr)
+
+Note that as of 2016 this plugin doesn't appear to have been under active development. Also it is
+still pinned to the `2.x` series of site_prism so use it of your own accord.
 
 # Epilogue
 
