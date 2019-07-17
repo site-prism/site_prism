@@ -29,11 +29,12 @@ SitePrism implements the Page Object Model pattern on top of Capybara.'
   s.add_development_dependency 'cucumber', ['~> 3.1']
   s.add_development_dependency 'rake', ['~> 12.3']
   s.add_development_dependency 'rspec', ['~> 3.8']
-  s.add_development_dependency 'rubocop', ['~> 0.71.0']
+  s.add_development_dependency 'rubocop', ['~> 0.73.0']
   s.add_development_dependency 'rubocop-performance', ['~> 1.4.0']
+  s.add_development_dependency 'rubocop-rspec', ['~> 1.33.0']
   s.add_development_dependency 'selenium-webdriver', ['~> 3.7']
   s.add_development_dependency 'simplecov', ['~> 0.17']
-  s.add_development_dependency 'webdrivers', ['~> 3.9.1']
+  s.add_development_dependency 'webdrivers', ['~> 3.9.3']
 
   s.post_install_message = 'site_prism has now moved to a new organisation to facilitate better
 management of the codebase. The new organisation link is available at www.github.com/site-prism

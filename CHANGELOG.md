@@ -1,14 +1,34 @@
-<!-- #2 (New repo) - Jun 17th - Last update to this document -->
+<!-- PR #8 - Jul 15th - Last update to this document -->
 ## [Unreleased]
 ### Removed
 
 ### Added
+- Added first bunch of Feature Deprecation notices for users to advise of the items which
+will either be changing for version4 or being removed entirely.
+  - This also advises of a couple of areas that had some minor bugs in the codebase in the DSL
+  creation phase (These will be fixed going forwards in v4)
+([luke-hill])
 
 ### Changed
 - `#all_there?` now can be used both internally by site_prism and by the all_there gem
   - Users can set `SitePrism.use_all_there_gem` to use the latest bleeding edge logic
+  - Note this also requires users to use the `0.2` version of the new gem
+  - Users need to manually add `require site_prism-all_there` whilst this gem is still under
+  migration from the existing code-base. It will be auto-added at a later date
+([luke-hill])
+
+- Upped some gem dependencies
+  - `rubocop` now is upped to `0.73`, `rubocop` performance is at `1.4`
+  - Added `rubocop-rspec` and re-generated config file (Plenty to fix up)
+  - `simplecov` minimum requirement is `0.17`
+([luke-hill])
 
 ### Fixed
+- Fixed all legacy links to ([natritmeyer])'s Github page. They all now point here.
+([luke-hill]) & ([igas])
+
+- Fixed up / Improved some dead documentation links on the README, warning about outdated plugins
+([luke-hill])
 
 ## [3.3] - 2019-07-01
 ### Added
@@ -1032,3 +1052,4 @@ impending major rubocop release
 [JanStevens]:     https://github.com/JanStevens
 [dkniffin]:       https://github.com/dkniffin
 [hoffi]:          https://github.com/hoffi
+[igas]:           https://github.com/igas

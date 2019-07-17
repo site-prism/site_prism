@@ -1,4 +1,8 @@
-require: rubocop-performance
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rspec
 
 AllCops:
   TargetRubyVersion: 2.3
