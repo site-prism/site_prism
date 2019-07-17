@@ -16,7 +16,7 @@ require_relative 'sections/all'
 
 Capybara.register_driver :site_prism do |app|
   browser = ENV.fetch('browser', 'firefox').to_sym
-  # To stop chrome V75 failures (Not a problem whilst we're only supporting selenium v3)
+  # Needed whilst we support Webdriver 3.x (Can be removed once we only support 4.x)
   capabilities =
     if browser == :chrome
       { 'chromeOptions' => { 'w3c' => false } }
@@ -33,3 +33,5 @@ Capybara.configure do |config|
   config.app_host = 'file://' + File.dirname(__FILE__) + '/../../test_site'
   config.ignore_hidden_elements = false
 end
+
+Webdrivers.cache_time = 86_400
