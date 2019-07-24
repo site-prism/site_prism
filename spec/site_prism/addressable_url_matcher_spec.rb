@@ -2,9 +2,7 @@
 
 describe SitePrism::AddressableUrlMatcher do
   describe '#matches?' do
-    let(:url) do
-      'https://joe:bleep@bazzle.com:8443/foos/22/bars/12?junk=janky#middle'
-    end
+    let(:url) { 'https://joe:bleep@bazzle.com:8443/foos/22/bars/12?junk=janky#middle' }
 
     it 'passes on templated scheme' do
       expect_matches('{scheme}://bazzle.com').to be true
@@ -105,10 +103,6 @@ describe SitePrism::AddressableUrlMatcher do
       ).to be true
     end
 
-    it 'passes on no path' do
-      expect_matches('//bazzle.com').to be true
-    end
-
     it "doesn't match on root path" do
       expect_matches('//bazzle.com/').to be false
     end
@@ -166,8 +160,7 @@ describe SitePrism::AddressableUrlMatcher do
     end
 
     it 'raises an error on templated port' do
-      expect { matches?('//bazzle.com:{port}') }
-        .to raise_error(SitePrism::InvalidUrlMatcherError)
+      expect { matches?('//bazzle.com:{port}') }.to raise_error(SitePrism::InvalidUrlMatcherError)
     end
 
     def expect_matches(*args)

@@ -2,7 +2,7 @@
 
 describe SitePrism::Logger do
   describe '#create' do
-    subject { SitePrism::Logger.new.create }
+    subject { described_class.new.create }
 
     it { is_expected.to be_a Logger }
 

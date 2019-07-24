@@ -12,7 +12,7 @@ describe SitePrism::Page do
     set_url_matcher(/bob/)
   end
 
-  let!(:locator) { instance_double('Capybara::Node::Element') }
+  let(:locator) { instance_double('Capybara::Node::Element') }
   let(:blank_page) { BlankPage.new }
   let(:page_with_url) { PageWithUrl.new }
   let(:page_with_uri_template) { PageWithUriTemplate.new }
@@ -23,11 +23,11 @@ describe SitePrism::Page do
   end
 
   it 'responds to set_url' do
-    expect(SitePrism::Page).to respond_to(:set_url)
+    expect(described_class).to respond_to(:set_url)
   end
 
   it 'responds to set_url_matcher' do
-    expect(SitePrism::Page).to respond_to(:set_url_matcher)
+    expect(described_class).to respond_to(:set_url_matcher)
   end
 
   it 'should be able to set a url against it' do
@@ -125,9 +125,7 @@ is called before the matcher has been set" do
     end
 
     it 'should allow expansions if the url has them' do
-      expect do
-        page_with_uri_template.load(username: 'foobar')
-      end.not_to raise_error
+      expect { page_with_uri_template.load(username: 'foobar') }.not_to raise_error
 
       expect(
         page_with_uri_template
@@ -617,6 +615,6 @@ from the be_displayed matcher" do
   end
 
   def swap_current_url(url)
-    allow(page).to receive(:page).and_return(double(current_url: url))
+    allow(page).to receive(:page).and_return(instance_double('FakedPage', current_url: url))
   end
 end

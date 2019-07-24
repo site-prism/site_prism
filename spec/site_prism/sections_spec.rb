@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe SitePrism::Page do
+describe SitePrism::Section do
   subject { Page.new }
 
   class PluralSections < SitePrism::Section; end
@@ -18,7 +18,7 @@ describe SitePrism::Page do
     it 'should be settable' do
       expect(SitePrism::Page).to respond_to(:sections)
 
-      expect(SitePrism::Section).to respond_to(:sections)
+      expect(described_class).to respond_to(:sections)
     end
   end
 
@@ -26,8 +26,7 @@ describe SitePrism::Page do
     expect(subject.plural_sections).to be_an Array
   end
 
-  context "when using sections with default search arguments \
-and without search arguments" do
+  context 'when using sections with default search arguments and without search arguments' do
     let(:search_arguments) { [:css, '.section'] }
 
     before do
@@ -38,10 +37,8 @@ and without search arguments" do
     end
 
     it 'should use default arguments' do
-      expect(SitePrism::Section)
-        .to receive(:new).with(subject, :element1).ordered
-      expect(SitePrism::Section)
-        .to receive(:new).with(subject, :element2).ordered
+      expect(described_class).to receive(:new).with(subject, :element1).ordered
+      expect(described_class).to receive(:new).with(subject, :element2).ordered
 
       subject.plural_sections_with_defaults
     end
