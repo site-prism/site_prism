@@ -23,11 +23,11 @@ describe SitePrism::Page do
   end
 
   it 'responds to set_url' do
-    expect(SitePrism::Page).to respond_to(:set_url)
+    expect(described_class).to respond_to(:set_url)
   end
 
   it 'responds to set_url_matcher' do
-    expect(SitePrism::Page).to respond_to(:set_url_matcher)
+    expect(described_class).to respond_to(:set_url_matcher)
   end
 
   it 'should be able to set a url against it' do

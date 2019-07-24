@@ -5,10 +5,10 @@ describe SitePrism::Section do
   class Page < SitePrism::Page; end
 
   let(:dont_wait) { { wait: 0 } }
-  let(:section_without_block) { SitePrism::Section.new(Page.new, locator) }
+  let(:section_without_block) { described_class.new(Page.new, locator) }
   let!(:locator) { instance_double('Capybara::Node::Element') }
   let(:section_with_block) do
-    SitePrism::Section.new(Page.new, locator) { 1 + 1 }
+    described_class.new(Page.new, locator) { 1 + 1 }
   end
 
   it 'responds to Capybara methods' do
@@ -19,7 +19,7 @@ describe SitePrism::Section do
     it 'should be settable' do
       expect(SitePrism::Page).to respond_to(:section)
 
-      expect(SitePrism::Section).to respond_to(:section)
+      expect(described_class).to respond_to(:section)
     end
   end
 
@@ -318,11 +318,11 @@ set_default_search_arguments within section class"
   end
 
   describe '#parent_page' do
-    let(:section) { SitePrism::Section.new(page, '.locator') }
+    let(:section) { described_class.new(page, '.locator') }
     let(:deeply_nested_section) do
-      SitePrism::Section.new(
-        SitePrism::Section.new(
-          SitePrism::Section.new(
+      described_class.new(
+        described_class.new(
+          described_class.new(
             page, '.locator-section-large'
           ), '.locator-section-medium'
         ), '.locator-small'
@@ -344,7 +344,7 @@ set_default_search_arguments within section class"
   end
 
   describe '#page' do
-    subject { SitePrism::Section.new('parent', root_element).page }
+    subject { described_class.new('parent', root_element).page }
 
     let(:root_element) { 'root' }
 
