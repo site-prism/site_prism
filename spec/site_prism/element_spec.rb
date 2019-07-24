@@ -4,6 +4,7 @@ describe SitePrism do
   describe 'Element' do
     # This stops the stdout process leaking between tests
     before { wipe_logger! }
+
     let(:expected_elements) { SitePrism::SpecHelper.present_on_page }
 
     shared_examples 'an element' do

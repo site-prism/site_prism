@@ -615,6 +615,6 @@ from the be_displayed matcher" do
   end
 
   def swap_current_url(url)
-    allow(page).to receive(:page).and_return(double(current_url: url))
+    allow(page).to receive(:page).and_return(instance_double('FakedPage', current_url: url))
   end
 end

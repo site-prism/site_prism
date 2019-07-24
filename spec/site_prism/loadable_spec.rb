@@ -95,8 +95,8 @@ when all load validations pass" do
     end
 
     it 'raises an error immediately on the first validation failure' do
-      validation_spy1 = spy(valid?: false)
-      validation_spy2 = spy(valid?: false)
+      validation_spy1 = instance_spy('007', valid?: false)
+      validation_spy2 = instance_spy('007', valid?: true)
 
       loadable.load_validation { validation_spy1.valid? }
       loadable.load_validation { validation_spy2.valid? }
@@ -109,8 +109,8 @@ when all load validations pass" do
     end
 
     it 'executes validations only once for nested calls' do
-      james_bond = spy
-      validation_spy1 = spy(valid?: true)
+      james_bond = instance_spy('007')
+      validation_spy1 = instance_spy('007', valid?: true)
 
       loadable.load_validation { validation_spy1.valid? }
       instance = loadable.new
@@ -146,7 +146,7 @@ when all load validations pass" do
     let(:inheriting_loadable) { Class.new(loadable) }
 
     it 'returns true if loaded value is cached' do
-      validation_spy1 = spy(valid?: true)
+      validation_spy1 = instance_spy('007', valid?: true)
       loadable.load_validation { validation_spy1.valid? }
       instance = loadable.new
       instance.loaded = true

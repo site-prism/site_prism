@@ -48,8 +48,7 @@ describe SitePrism::Section do
     end
 
     it 'should have elements from the defined section' do
-      expect(subject.section_with_a_block)
-        .to respond_to(:single_section_element)
+      expect(subject.section_with_a_block).to respond_to(:single_section_element)
     end
 
     it 'should have elements from the block' do
@@ -124,15 +123,12 @@ class or/and a block as the second argument."
         set_default_search_arguments :css, '.section'
       end
 
-      class SectionWithDefaultArgumentsForParent < SectionWithDefaultArguments
-      end
+      class SectionWithDefaultArgumentsForParent < SectionWithDefaultArguments; end
 
       section :section_using_defaults, SectionWithDefaultArguments
       section :section_using_defaults_from_parent,
               SectionWithDefaultArgumentsForParent
-      section :section_with_locator,
-              SectionWithDefaultArguments,
-              '.other-section'
+      section :section_with_locator, SectionWithDefaultArguments, '.other-section'
       sections :sections, SectionWithDefaultArguments
     end
     let(:page) { PageWithSectionWithDefaultSearchArguments.new }
@@ -177,9 +173,7 @@ set_default_search_arguments within section class"
         end
 
         it 'raises an ArgumentError' do
-          expect { invalid_page }
-            .to raise_error(ArgumentError)
-            .with_message(error_message)
+          expect { invalid_page }.to raise_error(ArgumentError).with_message(error_message)
         end
       end
     end

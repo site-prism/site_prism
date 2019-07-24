@@ -64,6 +64,7 @@ describe SitePrism do
       let(:file_content) { File.read(filename) }
 
       before { described_class.log_path = filename }
+
       after { File.delete(filename) if File.exist?(filename) }
 
       it 'sends the log messages to the file-path provided' do
