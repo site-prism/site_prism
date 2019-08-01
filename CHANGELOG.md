@@ -1,12 +1,22 @@
-<!-- PR #8 - Jul 15th - Last update to this document -->
+<!-- PR #14 - Jul 24th - Last update to this document -->
 ## [Unreleased]
 ### Removed
 
+### Added
+
+### Changed
+
+### Fixed
+
+## [3.4] - 2019-08-01
 ### Added
 - Added first bunch of Feature Deprecation notices for users to advise of the items which
 will either be changing for version4 or being removed entirely.
   - This also advises of a couple of areas that had some minor bugs in the codebase in the DSL
   creation phase (These will be fixed going forwards in v4)
+([luke-hill])
+
+- Added `rubocop-rspec` and regenerated the `.rubocop_todo.yml` file, fixing up some cops in the process
 ([luke-hill])
 
 ### Changed
@@ -944,7 +954,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[Unreleased]: https://github.com/site-prism/site_prism/compare/v3.3...master
+[Unreleased]: https://github.com/site-prism/site_prism/compare/v3.4...master
+[3.4]:        https://github.com/site-prism/site_prism/compare/v3.3...v3.4
 [3.3]:        https://github.com/site-prism/site_prism/compare/v3.2...v3.3
 [3.2]:        https://github.com/site-prism/site_prism/compare/v3.1...v3.2
 [3.1]:        https://github.com/site-prism/site_prism/compare/v3.0.3...v3.1
