@@ -62,4 +62,6 @@ module SitePrism
   # A page was loaded then failed one of the validations defined by the user
   # Formerly known as `NotLoadedError`
   class FailedLoadValidationError < PageLoadError; end
+
+  class UnsupportedElementName < SitePrismError; end
 end

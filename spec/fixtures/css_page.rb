@@ -8,6 +8,8 @@ class CSSPage < SitePrism::Page
   elements :elements_one, 'a.a b.b'
   elements :elements_two, '.many'
 
+  element :no_such_element, 'a.b c.d'
+
   section :section_one, CSSSection, 'span.locator'
 
   sections :sections_one, Blank, 'span.locator'

@@ -81,8 +81,13 @@ describe SitePrism::Page do
     expect { CSSPage.new.element_one { :foo } }.to raise_error(SitePrism::UnsupportedBlockError)
   end
 
-  it 'raises an exception if passing a block to elements' do
-    expect { CSSPage.new.elements_one { :foo } }.to raise_error(SitePrism::UnsupportedBlockError)
+  it 'should raise an exception when the name starts with no_' do
+    expect { CSSPage.new.no_such_element }.to raise_error(SitePrism::UnsupportedElementName)
+  end
+
+  it 'should raise an exception if passing a block to elements' do
+    expect { CSSPage.new.elements_one { :any_old_block } }
+      .to raise_error(SitePrism::UnsupportedBlockError)
   end
 
   it 'raises an exception if passing a block to sections' do

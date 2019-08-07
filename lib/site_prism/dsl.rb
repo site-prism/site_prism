@@ -36,6 +36,14 @@ module SitePrism
       raise SitePrism::UnsupportedBlockError
     end
 
+    # Prevent users from naming the elements starting with no_
+    def raise_if_name_unsupported(obj, name)
+      if name.to_s.start_with?("no_")
+        SitePrism.logger.error("#{obj.class}#{name} should not start with no_")
+        raise SitePrism::UnsupportedElementName
+      end
+    end
+
     # Sanitize method called before calling any SitePrism DSL method or
     # meta-programmed method. This ensures that the Capybara query is correct.
     #
@@ -79,6 +87,7 @@ module SitePrism
         SitePrism::Deprecator.deprecate('Passing a block to :element') if block_given?
         build(:element, name, *find_args) do
           define_method(name) do |*runtime_args, &element_block|
+            raise_if_name_unsupported(self, name)
             raise_if_block(self, name, !element_block.nil?, :element)
             _find(*merge_args(find_args, runtime_args))
           end
@@ -89,6 +98,7 @@ module SitePrism
         SitePrism::Deprecator.deprecate('Passing a block to :elements') if block_given?
         build(:elements, name, *find_args) do
           define_method(name) do |*runtime_args, &element_block|
+            raise_if_name_unsupported(self, name)
             raise_if_block(self, name, !element_block.nil?, :elements)
             _all(*merge_args(find_args, runtime_args))
           end
@@ -103,6 +113,7 @@ module SitePrism
         section_class, find_args = extract_section_options(args, &block)
         build(:section, name, *find_args) do
           define_method(name) do |*runtime_args, &runtime_block|
+            raise_if_name_unsupported(self, name)
             section_element = _find(*merge_args(find_args, runtime_args))
             section_class.new(self, section_element, &runtime_block)
           end
