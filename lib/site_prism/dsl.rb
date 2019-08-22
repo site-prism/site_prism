@@ -36,12 +36,12 @@ module SitePrism
       raise SitePrism::UnsupportedBlockError
     end
 
-    # Prevent users from naming the elements starting with no_
+    # Warn users from naming the elements starting with no_
     def raise_if_name_unsupported(obj, name)
-      if name.to_s.start_with?("no_")
-        SitePrism.logger.error("#{obj.class}#{name} should not start with no_")
-        raise SitePrism::UnsupportedElementName
-      end
+      return unless name.to_s.start_with?("no_")
+
+      SitePrism.logger.warn("#{obj.class}#{name} should not start with no_")
+      SitePrism::Deprecator.deprecate('Using no_ in element name')
     end
 
     # Sanitize method called before calling any SitePrism DSL method or
