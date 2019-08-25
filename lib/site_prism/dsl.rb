@@ -37,11 +37,11 @@ module SitePrism
     end
 
     # Warn users from naming the elements starting with no_
-    def raise_if_name_unsupported(obj, name)
+    def warn_if_dsl_collision(obj, name)
       return unless name.to_s.start_with?("no_")
 
-      SitePrism.logger.warn("#{obj.class}#{name} should not start with no_")
-      SitePrism::Deprecator.deprecate('Using no_ in element name')
+      SitePrism.logger.warn("#{obj.class}##{name} should not start with no_")
+      SitePrism::Deprecator.deprecate('Using no_ prefix in DSL definition')
     end
 
     # Sanitize method called before calling any SitePrism DSL method or
@@ -87,7 +87,7 @@ module SitePrism
         SitePrism::Deprecator.deprecate('Passing a block to :element') if block_given?
         build(:element, name, *find_args) do
           define_method(name) do |*runtime_args, &element_block|
-            raise_if_name_unsupported(self, name)
+            warn_if_dsl_collision(self, name)
             raise_if_block(self, name, !element_block.nil?, :element)
             _find(*merge_args(find_args, runtime_args))
           end
@@ -98,7 +98,7 @@ module SitePrism
         SitePrism::Deprecator.deprecate('Passing a block to :elements') if block_given?
         build(:elements, name, *find_args) do
           define_method(name) do |*runtime_args, &element_block|
-            raise_if_name_unsupported(self, name)
+            warn_if_dsl_collision(self, name)
             raise_if_block(self, name, !element_block.nil?, :elements)
             _all(*merge_args(find_args, runtime_args))
           end
@@ -113,7 +113,7 @@ module SitePrism
         section_class, find_args = extract_section_options(args, &block)
         build(:section, name, *find_args) do
           define_method(name) do |*runtime_args, &runtime_block|
-            raise_if_name_unsupported(self, name)
+            warn_if_dsl_collision(self, name)
             section_element = _find(*merge_args(find_args, runtime_args))
             section_class.new(self, section_element, &runtime_block)
           end

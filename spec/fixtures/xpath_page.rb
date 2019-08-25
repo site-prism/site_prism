@@ -8,7 +8,7 @@ class XPathPage < SitePrism::Page
   elements :elements_one, :xpath, '//a[@class="a"]//b[@class="b"]'
   elements :elements_two, :xpath, '//*[@class="many"]'
 
-  element :no_such_element, 'a.b c.d'
+  element :no_such_element, '//a[@class="b"]//c[@class="d"]'
 
   section :section_one, XPathSection, :xpath, '//span[@class="locator"]'
 
