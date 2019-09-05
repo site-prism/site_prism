@@ -14,17 +14,25 @@ describe SitePrism::Waiter do
       expect(described_class.wait_until_true { true }).to be true
     end
 
-    it 'allows custom timeouts' do
-      timeout = 0.2
-      start_time = Time.now
+    context 'with a custom timeout' do
+      let(:timeout) { 0.2 }
 
-      expect { described_class.wait_until_true(timeout) { false } }
-        .to raise_error(SitePrism::TimeoutError)
-        .with_message(/0.2/)
+      it 'alters the error message' do
+        expect { described_class.wait_until_true(timeout) { false } }
+          .to raise_error(SitePrism::TimeoutError)
+          .with_message(/#{timeout}/)
+      end
 
-      duration = Time.now - start_time
+      it 'waits the according amount of time' do
+        start_time = Time.now
 
-      expect(duration).to be_within(0.1).of(timeout)
+        expect { described_class.wait_until_true(timeout) { false } }
+          .to raise_error(SitePrism::TimeoutError)
+
+        duration = Time.now - start_time
+
+        expect(duration).to be_within(0.1).of(timeout)
+      end
     end
 
     context 'when time is frozen' do

@@ -127,10 +127,8 @@ is called before the matcher has been set" do
     it 'should allow expansions if the url has them' do
       expect { page_with_uri_template.load(username: 'foobar') }.not_to raise_error
 
-      expect(
-        page_with_uri_template
-        .url(username: 'foobar', query: { 'recent_posts' => 'true' })
-      ).to eq('/users/foobar?recent_posts=true')
+      expect(page_with_uri_template.url(username: 'foobar', query: { 'key' => 'value' }))
+        .to eq('/users/foobar?key=value')
 
       expect(page_with_uri_template.url).to eq('/users')
     end

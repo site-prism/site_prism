@@ -10,11 +10,13 @@ describe SitePrism::Loadable do
   class MyLoadablePage < SitePrism::Page; end
 
   describe '.load_validations' do
+    let(:validation1) { -> { true } }
+    let(:validation2) { -> { true } }
+    let(:validation3) { -> { true } }
+    let(:validation4) { -> { true } }
+
     context 'with no inheritance classes' do
       it 'returns load_validations from the current class' do
-        validation1 = -> { true }
-        validation2 = -> { true }
-
         loadable.load_validation(&validation1)
         loadable.load_validation(&validation2)
 
@@ -23,11 +25,9 @@ describe SitePrism::Loadable do
     end
 
     context 'with inheritance classes' do
-      it 'returns load_validations from the current and inherited classes' do
-        subklass = Class.new(loadable)
-        validation1 = -> { true }
-        validation2 = -> { true }
+      let(:subklass) { Class.new(loadable) }
 
+      it 'returns load_validations from the current and inherited classes' do
         loadable.load_validation(&validation1)
         subklass.load_validation(&validation2)
 
@@ -35,22 +35,11 @@ describe SitePrism::Loadable do
       end
 
       it 'ensures that load validations of parents are checked first' do
-        subklass = Class.new(loadable)
-        validation1 = -> { true }
-        validation2 = -> { true }
-        validation3 = -> { true }
-        validation4 = -> { true }
-        validation5 = -> { true }
-
-        loadable.load_validation(&validation5)
-        subklass.load_validation(&validation1)
+        loadable.load_validation(&validation1)
         subklass.load_validation(&validation2)
-        subklass.load_validation(&validation3)
-        loadable.load_validation(&validation4)
+        loadable.load_validation(&validation3)
 
-        expect(subklass.load_validations).to eq(
-          [validation5, validation4, validation1, validation2, validation3]
-        )
+        expect(subklass.load_validations).to eq([validation1, validation3, validation2])
       end
     end
 
@@ -69,8 +58,7 @@ describe SitePrism::Loadable do
   end
 
   describe '#when_loaded' do
-    it "executes and yields itself to the provided block \
-when all load validations pass" do
+    it 'executes and yields itself to the provided block when all load validations pass' do
       loadable.load_validation { true }
       instance = loadable.new
 
