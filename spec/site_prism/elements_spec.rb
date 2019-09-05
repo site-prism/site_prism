@@ -16,14 +16,14 @@ describe SitePrism do
       end
     end
 
-    context 'defined as css' do
+    context 'with a Page defined using CSS locators' do
       let(:page) { CSSPage.new }
       let(:klass) { CSSPage }
 
       it_behaves_like 'elements'
     end
 
-    context 'defined as xpath' do
+    context 'with a Page defined using XPath locators' do
       let(:page) { XPathPage.new }
       let(:klass) { XPathPage }
 

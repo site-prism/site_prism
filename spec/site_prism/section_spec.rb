@@ -55,7 +55,7 @@ describe SitePrism::Section do
       expect(subject.section_with_a_block).to respond_to(:block_element)
     end
 
-    context 'second argument is a Class' do
+    context 'when second argument is a Class' do
       class PageWithSection < SitePrism::Page
         section :section, Section, '.section'
       end
@@ -70,7 +70,7 @@ describe SitePrism::Section do
       it { is_expected.to respond_to(:all_there?) }
     end
 
-    context 'second argument is not a Class and a block given' do
+    context 'when second argument is not a Class but a block is given' do
       class PageWithAnonymousSectionOne < SitePrism::Page
         section :anonymous_section, '.section' do
           element :title, 'h1'
@@ -87,7 +87,7 @@ describe SitePrism::Section do
       it { is_expected.to respond_to(:all_there?) }
     end
 
-    context 'second argument is a Class and a block given' do
+    context 'when second argument is a Class and a block is given' do
       class PageWithAnonymousSectionTwo < SitePrism::Page
         section :anonymous_section, Section, '.section' do
           element :title, 'h1'
@@ -104,7 +104,7 @@ describe SitePrism::Section do
       it { is_expected.to respond_to(:all_there?) }
     end
 
-    context 'second argument is not a Class and no block given' do
+    context 'when second argument is not a Class and no block is given' do
       let(:section) { Page.section(:incorrect_section, '.section') }
       let(:message) do
         "You should provide descendant of SitePrism::Section \
@@ -134,7 +134,7 @@ class or/and a block as the second argument."
     let(:page) { PageWithSectionWithDefaultSearchArguments.new }
     let(:search_arguments) { [:css, '.section'] }
 
-    context 'search arguments are provided during the DSL definition' do
+    context 'when search arguments are provided during the DSL definition' do
       let(:search_arguments) { ['.other-section'] }
 
       it 'returns the search arguments for a section' do
@@ -144,8 +144,8 @@ class or/and a block as the second argument."
       end
     end
 
-    context 'search arguments are not provided during the DSL definition' do
-      context 'default search arguments are set on both parent and section' do
+    context 'when search arguments are not provided during the DSL definition' do
+      context 'when default search arguments are set on both parent and section' do
         it 'returns the default search arguments set on the section' do
           expect(page).to receive(:_find).with(*search_arguments, **dont_wait)
 
@@ -153,7 +153,7 @@ class or/and a block as the second argument."
         end
       end
 
-      context 'default search arguments are only set on the parent section' do
+      context 'when default search arguments are only set on the parent section' do
         it 'returns the default search arguments set on the parent section' do
           expect(page).to receive(:_find).with(*search_arguments, **dont_wait)
 
@@ -161,7 +161,7 @@ class or/and a block as the second argument."
         end
       end
 
-      context 'default search arguments are not set on parent or section' do
+      context 'when default search arguments are not set on parent or section' do
         let(:invalid_page) do
           class ErroredPage < SitePrism::Page
             section :section, Section
@@ -198,13 +198,13 @@ set_default_search_arguments within section class"
       expect(BaseSection.default_search_arguments).to eq([:css, 'a.b'])
     end
 
-    context 'both parent and child class have default_search_arguments' do
+    context 'when both parent and child class have default_search_arguments' do
       it 'returns the child level arguments' do
         expect(ChildSection.default_search_arguments).to eq([:xpath, '//h3'])
       end
     end
 
-    context 'only parent class has default_search_arguments' do
+    context 'when only parent class has default_search_arguments' do
       it 'returns the parent level arguments' do
         expect(OtherChildSection.default_search_arguments).to eq([:css, 'a.b'])
       end

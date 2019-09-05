@@ -5,7 +5,7 @@ describe SitePrism::ElementChecker do
 
   shared_examples 'a page' do
     describe '#all_there?' do
-      context 'by default' do
+      context 'with the default recursion setting' do
         subject { page.all_there? }
 
         it { is_expected.to be true }
@@ -94,7 +94,7 @@ describe SitePrism::ElementChecker do
     end
   end
 
-  context 'on a CSS Page' do
+  context 'with a Page defined using CSS locators' do
     let(:page) { CSSPage.new }
     let(:section) { CSSSection.new(page, section_locator) }
     let(:expected_items) { CSSPage.expected_items }
@@ -102,7 +102,7 @@ describe SitePrism::ElementChecker do
     it_behaves_like 'a page'
   end
 
-  context 'on an XPath Page' do
+  context 'with a Page defined using XPath locators' do
     let(:page) { XPathPage.new }
     let(:section) { XPathSection.new(page, section_locator) }
     let(:expected_items) { XPathPage.expected_items }

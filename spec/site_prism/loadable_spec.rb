@@ -54,7 +54,7 @@ describe SitePrism::Loadable do
       end
     end
 
-    context 'a standard page' do
+    context 'when on a standard page' do
       it 'has no default load validations' do
         expect(MyLoadablePage.load_validations.length).to eq(0)
       end
