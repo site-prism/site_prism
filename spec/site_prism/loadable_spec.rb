@@ -85,23 +85,24 @@ describe SitePrism::Loadable do
     it 'raises an error immediately on the first validation failure' do
       validation_spy1 = instance_spy('007', valid?: false)
       validation_spy2 = instance_spy('007', valid?: true)
-
       loadable.load_validation { validation_spy1.valid? }
       loadable.load_validation { validation_spy2.valid? }
 
+      expect(validation_spy1).to receive(:valid?).once
+      expect(validation_spy2).not_to receive(:valid?)
+
       expect { loadable.new.when_loaded { puts 'foo' } }
         .to raise_error(SitePrism::FailedLoadValidationError)
-
-      expect(validation_spy1).to have_received(:valid?).once
-      expect(validation_spy2).not_to have_received(:valid?)
     end
 
     it 'executes validations only once for nested calls' do
       james_bond = instance_spy('007')
       validation_spy1 = instance_spy('007', valid?: true)
-
-      loadable.load_validation { validation_spy1.valid? }
       instance = loadable.new
+      loadable.load_validation { validation_spy1.valid? }
+
+      expect(james_bond).to receive(:drink_martini)
+      expect(validation_spy1).to receive(:valid?).once
 
       instance.when_loaded do
         instance.when_loaded do
@@ -110,9 +111,6 @@ describe SitePrism::Loadable do
           end
         end
       end
-
-      expect(james_bond).to have_received(:drink_martini)
-      expect(validation_spy1).to have_received(:valid?).once
     end
 
     it 'resets the loaded cache at the end of the block' do
@@ -135,13 +133,14 @@ describe SitePrism::Loadable do
 
     it 'returns true if loaded value is cached' do
       validation_spy1 = instance_spy('007', valid?: true)
+
+      expect(validation_spy1).not_to receive(:valid?)
+
       loadable.load_validation { validation_spy1.valid? }
       instance = loadable.new
       instance.loaded = true
 
       expect(instance).to be_loaded
-
-      expect(validation_spy1).not_to have_received(:valid?)
     end
 
     it 'returns true if all load validations pass' do
