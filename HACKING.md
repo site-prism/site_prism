@@ -1,7 +1,6 @@
 # SitePrism dev setup
 
-To successfully get SitePrism running locally, you need to fork the repo and have
-`geckodriver` and/or `chromedriver` downloaded
+To successfully get SitePrism running locally, you need to just fork the repo
 
 ```bash
 $ git clone git@github.com:your_user_name/site_prism.git
@@ -21,6 +20,8 @@ $ bundle exec rake # Runs feature tests on firefox, then specs, then runs ruboco
 - Write your code. Make sure to add unit / feature tests AND documentation (If appropriate)
 - Run `bundle exec rake` and ensure it passes
 - Submit a pull request
+- If you encounter issues regarding not being able to perform browser tests check whether
+`geckodriver` and/or `chromedriver` have been downloaded (`webdrivers` controls this)
 
 Happy Testing / Developing!
 
