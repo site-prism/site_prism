@@ -38,5 +38,8 @@ SitePrism implements the Page Object Model pattern on top of Capybara.'
 
   s.post_install_message = 'site_prism has now moved to a new organisation to facilitate better
 management of the codebase. The new organisation link is available at www.github.com/site-prism
-and will house the site_prism gem plus new associated co-dependent gems.'
+and will house the site_prism gem plus new associated co-dependent gems.
+
+NB: The old repo will soon be discontinued and all existing issues will be moved over to the new
+repo.'
 end
