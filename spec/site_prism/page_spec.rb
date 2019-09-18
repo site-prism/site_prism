@@ -127,10 +127,8 @@ is called before the matcher has been set" do
     it 'should allow expansions if the url has them' do
       expect { page_with_uri_template.load(username: 'foobar') }.not_to raise_error
 
-      expect(
-        page_with_uri_template
-        .url(username: 'foobar', query: { 'recent_posts' => 'true' })
-      ).to eq('/users/foobar?recent_posts=true')
+      expect(page_with_uri_template.url(username: 'foobar', query: { 'key' => 'value' }))
+        .to eq('/users/foobar?key=value')
 
       expect(page_with_uri_template.url).to eq('/users')
     end
@@ -151,7 +149,7 @@ is called before the matcher has been set" do
       end
     end
 
-    context 'With Failing Load Validations' do
+    context 'with Failing Load Validations' do
       it 'raises an error' do
         allow(page_with_load_validations)
           .to receive(:must_be_true).and_return(false)
@@ -196,7 +194,7 @@ is called before the matcher has been set" do
         end
       end
 
-      context 'With Failing Load Validations' do
+      context 'with Failing Load Validations' do
         it 'raises an error' do
           allow(page_with_load_validations)
             .to receive(:must_be_true).and_return(false)
@@ -345,15 +343,13 @@ is called before the matcher has been set" do
         expect(page.displayed?(id: 17)).to be false
       end
 
-      it "passes through incorrect expected_mappings \
-from the be_displayed matcher" do
+      it 'passes through incorrect expected_mappings from the be_displayed matcher' do
         swap_current_url('http://localhost:3000/foos/28')
 
         expect(page).not_to be_displayed(id: 17)
       end
 
-      it "passes through correct expected_mappings \
-from the be_displayed matcher" do
+      it 'passes through correct expected_mappings from the be_displayed matcher' do
         swap_current_url('http://localhost:3000/foos/28')
 
         expect(page).to be_displayed(id: 28)

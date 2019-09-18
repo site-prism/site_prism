@@ -60,7 +60,7 @@ describe SitePrism do
       end
     end
 
-    context 'defined as css' do
+    context 'with a Page defined using CSS locators' do
       subject { page }
 
       let(:page) { CSSPage.new }
@@ -69,7 +69,7 @@ describe SitePrism do
       it_behaves_like 'an element'
     end
 
-    context 'defined as xpath' do
+    context 'with a Page defined using XPath locators' do
       subject { page }
 
       let(:page) { XPathPage.new }

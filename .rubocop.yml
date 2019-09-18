@@ -46,3 +46,6 @@ Style/AccessModifierDeclarations:
 Metrics/ModuleLength:
   Exclude:
     - 'lib/site_prism/dsl.rb'
+
+RSpec/MessageSpies:
+  EnforcedStyle: receive
