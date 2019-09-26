@@ -8,6 +8,18 @@
 
 ### Fixed
 
+## [3.4.1] - 2019-09-26
+### Changed
+- Update the `Gemfile.low_spec` as it was untouched in over 6months
+([luke-hill])
+
+- Unlock `site_prism-all_there` to any `0.x` version higher than `0.3` now it is more stable
+([luke-hill])
+
+### Fixed
+- Fixed up some RSpec cop offenses
+([luke-hill])
+
 ## [3.4] - 2019-08-01
 ### Added
 - Added first bunch of Feature Deprecation notices for users to advise of the items which
