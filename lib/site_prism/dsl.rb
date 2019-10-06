@@ -38,7 +38,7 @@ module SitePrism
 
     # Warn users from naming the elements starting with no_
     def warn_if_dsl_collision(obj, name)
-      return unless name.to_s.start_with?("no_")
+      return unless name.to_s.start_with?('no_')
 
       SitePrism.logger.warn("#{obj.class}##{name} should not start with no_")
       SitePrism::Deprecator.deprecate('Using no_ prefix in DSL definition')
