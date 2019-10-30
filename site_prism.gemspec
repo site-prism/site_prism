@@ -22,7 +22,7 @@ clean and semantic DSL for describing your site.
 SitePrism implements the Page Object Model pattern on top of Capybara.'
   s.files        = Dir.glob('lib/**/*') + %w[LICENSE.md README.md]
   s.require_path = 'lib'
-  s.add_dependency 'addressable', ['~> 2.5']
+  s.add_dependency 'addressable', ['>= 2.5', '<= 2.6']
   s.add_dependency 'capybara', ['~> 3.3']
   s.add_dependency 'site_prism-all_there', ['~> 0.3']
 
