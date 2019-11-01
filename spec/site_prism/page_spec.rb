@@ -52,10 +52,8 @@ describe SitePrism::Page do
     expect { page_with_url_matcher.displayed? }.not_to raise_error
   end
 
-  it "should raise an exception if displayed? \
-is called before the matcher has been set" do
-    expect { blank_page.displayed? }
-      .to raise_error(SitePrism::NoUrlMatcherForPageError)
+  it 'should raise an exception if `displayed?` is called before the matcher has been set' do
+    expect { blank_page.displayed? }.to raise_error(SitePrism::NoUrlMatcherForPageError)
   end
 
   it 'should expose the page title' do
@@ -63,18 +61,15 @@ is called before the matcher has been set" do
   end
 
   it 'should raise an exception if passing a block to an element' do
-    expect { CSSPage.new.element_one { :any_old_block } }
-      .to raise_error(SitePrism::UnsupportedBlockError)
+    expect { CSSPage.new.element_one { :foo } }.to raise_error(SitePrism::UnsupportedBlockError)
   end
 
   it 'should raise an exception if passing a block to elements' do
-    expect { CSSPage.new.elements_one { :any_old_block } }
-      .to raise_error(SitePrism::UnsupportedBlockError)
+    expect { CSSPage.new.elements_one { :foo } }.to raise_error(SitePrism::UnsupportedBlockError)
   end
 
   it 'should raise an exception if passing a block to sections' do
-    expect { CSSPage.new.sections_one { :any_old_block } }
-      .to raise_error(SitePrism::UnsupportedBlockError)
+    expect { CSSPage.new.sections_one { :foo } }.to raise_error(SitePrism::UnsupportedBlockError)
   end
 
   it { is_expected.to respond_to(*Capybara::Session::DSL_METHODS) }
@@ -116,8 +111,7 @@ is called before the matcher has been set" do
     let(:page_with_load_validations) { PageWithLoadValidations.new }
 
     it "should not allow loading if the url hasn't been set" do
-      expect { blank_page.load }
-        .to raise_error(SitePrism::NoUrlForPageError)
+      expect { blank_page.load }.to raise_error(SitePrism::NoUrlForPageError)
     end
 
     it 'should allow loading if the url has been set' do
@@ -133,7 +127,7 @@ is called before the matcher has been set" do
       expect(page_with_uri_template.url).to eq('/users')
     end
 
-    it 'should allow to load html' do
+    it 'loads the html' do
       expect { page_with_url.load('<html/>') }.not_to raise_error
     end
 
@@ -143,27 +137,25 @@ is called before the matcher has been set" do
       end
 
       context 'when validations are disabled' do
-        it 'executes the block' do
+        it 'loads the page' do
           expect(page_with_load_validations.load(with_validations: false)).to be_truthy
         end
       end
     end
 
     context 'with Failing Load Validations' do
-      it 'raises an error' do
-        allow(page_with_load_validations)
-          .to receive(:must_be_true).and_return(false)
+      before do
+        allow(page_with_load_validations).to receive(:must_be_true).and_return(false)
+      end
 
+      it 'raises an error' do
         expect { page_with_load_validations.load }
           .to raise_error(SitePrism::FailedLoadValidationError)
           .with_message('It is not true!')
       end
 
       context 'when validations are disabled' do
-        it 'executes the block' do
-          allow(page_with_load_validations)
-            .to receive(:must_be_true).and_return(false)
-
+        it 'loads the page' do
           expect(page_with_load_validations.load(with_validations: false)).to be_truthy
         end
       end
@@ -195,10 +187,11 @@ is called before the matcher has been set" do
       end
 
       context 'with Failing Load Validations' do
-        it 'raises an error' do
-          allow(page_with_load_validations)
-            .to receive(:must_be_true).and_return(false)
+        before do
+          allow(page_with_load_validations).to receive(:must_be_true).and_return(false)
+        end
 
+        it 'raises an error' do
           expect { page_with_load_validations.load { puts 'foo' } }
             .to raise_error(SitePrism::FailedLoadValidationError)
             .with_message('It is not true!')
@@ -206,9 +199,6 @@ is called before the matcher has been set" do
 
         context 'when validations are disabled' do
           it 'executes the block' do
-            allow(page_with_load_validations)
-              .to receive(:must_be_true).and_return(false)
-
             expect(page_with_load_validations.load(with_validations: false) { :return_this })
               .to eq(:return_this)
           end
@@ -364,8 +354,7 @@ is called before the matcher has been set" do
       let(:page) { PageWithBogusFullUrlMatcher.new }
 
       it 'raises InvalidUrlMatcherError' do
-        expect { page.displayed? }
-          .to raise_error(SitePrism::InvalidUrlMatcherError)
+        expect { page.displayed? }.to raise_error(SitePrism::InvalidUrlMatcherError)
       end
     end
   end

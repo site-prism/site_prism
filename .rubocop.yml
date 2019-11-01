@@ -7,6 +7,7 @@ require:
 AllCops:
   TargetRubyVersion: 2.3
 
+# This allows a longer LineLength whilst ignoring cuke definitions
 Metrics/LineLength:
   Max: 100
   IgnoredPatterns:
@@ -14,25 +15,32 @@ Metrics/LineLength:
     - '^When'
     - '^Then'
 
+# We need to massively improve this! But for now the suite is not under active documentation
 Documentation:
   Enabled: false
 
+# We are a DSL, so we occassionally need to use `#set_` prefixes on our DSL names
 AccessorMethodName:
   Enabled: false
 
+# This is a better style, and should be the default IMO
 Style/RegexpLiteral:
   EnforcedStyle: slashes
   AllowInnerSlashes: true
 
+# Our gemspec like most will cause issues here
+# All spec files are huge blocks, should just ignore them
 BlockLength:
   Exclude:
     - './spec/**/*_spec.rb'
     - 'site_prism.gemspec'
 
+# Stylistic preference to improve git diffs
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
   Enabled: true
 
+# Stylistic preference to improve git diffs
 Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: comma
   Enabled: true
@@ -47,5 +55,10 @@ Metrics/ModuleLength:
   Exclude:
     - 'lib/site_prism/dsl.rb'
 
+# Stylistic preference to make the RSpec tests flow better
 RSpec/MessageSpies:
   EnforcedStyle: receive
+
+# This allows one level of nesting inside `shared_examples`
+RSpec/NestedGroups:
+  Max: 4
