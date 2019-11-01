@@ -15,10 +15,12 @@ describe SitePrism::Section do
     expect(section_without_block).to respond_to(*Capybara::Session::DSL_METHODS)
   end
 
-  describe '.section' do
-    it 'should be settable' do
+  describe '.sections' do
+    it 'can be set on `SitePrism::Page`' do
       expect(SitePrism::Page).to respond_to(:section)
+    end
 
+    it 'can be set on `SitePrism::Section`' do
       expect(described_class).to respond_to(:section)
     end
   end
@@ -45,15 +47,15 @@ describe SitePrism::Section do
       allow(subject).to receive(:_find).and_return(:element)
     end
 
-    it 'should be an instance of the defined section class' do
+    it 'is an instance of the defined section class' do
       expect(subject.section_with_a_block.class.ancestors).to include(SingleSection)
     end
 
-    it 'should have elements from the defined section' do
+    it 'has elements from the defined section' do
       expect(subject.section_with_a_block).to respond_to(:single_section_element)
     end
 
-    it 'should have elements from the block' do
+    it 'has elements from the block' do
       expect(subject.section_with_a_block).to respond_to(:block_element)
     end
 
