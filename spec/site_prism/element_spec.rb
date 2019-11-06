@@ -9,9 +9,11 @@ describe SitePrism do
 
     shared_examples 'an element' do
       describe '.element' do
-        it 'should be settable' do
+        it 'can be set on `SitePrism::Page`' do
           expect(SitePrism::Page).to respond_to(:element)
+        end
 
+        it 'can be set on `SitePrism::Section`' do
           expect(SitePrism::Section).to respond_to(:element)
         end
       end

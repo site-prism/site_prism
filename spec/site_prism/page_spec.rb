@@ -30,51 +30,52 @@ describe SitePrism::Page do
     expect(described_class).to respond_to(:set_url_matcher)
   end
 
-  it 'should be able to set a url against it' do
-    expect(page_with_url.url).to eq('/bob')
+  describe '#url' do
+    it 'shows the base url of the `SitePrism::Page`' do
+      expect(page_with_url.url).to eq('/bob')
+    end
+
+    it 'is nil by default' do
+      expect(blank_page.url).to be_nil
+    end
   end
 
-  it 'url should be nil by default' do
-    expect(blank_page.url).to be_nil
+  describe '#url_matcher' do
+    it 'shows the base url regex matcher of the `SitePrism::Page`' do
+      expect(page_with_url_matcher.url_matcher).to eq(/bob/)
+    end
+
+    it 'is nil by default' do
+      expect(BlankPage.url_matcher).to be_nil
+
+      expect(blank_page.url_matcher).to be_nil
+    end
   end
 
-  it 'url matcher should be nil by default' do
-    expect(BlankPage.url_matcher).to be_nil
+  describe '#displayed?' do
+    it 'allow calls if the url matcher has been set' do
+      expect { page_with_url_matcher.displayed? }.not_to raise_error
+    end
 
-    expect(blank_page.url_matcher).to be_nil
+    it 'raises an exception if called before the matcher has been set' do
+      expect { blank_page.displayed? }.to raise_error(SitePrism::NoUrlMatcherForPageError)
+    end
   end
 
-  it 'should be able to set a url matcher against it' do
-    expect(page_with_url_matcher.url_matcher).to eq(/bob/)
-  end
-
-  it 'should allow calls to displayed? if the url matcher has been set' do
-    expect { page_with_url_matcher.displayed? }.not_to raise_error
-  end
-
-  it "should raise an exception if displayed? \
-is called before the matcher has been set" do
-    expect { blank_page.displayed? }
-      .to raise_error(SitePrism::NoUrlMatcherForPageError)
-  end
-
-  it 'should expose the page title' do
+  it 'exposes the page title' do
     expect(blank_page).to respond_to(:title)
   end
 
-  it 'should raise an exception if passing a block to an element' do
-    expect { CSSPage.new.element_one { :any_old_block } }
-      .to raise_error(SitePrism::UnsupportedBlockError)
+  it 'raises an exception if passing a block to an element' do
+    expect { CSSPage.new.element_one { :foo } }.to raise_error(SitePrism::UnsupportedBlockError)
   end
 
-  it 'should raise an exception if passing a block to elements' do
-    expect { CSSPage.new.elements_one { :any_old_block } }
-      .to raise_error(SitePrism::UnsupportedBlockError)
+  it 'raises an exception if passing a block to elements' do
+    expect { CSSPage.new.elements_one { :foo } }.to raise_error(SitePrism::UnsupportedBlockError)
   end
 
-  it 'should raise an exception if passing a block to sections' do
-    expect { CSSPage.new.sections_one { :any_old_block } }
-      .to raise_error(SitePrism::UnsupportedBlockError)
+  it 'raises an exception if passing a block to sections' do
+    expect { CSSPage.new.sections_one { :foo } }.to raise_error(SitePrism::UnsupportedBlockError)
   end
 
   it { is_expected.to respond_to(*Capybara::Session::DSL_METHODS) }
@@ -115,16 +116,15 @@ is called before the matcher has been set" do
 
     let(:page_with_load_validations) { PageWithLoadValidations.new }
 
-    it "should not allow loading if the url hasn't been set" do
-      expect { blank_page.load }
-        .to raise_error(SitePrism::NoUrlForPageError)
+    it "does not allow loading if the url hasn't been set" do
+      expect { blank_page.load }.to raise_error(SitePrism::NoUrlForPageError)
     end
 
-    it 'should allow loading if the url has been set' do
+    it 'allows loading if the url has been set' do
       expect { page_with_url.load }.not_to raise_error
     end
 
-    it 'should allow expansions if the url has them' do
+    it 'allow expansions if the url has them' do
       expect { page_with_uri_template.load(username: 'foobar') }.not_to raise_error
 
       expect(page_with_uri_template.url(username: 'foobar', query: { 'key' => 'value' }))
@@ -133,7 +133,7 @@ is called before the matcher has been set" do
       expect(page_with_uri_template.url).to eq('/users')
     end
 
-    it 'should allow to load html' do
+    it 'loads the html' do
       expect { page_with_url.load('<html/>') }.not_to raise_error
     end
 
@@ -143,34 +143,32 @@ is called before the matcher has been set" do
       end
 
       context 'when validations are disabled' do
-        it 'executes the block' do
+        it 'loads the page' do
           expect(page_with_load_validations.load(with_validations: false)).to be_truthy
         end
       end
     end
 
     context 'with Failing Load Validations' do
-      it 'raises an error' do
-        allow(page_with_load_validations)
-          .to receive(:must_be_true).and_return(false)
+      before do
+        allow(page_with_load_validations).to receive(:must_be_true).and_return(false)
+      end
 
+      it 'raises an error' do
         expect { page_with_load_validations.load }
           .to raise_error(SitePrism::FailedLoadValidationError)
           .with_message('It is not true!')
       end
 
       context 'when validations are disabled' do
-        it 'executes the block' do
-          allow(page_with_load_validations)
-            .to receive(:must_be_true).and_return(false)
-
+        it 'loads the page' do
           expect(page_with_load_validations.load(with_validations: false)).to be_truthy
         end
       end
     end
 
     context 'when passed a block' do
-      it 'should allow to load html and yields itself' do
+      it 'loads the html and yields itself' do
         expect(blank_page.load('<html>hi<html/>', &:text)).to eq('hi')
       end
 
@@ -195,10 +193,11 @@ is called before the matcher has been set" do
       end
 
       context 'with Failing Load Validations' do
-        it 'raises an error' do
-          allow(page_with_load_validations)
-            .to receive(:must_be_true).and_return(false)
+        before do
+          allow(page_with_load_validations).to receive(:must_be_true).and_return(false)
+        end
 
+        it 'raises an error' do
           expect { page_with_load_validations.load { puts 'foo' } }
             .to raise_error(SitePrism::FailedLoadValidationError)
             .with_message('It is not true!')
@@ -206,9 +205,6 @@ is called before the matcher has been set" do
 
         context 'when validations are disabled' do
           it 'executes the block' do
-            allow(page_with_load_validations)
-              .to receive(:must_be_true).and_return(false)
-
             expect(page_with_load_validations.load(with_validations: false) { :return_this })
               .to eq(:return_this)
           end
@@ -225,11 +221,14 @@ is called before the matcher has been set" do
     end
 
     context 'with a full string URL matcher' do
-      class PageWithStringFullUrlMatcher < SitePrism::Page
-        set_url_matcher('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
-      end
+      let(:page) do
+        klass =
+          Class.new(SitePrism::Page) do
+            set_url_matcher('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
+          end
 
-      let(:page) { PageWithStringFullUrlMatcher.new }
+        klass.new
+      end
 
       it 'matches with all elements matching' do
         swap_current_url('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
@@ -287,11 +286,14 @@ is called before the matcher has been set" do
     end
 
     context 'with a minimal URL matcher' do
-      class PageWithStringMinimalUrlMatcher < SitePrism::Page
-        set_url_matcher('/foo')
-      end
+      let(:page) do
+        klass =
+          Class.new(SitePrism::Page) do
+            set_url_matcher('/foo')
+          end
 
-      let(:page) { PageWithStringMinimalUrlMatcher.new }
+        klass.new
+      end
 
       it 'matches a complex URL by only path' do
         swap_current_url('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
@@ -301,13 +303,16 @@ is called before the matcher has been set" do
     end
 
     context 'with an implicit matcher' do
-      class PageWithImplicitUrlMatcher < SitePrism::Page
-        set_url '/foo'
+      let(:page) do
+        klass =
+          Class.new(SitePrism::Page) do
+            set_url '/foo'
+          end
+
+        klass.new
       end
 
-      let(:page) { PageWithImplicitUrlMatcher.new }
-
-      it 'should default the matcher to the url' do
+      it 'sets the `url_matcher` to the url property' do
         expect(page.url_matcher).to eq('/foo')
       end
 
@@ -319,11 +324,14 @@ is called before the matcher has been set" do
     end
 
     context 'with a parameterized URL matcher' do
-      class PageWithParameterizedUrlMatcher < SitePrism::Page
-        set_url_matcher('{scheme}:///foos{/id}')
-      end
+      let(:page) do
+        klass =
+          Class.new(SitePrism::Page) do
+            set_url_matcher('{scheme}:///foos{/id}')
+          end
 
-      let(:page) { PageWithParameterizedUrlMatcher.new }
+        klass.new
+      end
 
       it 'returns true without expected_mappings provided' do
         swap_current_url('http://localhost:3000/foos/28')
@@ -357,15 +365,17 @@ is called before the matcher has been set" do
     end
 
     context 'with a bogus URL matcher' do
-      class PageWithBogusFullUrlMatcher < SitePrism::Page
-        set_url_matcher(this: "isn't a URL matcher")
+      let(:page) do
+        klass =
+          Class.new(SitePrism::Page) do
+            set_url_matcher(this: "isn't a URL matcher")
+          end
+
+        klass.new
       end
 
-      let(:page) { PageWithBogusFullUrlMatcher.new }
-
-      it 'raises InvalidUrlMatcherError' do
-        expect { page.displayed? }
-          .to raise_error(SitePrism::InvalidUrlMatcherError)
+      it 'raises an InvalidUrlMatcherError' do
+        expect { page.displayed? }.to raise_error(SitePrism::InvalidUrlMatcherError)
       end
     end
   end
@@ -456,7 +466,7 @@ is called before the matcher has been set" do
 
       let(:page) { PageWithImplicitUrlMatcher.new }
 
-      it 'should default the matcher to the url' do
+      it 'sets the `url_matcher` to the url property' do
         expect(page.url_matcher).to eq('/foo')
       end
 

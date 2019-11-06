@@ -967,6 +967,7 @@ impending major rubocop release
 
 <!-- Releases -->
 [Unreleased]: https://github.com/site-prism/site_prism/compare/v3.4...master
+[3.4.1]:      https://github.com/site-prism/site_prism/compare/v3.4...v3.4.1
 [3.4]:        https://github.com/site-prism/site_prism/compare/v3.3...v3.4
 [3.3]:        https://github.com/site-prism/site_prism/compare/v3.2...v3.3
 [3.2]:        https://github.com/site-prism/site_prism/compare/v3.1...v3.2
