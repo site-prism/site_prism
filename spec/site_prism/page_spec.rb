@@ -381,7 +381,7 @@ describe SitePrism::Page do
   end
 
   describe '#wait_until_displayed' do
-    subject { page.wait_until_displayed }
+    subject(:wait_for_page) { page.wait_until_displayed }
 
     context 'with a full string URL matcher' do
       class PageWithStringFullUrlMatcher < SitePrism::Page
@@ -393,55 +393,55 @@ describe SitePrism::Page do
       it 'matches with all elements matching' do
         swap_current_url('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
 
-        expect { subject }.not_to raise_error
+        expect { wait_for_page }.not_to raise_error
       end
 
       it "doesn't match with a non-matching fragment" do
         swap_current_url('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#otherfr')
 
-        expect { subject }.to raise_error(SitePrism::TimeoutError)
+        expect { wait_for_page }.to raise_error(SitePrism::TimeoutError)
       end
 
       it "doesn't match with a missing param" do
         swap_current_url('https://joe:bump@bla.org:443/foo?bar=baz#frag')
 
-        expect { subject }.to raise_error(SitePrism::TimeoutError)
+        expect { wait_for_page }.to raise_error(SitePrism::TimeoutError)
       end
 
       it "doesn't match with wrong path" do
         swap_current_url('https://joe:bump@bla.org:443/not_foo?bar=baz&bar=boof#frag')
 
-        expect { subject }.to raise_error(SitePrism::TimeoutError)
+        expect { wait_for_page }.to raise_error(SitePrism::TimeoutError)
       end
 
       it "doesn't match with wrong host" do
         swap_current_url('https://joe:bump@blabber.org:443/foo?bar=baz&bar=boof#frag')
 
-        expect { subject }.to raise_error(SitePrism::TimeoutError)
+        expect { wait_for_page }.to raise_error(SitePrism::TimeoutError)
       end
 
       it "doesn't match with wrong user" do
         swap_current_url('https://joseph:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
 
-        expect { subject }.to raise_error(SitePrism::TimeoutError)
+        expect { wait_for_page }.to raise_error(SitePrism::TimeoutError)
       end
 
       it "doesn't match with wrong password" do
         swap_current_url('https://joe:bean@bla.org:443/foo?bar=baz&bar=boof#frag')
 
-        expect { subject }.to raise_error(SitePrism::TimeoutError)
+        expect { wait_for_page }.to raise_error(SitePrism::TimeoutError)
       end
 
       it "doesn't match with wrong scheme" do
         swap_current_url('http://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
 
-        expect { subject }.to raise_error(SitePrism::TimeoutError)
+        expect { wait_for_page }.to raise_error(SitePrism::TimeoutError)
       end
 
       it "doesn't match with wrong port" do
         swap_current_url('https://joe:bump@bla.org:8000/foo?bar=baz&bar=boof#frag')
 
-        expect { subject }.to raise_error(SitePrism::TimeoutError)
+        expect { wait_for_page }.to raise_error(SitePrism::TimeoutError)
       end
     end
 
@@ -455,7 +455,7 @@ describe SitePrism::Page do
       it 'matches a complex URL by only path' do
         swap_current_url('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
 
-        expect { subject }.not_to raise_error
+        expect { wait_for_page }.not_to raise_error
       end
     end
 
@@ -473,7 +473,7 @@ describe SitePrism::Page do
       it 'matches a realistic local dev URL' do
         swap_current_url('http://localhost:3000/foo')
 
-        expect { subject }.not_to raise_error
+        expect { wait_for_page }.not_to raise_error
       end
     end
 
@@ -511,7 +511,7 @@ describe SitePrism::Page do
       let(:page) { PageWithBogusFullUrlMatcher.new }
 
       it 'raises InvalidUrlMatcherError' do
-        expect { subject }.to raise_error(SitePrism::InvalidUrlMatcherError)
+        expect { wait_for_page }.to raise_error(SitePrism::InvalidUrlMatcherError)
       end
     end
   end

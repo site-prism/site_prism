@@ -2,14 +2,14 @@
 
 describe SitePrism::Logger do
   describe '#create' do
-    subject { described_class.new.create }
+    subject(:logger) { described_class.new.create }
 
     it { is_expected.to be_a Logger }
 
     it 'has default attributes' do
-      expect(subject.progname).to eq('SitePrism')
+      expect(logger.progname).to eq('SitePrism')
 
-      expect(subject.level).to eq(5)
+      expect(logger.level).to eq(5)
     end
   end
 end
