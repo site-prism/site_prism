@@ -25,7 +25,7 @@ describe SitePrism do
   end
 
   describe '.logger' do
-    context 'at default severity' do
+    context 'with default severity' do
       it 'does not log messages below UNKNOWN' do
         log_messages = capture_stdout do
           described_class.logger.debug('DEBUG')
@@ -44,7 +44,7 @@ describe SitePrism do
       end
     end
 
-    context 'at an altered severity' do
+    context 'with an altered severity' do
       it 'logs messages at all levels above the new severity' do
         log_messages = capture_stdout do
           described_class.log_level = :DEBUG
@@ -59,7 +59,7 @@ describe SitePrism do
   end
 
   describe '.log_path=' do
-    context 'to a file' do
+    context 'when set to a file' do
       let(:filename) { 'sample.log' }
       let(:file_content) { File.read(filename) }
 
@@ -74,7 +74,7 @@ describe SitePrism do
       end
     end
 
-    context 'to $stderr' do
+    context 'when set to $stderr' do
       it 'sends the log messages to $stderr' do
         expect do
           described_class.log_path = $stderr
@@ -93,11 +93,9 @@ describe SitePrism do
   describe '.log_level' do
     subject { described_class.log_level }
 
-    context 'by default' do
-      it { is_expected.to eq(:UNKNOWN) }
-    end
+    it { is_expected.to eq(:UNKNOWN) }
 
-    context 'after being changed to INFO' do
+    context 'when changed to `INFO`' do
       before { described_class.log_level = :INFO }
 
       it { is_expected.to eq(:INFO) }
@@ -109,11 +107,9 @@ describe SitePrism do
 
     after { described_class.use_all_there_gem = nil }
 
-    context 'by default' do
-      it { is_expected.to be nil }
-    end
+    it { is_expected.to be nil }
 
-    context 'after being changed to true' do
+    context 'when changed to `true`' do
       before { described_class.use_all_there_gem = true }
 
       it { is_expected.to be true }
