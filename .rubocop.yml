@@ -60,5 +60,6 @@ RSpec/MessageSpies:
   EnforcedStyle: receive
 
 # This allows one level of nesting inside `shared_examples`
+# This is broken currently!
 RSpec/NestedGroups:
-  Max: 4
+  Max: 5
