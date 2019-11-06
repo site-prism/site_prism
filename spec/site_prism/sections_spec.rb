@@ -39,8 +39,8 @@ describe SitePrism::Section do
     end
 
     it 'uses the `default_search_arguments` that have been set' do
-      expect(described_class).to receive(:new).with(subject, :element1).ordered
-      expect(described_class).to receive(:new).with(subject, :element2).ordered
+      expect(described_class).to receive(:new).with(page, :element1).ordered
+      expect(described_class).to receive(:new).with(page, :element2).ordered
 
       page.plural_sections_with_defaults
     end

@@ -44,19 +44,19 @@ describe SitePrism::Section do
     end
 
     before do
-      allow(subject).to receive(:_find).and_return(:element)
+      allow(page_with_sections).to receive(:_find).and_return(:element)
     end
 
     it 'is an instance of the defined section class' do
-      expect(subject.section_with_a_block.class.ancestors).to include(SingleSection)
+      expect(page_with_sections.section_with_a_block.class.ancestors).to include(SingleSection)
     end
 
     it 'has elements from the defined section' do
-      expect(subject.section_with_a_block).to respond_to(:single_section_element)
+      expect(page_with_sections.section_with_a_block).to respond_to(:single_section_element)
     end
 
     it 'has elements from the block' do
-      expect(subject.section_with_a_block).to respond_to(:block_element)
+      expect(page_with_sections.section_with_a_block).to respond_to(:block_element)
     end
 
     context 'when second argument is a Class' do

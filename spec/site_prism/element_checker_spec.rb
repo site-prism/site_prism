@@ -10,10 +10,15 @@ describe SitePrism::ElementChecker do
 
         it { is_expected.to be true }
 
-        it 'checks only the expected elements' do
+        it 'checks only the `expected_elements`' do
           expected_items.each do |name|
             expect(page).to receive(:there?).with(name).once.and_call_original
           end
+
+          subject
+        end
+
+        it "does not check items that aren't defined as `expected_elements`" do
           expect(page).not_to receive(:there?).with(:element_two)
 
           subject
@@ -25,10 +30,15 @@ describe SitePrism::ElementChecker do
 
         it { is_expected.to be true }
 
-        it 'checks only the expected elements' do
+        it 'checks only the `expected_elements`' do
           expected_items.each do |name|
             expect(page).to receive(:there?).with(name).once.and_call_original
           end
+
+          subject
+        end
+
+        it "does not check items that aren't defined as `expected_elements`" do
           expect(page).not_to receive(:there?).with(:element_two)
 
           subject
@@ -44,13 +54,10 @@ describe SitePrism::ElementChecker do
 
         it { is_expected.to be true }
 
-        it 'checks each item in expected elements plus all first-generation descendants' do
+        it 'checks each item in `expected_elements` plus all first-generation descendants' do
           expected_items.each do |name|
             expect_any_instance_of(SitePrism::RecursionChecker)
-              .to receive(:there?)
-              .with(name)
-              .once
-              .and_call_original
+              .to receive(:there?).with(name).once.and_call_original
           end
 
           expect(section).to receive(:all_there?).and_call_original

@@ -58,6 +58,9 @@ describe SitePrism::Loadable do
   end
 
   describe '#when_loaded' do
+    let(:validation_spy1) { instance_spy('007', valid?: false) }
+    let(:validation_spy2) { instance_spy('007', valid?: true) }
+
     it 'executes and yields itself to the provided block when all load validations pass' do
       loadable.load_validation { true }
       instance = loadable.new
