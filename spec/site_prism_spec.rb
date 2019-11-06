@@ -12,13 +12,9 @@ describe SitePrism do
     end
 
     it 'yields the configured options' do
-      expect(described_class).to receive(:logger)
-      expect(described_class).to receive(:log_level)
-      expect(described_class).to receive(:log_level=)
+      expect(described_class).to receive(:log_level=).with(:WARN)
 
       described_class.configure do |config|
-        config.logger
-        config.log_level
         config.log_level = :WARN
       end
     end
@@ -45,14 +41,16 @@ describe SitePrism do
     end
 
     context 'with an altered severity' do
-      it 'logs messages at all levels above the new severity' do
-        log_messages = capture_stdout do
+      let(:log_messages) do
+        capture_stdout do
           described_class.log_level = :DEBUG
 
           described_class.logger.debug('DEBUG')
           described_class.logger.info('INFO')
         end
+      end
 
+      it 'logs messages at all levels above the new severity' do
         expect(lines(log_messages)).to eq(2)
       end
     end
