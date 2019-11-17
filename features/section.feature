@@ -13,6 +13,11 @@ Feature: Page Sections
     Then I can access elements within the section using a block
     But I cannot access elements that are not in the section using a block
 
+  Scenario: access elements in the section by passing a block to within
+    When I navigate to the home page
+    Then I can execute elements in the context of a section by passing a block to within
+    But I cannot access elements that are not in the section using within
+
   Scenario: section in a section
     When I navigate to the nested section page
     Then I can see a section in a section

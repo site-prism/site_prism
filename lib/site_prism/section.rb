@@ -31,6 +31,10 @@ module SitePrism
       Capybara.within(@root_element) { yield(self) } if block_given?
     end
 
+    def within(&block)
+      Capybara.within(@root_element) { yield(self) }
+    end
+
     # Capybara::DSL module "delegates" Capybara methods to the "page" method
     # as such we need to overload this method so that the correct scoping
     # occurs and calls within a section (For example section.find(element))
