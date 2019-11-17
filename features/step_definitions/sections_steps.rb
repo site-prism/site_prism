@@ -18,21 +18,21 @@ Then('I can see a collection of anonymous sections') do
   expect(anonymous_sections.size).to eq(2)
 end
 
-
-Then('I can execute in the context of a section using a block') do
+Then('I can execute in the context of each section by passing a block to within') do
   block_inner_executions = 0
 
   expect(@test_site.nested_sections).to have_search_results(count: 4)
 
-  @test_site.nested_sections.search_results.first do |sec|
+  @test_site.nested_sections.search_results.first.within do |sec|
     block_inner_executions += 1
-    expect(sec).to be_an_instance_of(SitePrism::Section)
+
+    expect(sec).to be_an_instance_of(SearchResults)
     expect(sec).to have_text('Result 0')
   end
 
-  @test_site.nested_sections.search_results.last do |sec|
+  @test_site.nested_sections.search_results.last.within do |sec|
     block_inner_executions += 1
-    expect(sec).to be_an_instance_of(SitePrism::Section)
+    expect(sec).to be_an_instance_of(SearchResults)
     expect(sec).to have_text('Result 3')
   end
 
