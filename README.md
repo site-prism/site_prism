@@ -15,7 +15,7 @@ Make sure to add your project/company to https://github.com/site-prism/site_pris
 
 We love it when people want to get involved with our Open Source Project.
 
-We have a brief set of setup docs [HERE](https://github.com/site-prism/site_prism/blob/master/development_setup.md)
+We have a brief set of setup docs [HERE](https://github.com/site-prism/site_prism/blob/master/HACKING.md)
 
 ## Supported Rubies / Browsers
 
@@ -498,7 +498,7 @@ end
 
 #### Waiting for an element to become visible
 
-A method that gets added by calling `element` is the 
+A method that gets added by calling `element` is the
 `wait_until_<element_name>_visible` method. Calling this method will
 cause the test to wait for Capybara's default wait time for the element
 to become visible. You can customise the wait time by supplying a number
@@ -1175,7 +1175,7 @@ This allows for pretty tests ...
 ```ruby
 Then(/^there are lots of search_results$/) do
   expect(@results_page.search_results.size).to eq(10)
-  
+
   @home.search_results.each do |result|
     expect(result).to have_title
     expect(result.blurb.text).not_to be_empty
@@ -1387,7 +1387,7 @@ instance of the class when created.
 
 ### Skipping load Validations
 
-Defined load validations can be skipped for one `load` call by 
+Defined load validations can be skipped for one `load` call by
 passing in `with_validations: false`.
 
 ```ruby
@@ -1654,7 +1654,7 @@ as per the code below
 Capybara.configure do |config|
   config.default_max_wait_time = 11 #=> Wait up to 11 seconds for all queries to fail
   # or if you don't want to ever wait
-  config.default_max_wait_time = 0 #=> Don't ever wait! 
+  config.default_max_wait_time = 0 #=> Don't ever wait!
 end
 ```
 
