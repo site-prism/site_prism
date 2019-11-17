@@ -31,7 +31,7 @@ module SitePrism
       Capybara.within(@root_element) { yield(self) } if block_given?
     end
 
-    def within(&block)
+    def within
       Capybara.within(@root_element) { yield(self) }
     end
 

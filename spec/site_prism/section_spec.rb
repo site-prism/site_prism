@@ -282,7 +282,7 @@ set_default_search_arguments within section class"
   end
 
   describe '#within' do
-    it "passes the block to Capybara#within" do
+    it 'passes the block to Capybara#within' do
       expect(Capybara).to receive(:within).with(locator)
 
       section_without_block.within { :noop }
