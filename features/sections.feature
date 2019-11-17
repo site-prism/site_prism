@@ -15,3 +15,7 @@ Feature: Interaction with groups of elements
   Scenario: anonymous sections collection
     When I navigate to the nested section page
     Then I can see a collection of anonymous sections
+
+  Scenario: access elements in the section by passing a block
+    When I navigate to the nested section page
+    Then I can execute in the context of a section using a block
