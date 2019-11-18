@@ -4,6 +4,14 @@ describe SitePrism::Loadable do
   let(:loadable) do
     Class.new do
       include SitePrism::Loadable
+
+      def valid1?
+        false
+      end
+
+      def valid2?
+        true
+      end
     end
   end
 
@@ -58,12 +66,10 @@ describe SitePrism::Loadable do
   end
 
   describe '#when_loaded' do
-    let(:validation_spy1) { instance_spy('007', valid?: false) }
-    let(:validation_spy2) { instance_spy('007', valid?: true) }
+    let(:instance) { loadable.new }
 
     it 'executes and yields itself to the provided block when all load validations pass' do
       loadable.load_validation { true }
-      instance = loadable.new
 
       expect(instance).to receive(:foo)
 
@@ -71,60 +77,59 @@ describe SitePrism::Loadable do
     end
 
     context 'with failing validations' do
-      before { loadable.load_validation { [false, 'VALIDATION FAILED'] } }
+      before { loadable.load_validation { [valid1?, 'valid1 failed'] } }
 
-      it 'raises a FailedLoadValidationError' do
-        expect { loadable.new.when_loaded { :foo } }
+      it 'raises a `FailedLoadValidationError`' do
+        expect { instance.when_loaded { :foo } }
           .to raise_error(SitePrism::FailedLoadValidationError)
       end
 
       it 'can be supplied with a user-defined message' do
-        expect { loadable.new.when_loaded { :foo } }
-          .to raise_error
-          .with_message('VALIDATION FAILED')
+        expect { instance.when_loaded { :foo } }.to raise_error.with_message('valid1 failed')
+      end
+
+      it 'raises an error immediately on the first validation failure' do
+        loadable.load_validation { [valid2?, 'valid2 failed'] }
+
+        expect(instance).to receive(:valid1?).once
+        expect(instance).not_to receive(:valid2?)
+
+        expect { instance.when_loaded { puts 'foo' } }
+          .to raise_error(SitePrism::FailedLoadValidationError)
       end
     end
 
-    it 'raises an error immediately on the first validation failure' do
-      validation_spy1 = instance_spy('007', valid?: false)
-      validation_spy2 = instance_spy('007', valid?: true)
-      loadable.load_validation { validation_spy1.valid? }
-      loadable.load_validation { validation_spy2.valid? }
-
-      expect(validation_spy1).to receive(:valid?).once
-      expect(validation_spy2).not_to receive(:valid?)
-
-      expect { loadable.new.when_loaded { puts 'foo' } }
-        .to raise_error(SitePrism::FailedLoadValidationError)
-    end
-
-    it 'executes validations only once for nested calls' do
+    it 'executes the inner-most nesting when applicable' do
       james_bond = instance_spy('007')
-      validation_spy1 = instance_spy('007', valid?: true)
-      instance = loadable.new
-      loadable.load_validation { validation_spy1.valid? }
+      loadable.load_validation { valid2? }
 
-      expect(james_bond).to receive(:drink_martini)
-      expect(validation_spy1).to receive(:valid?).once
+      expect(james_bond).to receive(:drink_martini).once
 
       instance.when_loaded do
         instance.when_loaded do
-          instance.when_loaded do
-            james_bond.drink_martini
-          end
+          james_bond.drink_martini
         end
+      end
+    end
+
+    it 'executes validations only once for nested calls' do
+      loadable.load_validation { valid2? }
+
+      expect(instance).to receive(:valid2?).once.and_call_original
+
+      instance.when_loaded do
+        instance.when_loaded {}
       end
     end
 
     it 'resets the loaded cache at the end of the block' do
       loadable.load_validation { true }
-      instance = loadable.new
 
-      expect(instance.loaded).to be nil
+      expect(instance.loaded).to be_nil
 
       instance.when_loaded { |i| expect(i.loaded).to be true }
 
-      expect(instance.loaded).to be nil
+      expect(instance.loaded).to be_nil
     end
   end
 
@@ -132,15 +137,15 @@ describe SitePrism::Loadable do
     # We want to test with multiple inheritance
     subject { inheriting_loadable.new }
 
+    let(:instance) { inheriting_loadable.new }
+
     let(:inheriting_loadable) { Class.new(loadable) }
 
+    before { inheriting_loadable.load_validation { [valid2?, 'valid1 failed'] } }
+
     it 'returns true if loaded value is cached' do
-      validation_spy1 = instance_spy('007', valid?: true)
+      expect(instance).not_to receive(:valid2?)
 
-      expect(validation_spy1).not_to receive(:valid?)
-
-      loadable.load_validation { validation_spy1.valid? }
-      instance = loadable.new
       instance.loaded = true
 
       expect(instance).to be_loaded
@@ -152,7 +157,7 @@ describe SitePrism::Loadable do
       inheriting_loadable.load_validation { true }
       inheriting_loadable.load_validation { true }
 
-      expect(inheriting_loadable.new).to be_loaded
+      expect(instance).to be_loaded
     end
 
     it 'returns false if a defined load validation fails' do
@@ -161,7 +166,7 @@ describe SitePrism::Loadable do
       inheriting_loadable.load_validation { true }
       inheriting_loadable.load_validation { false }
 
-      expect(inheriting_loadable.new).not_to be_loaded
+      expect(instance).not_to be_loaded
     end
 
     it 'returns false if an inherited load validation fails' do
@@ -170,7 +175,7 @@ describe SitePrism::Loadable do
       inheriting_loadable.load_validation { true }
       inheriting_loadable.load_validation { true }
 
-      expect(inheriting_loadable.new).not_to be_loaded
+      expect(instance).not_to be_loaded
     end
 
     it 'sets the load_error if a failing load_validation supplies one' do
@@ -178,7 +183,6 @@ describe SitePrism::Loadable do
       loadable.load_validation { [false, 'fubar'] }
       inheriting_loadable.load_validation { [true, 'this also cannot fail'] }
 
-      instance = inheriting_loadable.new
       instance.loaded?
 
       expect(instance.load_error).to eq('fubar')
