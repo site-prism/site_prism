@@ -15,13 +15,12 @@ describe SitePrism::Loadable do
     end
   end
 
-  class MyLoadablePage < SitePrism::Page; end
+  let(:instance) { loadable.new }
 
   describe '.load_validations' do
     let(:validation1) { -> { true } }
     let(:validation2) { -> { true } }
     let(:validation3) { -> { true } }
-    let(:validation4) { -> { true } }
 
     context 'with no inheritance classes' do
       it 'returns load_validations from the current class' do
@@ -51,29 +50,53 @@ describe SitePrism::Loadable do
       end
     end
 
-    context 'when on a standard page' do
-      it 'has no default load validations' do
-        expect(MyLoadablePage.load_validations.length).to eq(0)
-      end
+    it 'has no default load validations' do
+      expect(loadable.load_validations.length).to eq(0)
     end
   end
 
   describe '.load_validation' do
-    it 'adds validations to the load_validations list' do
+    it 'adds a single validation to the load_validations list' do
       expect { loadable.load_validation { true } }
         .to change { loadable.load_validations.size }.by(1)
     end
   end
 
   describe '#when_loaded' do
-    let(:instance) { loadable.new }
+    let(:james_bond) { instance_spy('007') }
 
-    it 'executes and yields itself to the provided block when all load validations pass' do
-      loadable.load_validation { true }
+    context 'with passing load validations' do
+      before { loadable.load_validation { valid2? } }
 
-      expect(instance).to receive(:foo)
+      it 'executes and yields itself to the provided block when all load validations pass' do
+        expect(instance).to receive(:foo)
 
-      instance.when_loaded(&:foo)
+        instance.when_loaded(&:foo)
+      end
+
+      it 'executes the inner-most nesting when applicable' do
+        expect(james_bond).to receive(:drink_martini).once
+
+        instance.when_loaded do
+          instance.when_loaded { james_bond.drink_martini }
+        end
+      end
+
+      it 'executes validations only once for nested calls' do
+        expect(instance).to receive(:valid2?).once.and_call_original
+
+        instance.when_loaded do
+          instance.when_loaded {}
+        end
+      end
+
+      it 'resets the loaded cache at the end of the block' do
+        expect(instance.loaded).to be_nil
+
+        instance.when_loaded { |i| expect(i.loaded).to be true }
+
+        expect(instance.loaded).to be_nil
+      end
     end
 
     context 'with failing validations' do
@@ -94,54 +117,17 @@ describe SitePrism::Loadable do
         expect(instance).to receive(:valid1?).once
         expect(instance).not_to receive(:valid2?)
 
-        expect { instance.when_loaded { puts 'foo' } }
-          .to raise_error(SitePrism::FailedLoadValidationError)
+        expect { instance.when_loaded }.to raise_error(SitePrism::FailedLoadValidationError)
       end
-    end
-
-    it 'executes the inner-most nesting when applicable' do
-      james_bond = instance_spy('007')
-      loadable.load_validation { valid2? }
-
-      expect(james_bond).to receive(:drink_martini).once
-
-      instance.when_loaded do
-        instance.when_loaded do
-          james_bond.drink_martini
-        end
-      end
-    end
-
-    it 'executes validations only once for nested calls' do
-      loadable.load_validation { valid2? }
-
-      expect(instance).to receive(:valid2?).once.and_call_original
-
-      instance.when_loaded do
-        instance.when_loaded {}
-      end
-    end
-
-    it 'resets the loaded cache at the end of the block' do
-      loadable.load_validation { true }
-
-      expect(instance.loaded).to be_nil
-
-      instance.when_loaded { |i| expect(i.loaded).to be true }
-
-      expect(instance.loaded).to be_nil
     end
   end
 
   describe '#loaded?' do
-    # We want to test with multiple inheritance
-    subject { inheriting_loadable.new }
-
-    let(:instance) { inheriting_loadable.new }
+    subject(:instance) { inheriting_loadable.new }
 
     let(:inheriting_loadable) { Class.new(loadable) }
 
-    before { inheriting_loadable.load_validation { [valid2?, 'valid1 failed'] } }
+    before { inheriting_loadable.load_validation { [valid2?, 'valid2 failed'] } }
 
     it 'returns true if loaded value is cached' do
       expect(instance).not_to receive(:valid2?)
@@ -153,8 +139,6 @@ describe SitePrism::Loadable do
 
     it 'returns true if all load validations pass' do
       loadable.load_validation { true }
-      loadable.load_validation { true }
-      inheriting_loadable.load_validation { true }
       inheriting_loadable.load_validation { true }
 
       expect(instance).to be_loaded
@@ -162,17 +146,13 @@ describe SitePrism::Loadable do
 
     it 'returns false if a defined load validation fails' do
       loadable.load_validation { true }
-      loadable.load_validation { true }
-      inheriting_loadable.load_validation { true }
       inheriting_loadable.load_validation { false }
 
       expect(instance).not_to be_loaded
     end
 
     it 'returns false if an inherited load validation fails' do
-      loadable.load_validation { true }
       loadable.load_validation { false }
-      inheriting_loadable.load_validation { true }
       inheriting_loadable.load_validation { true }
 
       expect(instance).not_to be_loaded
