@@ -63,20 +63,23 @@ end
 Capybara.app = MyTestApp.new
 
 RSpec.configure do |rspec|
-  [CSSPage, XPathPage].each do |klass|
+  [CSSPage, XPathPage].each do |page_klass|
     SitePrism::SpecHelper.present_on_page.each do |method|
       rspec.before do
-        allow_any_instance_of(klass).to receive("has_#{method}?").and_return(true)
-        allow_any_instance_of(klass).to receive("has_no_#{method}?").and_return(false)
+        page_instance = page_klass.new
+        allow(page_klass).to receive(:new).and_return(page_instance)
+
+        allow(page_instance).to receive("has_#{method}?").and_return(true)
+        allow(page_instance).to receive("has_no_#{method}?").and_return(false)
       end
     end
   end
 
-  [CSSSection, XPathSection].each do |klass|
+  [CSSSection, XPathSection].each do |section_klass|
     SitePrism::SpecHelper.present_on_section.each do |method|
       rspec.before do
-        allow_any_instance_of(klass).to receive("has_#{method}?").and_return(true)
-        allow_any_instance_of(klass).to receive("has_no_#{method}?").and_return(false)
+        allow_any_instance_of(section_klass).to receive("has_#{method}?").and_return(true)
+        allow_any_instance_of(section_klass).to receive("has_no_#{method}?").and_return(false)
       end
     end
   end
