@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'simplecov' unless ENV['CI']
+require 'simplecov'
 
 SimpleCov.start do
   add_group 'Features', 'features'
