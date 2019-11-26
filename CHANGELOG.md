@@ -1,12 +1,16 @@
-<!-- PR #14 - Jul 24th - Last update to this document -->
+<!-- PR #32 - Nov 26th - Last update to this document -->
 ## [Unreleased]
 ### Removed
 
 ### Added
+- Simplecov now triggers for both local and CI builds
+([luke-hill])
 
 ### Changed
 
 ### Fixed
+- Fixed up some RSpec cop offenses & Added reasons for rule definitions
+([luke-hill])
 
 ## [3.4.1] - 2019-09-26
 ### Changed
@@ -14,6 +18,9 @@
 ([luke-hill])
 
 - Unlock `site_prism-all_there` to any `0.x` version higher than `0.3` now it is more stable
+([luke-hill])
+
+- Added more rubocop rule definitions
 ([luke-hill])
 
 ### Fixed
@@ -966,7 +973,7 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[Unreleased]: https://github.com/site-prism/site_prism/compare/v3.4...master
+[Unreleased]: https://github.com/site-prism/site_prism/compare/v3.4.1...master
 [3.4.1]:      https://github.com/site-prism/site_prism/compare/v3.4...v3.4.1
 [3.4]:        https://github.com/site-prism/site_prism/compare/v3.3...v3.4
 [3.3]:        https://github.com/site-prism/site_prism/compare/v3.2...v3.3
