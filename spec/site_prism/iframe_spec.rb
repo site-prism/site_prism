@@ -3,6 +3,11 @@
 describe SitePrism do
   describe 'iFrame' do
     let!(:locator) { instance_double('Capybara::Node::Element') }
+    let(:frame_instance) { frame_class.new }
+
+    before do
+      allow(frame_class).to receive(:new).and_return(frame_instance)
+    end
 
     shared_examples 'iFrame' do
       it 'cannot be called out of block context' do
@@ -14,7 +19,7 @@ describe SitePrism do
           expect(Capybara.current_session)
             .to receive(:within_frame).with(*frame_caller_args).and_yield
 
-          expect_any_instance_of(frame_class)
+          expect(frame_instance)
             .to receive(:_find).with(*element_caller_args).and_return(locator)
 
           page.iframe(&:element_one)
@@ -22,13 +27,15 @@ describe SitePrism do
       end
 
       describe 'A Section with an iFrame contained within' do
-        before { allow(page).to receive(:_find).with(*section_locator).and_return(locator) }
+        before do
+          allow(page).to receive(:_find).with(*section_locator).and_return(locator)
+        end
 
         it 'uses #within_frame delegated through Capybara.current_session' do
           expect(Capybara.current_session)
             .to receive(:within_frame).with(*frame_caller_args).and_yield
 
-          expect_any_instance_of(frame_class)
+          expect(frame_instance)
             .to receive(:_find).with(*element_caller_args).and_return(locator)
 
           page.section_one.iframe(&:element_one)

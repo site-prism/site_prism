@@ -48,22 +48,33 @@ describe SitePrism::ElementChecker do
       context 'with recursion set to one' do
         subject { page.all_there?(recursion: :one) }
 
+        let(:recursion_instance) { SitePrism::RecursionChecker.new(page) }
+
         before do
           allow(page).to receive(:section_one).and_return(section)
+          allow(SitePrism::RecursionChecker).to receive(:new).and_return(recursion_instance)
         end
 
         it { is_expected.to be true }
 
-        it 'checks each item in `expected_elements` plus all first-generation descendants' do
+        it 'checks each item in `expected_elements`' do
           expected_items.each do |name|
-            expect_any_instance_of(SitePrism::RecursionChecker)
-              .to receive(:there?).with(name).once.and_call_original
+            expect(recursion_instance).to receive(:there?).with(name).once.and_call_original
           end
 
+          subject
+        end
+
+        it 'checks all first-generation descendants' do
           expect(section).to receive(:all_there?).and_call_original
           expect(section).to receive(:there?).with(:inner_element_one).and_return(true)
           expect(section).to receive(:there?).with(:inner_element_two).and_return(true)
           expect(section).to receive(:there?).with(:iframe).and_return(true)
+
+          subject
+        end
+
+        it "doesn't check any items that aren't marked as `expected_items`" do
           expect(page).not_to receive(:there?).with(:element_two)
 
           subject

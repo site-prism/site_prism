@@ -30,43 +30,45 @@ describe SitePrism::Section do
       element :single_section_element, '.foo'
     end
 
-    subject(:page_with_sections) do
-      klass =
-        Class.new(SitePrism::Page) do
-          section :single_section, SingleSection, '.bob'
+    let(:page_with_sections) do
+      Class.new(SitePrism::Page) do
+        section :single_section, SingleSection, '.bob'
 
-          section :section_with_a_block, SingleSection, '.bob' do
-            element :block_element, '.btn'
-          end
+        section :section_with_a_block, SingleSection, '.bob' do
+          element :block_element, '.btn'
         end
+      end
+    end
 
-      klass.new
+    let(:page_with_sections_instance) do
+      page_with_sections.new
     end
 
     before do
-      allow(page_with_sections).to receive(:_find).and_return(:element)
+      allow(page_with_sections_instance).to receive(:_find).and_return(:element)
     end
 
     it 'is an instance of the defined section class' do
-      expect(page_with_sections.section_with_a_block.class.ancestors).to include(SingleSection)
+      expect(page_with_sections_instance.section_with_a_block.class.ancestors)
+        .to include(SingleSection)
     end
 
     it 'has elements from the defined section' do
-      expect(page_with_sections.section_with_a_block).to respond_to(:single_section_element)
+      expect(page_with_sections_instance.section_with_a_block)
+        .to respond_to(:single_section_element)
     end
 
     it 'has elements from the block' do
-      expect(page_with_sections.section_with_a_block).to respond_to(:block_element)
+      expect(page_with_sections_instance.section_with_a_block).to respond_to(:block_element)
     end
 
     context 'when second argument is a Class' do
-      subject(:page_with_section) do
-        klass =
-          Class.new(SitePrism::Page) do
-            section :section, Section, '.section'
-          end
+      subject { page_with_section.new }
 
-        klass.new
+      let(:page_with_section) do
+        Class.new(SitePrism::Page) do
+          section :section, Section, '.section'
+        end
       end
 
       it { is_expected.to respond_to(:section) }
@@ -78,15 +80,14 @@ describe SitePrism::Section do
     end
 
     context 'when second argument is not a Class but a block is given' do
-      subject(:page_with_anonymous_section) do
-        klass =
-          Class.new(SitePrism::Page) do
-            section :anonymous_section, '.section' do
-              element :title, 'h1'
-            end
-          end
+      subject { page_with_anonymous_section.new }
 
-        klass.new
+      let(:page_with_anonymous_section) do
+        Class.new(SitePrism::Page) do
+          section :anonymous_section, '.section' do
+            element :title, 'h1'
+          end
+        end
       end
 
       it { is_expected.to respond_to(:anonymous_section) }
@@ -98,15 +99,14 @@ describe SitePrism::Section do
     end
 
     context 'when second argument is a Class and a block is given' do
-      subject(:page_with_anonymous_section) do
-        klass =
-          Class.new(SitePrism::Page) do
-            section :anonymous_section, Section, '.section' do
-              element :title, 'h1'
-            end
-          end
+      subject { page_with_anonymous_section.new }
 
-        klass.new
+      let(:page_with_anonymous_section) do
+        Class.new(SitePrism::Page) do
+          section :anonymous_section, Section, '.section' do
+            element :title, 'h1'
+          end
+        end
       end
 
       it { is_expected.to respond_to(:anonymous_section) }
