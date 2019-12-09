@@ -8,4 +8,4 @@ SimpleCov.start do
   add_group 'Code', 'lib'
 end
 
-SimpleCov.minimum_coverage 99
+SimpleCov.minimum_coverage 98.3
