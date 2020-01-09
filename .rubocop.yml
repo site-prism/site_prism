@@ -19,7 +19,7 @@ Metrics/LineLength:
 Style/Documentation:
   Enabled: false
 
-# We are a DSL, so we occassionally need to use `#set_` prefixes on our DSL names
+# We are a DSL, so we occasionally need to use `#set_` prefixes on our DSL names
 Naming/AccessorMethodName:
   Enabled: false
 
