@@ -16,7 +16,17 @@ describe SitePrism do
 
       describe 'A Page with an iFrame contained within' do
         it 'uses #within_frame delegated through Capybara.current_session' do
+          allow(frame_instance)
+            .to receive(:_find).with(*element_caller_args).and_return(locator)
+
           expect(Capybara.current_session)
+            .to receive(:within_frame).with(*frame_caller_args).and_yield
+
+          page.iframe(&:element_one)
+        end
+
+        it 'passes the caller arg to the frame instance to then perform the location check' do
+          allow(Capybara.current_session)
             .to receive(:within_frame).with(*frame_caller_args).and_yield
 
           expect(frame_instance)
