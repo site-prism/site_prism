@@ -12,6 +12,6 @@ RSpec/AnyInstance:
     - 'spec/spec_helper.rb'
 
 # Offense count: 13
-# Configuration parameters: AggregateFailuresByDefault.
-RSpec/MultipleExpectations:
-  Max: 4
+## Configuration parameters: AggregateFailuresByDefault.
+#RSpec/MultipleExpectations:
+#  Max: 2
