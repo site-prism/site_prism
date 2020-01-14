@@ -1,4 +1,3 @@
-<!-- PR #32 - Nov 26th - Last update to this document -->
 ## [Unreleased]
 ### Removed
 
@@ -7,6 +6,12 @@
 ([luke-hill])
 
 ### Changed
+- All internal SitePrism tests now will enable `site_prism-all_there` gem by default
+  - Note there are still a couple of tests that make use of not using this
+  (Whilst the gem is still optional)
+  - During the `v3.x` series this gem will slowly move more into mainstream and will become the default
+  option for `v4.0`
+([luke-hill])
 
 ### Fixed
 - Fixed up some RSpec cop offenses & Added reasons for rule definitions

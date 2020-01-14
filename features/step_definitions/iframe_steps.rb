@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+Given('I have disabled the SitePrism AllThere gem') do
+  SitePrism.use_all_there_gem = false
+end
+
 Then('I can locate the iframe by id') do
   expect(@test_site.home).to have_id_iframe
 end

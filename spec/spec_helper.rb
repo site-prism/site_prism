@@ -13,6 +13,10 @@ require_relative 'fixtures/all'
 
 Capybara.default_max_wait_time = 0
 
+# This will be required until v4 of SitePrism is released
+require 'site_prism/all_there'
+SitePrism.use_all_there_gem = true
+
 module SitePrism
   module SpecHelper
     module_function

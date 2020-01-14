@@ -21,7 +21,7 @@ We have a brief set of setup docs [HERE](https://github.com/site-prism/site_pris
 
 SitePrism is built and tested to work on Ruby 2.4 - 2.6. Ruby 2.3 (Now EOL), is supported but not tested against.
 If you are using SitePrism with Ruby 2.3 it is highly advisable to upgrade to a more modern Ruby
-such as 2.5 or 2.6, if for any other reason, to get a noticeable speed boost!
+such as 2.6 or 2.7, if for any other reason, to get a noticeable speed boost!
 
 SitePrism should run on all major browsers. The gem's integration tests are ran on Chrome and Firefox.
 
@@ -124,6 +124,7 @@ require 'capybara'
 require 'capybara/cucumber'
 require 'selenium-webdriver'
 require 'site_prism'
+require 'site_prism/all_there' # Optional but needed to perform more complex matching
 ```
 
 The driver creation is identical to how you would normally create a Capybara driver,
@@ -135,6 +136,7 @@ Capybara.register_driver :site_prism do |app|
   Capybara::Selenium::Driver.new(app, browser: browser, desired_capabilities: capabilities)
 end
 
+# Then tell Capybara to use the Driver you've just defined as its default driver
 Capybara.configure do |config|
   config.default_driver = :site_prism
 end
@@ -149,6 +151,7 @@ require 'capybara'
 require 'capybara/rspec'
 require 'selenium-webdriver'
 require 'site_prism'
+require 'site_prism/all_there' # Optional but needed to perform more complex matching
 ```
 
 And again, as above, a sample driver is no different to a normal driver instantiation in Capybara.
@@ -717,8 +720,8 @@ through them to find out if all of your items are present then you can also do t
 Simply pass a recursion parameter to the `#all_there?` check. Note that the only valid values
 for this at the moment are `:none` and `:one`
 
-Passing `:none` in (default), will not change the functionality. However passing in `:one` will cause
-site_prism to recurse through all section / sections items defined in your current scope.
+Passing `:none` (default), will not change the functionality. However passing in `:one` will cause
+`site_prism` to recurse through all `section` / `sections` items defined in your present scope.
 
 Work alongside developing this functionality further is being continued in the
 [site_prism-all_there](http://www.github.com/site-prism/site_prism-all_there) repo. So head on over
@@ -727,11 +730,11 @@ there if you're interested in how this feature will work going forwards
 NB: At the moment a "primitive" but working copy of this is hosted inside this gem. But if you wish to
 use the bleeding edge version of the logic. Then simply set the following configuration parameter
 
-```rb
+```ruby
+`require 'site_prism/all_there'`
+
 SitePrism.use_all_there_gem = true
 ```
-
-Make sure as well to require the gem code by doing `require 'site_prism/all_there'`
 
 ## Sections
 
