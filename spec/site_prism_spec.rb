@@ -6,7 +6,7 @@ describe SitePrism do
 
   # This will be required until v4 of SitePrism is released - We hack it here to be +nil+ but
   # everywhere else is +true+ until we standardise it
-  SitePrism.use_all_there_gem = nil
+  described_class.use_all_there_gem = nil
 
   describe '.configure' do
     it 'can configure the logger in a configure block' do
