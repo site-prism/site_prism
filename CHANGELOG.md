@@ -2,6 +2,13 @@
 ### Removed
 
 ### Added
+
+### Changed
+
+### Fixed
+
+## [3.4.2] - 2020-01-3x
+### Added
 - Simplecov now triggers for both local and CI builds
 ([luke-hill])
 
@@ -986,7 +993,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[Unreleased]: https://github.com/site-prism/site_prism/compare/v3.4.1...master
+[Unreleased]: https://github.com/site-prism/site_prism/compare/v3.4.2...master
+[3.4.2]:      https://github.com/site-prism/site_prism/compare/v3.4.1...v3.4.2
 [3.4.1]:      https://github.com/site-prism/site_prism/compare/v3.4...v3.4.1
 [3.4]:        https://github.com/site-prism/site_prism/compare/v3.3...v3.4
 [3.3]:        https://github.com/site-prism/site_prism/compare/v3.2...v3.3
