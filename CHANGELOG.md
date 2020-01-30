@@ -13,6 +13,14 @@
   option for `v4.0`
 ([luke-hill])
 
+- Travis now builds on ruby `2.7` instead of `ruby-head`
+([luke-hill])
+
+- gemspec now forces version `0.3.1` minimum of `site_prism-all_there`
+  - This will include the latest bug-fix required to make the gem fully operational
+  - All versions up to `< 1` are permitted to future-proof it against further tweaks
+([luke-hill])
+
 ### Fixed
 - Fixed up some RSpec cop offenses & Added reasons for rule definitions
 ([luke-hill])

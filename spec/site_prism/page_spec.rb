@@ -31,12 +31,21 @@ describe SitePrism::Page do
   end
 
   describe '#url' do
-    it 'shows the base url of the `SitePrism::Page`' do
+    it 'shows the base url of a page object' do
       expect(page_with_url.url).to eq('/bob')
     end
 
     it 'is nil by default' do
       expect(blank_page.url).to be_nil
+    end
+
+    it 'shows the base url of a page object - omitting the parametrisation parts' do
+      expect(page_with_uri_template.url).to eq('/users')
+    end
+
+    it 'shows the full url of a page object including the parametrisation parts' do
+      expect(page_with_uri_template.url(username: 'foobar', query: { 'key' => 'value' }))
+        .to eq('/users/foobar?key=value')
     end
   end
 
@@ -45,9 +54,11 @@ describe SitePrism::Page do
       expect(page_with_url_matcher.url_matcher).to eq(/bob/)
     end
 
-    it 'is nil by default' do
+    it 'is nil by default on the Class' do
       expect(BlankPage.url_matcher).to be_nil
+    end
 
+    it 'is nil by default on the Instance' do
       expect(blank_page.url_matcher).to be_nil
     end
   end
@@ -124,13 +135,12 @@ describe SitePrism::Page do
       expect { page_with_url.load }.not_to raise_error
     end
 
-    it 'allow expansions if the url has them' do
+    it 'allows loading with arguments if the url has been set with them' do
       expect { page_with_uri_template.load(username: 'foobar') }.not_to raise_error
+    end
 
-      expect(page_with_uri_template.url(username: 'foobar', query: { 'key' => 'value' }))
-        .to eq('/users/foobar?key=value')
-
-      expect(page_with_uri_template.url).to eq('/users')
+    it 'does not crash when loading a page with arguments if the url does not recognise them' do
+      expect { page_with_load_validations.load(username: 'foobar') }.not_to raise_error
     end
 
     it 'loads the html' do
