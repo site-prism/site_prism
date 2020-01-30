@@ -7,7 +7,7 @@
 
 ### Fixed
 
-## [3.4.2] - 2020-01-3x
+## [3.4.2] - 2020-01-30
 ### Added
 - Simplecov now triggers for both local and CI builds
 ([luke-hill])
@@ -26,6 +26,9 @@
 - gemspec now forces version `0.3.1` minimum of `site_prism-all_there`
   - This will include the latest bug-fix required to make the gem fully operational
   - All versions up to `< 1` are permitted to future-proof it against further tweaks
+([luke-hill])
+
+- v13 of `rake` can now be used
 ([luke-hill])
 
 ### Fixed
