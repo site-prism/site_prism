@@ -36,5 +36,12 @@ Then('I can execute in the context of each section by passing a block to within'
     expect(sec).to have_text('Result 3')
   end
 
-  expect(block_inner_executions).to eq 2
+  @test_site.nested_sections.search_results.each do |sec|
+    block_inner_executions += 1
+
+    expect(sec).to be_an_instance_of(SearchResults)
+    expect(sec).to have_text(/Result/)
+  end
+
+  expect(block_inner_executions).to eq 6
 end
