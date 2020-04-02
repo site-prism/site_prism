@@ -181,7 +181,7 @@ module SitePrism
       def add_helper_methods(name, *find_args)
         create_existence_checker(name, *find_args)
         create_nonexistence_checker(name, *find_args)
-        create_rspec_existence_matchers(name) if defined?(RSpec)
+        create_rspec_existence_matchers(name) if defined?(RSpec::Matchers)
         create_visibility_waiter(name, *find_args)
         create_invisibility_waiter(name, *find_args)
       end
