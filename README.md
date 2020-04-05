@@ -936,7 +936,7 @@ Then(/^the home page menu contains a link to the various search functions$/) do
 end
 ```
 
-Note that on individual sections it's possible to pass a block directly to the section without using `within`.  Because the block is executed only during Section initialization this won't work when accessing a single Section from an array of Sections.  For that reason we recommend using `within` which works in either case.
+Note that on an individual section it's possible to pass a block directly to the section without using `within`.  Because the block is executed only during `Section` initialization this won't work when accessing a single Section from an array of Sections.  For that reason we recommend using `within` which works in either case.
 
 ```ruby
 Then(/^the home page menu contains a link to the various search functions$/) do
