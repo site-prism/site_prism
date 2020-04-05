@@ -4,10 +4,6 @@ describe SitePrism do
   # Stop the $stdout process leaking cross-tests
   before { wipe_logger! }
 
-  # This will be required until v4 of SitePrism is released - We hack it here to be +nil+ but
-  # everywhere else is +true+ until we standardise it
-  described_class.use_all_there_gem = nil
-
   describe '.configure' do
     it 'can configure the logger in a configure block' do
       expect(described_class).to receive(:configure).once
@@ -107,14 +103,16 @@ describe SitePrism do
   describe '.use_all_there_gem' do
     subject { described_class.use_all_there_gem }
 
-    after { described_class.use_all_there_gem = nil }
+    let!(:original_value) { described_class.use_all_there_gem }
 
-    it { is_expected.to be nil }
+    after { described_class.use_all_there_gem = original_value }
+
+    it { is_expected.to be true }
 
     context 'when changed to `true`' do
-      before { described_class.use_all_there_gem = true }
+      before { described_class.use_all_there_gem = false }
 
-      it { is_expected.to be true }
+      it { is_expected.to be false }
     end
   end
 
