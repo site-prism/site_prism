@@ -12,18 +12,46 @@ Then('I can see a section in a section') do
 end
 
 Then('I can access elements within the section using a block') do
+  block_inner_executions = 0
+
   expect(@test_site.home).to have_people
 
   @test_site.home.people do |section|
+    block_inner_executions += 1
+
     expect(section.headline.text).to eq('People')
 
     expect(section).to have_individuals(count: 4)
   end
+
+  expect(block_inner_executions).to eq 1
+end
+
+Then('I can execute elements in the context of a section by passing a block to within') do
+  block_inner_executions = 0
+
+  expect(@test_site.home).to have_people
+
+  @test_site.home.people.within do |section|
+    block_inner_executions += 1
+
+    expect(section.headline.text).to eq('People')
+
+    expect(section).to have_individuals(count: 4)
+  end
+
+  expect(block_inner_executions).to eq 1
 end
 
 Then('I cannot access elements that are not in the section using a block') do
   expect do
     @test_site.home.people { |section| expect(section).to have_not_here }
+  end.to raise_error(RSpec::Expectations::ExpectationNotMetError)
+end
+
+Then('I cannot access elements that are not in the section using within') do
+  expect do
+    @test_site.home.people.within { |section| expect(section).to have_not_here }
   end.to raise_error(RSpec::Expectations::ExpectationNotMetError)
 end
 

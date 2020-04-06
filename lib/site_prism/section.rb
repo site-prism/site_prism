@@ -25,10 +25,14 @@ module SitePrism
         nil
     end
 
-    def initialize(parent, root_element)
+    def initialize(parent, root_element, &block)
       @parent = parent
       @root_element = root_element
-      Capybara.within(@root_element) { yield(self) } if block_given?
+      within(&block) if block_given?
+    end
+
+    def within
+      Capybara.within(@root_element) { yield(self) }
     end
 
     # Capybara::DSL module "delegates" Capybara methods to the "page" method

@@ -77,6 +77,7 @@ describe SitePrism::Section do
       it { is_expected.to respond_to(:wait_until_section_visible) }
       it { is_expected.to respond_to(:wait_until_section_invisible) }
       it { is_expected.to respond_to(:all_there?) }
+      it { is_expected.to respond_to(:within) }
     end
 
     context 'when second argument is not a Class but a block is given' do
@@ -96,6 +97,7 @@ describe SitePrism::Section do
       it { is_expected.to respond_to(:wait_until_anonymous_section_visible) }
       it { is_expected.to respond_to(:wait_until_anonymous_section_invisible) }
       it { is_expected.to respond_to(:all_there?) }
+      it { is_expected.to respond_to(:within) }
     end
 
     context 'when second argument is a Class and a block is given' do
@@ -115,6 +117,7 @@ describe SitePrism::Section do
       it { is_expected.to respond_to(:wait_until_anonymous_section_visible) }
       it { is_expected.to respond_to(:wait_until_anonymous_section_invisible) }
       it { is_expected.to respond_to(:all_there?) }
+      it { is_expected.to respond_to(:within) }
     end
 
     context 'when second argument is not a Class and no block is given' do
@@ -275,6 +278,14 @@ set_default_search_arguments within section class"
 
         page.new_element
       end
+    end
+  end
+
+  describe '#within' do
+    it 'passes the block to Capybara#within' do
+      expect(Capybara).to receive(:within).with(locator)
+
+      section_without_block.within { :noop }
     end
   end
 

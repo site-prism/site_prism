@@ -15,7 +15,7 @@ Make sure to add your project/company to https://github.com/site-prism/site_pris
 
 We love it when people want to get involved with our Open Source Project.
 
-We have a brief set of setup docs [HERE](https://github.com/site-prism/site_prism/blob/master/development_setup.md)
+We have a brief set of setup docs [HERE](https://github.com/site-prism/site_prism/blob/master/HACKING.md)
 
 ## Supported Rubies / Browsers
 
@@ -498,7 +498,7 @@ end
 
 #### Waiting for an element to become visible
 
-A method that gets added by calling `element` is the 
+A method that gets added by calling `element` is the
 `wait_until_<element_name>_visible` method. Calling this method will
 cause the test to wait for Capybara's default wait time for the element
 to become visible. You can customise the wait time by supplying a number
@@ -921,18 +921,27 @@ end
 
 ##### Accessing section elements using a block
 
-A Section can be scoped so it is only accessible inside a block. This is
+You can execute a block within the context of a Section. This is
 similar to Capybara's `within` method and allows for shorter test code
-particularly with nested sections. Some of this test code can be
-made a little prettier by simply passing a block in.
+particularly with nested sections. Test code that might have to repeat the block name can be shortened up this way.
 
 ```ruby
 Then(/^the home page menu contains a link to the various search functions$/) do
-  @home.menu do |menu|
+  @home.menu.within do |menu|
     expect(menu).to have_search
     expect(menu.search['href']).to include('google.com')
     expect(menu).to have_images
     expect(menu).to have_maps
+  end
+end
+```
+
+Note that on an individual section it's possible to pass a block directly to the section without using `within`.  Because the block is executed only during `Section` initialization this won't work when accessing a single Section from an array of Sections.  For that reason we recommend using `within` which works in either case.
+
+```ruby
+Then(/^the home page menu contains a link to the various search functions$/) do
+  @home.menu do |menu|  # possible, but prefer: `@home.menu.within`
+    expect(menu).to have_search
   end
 end
 ```
@@ -1175,7 +1184,7 @@ This allows for pretty tests ...
 ```ruby
 Then(/^there are lots of search_results$/) do
   expect(@results_page.search_results.size).to eq(10)
-  
+
   @home.search_results.each do |result|
     expect(result).to have_title
     expect(result.blurb.text).not_to be_empty
@@ -1190,6 +1199,26 @@ create a new instance of `SearchResults` and becomes its root
 element. So if the css selector finds 3 `li` elements, calling
 `search_results` will return an array containing 3 instances of
 `SearchResults`, each with one of the `li` elements as it's root element.
+
+##### Accessing Within a Collection of Sections
+
+When using an iterator such as `each` to pass a block through to a collection of sections it is possible to skip using `within`.  However some caution is warranted when accessing the Sections directly from an array, as the block can only be executed when the section is being initialized.  The following does not work:
+
+```rb
+  @home.search_results.first do |result|
+    # This block is silently ignored.
+    expect(result).to have_title
+  end
+```
+Instead use `within` to access the inner-context of the Section.
+
+```rb
+  @home.search_results.first.within do |result|
+    # This block is run within the context of the Section.
+    expect(result).to have_title
+  end
+```
+
 
 #### Anonymous Section Collections
 
@@ -1387,7 +1416,7 @@ instance of the class when created.
 
 ### Skipping load Validations
 
-Defined load validations can be skipped for one `load` call by 
+Defined load validations can be skipped for one `load` call by
 passing in `with_validations: false`.
 
 ```ruby
@@ -1654,7 +1683,7 @@ as per the code below
 Capybara.configure do |config|
   config.default_max_wait_time = 11 #=> Wait up to 11 seconds for all queries to fail
   # or if you don't want to ever wait
-  config.default_max_wait_time = 0 #=> Don't ever wait! 
+  config.default_max_wait_time = 0 #=> Don't ever wait!
 end
 ```
 
