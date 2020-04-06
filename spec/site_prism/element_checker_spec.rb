@@ -48,11 +48,12 @@ describe SitePrism::ElementChecker do
       context 'with recursion set to one' do
         subject { page.all_there?(recursion: :one) }
 
-        let(:recursion_instance) { SitePrism::RecursionChecker.new(page) }
+        let(:recursion_class) { SitePrism::AllThere::RecursionChecker }
+        let(:recursion_instance) { recursion_class.new(page) }
 
         before do
           allow(page).to receive(:section_one).and_return(section)
-          allow(SitePrism::RecursionChecker).to receive(:new).and_return(recursion_instance)
+          allow(recursion_class).to receive(:new).and_return(recursion_instance)
         end
 
         it { is_expected.to be true }
