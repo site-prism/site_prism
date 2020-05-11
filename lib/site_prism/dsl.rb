@@ -206,12 +206,26 @@ module SitePrism
       end
 
       def create_rspec_existence_matchers(element_name)
-        matcher = "has_#{element_name}?"
-        negated_matcher = "has_no_#{element_name}?"
+        matcher = "have_#{element_name}"
+        object_method = "has_#{element_name}?"
+        negated_object_method = "has_no_#{element_name}?"
 
-        RSpec::Matchers.define "have_#{element_name}" do |*args|
-          match { |actual| actual.public_send(matcher, *args) }
-          match_when_negated { |actual| actual.public_send(negated_matcher, *args) }
+        RSpec::Matchers.define matcher do |*args|
+          match { |actual| actual.public_send(object_method, *args) }
+          match_when_negated do |actual|
+            if actual.respond_to?(negated_object_method)
+              actual.public_send(negated_object_method, *args)
+            else
+              warning = [
+                "#{matcher} was handled by a matcher added by site prism, but the object under",
+                "test does not respond to #{negated_object_method} and is probably not a site",
+                'prism page. Attempting to mimic the rspec standard matcher that site prism',
+                'replaced.',
+              ].join(' ')
+              SitePrism.logger.debug(warning)
+              !actual.public_send(object_method, *args)
+            end
+          end
         end
       end
 
