@@ -70,3 +70,7 @@ Feature: Page Properties
   @slow-test
   Scenario: Elements Present - Negative
     Then not all mapped elements are present
+
+  Scenario: Missing Elements
+    When I navigate to a page with no title
+    Then all missing elements are returned

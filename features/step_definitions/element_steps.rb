@@ -55,16 +55,20 @@ end
 
 Then('all mapped elements are present') do
   mapped_item_names =
-    @test_site.dynamic.class.mapped_items.map(&:values).flatten.sort
+    @test_site.dynamic.class.mapped_items.map(&:values).flatten
 
-  expect(@test_site.dynamic.elements_present.sort).to eq(mapped_item_names)
+  expect(@test_site.dynamic.elements_present).to match_array(mapped_item_names)
 end
 
 Then('not all mapped elements are present') do
   mapped_item_names =
     @test_site.home.class.mapped_items.map(&:values).flatten
 
-  expect(@test_site.home.elements_present).not_to eq(mapped_item_names)
+  expect(@test_site.home.elements_present).not_to match_array(mapped_item_names)
+end
+
+Then('all missing elements are returned') do
+  expect(@test_site.no_title.elements_missing).to match_array([:missing_messages])
 end
 
 Then('the previously visible element is invisible') do
