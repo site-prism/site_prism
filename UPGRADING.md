@@ -1,5 +1,25 @@
 # Upgrading from SitePrism 2.x to 3.x
 
+## 2.11 to 2.14 first
+To reduce the overhead of the upgrade, I recommend you lock capybara at 2.18 until site_prism is upgraded until v.A.
+In my case, I was going from SitePrism 2.11
+
+at 2.14 you must remove the deprecated timeout paramater on invisible matcher, eg:
+
+```
+-    wait_until_loading_indicator_invisible(timeout)
++    wait_until_loading_indicator_invisible
+```
+
+Modify your Gemfile so you have something like this.
+```
+gem 'site_prism', '< 2.15'
+gem 'capybara', '~> 2.18'
+```
+
+making sure you go step by step
+
+
 ## Default Load Validations
 
 SitePrism 2.x contains 1 inbuilt load validation for any Page that is a
