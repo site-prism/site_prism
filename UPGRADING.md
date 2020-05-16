@@ -19,6 +19,40 @@ gem 'capybara', '~> 2.18'
 
 making sure you go step by step
 
+at 2.15.1
+
+I started getting these errors
+
+```
+Selenium::WebDriver::Error::StaleElementReferenceError:
+        stale element reference: element is not attached to the page document
+          (Session info: chrome=67.0.3396.79)
+          (Driver info: chromedriver=2.39.562737 (dba483cee6a5f15e2e2d73df16968ab10b38a2bf),platform=Linux 4.14.133-113.105.amzn2.x86_64 x86_64)
+```
+
+2.15 is also stricker on matching, you might get error such as:
+
+```
+     Capybara::Ambiguous:
+       Ambiguous match, found 2 elements matching visible css ".ui-dialog.ui-widget"
+```
+
+in some cases, waiting might help, at least until you can upgrade capybara as well
+
+```
+def wait_for_ajax
+  Timeout.timeout(30) do
+    loop until all_ajax_requests_finished?
+  end
+end
+```
+
+from 3.0, you need to update your matchers, eg:
+
+```
+-    wait_for_custom_schedule_dialog_buttons
++    wait_until_custom_schedule_dialog_buttons_visible
+```
 
 ## Default Load Validations
 
