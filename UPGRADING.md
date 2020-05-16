@@ -54,6 +54,15 @@ from 3.0, you need to update your matchers, eg:
 +    wait_until_custom_schedule_dialog_buttons_visible
 ```
 
+## Updating Capybara
+
+From site_prism 2.15, you can update capybara 3.2
+And from site_prism 2.16, you can update to capybara 3.5
+But if you are stuck like me, I recommend you postpone this update and keep capybara 2.18 until site_prism 3.0.3
+which is the last version that supports capybara 2.x
+
+At that point, you have to upgrade if you want to use site_prism 3.1-3.4
+
 ## Default Load Validations
 
 SitePrism 2.x contains 1 inbuilt load validation for any Page that is a
