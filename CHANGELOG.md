@@ -1111,3 +1111,4 @@ impending major rubocop release
 [dkniffin]:       https://github.com/dkniffin
 [hoffi]:          https://github.com/hoffi
 [igas]:           https://github.com/igas
+[oieioi]:         https://github.com/oieioi
