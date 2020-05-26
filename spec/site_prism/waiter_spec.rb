@@ -34,16 +34,5 @@ describe SitePrism::Waiter do
         expect(duration).to be_within(0.1).of(timeout)
       end
     end
-
-    context 'when time is frozen' do
-      before do
-        allow(Time).to receive(:now).and_return(Time.new(2019, 4, 25))
-      end
-
-      it 'throws a FrozenInTimeError exception' do
-        expect { described_class.wait_until_true { false } }
-          .to raise_error(SitePrism::FrozenInTimeError)
-      end
-    end
   end
 end

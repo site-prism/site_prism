@@ -13,6 +13,7 @@ module SitePrism
   autoload :Page, 'site_prism/page'
   autoload :Section, 'site_prism/section'
   autoload :Waiter, 'site_prism/waiter'
+  autoload :Timer, 'site_prism/timer'
 
   class << self
     attr_reader :use_all_there_gem
