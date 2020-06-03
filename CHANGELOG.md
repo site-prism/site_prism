@@ -6,6 +6,9 @@
 ### Changed
 
 ### Fixed
+- Fixed warnings about keyword arguments in Ruby 2.7
+  - The official explanation of keyword arguments in Ruby 2.7 can be found [HERE](https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/)
+([oieioi])
 
 ## [3.4.2] - 2020-01-30
 ### Added
@@ -1108,3 +1111,4 @@ impending major rubocop release
 [dkniffin]:       https://github.com/dkniffin
 [hoffi]:          https://github.com/hoffi
 [igas]:           https://github.com/igas
+[oieioi]:         https://github.com/oieioi

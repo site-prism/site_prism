@@ -57,7 +57,7 @@ module SitePrism
 
       recombine_args(find_args, runtime_args, options)
 
-      return [*find_args, *runtime_args] if options.empty?
+      return [*find_args, *runtime_args, {}] if options.empty?
 
       [*find_args, *runtime_args, options]
     end
