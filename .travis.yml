@@ -17,6 +17,7 @@ env:
 gemfile:
   - Gemfile
   - gemfiles/Gemfile.low_spec
+  - gemfiles/Gemfile.webdriver_alpha
 
 addons:
   chrome: stable
