@@ -7,6 +7,9 @@
 ([anuj-ssharma]) & ([luke-hill])
 
 ### Changed
+- **Required Ruby Version is now 2.4+**
+  - Alongside this, initial support will be offered for `selenium-webdriver` in alpha versions
+([luke-hill])
 
 - Refined SitePrism's `Waiter.wait_until_true` logic
   - SitePrism can now be used with `Timecop.freeze` and Rails' `travel_to`  
