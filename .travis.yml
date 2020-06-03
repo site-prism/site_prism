@@ -22,9 +22,6 @@ addons:
   chrome: stable
   firefox: latest
 
-before_install:
-  - gem install bundler -v '< 2'
-
 services:
   - xvfb
 
@@ -34,7 +31,3 @@ script:
 branches:
   only:
     - master
-
-matrix:
-  allow_failures:
-    - rvm: 2.7
