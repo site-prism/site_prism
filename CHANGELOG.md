@@ -2,6 +2,9 @@
 ### Removed
 
 ### Added
+- Added new logging that will notify users (And team!), when a user creates a name with a `no_` prefix
+  - This will cause race condition conflicts which are intractable, and as such will be banned in a later release
+([anuj-ssharma]) & ([luke-hill])
 
 ### Changed
 
@@ -9,6 +12,14 @@
 - Fixed warnings about keyword arguments in Ruby 2.7
   - The official explanation of keyword arguments in Ruby 2.7 can be found [HERE](https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/)
 ([oieioi])
+
+- Generic suite fixes for making tests more robust
+([ineverov])
+
+- Fixed an issue where block syntax wouldn't work properly for a singular DSL item (element / section)
+  - If using one of these items, the block syntax would only work on initialization, as such it is advised to
+  use SitePrism's `#within` scoping method which accesses the Capybara one using the SitePrism initializer.
+  Read [HERE](https://github.com/site-prism/site_prism#accessing-within-a-collection-of-sections) for more info
 
 ## [3.4.2] - 2020-01-30
 ### Added
@@ -1112,3 +1123,4 @@ impending major rubocop release
 [hoffi]:          https://github.com/hoffi
 [igas]:           https://github.com/igas
 [oieioi]:         https://github.com/oieioi
+[anuj-ssharma]:   https://github.com/anuj-ssharma
