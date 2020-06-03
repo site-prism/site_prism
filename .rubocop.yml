@@ -5,7 +5,7 @@ require:
   - rubocop-rspec
 
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
 
 # This allows a longer LineLength whilst ignoring cuke definitions
 Metrics/LineLength:
