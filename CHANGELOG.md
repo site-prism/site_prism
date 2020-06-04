@@ -1,4 +1,4 @@
-## [Unreleased]
+## [3.5] - 2020-06-04
 ### Removed
 
 ### Added
@@ -1010,7 +1010,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[Unreleased]: https://github.com/site-prism/site_prism/compare/v3.4.2...master
+[Unreleased]: https://github.com/site-prism/site_prism/compare/v3.5...master
+[3.5]:        https://github.com/site-prism/site_prism/compare/v3.4.2...v3.5
 [3.4.2]:      https://github.com/site-prism/site_prism/compare/v3.4.1...v3.4.2
 [3.4.1]:      https://github.com/site-prism/site_prism/compare/v3.4...v3.4.1
 [3.4]:        https://github.com/site-prism/site_prism/compare/v3.3...v3.4
