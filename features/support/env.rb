@@ -18,9 +18,9 @@ require_relative 'sections/all'
 SimpleCov.start if defined? SimpleCov
 
 Capybara.register_driver :site_prism do |app|
-  browser = ENV.fetch('browser', 'firefox').to_sym
+  browser = ENV.fetch('browser', 'chrome').to_sym
   # Needed whilst we support Webdriver 3.x (Can be removed once we only support 4.x)
-  capabilities =
+  capabilities = {}
     if browser == :chrome
       { 'chromeOptions' => { 'w3c' => false } }
     else
@@ -38,6 +38,7 @@ Capybara.configure do |config|
 end
 
 Webdrivers.cache_time = 86_400
+Webdrivers.logger.level = :DEBUG
 
 # This will be required until v4 of SitePrism is released
 require 'site_prism/all_there'
