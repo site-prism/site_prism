@@ -20,7 +20,7 @@ SimpleCov.start if defined? SimpleCov
 Capybara.register_driver :site_prism do |app|
   browser = ENV.fetch('browser', 'chrome').to_sym
   # Needed whilst we support Webdriver 3.x (Can be removed once we only support 4.x)
-  capabilities = {}
+  capabilities =
     if browser == :chrome
       { 'chromeOptions' => { 'w3c' => false } }
     else
