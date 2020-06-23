@@ -19,15 +19,7 @@ SimpleCov.start if defined? SimpleCov
 
 Capybara.register_driver :site_prism do |app|
   browser = ENV.fetch('browser', 'chrome').to_sym
-  # Needed whilst we support Webdriver 3.x (Can be removed once we only support 4.x)
-  capabilities =
-    if browser == :chrome
-      { 'chromeOptions' => { 'w3c' => false } }
-    else
-      {}
-    end
-
-  Capybara::Selenium::Driver.new(app, browser: browser, desired_capabilities: capabilities)
+  Capybara::Selenium::Driver.new(app, browser: browser)
 end
 
 Capybara.configure do |config|
@@ -37,6 +29,7 @@ Capybara.configure do |config|
   config.ignore_hidden_elements = false
 end
 
+Selenium::WebDriver.logger.level = :debug
 Webdrivers.cache_time = 86_400
 Webdrivers.logger.level = :DEBUG
 
