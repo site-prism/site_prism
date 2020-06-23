@@ -8,6 +8,11 @@
 
 ### Changed
 
+- Refined SitePrism's `Waiter.wait_until_true` logic
+  - SitePrism can now be used with `Timecop.freeze` and Rails' `travel_to`  
+  - `FrozenInTimeError` was removed as it is no longer needed
+ ([sos4nt])
+ 
 ### Fixed
 - Fixed warnings about keyword arguments in Ruby 2.7
   - The official explanation of keyword arguments in Ruby 2.7 can be found [HERE](https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/)
@@ -1125,3 +1130,4 @@ impending major rubocop release
 [igas]:           https://github.com/igas
 [oieioi]:         https://github.com/oieioi
 [anuj-ssharma]:   https://github.com/anuj-ssharma
+[sos4nt]:         https://github.com/sos4nt
