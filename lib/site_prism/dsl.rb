@@ -192,7 +192,7 @@ module SitePrism
       def add_helper_methods(name, *find_args)
         create_existence_checker(name, *find_args)
         create_nonexistence_checker(name, *find_args)
-        create_rspec_existence_matchers(name) if defined?(RSpec)
+        SitePrism::RspecMatchers.create_rspec_existence_matchers(name) if defined?(RSpec)
         create_visibility_waiter(name, *find_args)
         create_invisibility_waiter(name, *find_args)
       end
@@ -202,30 +202,6 @@ module SitePrism
           create_error_method(proposed_method_name)
         else
           yield
-        end
-      end
-
-      def create_rspec_existence_matchers(element_name)
-        matcher = "have_#{element_name}"
-        object_method = "has_#{element_name}?"
-        negated_object_method = "has_no_#{element_name}?"
-
-        RSpec::Matchers.define matcher do |*args|
-          match { |actual| actual.public_send(object_method, *args) }
-          match_when_negated do |actual|
-            if actual.respond_to?(negated_object_method)
-              actual.public_send(negated_object_method, *args)
-            else
-              warning = [
-                "#{matcher} was handled by a matcher added by site prism, but the object under",
-                "test does not respond to #{negated_object_method} and is probably not a site",
-                'prism page. Attempting to mimic the rspec standard matcher that site prism',
-                'replaced.',
-              ].join(' ')
-              SitePrism.logger.debug(warning)
-              !actual.public_send(object_method, *args)
-            end
-          end
         end
       end
 

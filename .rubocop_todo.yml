@@ -11,13 +11,10 @@
 Metrics/ClassLength:
   Max: 120
 
-Metrics/MethodLength:
-  Max: 20
-
 # Offense count: 1
 # Configuration parameters: CountComments.
 Metrics/ModuleLength:
-  Max: 221
+  Max: 207
 
 # Offense count: 2
 RSpec/AnyInstance:

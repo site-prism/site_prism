@@ -5,15 +5,16 @@ require 'addressable/template'
 
 module SitePrism
   autoload :AddressableUrlMatcher, 'site_prism/addressable_url_matcher'
-  autoload :Deprecator, 'site_prism/deprecator'
   autoload :DSL, 'site_prism/dsl'
+  autoload :Deprecator, 'site_prism/deprecator'
   autoload :ElementChecker, 'site_prism/element_checker'
-  autoload :RecursionChecker, 'site_prism/recursion_checker'
   autoload :Logger, 'site_prism/logger'
   autoload :Page, 'site_prism/page'
+  autoload :RecursionChecker, 'site_prism/recursion_checker'
+  autoload :RspecMatchers, 'site_prism/rspec_matchers'
   autoload :Section, 'site_prism/section'
-  autoload :Waiter, 'site_prism/waiter'
   autoload :Timer, 'site_prism/timer'
+  autoload :Waiter, 'site_prism/waiter'
 
   class << self
     attr_reader :use_all_there_gem
