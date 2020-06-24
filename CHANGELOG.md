@@ -1,4 +1,19 @@
-## [Unreleased]
+## Unreleased
+### Removed
+
+### Added
+
+### Changed
+
+
+### Fixed
+
+- SitePrism's RSpec matchers fall back to behaviour matching that of the standard RSpec
+  built-ins when called on anything that is not a SitePrism page.
+([lparry])
+
+## [3.5] - 2020-06-04
+
 ### Removed
 - ...
 
@@ -1143,3 +1158,4 @@ impending major rubocop release
 [oieioi]:         https://github.com/oieioi
 [anuj-ssharma]:   https://github.com/anuj-ssharma
 [sos4nt]:         https://github.com/sos4nt
+[lparry]:         https://github.com/lparry
