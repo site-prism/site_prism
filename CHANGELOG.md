@@ -1,10 +1,9 @@
-## [3.5] - 2020-06-04
+## [Unreleased]
 ### Removed
+- ...
 
 ### Added
-- Added new logging that will notify users (And team!), when a user creates a name with a `no_` prefix
-  - This will cause race condition conflicts which are intractable, and as such will be banned in a later release
-([anuj-ssharma]) & ([luke-hill])
+- ...
 
 ### Changed
 - **Required Ruby Version is now 2.4+**
@@ -14,7 +13,16 @@
 - Refined SitePrism's `Waiter.wait_until_true` logic
   - SitePrism can now be used with `Timecop.freeze` and Rails' `travel_to`  
   - `FrozenInTimeError` was removed as it is no longer needed
- ([sos4nt])
+([sos4nt])
+
+### Fixed
+- ...
+
+## [3.5] - 2020-06-04
+### Added
+- Added new logging that will notify users (And team!), when a user creates a name with a `no_` prefix
+  - This will cause race condition conflicts which are intractable, and as such will be banned in a later release
+([anuj-ssharma]) & ([luke-hill])
  
 ### Fixed
 - Fixed warnings about keyword arguments in Ruby 2.7
@@ -28,6 +36,7 @@
   - If using one of these items, the block syntax would only work on initialization, as such it is advised to
   use SitePrism's `#within` scoping method which accesses the Capybara one using the SitePrism initializer.
   Read [HERE](https://github.com/site-prism/site_prism#accessing-within-a-collection-of-sections) for more info
+([tgaff])
 
 ## [3.4.2] - 2020-01-30
 ### Added
