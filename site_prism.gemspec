@@ -5,7 +5,7 @@ require './lib/site_prism/version'
 Gem::Specification.new do |s|
   s.name        = 'site_prism'
   s.version     = SitePrism::VERSION
-  s.required_ruby_version = '>= 2.3'
+  s.required_ruby_version = '>= 2.4'
   s.platform    = Gem::Platform::RUBY
   s.license     = 'BSD-3-Clause'
   s.authors     = ['Luke Hill', 'Nat Ritmeyer']
@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.files        = Dir.glob('lib/**/*') + %w[LICENSE.md README.md]
   s.require_path = 'lib'
   s.add_dependency 'addressable', ['~> 2.5']
-  s.add_dependency 'capybara', ['<= 3.29']
+  s.add_dependency 'capybara', ['>= 3.8', '<= 3.29']
   s.add_dependency 'site_prism-all_there', ['>= 0.3.1', '< 1.0']
 
   s.add_development_dependency 'cucumber', ['~> 3.1']
@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rubocop', ['~> 0.75.0']
   s.add_development_dependency 'rubocop-performance', ['~> 1.5.1']
   s.add_development_dependency 'rubocop-rspec', ['~> 1.33.0']
-  s.add_development_dependency 'selenium-webdriver', ['~> 3.7']
+  s.add_development_dependency 'selenium-webdriver', ['>= 3.9', '< 4.1']
   s.add_development_dependency 'simplecov', ['~> 0.17']
-  s.add_development_dependency 'webdrivers', ['~> 4.0']
+  s.add_development_dependency 'webdrivers', ['~> 4.1']
 end
