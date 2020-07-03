@@ -60,6 +60,14 @@ Then('access to elements is constrained to those within the section') do
 
   expect(@test_site.home.has_welcome_message?).to be true
 
+  # Given this code passes, we know it's a SitePrism interop issue
+  people = page.find('.people')
+  people.has_no_css?('.welcome')
+  expect(people).to have_no_css('.welcome')
+
+  @test_site.home.people.has_no_css?('.welcome') # Returns true
+  expect(@test_site.home.people).to have_no_css('.welcome') # undefined method `current_scope' for #<Capybara::Node::Element:...>
+
   @test_site.home.people do |section|
     # Passing boolean
     section.has_no_css?('.welcome') # Returns true
