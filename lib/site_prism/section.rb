@@ -4,7 +4,6 @@ require 'site_prism/loadable'
 
 module SitePrism
   class Section
-    include Capybara::DSL
     include ElementChecker
     include Loadable
     include DSL
@@ -31,23 +30,40 @@ module SitePrism
       within(&block) if block_given?
     end
 
+    ::Capybara::Session::NODE_METHODS.each do |method|
+      class_eval <<~METHOD, __FILE__, __LINE__ + 1
+        def #{method}(...)
+          @root_element.method("#{method}").call(...)
+        end
+      METHOD
+    end
+
+    (::Capybara::Session::DSL_METHODS - ::Capybara::Session::NODE_METHODS).each do |method|
+      class_eval <<~METHOD, __FILE__, __LINE__ + 1
+        def #{method}(...)
+          @parent.method("#{method}").call(...)
+        end
+      METHOD
+    end
+
+    def to_capybara_node
+      @root_element
+    end
+
     def within
       Capybara.within(@root_element) { yield(self) }
     end
 
-    # Capybara::DSL module "delegates" Capybara methods to the "page" method
-    # as such we need to overload this method so that the correct scoping
-    # occurs and calls within a section (For example section.find(element))
-    # correctly scope to look within the section only
+    # This is no longer a necessary method should probably be deprecated/removed
     def page
       return root_element if root_element
 
-      SitePrism.logger.warn('Root Element not found; Falling back to `super`')
-      super
+      SitePrism.logger.warn('Root Element not found; Falling back to Capybara.current_session')
+      Capybara.current_session
     end
 
     def visible?
-      page.visible?
+      @root_element.visible?
     end
 
     def_delegators :capybara_session,
