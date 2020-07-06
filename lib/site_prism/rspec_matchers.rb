@@ -6,48 +6,53 @@ module SitePrism
       new(element_name).create_rspec_existence_matchers
     end
 
+    attr_reader :element_name
+
     def initialize(element_name)
       @element_name = element_name
     end
 
     def create_rspec_existence_matchers
-      matcher = "have_#{element_name}"
-      object_method = "has_#{element_name}?"
-      negated_object_method = "has_no_#{element_name}?"
-      useless_method_to_save_lines(
-        matcher,
-        object_method,
-        negated_object_method,
-        method(:log_warning)
-      )
+      useless_method_to_save_lines(matcher, object_method, negated_object_method, warning)
     end
 
-    private
-
-    def useless_method_to_save_lines(matcher, object_method, negated_object_method, log_warning)
-      RSpec::Matchers.define matcher do |*args|
+    # this method only exists so that all of the arguments are accessible when the matcher is
+    # actualy invoked, otherwise we get a bunch of NameErrors because the methods on this class are
+    # no longer available to the matcher. We could assign them to local variable in a single method,
+    # but rubocop's method length limit says no, so we use method arguments sneak past that limit.
+    def useless_method_to_save_lines(matcher, object_method, negated_object_method, warning)
+      RSpec::Matchers.define(matcher) do |*args|
         match { |actual| actual.public_send(object_method, *args) }
         match_when_negated do |actual|
           if actual.respond_to?(negated_object_method)
             return actual.public_send(negated_object_method, *args)
           end
 
-          log_warning.call(matcher, negated_object_method)
+          SitePrism.logger.debug(warning)
           !actual.public_send(object_method, *args)
         end
       end
     end
 
-    attr_reader :element_name
+    def matcher
+      "have_#{element_name}"
+    end
 
-    def log_warning(matcher, negated_object_method)
-      warning = [
+    def object_method
+      "has_#{element_name}?"
+    end
+
+    def negated_object_method
+      "has_no_#{element_name}?"
+    end
+
+    def warning
+      [
         "#{matcher} was handled by a matcher added by site prism, but the object under",
         "test does not respond to #{negated_object_method} and is probably not a site",
         'prism page. Attempting to mimic the rspec standard matcher that site prism',
         'replaced.',
       ].join(' ')
-      SitePrism.logger.debug(warning)
     end
   end
 end
