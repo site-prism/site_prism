@@ -35,6 +35,10 @@ module SitePrism
       _mapped_items.select { |name| there?(name) }
     end
 
+    def elements_missing
+      elements_to_check.reject { |name| there?(name) }
+    end
+
     private
 
     def all_there_with_recursion

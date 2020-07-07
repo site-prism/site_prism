@@ -3,7 +3,7 @@
 - ...
 
 ### Added
-- ...
+- Added `elements_missing` method which returns all missing elements from the expected_elements list ([ineverov])
 
 ### Changed
 - **Required Ruby Version is now 2.4+**

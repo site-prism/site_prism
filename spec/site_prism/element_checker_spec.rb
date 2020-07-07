@@ -105,6 +105,44 @@ describe SitePrism::ElementChecker do
       end
     end
 
+    describe '#elements_missing' do
+      subject { page.elements_missing }
+
+      let(:present) { expected_items[1..-1] }
+      let(:missing) { expected_items[0] }
+      let(:not_expected) { page.class.mapped_items.map(&:values).flatten - expected_items }
+
+      it 'calls #there? for missing elements' do
+        present.each { |name| allow(page).to receive(:there?).with(name).once.and_call_original }
+        expect(page).to receive(:there?).with(missing).once.and_return(false)
+
+        subject
+      end
+
+      it 'calls #there? for present elements' do
+        allow(page).to receive(:there?).with(missing).once.and_return(false)
+        present[1..-1].each { |name| allow(page).to receive(:there?).with(name).once }
+        expect(page).to receive(:there?).with(present[0]).once.and_return(true)
+
+        subject
+      end
+
+      it 'does not calls #there? for elements not defined as expected' do
+        expect(page).not_to receive(:there?).with(not_expected.first)
+
+        subject
+      end
+
+      it 'returns missing elements' do
+        allow(page).to receive(:there?).with(missing).once.and_return(false)
+        present.each do |name|
+          allow(page).to receive(:there?).with(name).once.and_call_original
+        end
+
+        expect(subject).to match_array(missing)
+      end
+    end
+
     describe '#elements_present' do
       it 'lists the SitePrism objects that are present on the page' do
         expect(page.elements_present)

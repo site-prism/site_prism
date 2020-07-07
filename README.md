@@ -736,6 +736,28 @@ use the bleeding edge version of the logic. Then simply set the following config
 SitePrism.use_all_there_gem = true
 ```
 
+### Getting the list of missing elements
+
+If `#all_there?` returns false and you wish to get the list of missing elements for debugging purposes
+you may want to use `#elements_missing` method. It will return all missing elements from the expected_elements list
+
+If you do not provide a list of `expected_elements` this method will return all elements that are missing on the page;
+from those which are defined.
+
+```ruby
+class Home < SitePrism::Page
+  element :name, '#name'
+  element :address, '#address'
+  element :success_message, 'span.alert-success'
+
+  expected_elements :name, :address
+end
+
+# and... Only `address` is on the page
+
+@test_page.elements_missing #=> [:name]
+```
+
 ## Sections
 
 SitePrism allows you to model sections of a page that appear on multiple
@@ -1688,7 +1710,7 @@ end
 ```
 
 Note that even with implicit waits on you can dynamically modify the wait times
-in any SitePrism method to help work-around special circumstances.  
+in any SitePrism method to help work-around special circumstances.
 
 ```ruby
 # Option 1: using wait key assignment
