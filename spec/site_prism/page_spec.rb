@@ -585,7 +585,7 @@ describe SitePrism::Page do
 
   describe '#evaluate_script' do
     it 'delegates through Capybara.current_session' do
-      expect(Capybara.current_session)
+      allow(Capybara.current_session)
         .to receive(:evaluate_script)
         .with('How High?')
         .and_return('To the sky!')

@@ -60,7 +60,9 @@ describe SitePrism do
       it 'raises a warning when the name starts with no_' do
         log_messages = capture_stdout do
           described_class.log_level = :WARN
-          expect { subject.no_such_element }.to raise_error(Capybara::ElementNotFound)
+          subject.no_such_element
+        rescue Capybara::ElementNotFound
+          :no_op
         end
         expect(lines(log_messages)).to eq 3
       end

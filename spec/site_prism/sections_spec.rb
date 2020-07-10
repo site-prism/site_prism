@@ -29,7 +29,7 @@ describe SitePrism::Section do
     expect(page_instance.plural_sections).to be_an Array
   end
 
-  context 'when using sections with default search arguments and without search arguments' do
+  context 'when using sections with default search arguments set but no defined search arguments' do
     let(:search_arguments) { [:css, '.section'] }
 
     before do
@@ -40,8 +40,7 @@ describe SitePrism::Section do
     end
 
     it 'uses the `default_search_arguments` that have been set' do
-      expect(described_class).to receive(:new).with(page_instance, :element1).ordered
-      expect(described_class).to receive(:new).with(page_instance, :element2).ordered
+      expect(described_class).to receive(:new).twice
 
       page_instance.plural_sections_with_defaults
     end

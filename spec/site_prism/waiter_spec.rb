@@ -10,8 +10,8 @@ describe SitePrism::Waiter do
         .with_message(/0.1/)
     end
 
-    it 'returns true if block returns true' do
-      expect(described_class.wait_until_true { true }).to be true
+    it 'returns true if block is truthy' do
+      expect(described_class.wait_until_true { :foo }).to be true
     end
 
     context 'with a custom timeout' do
@@ -21,17 +21,6 @@ describe SitePrism::Waiter do
         expect { described_class.wait_until_true(timeout) { false } }
           .to raise_error(SitePrism::TimeoutError)
           .with_message(/#{timeout}/)
-      end
-
-      it 'waits the according amount of time' do
-        start_time = Time.now
-
-        expect { described_class.wait_until_true(timeout) { false } }
-          .to raise_error(SitePrism::TimeoutError)
-
-        duration = Time.now - start_time
-
-        expect(duration).to be_within(0.1).of(timeout)
       end
     end
   end

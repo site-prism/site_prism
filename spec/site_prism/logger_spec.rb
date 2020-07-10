@@ -6,9 +6,11 @@ describe SitePrism::Logger do
 
     it { is_expected.to be_a Logger }
 
-    it 'has default attributes' do
+    it 'has a default name' do
       expect(logger.progname).to eq('SitePrism')
+    end
 
+    it 'has a default logging level' do
       expect(logger.level).to eq(5)
     end
   end
