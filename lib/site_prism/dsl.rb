@@ -192,7 +192,7 @@ module SitePrism
       def add_helper_methods(name, *find_args)
         create_existence_checker(name, *find_args)
         create_nonexistence_checker(name, *find_args)
-        create_rspec_existence_matchers(name) if defined?(RSpec)
+        SitePrism::RspecMatchers.new(name)._create_rspec_existence_matchers if defined?(RSpec)
         create_visibility_waiter(name, *find_args)
         create_invisibility_waiter(name, *find_args)
       end
@@ -202,16 +202,6 @@ module SitePrism
           create_error_method(proposed_method_name)
         else
           yield
-        end
-      end
-
-      def create_rspec_existence_matchers(element_name)
-        matcher = "has_#{element_name}?"
-        negated_matcher = "has_no_#{element_name}?"
-
-        RSpec::Matchers.define "have_#{element_name}" do |*args|
-          match { |actual| actual.public_send(matcher, *args) }
-          match_when_negated { |actual| actual.public_send(negated_matcher, *args) }
         end
       end
 

@@ -1,6 +1,5 @@
-## [Unreleased]
+## Unreleased
 ### Removed
-- ...
 
 ### Added
 - Added `elements_missing` method which returns all missing elements from the expected_elements list ([ineverov])
@@ -16,7 +15,9 @@
 ([sos4nt])
 
 ### Fixed
-- ...
+- SitePrism's RSpec matchers fall back to behaviour matching that of the standard RSpec
+  built-in matchers when called on anything that is not a SitePrism object.
+([lparry]) & ([luke-hill])
 
 ## [3.5] - 2020-06-04
 ### Added
@@ -1143,3 +1144,4 @@ impending major rubocop release
 [oieioi]:         https://github.com/oieioi
 [anuj-ssharma]:   https://github.com/anuj-ssharma
 [sos4nt]:         https://github.com/sos4nt
+[lparry]:         https://github.com/lparry

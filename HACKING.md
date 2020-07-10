@@ -11,17 +11,17 @@ $ bundle
 Hacking commands you may need are ...
 
 ```bash
-$ bundle exec rake cukes # Run feature tests on firefox (Default browser)
-$ bundle exec rake cukes browser=chrome # Run feature tests on chrome
+$ bundle exec rake cukes # Run feature tests on chrome (Default browser)
+$ bundle exec rake cukes browser=firefox # Run feature tests on chrome
 $ bundle exec rake specs # Run all rspec tests
-$ bundle exec rake # Runs feature tests on firefox, then specs, then runs rubocop
+$ bundle exec rake # Runs feature tests on chrome, then specs, then runs rubocop
 ```
 
-- Write your code. Make sure to add unit / feature tests AND documentation (If appropriate)
+- Write your code. Make sure to add tests AND documentation (If appropriate)
 - Run `bundle exec rake` and ensure it passes
 - Submit a pull request
 - If you encounter issues regarding not being able to perform browser tests check whether
-`geckodriver` and/or `chromedriver` have been downloaded (`webdrivers` controls this)
+`geckodriver` and/or `chromedriver` have been downloaded (The `webdrivers` controls this)
 
 Happy Testing / Developing!
 

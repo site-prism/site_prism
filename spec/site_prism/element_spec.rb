@@ -33,6 +33,30 @@ describe SitePrism do
         expect(subject).not_to have_element_two
       end
 
+      context 'when other classes have the overlapping methods defined' do
+        subject { anonymous_test_class.new }
+
+        let(:anonymous_test_class) do
+          Class.new do
+            def has_element_one?
+              true
+            end
+
+            def has_element_two?
+              false
+            end
+          end
+        end
+
+        it 'does not break the normal existence matcher behaviour' do
+          expect(subject).to have_element_one
+        end
+
+        it 'does not break the SitePrism defined negation matcher behaviour' do
+          expect(subject).not_to have_element_two
+        end
+      end
+
       it 'raises a warning when the name starts with no_' do
         log_messages = capture_stdout do
           described_class.log_level = :WARN
