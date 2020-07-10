@@ -65,21 +65,6 @@ describe SitePrism do
         expect(lines(log_messages)).to eq 3
       end
 
-      describe '#all_there?' do
-        subject { page.all_there? }
-
-        context 'with no recursion' do
-          it { is_expected.to be_truthy }
-
-          it 'checks only the expected elements' do
-            expect(page).to receive(:there?).with(:element_one).once
-            expect(page).not_to receive(:there?).with(:element_two)
-
-            subject
-          end
-        end
-      end
-
       describe '#elements_present' do
         it 'only lists the SitePrism objects that are present on the page' do
           expect(page.elements_present.sort).to eq(expected_elements.sort)

@@ -149,14 +149,35 @@ describe SitePrism::Page do
     end
 
     context 'with Passing Load Validations' do
-      it 'executes the block' do
-        expect(page_with_load_validations.load).to be_truthy
+      it 'executes the pre-defined load validation blocks' do
+        expect(page_with_load_validations.load).to be true
       end
 
-      context 'when validations are disabled' do
-        it 'loads the page' do
-          expect(page_with_load_validations.load(with_validations: false)).to be_truthy
-        end
+      it 'executes and returns the block passed into it at runtime' do
+        expect(blank_page.load('<html>hi<html/>', &:text)).to eq('hi')
+      end
+
+      it 'yields itself to the passed block' do
+        expect(page_with_load_validations).to receive(:foo?).and_call_original
+
+        page_with_load_validations.load(&:foo?)
+      end
+
+      it 'loads the page' do
+        page_with_load_validations.load
+
+        expect(page_with_load_validations).to be_loaded
+      end
+
+      it 'does not call the load validations if they are disabled' do
+        expect(page_with_load_validations).not_to receive(:must_be_true)
+
+        page_with_load_validations.load(with_validations: false)
+      end
+
+      it 'still executes and returns the block passed into it when load validations are disabled' do
+        expect(page_with_load_validations.load(with_validations: false) { :return_this })
+          .to eq(:return_this)
       end
     end
 
@@ -171,55 +192,19 @@ describe SitePrism::Page do
           .with_message('It is not true!')
       end
 
-      context 'when validations are disabled' do
-        it 'loads the page' do
-          expect(page_with_load_validations.load(with_validations: false)).to be_truthy
-        end
-      end
-    end
-
-    context 'when passed a block' do
-      it 'loads the html and yields itself' do
-        expect(blank_page.load('<html>hi<html/>', &:text)).to eq('hi')
+      it 'still raises an error when passed a truthy block' do
+        expect { page_with_load_validations.load { puts 'foo' } }
+          .to raise_error(SitePrism::FailedLoadValidationError)
+          .with_message('It is not true!')
       end
 
-      context 'with Passing Load Validations' do
-        it 'executes the block' do
-          expect(page_with_load_validations.load { :return_this })
-            .to eq(:return_this)
-        end
-
-        it 'yields itself to the passed block' do
-          expect(page_with_load_validations).to receive(:foo?).and_call_original
-
-          page_with_load_validations.load(&:foo?)
-        end
-
-        context 'when validations are disabled' do
-          it 'executes the block' do
-            expect(page_with_load_validations.load(with_validations: false) { :return_this })
-              .to eq(:return_this)
-          end
-        end
+      it 'loads the page when validations are disabled' do
+        expect(page_with_load_validations.load(with_validations: false)).to be_truthy
       end
 
-      context 'with Failing Load Validations' do
-        before do
-          allow(page_with_load_validations).to receive(:must_be_true).and_return(false)
-        end
-
-        it 'raises an error' do
-          expect { page_with_load_validations.load { puts 'foo' } }
-            .to raise_error(SitePrism::FailedLoadValidationError)
-            .with_message('It is not true!')
-        end
-
-        context 'when validations are disabled' do
-          it 'executes the block' do
-            expect(page_with_load_validations.load(with_validations: false) { :return_this })
-              .to eq(:return_this)
-          end
-        end
+      it 'still executes and returns the block passed into it when load validations are disabled' do
+        expect(page_with_load_validations.load(with_validations: false) { :return_this })
+          .to eq(:return_this)
       end
     end
   end
