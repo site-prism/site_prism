@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'site_prism/loadable'
-
 module SitePrism
   class Page
     include Capybara::DSL
@@ -80,9 +78,7 @@ module SitePrism
     end
 
     def url(expansion = {})
-      return nil if self.class.url.nil?
-
-      Addressable::Template.new(self.class.url).expand(expansion).to_s
+      self.class.url && Addressable::Template.new(self.class.url).expand(expansion).to_s
     end
 
     def url_matcher

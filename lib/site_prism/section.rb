@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'site_prism/loadable'
-
 module SitePrism
   class Section
     include Capybara::DSL

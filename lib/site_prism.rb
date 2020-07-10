@@ -8,6 +8,7 @@ module SitePrism
   autoload :DSL, 'site_prism/dsl'
   autoload :Deprecator, 'site_prism/deprecator'
   autoload :ElementChecker, 'site_prism/element_checker'
+  autoload :Loadable, 'site_prism/loadable'
   autoload :Logger, 'site_prism/logger'
   autoload :Page, 'site_prism/page'
   autoload :RecursionChecker, 'site_prism/recursion_checker'
