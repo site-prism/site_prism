@@ -15,7 +15,7 @@ describe SitePrism::Waiter do
     end
 
     context 'with a custom timeout' do
-      let(:timeout) { 0.2 }
+      let(:timeout) { 0.18 }
 
       it 'alters the error message' do
         expect { described_class.wait_until_true(timeout) { false } }

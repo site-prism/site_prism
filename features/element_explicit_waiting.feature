@@ -20,7 +20,7 @@ Feature: Waiting for an Element
     And I am not made to wait for the full overridden duration
 
   Scenario: Wait for Element Visibility - Negative - Overridden Timeout
-    Then I get a timeout error when waiting for an element within the limit
+    Then I get a timeout error when waiting for an element to become visible within the limit
 
   Scenario: Wait for Element Visibility - Positive - Default Timeout
     When I wait until a particular element is visible

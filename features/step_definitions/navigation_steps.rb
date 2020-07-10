@@ -78,7 +78,7 @@ Then('I am not made to wait to continue') do
 end
 
 Then('I am made to wait to continue') do
-  expect(@duration).to be > 0.2
+  expect(@duration).to be > 0.175
 end
 
 Then('the page will not be marked as loaded') do
