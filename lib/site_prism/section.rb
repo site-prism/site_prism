@@ -66,27 +66,5 @@ module SitePrism
     def native
       root_element.native
     end
-
-    private
-
-    def _find(*find_args)
-      kwargs = find_args.pop
-      page.find(*find_args, **kwargs)
-    end
-
-    def _all(*find_args)
-      kwargs = find_args.pop
-      page.all(*find_args, **kwargs)
-    end
-
-    def element_exists?(*find_args)
-      kwargs = find_args.pop
-      page.has_selector?(*find_args, **kwargs)
-    end
-
-    def element_does_not_exist?(*find_args)
-      kwargs = find_args.pop
-      page.has_no_selector?(*find_args, **kwargs)
-    end
   end
 end

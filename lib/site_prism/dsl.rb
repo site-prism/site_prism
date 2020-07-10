@@ -8,6 +8,30 @@ module SitePrism
 
     private
 
+    # Call `find` inside context set on page/section
+    def _find(*find_args)
+      kwargs = find_args.pop
+      page.find(*find_args, **kwargs)
+    end
+
+    # Call `all` inside context set on page/section
+    def _all(*find_args)
+      kwargs = find_args.pop
+      page.all(*find_args, **kwargs)
+    end
+
+    # Call `has_selector?` inside context set on page/section
+    def element_exists?(*find_args)
+      kwargs = find_args.pop
+      page.has_selector?(*find_args, **kwargs)
+    end
+
+    # Call `has_no_selector?` inside context set on page/section
+    def element_does_not_exist?(*find_args)
+      kwargs = find_args.pop
+      page.has_no_selector?(*find_args, **kwargs)
+    end
+
     # The default waiting time set by Capybara's configuration settings.
     def wait_time
       Capybara.default_max_wait_time
