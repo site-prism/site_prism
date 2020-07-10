@@ -30,7 +30,7 @@ Then('the slow section appears') do
   expect(@test_site.slow).to have_first_section
 end
 
-Then('an error is raised when waiting a new time for the section to vanish') do
+Then('an error is raised when waiting an overridden time for the section to vanish') do
   expect { @test_site.vanishing.wait_until_container_invisible(wait: 0.25) }
     .to raise_error(SitePrism::ElementInvisibilityTimeoutError)
 end

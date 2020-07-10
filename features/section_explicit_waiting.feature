@@ -28,4 +28,4 @@ Feature: Waiting for a Section
     Then an error is raised when waiting for the section to vanish
 
   Scenario: Wait for Section Invisibility - Negative - Overridden Timeout
-    Then an error is raised when waiting a new time for the section to vanish
+    Then an error is raised when waiting an overridden time for the section to vanish
