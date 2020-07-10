@@ -33,25 +33,27 @@ describe SitePrism do
         expect(subject).not_to have_element_two
       end
 
-      context 'when other classes coincidentally have the overlapping methods defined' do
+      context 'when other classes have the overlapping methods defined' do
         subject { anonymous_test_class.new }
 
-        let!(:anonymous_site_prism_class) do # rubocop:disable RSpec/LetSetup
-          Class.new(SitePrism::Page) do
-            element :foo, :xpath, '//a[@class="b"]//c[@class="d"]'
-          end
-        end
-
-        let!(:anonymous_test_class) do
+        let(:anonymous_test_class) do
           Class.new do
-            def has_foo?
+            def has_element_one?
+              true
+            end
+
+            def has_element_two?
               false
             end
           end
         end
 
         it 'does not break the normal existence matcher behaviour' do
-          expect(subject).not_to have_foo
+          expect(subject).to have_element_one
+        end
+
+        it 'does not break the SitePrism defined negation matcher behaviour' do
+          expect(subject).not_to have_element_two
         end
       end
 
