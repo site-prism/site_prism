@@ -22,7 +22,7 @@ module SitePrism
     module_function
 
     def present_on_page
-      %i[element_one elements_one section_one sections_one element_three]
+      %i[element_one elements_one section_one sections_one element_three no_way_should_this_be_written]
     end
 
     def present_on_section
@@ -54,6 +54,14 @@ end
 
 def lines(string)
   string.split("\n").length
+end
+
+def swallow_missing_element
+  begin
+    yield
+  rescue Capybara::ElementNotFound
+    :no_op
+  end
 end
 
 Capybara.app = MyTestApp.new

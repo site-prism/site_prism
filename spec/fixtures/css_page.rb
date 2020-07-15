@@ -9,6 +9,7 @@ class CSSPage < SitePrism::Page
   elements :elements_two, '.many'
 
   element :no_such_element, 'a.b c.d'
+  element :no_way_should_this_be_written, 'a.c b.d'
 
   section :section_one, CSSSection, 'span.locator'
 

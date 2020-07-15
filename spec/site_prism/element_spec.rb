@@ -28,8 +28,9 @@ describe SitePrism do
         expect(subject).to have_element_one
       end
 
-      it 'supports negated rspec existence matchers' do
-        expect(subject).to receive(:has_no_element_two?).once.and_call_original
+      it 'calls the SitePrism matcher when using an rspec negated existence matcher' do
+        allow(subject).to receive(:has_no_element_two?).once.and_call_original
+
         expect(subject).not_to have_element_two
       end
 
@@ -59,12 +60,8 @@ describe SitePrism do
 
       it 'raises a warning when the name starts with no_' do
         log_messages = capture_stdout do
-          begin
-            described_class.log_level = :WARN
-            subject.no_such_element
-          rescue Capybara::ElementNotFound
-            :no_op
-          end
+          described_class.log_level = :WARN
+          subject.no_way_should_this_be_written
         end
         expect(lines(log_messages)).to eq 3
       end
@@ -88,6 +85,12 @@ describe SitePrism do
 
       let(:page) { CSSPage.new }
       let(:klass) { CSSPage }
+      let(:element) { instance_double('Capybara::Node::Element') }
+
+      before do
+        allow(page).to receive(:element).with(:no_way_should_this_be_written, '//a[@class="c"]//b[@class="d"]').and_call_original
+        allow(page).to receive(:_find).with(['//a[@class="c"]//b[@class="d"]', wait:0]).and_return(element)
+      end
 
       it_behaves_like 'an element'
     end
@@ -97,6 +100,12 @@ describe SitePrism do
 
       let(:page) { XPathPage.new }
       let(:klass) { XPathPage }
+      let(:element) { instance_double('Capybara::Node::Element') }
+
+      before do
+        allow(page).to receive(:element).with(:no_way_should_this_be_written, 'a.c b.d').and_call_original
+        allow(page).to receive(:_find).with(['a.c b.d', wait: 0]).and_return(element)
+      end
 
       it_behaves_like 'an element'
     end

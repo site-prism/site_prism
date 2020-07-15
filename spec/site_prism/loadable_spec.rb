@@ -91,11 +91,11 @@ describe SitePrism::Loadable do
       end
 
       it 'resets the loaded cache at the end of the block' do
-        expect(instance.loaded).to be_nil
+        previous_nil_loaded_state = instance.loaded
 
-        instance.when_loaded { |i| expect(i.loaded).to be true }
-
-        expect(instance.loaded).to be_nil
+        instance.when_loaded do |instance|
+          expect(previous_nil_loaded_state).not_to eq(instance.loaded)
+        end
       end
     end
 

@@ -53,3 +53,8 @@ Style/AccessModifierDeclarations:
 # Stylistic preference to make the RSpec tests flow better
 RSpec/MessageSpies:
   EnforcedStyle: receive
+
+# These 2 failures will be fixed when we migrate to Ruby 2.5+ restriction
+RSpec/ExampleLength:
+  Exclude:
+    - 'spec/site_prism/loadable_spec.rb'
