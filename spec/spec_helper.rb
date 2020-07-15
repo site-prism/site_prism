@@ -57,11 +57,9 @@ def lines(string)
 end
 
 def swallow_missing_element
-  begin
-    yield
-  rescue Capybara::ElementNotFound
-    :no_op
-  end
+  yield
+rescue Capybara::ElementNotFound
+  :no_op
 end
 
 Capybara.app = MyTestApp.new

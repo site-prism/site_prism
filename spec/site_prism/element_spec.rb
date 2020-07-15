@@ -61,7 +61,7 @@ describe SitePrism do
       it 'raises a warning when the name starts with no_' do
         log_messages = capture_stdout do
           described_class.log_level = :WARN
-          subject.no_way_should_this_be_written
+          subject.no_such_element
         end
         expect(lines(log_messages)).to eq 3
       end
@@ -88,8 +88,14 @@ describe SitePrism do
       let(:element) { instance_double('Capybara::Node::Element') }
 
       before do
-        allow(page).to receive(:element).with(:no_way_should_this_be_written, 'a.c b.d').and_call_original
-        allow(page).to receive(:_find).with('a.c b.d', wait: 0).and_return(element)
+        allow(page)
+          .to receive(:element)
+          .with(:no_such_element, 'a.b c.d')
+          .and_call_original
+        allow(page)
+          .to receive(:_find)
+          .with('a.b c.d', wait: 0)
+          .and_return(element)
       end
 
       it_behaves_like 'an element'
@@ -103,8 +109,14 @@ describe SitePrism do
       let(:element) { instance_double('Capybara::Node::Element') }
 
       before do
-        allow(page).to receive(:element).with(:no_way_should_this_be_written, '//a[@class="c"]//b[@class="d"]').and_call_original
-        allow(page).to receive(:_find).with('//a[@class="c"]//b[@class="d"]', wait: 0).and_return(element)
+        allow(page)
+          .to receive(:element)
+          .with(:no_such_element, '//a[@class="b"]//c[@class="d"]')
+          .and_call_original
+        allow(page)
+          .to receive(:_find)
+          .with('//a[@class="b"]//c[@class="d"]', wait: 0)
+          .and_return(element)
       end
 
       it_behaves_like 'an element'
