@@ -115,19 +115,23 @@ describe SitePrism::Loadable do
       end
 
       it 'raises an error immediately on the first validation failure' do
-        expect(instance).to receive(:valid1?).once
+        begin
+          expect(instance).to receive(:valid1?).once
 
-        instance.when_loaded
-      rescue SitePrism::FailedLoadValidationError
-        :no_op
+          instance.when_loaded
+        rescue SitePrism::FailedLoadValidationError
+          :no_op
+        end
       end
 
       it 'does not call other load validations after failing a load validation' do
-        expect(instance).not_to receive(:valid2?)
+        begin
+          expect(instance).not_to receive(:valid2?)
 
-        instance.when_loaded
-      rescue SitePrism::FailedLoadValidationError
-        :no_op
+          instance.when_loaded
+        rescue SitePrism::FailedLoadValidationError
+          :no_op
+        end
       end
     end
   end
@@ -139,14 +143,19 @@ describe SitePrism::Loadable do
 
     before do
       inheriting_loadable.load_validation { [valid2?, 'valid2 failed'] }
-      instance.loaded = true
     end
 
+    it { is_expected.to be_loaded }
+
     it 'returns true if loaded value is cached' do
+      instance.loaded = true
+
       expect(instance).to be_loaded
     end
 
     it 'does not check load_validations if already loaded' do
+      instance.loaded = true
+
       expect(instance).not_to receive(:valid2?)
 
       instance.loaded?
@@ -182,7 +191,5 @@ describe SitePrism::Loadable do
 
       expect(instance.load_error).to eq('fubar')
     end
-
-    it { is_expected.to be_loaded }
   end
 end
