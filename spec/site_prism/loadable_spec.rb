@@ -115,22 +115,18 @@ describe SitePrism::Loadable do
       end
 
       it 'raises an error immediately on the first validation failure' do
-        begin
+        swallow_bad_validation do
           expect(instance).to receive(:valid1?).once
 
           instance.when_loaded
-        rescue SitePrism::FailedLoadValidationError
-          :no_op
         end
       end
 
       it 'does not call other load validations after failing a load validation' do
-        begin
+        swallow_bad_validation do
           expect(instance).not_to receive(:valid2?)
 
           instance.when_loaded
-        rescue SitePrism::FailedLoadValidationError
-          :no_op
         end
       end
     end

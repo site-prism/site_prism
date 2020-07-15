@@ -62,6 +62,12 @@ rescue Capybara::ElementNotFound
   :no_op
 end
 
+def swallow_bad_validation
+  yield
+rescue SitePrism::FailedLoadValidationError
+  :no_op
+end
+
 Capybara.app = MyTestApp.new
 
 RSpec.configure do |rspec|
