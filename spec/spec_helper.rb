@@ -74,11 +74,11 @@ RSpec.configure do |rspec|
   [CSSPage, XPathPage].each do |page_klass|
     SitePrism::SpecHelper.present_on_page.each do |method|
       rspec.before do
-        page_instance = page_klass.new
-        allow(page_klass).to receive(:new).and_return(page_instance)
+        @page_instance = page_klass.new
+        allow(page_klass).to receive(:new).and_return(@page_instance)
 
-        allow(page_instance).to receive("has_#{method}?").and_return(true)
-        allow(page_instance).to receive("has_no_#{method}?").and_return(false)
+        allow(@page_instance).to receive("has_#{method}?").and_return(true)
+        allow(@page_instance).to receive("has_no_#{method}?").and_return(false)
       end
     end
   end
@@ -86,8 +86,18 @@ RSpec.configure do |rspec|
   [CSSSection, XPathSection].each do |section_klass|
     SitePrism::SpecHelper.present_on_section.each do |method|
       rspec.before do
-        allow_any_instance_of(section_klass).to receive("has_#{method}?").and_return(true)
-        allow_any_instance_of(section_klass).to receive("has_no_#{method}?").and_return(false)
+        root_element = instance_double(Capybara::Node::Element)
+        section_instance = section_klass.new(
+          @page_instance,
+          root_element
+        )
+        allow(section_klass).to receive(:new).and_return(section_instance)
+
+        allow(section_instance).to receive("has_#{method}?").and_return(true)
+        allow(section_instance).to receive("has_no_#{method}?").and_return(false)
+        #
+        # allow_any_instance_of(section_klass).to receive("has_#{method}?").and_return(true)
+        # allow_any_instance_of(section_klass).to receive("has_no_#{method}?").and_return(false)
       end
     end
   end
