@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.metadata = {
     'bug_tracker_uri' => 'https://github.com/site-prism/site_prism/issues',
     'changelog_uri' => 'https://github.com/site-prism/site_prism/blob/master/CHANGELOG.md',
-    'source_code_uri' => 'https://github.com/site-prism/site_prism',
+    'source_code_uri' => 'https://github.com/site-prism/site_prism'
   }
   s.summary     = 'A Page Object Model DSL for Capybara'
   s.description = 'SitePrism gives you a simple, clean and semantic DSL for describing your site.'\

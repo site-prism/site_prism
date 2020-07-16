@@ -194,7 +194,7 @@ module SitePrism
           elements: [],
           section: [],
           sections: [],
-          iframe: [],
+          iframe: []
         }
       end
 

@@ -95,9 +95,6 @@ RSpec.configure do |rspec|
 
         allow(section_instance).to receive("has_#{method}?").and_return(true)
         allow(section_instance).to receive("has_no_#{method}?").and_return(false)
-        #
-        # allow_any_instance_of(section_klass).to receive("has_#{method}?").and_return(true)
-        # allow_any_instance_of(section_klass).to receive("has_no_#{method}?").and_return(false)
       end
     end
   end
