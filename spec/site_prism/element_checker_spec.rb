@@ -68,9 +68,16 @@ describe SitePrism::ElementChecker do
 
         it 'checks all first-generation descendants' do
           expect(section).to receive(:all_there?).and_call_original
+
+          subject
+        end
+
+        it 'checks whether items one level down are present' do
+          allow(section).to receive(:all_there?).and_call_original
+          allow(section).to receive(:there?).with(:inner_element_two).and_return(true)
+          allow(section).to receive(:there?).with(:iframe).and_return(true)
+
           expect(section).to receive(:there?).with(:inner_element_one).and_return(true)
-          expect(section).to receive(:there?).with(:inner_element_two).and_return(true)
-          expect(section).to receive(:there?).with(:iframe).and_return(true)
 
           subject
         end
@@ -83,9 +90,9 @@ describe SitePrism::ElementChecker do
       end
 
       context 'with recursion set to an invalid value' do
-        # This stops the stdout process leaking between tests
         subject { page.all_there?(recursion: 'go nuts') }
 
+        # This stops the stdout process leaking between tests
         before { wipe_logger! }
 
         it 'does not check any elements' do

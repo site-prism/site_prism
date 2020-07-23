@@ -13,12 +13,6 @@ describe SitePrism::Deprecator do
 
       expect(lines(log_messages)).to eq 2
     end
-
-    it 'Requires an `old` argument' do
-      expect { described_class.deprecate }
-        .to raise_error(ArgumentError)
-        .with_message("wrong number of arguments \(given 0, expected 1..2\)")
-    end
   end
 
   describe '.soft_deprecate' do
@@ -29,12 +23,6 @@ describe SitePrism::Deprecator do
       end
 
       expect(lines(log_messages)).to eq 4
-    end
-
-    it 'Requires an `old` and a `reason` argument' do
-      expect { described_class.soft_deprecate }
-        .to raise_error(ArgumentError)
-        .with_message("wrong number of arguments \(given 0, expected 2..3\)")
     end
   end
 end

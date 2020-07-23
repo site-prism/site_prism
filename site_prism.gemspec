@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.metadata = {
     'bug_tracker_uri' => 'https://github.com/site-prism/site_prism/issues',
     'changelog_uri' => 'https://github.com/site-prism/site_prism/blob/master/CHANGELOG.md',
-    'source_code_uri' => 'https://github.com/site-prism/site_prism',
+    'source_code_uri' => 'https://github.com/site-prism/site_prism'
   }
   s.summary     = 'A Page Object Model DSL for Capybara'
   s.description = 'SitePrism gives you a simple, clean and semantic DSL for describing your site.'\
@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry-byebug'
   s.add_development_dependency 'rake', ['>= 12.3']
   s.add_development_dependency 'rspec', ['~> 3.8']
-  s.add_development_dependency 'rubocop', ['~> 0.75.0']
+  s.add_development_dependency 'rubocop', ['~> 0.81.0']
   s.add_development_dependency 'rubocop-performance', ['~> 1.5.1']
   s.add_development_dependency 'rubocop-rspec', ['~> 1.33.0']
   s.add_development_dependency 'selenium-webdriver', ['>= 3.9', '< 4.1']

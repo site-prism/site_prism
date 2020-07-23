@@ -19,6 +19,9 @@
   built-in matchers when called on anything that is not a SitePrism object.
 ([lparry]) & ([luke-hill])
 
+- Fixed up a bunch more RSpec cop offenses and updated the minimum dev requirement of rubocop to `0.81` as it was ancient!
+([luke-hill])
+
 ## [3.5] - 2020-06-04
 ### Added
 - Added new logging that will notify users (And team!), when a user creates a name with a `no_` prefix

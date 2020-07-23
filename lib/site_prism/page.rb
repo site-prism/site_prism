@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'site_prism/loadable'
-
 module SitePrism
   class Page
     include Capybara::DSL
@@ -26,11 +24,7 @@ module SitePrism
     end
 
     def page
-      if defined?(@page)
-        @page
-      else
-        Capybara.current_session
-      end
+      (defined?(@page) && @page) || Capybara.current_session
     end
 
     # Loads the page.
@@ -78,18 +72,13 @@ module SitePrism
 
     def url_matches(seconds = wait_time)
       return unless displayed?(seconds)
+      return regexp_backed_matches if url_matcher.is_a?(Regexp)
 
-      if url_matcher.is_a?(Regexp)
-        regexp_backed_matches
-      else
-        template_backed_matches
-      end
+      template_backed_matches
     end
 
     def url(expansion = {})
-      return nil if self.class.url.nil?
-
-      Addressable::Template.new(self.class.url).expand(expansion).to_s
+      self.class.url && Addressable::Template.new(self.class.url).expand(expansion).to_s
     end
 
     def url_matcher
@@ -101,26 +90,6 @@ module SitePrism
     end
 
     private
-
-    def _find(*find_args)
-      kwargs = find_args.pop
-      page.find(*find_args, **kwargs)
-    end
-
-    def _all(*find_args)
-      kwargs = find_args.pop
-      page.all(*find_args, **kwargs)
-    end
-
-    def element_exists?(*find_args)
-      kwargs = find_args.pop
-      page.has_selector?(*find_args, **kwargs)
-    end
-
-    def element_does_not_exist?(*find_args)
-      kwargs = find_args.pop
-      page.has_no_selector?(*find_args, **kwargs)
-    end
 
     def regexp_backed_matches
       url_matcher.match(page.current_url)
