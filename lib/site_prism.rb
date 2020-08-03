@@ -20,7 +20,7 @@ module SitePrism
   autoload :Waiter, 'site_prism/waiter'
 
   class << self
-    attr_reader :use_all_there_gem
+    attr_reader :use_all_there_gem, :run_validations_on_initialize
 
     def configure
       yield self
@@ -79,6 +79,14 @@ module SitePrism
     def use_all_there_gem=(value)
       logger.debug("Setting use_all_there_gem to #{value}")
       @use_all_there_gem = value
+    end
+
+    # Whether you wish to use the new experimental run_validations_on_initialize setting
+    #   This will allow pages/sections when initialized to run their load_validations
+    #   immediately without having to wait to call `#load` which may not be relevant
+    def run_validations_on_initialize=(value)
+      logger.debug("Setting run_validations_on_initialize to #{value}")
+      @run_validations_on_initialize = value
     end
   end
 end

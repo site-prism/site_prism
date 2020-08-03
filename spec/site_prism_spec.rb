@@ -109,7 +109,7 @@ describe SitePrism do
 
     it { is_expected.to be true }
 
-    context 'when changed to `true`' do
+    context 'when changed to `false`' do
       before { described_class.use_all_there_gem = false }
 
       it { is_expected.to be false }
@@ -117,8 +117,30 @@ describe SitePrism do
   end
 
   describe '.use_all_there_gem=' do
-    it 'can alter whether site_prism uses the new gem to run #all_there?' do
+    it 'can alter whether site_prism uses the site_prism-all_there gem to perform #all_there?' do
       expect(described_class).to respond_to(:use_all_there_gem=)
+    end
+  end
+
+  describe '.run_validations_on_initialize' do
+    subject { described_class.run_validations_on_initialize }
+
+    let!(:original_value) { described_class.run_validations_on_initialize }
+
+    after { described_class.run_validations_on_initialize = original_value }
+
+    it { is_expected.to be nil }
+
+    context 'when changed to `true`' do
+      before { described_class.run_validations_on_initialize = true }
+
+      it { is_expected.to be true }
+    end
+  end
+
+  describe '.run_validations_on_initialize=' do
+    it 'can alter whether site_prism will auto run validations when upon class initialization' do
+      expect(described_class).to respond_to(:run_validations_on_initialize=)
     end
   end
 end
