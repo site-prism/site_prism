@@ -5,11 +5,11 @@ describe SitePrism::Loadable do
     Class.new do
       include SitePrism::Loadable
 
-      def valid1?
+      def false_thing?
         false
       end
 
-      def valid2?
+      def true_thing?
         true
       end
     end
@@ -64,7 +64,7 @@ describe SitePrism::Loadable do
     let(:james_bond) { instance_spy('007') }
 
     context 'with passing load validations' do
-      before { loadable.load_validation { valid2? } }
+      before { loadable.load_validation { true_thing? } }
 
       it 'executes and yields itself to the provided block when all load validations pass' do
         expect(instance).to receive(:foo)
@@ -81,7 +81,7 @@ describe SitePrism::Loadable do
       end
 
       it 'executes validations only once for nested calls' do
-        expect(instance).to receive(:valid2?).once.and_call_original
+        expect(instance).to receive(:true_thing?).once.and_call_original
 
         instance.when_loaded do
           instance.when_loaded {}
@@ -98,10 +98,7 @@ describe SitePrism::Loadable do
     end
 
     context 'with failing validations' do
-      before do
-        loadable.load_validation { [valid1?, 'valid1 failed'] }
-        loadable.load_validation { [valid2?, 'valid2 failed'] }
-      end
+      before { loadable.load_validation { [false_thing?, 'valid1 failed'] } }
 
       it 'raises a `FailedLoadValidationError`' do
         expect { instance.when_loaded { :foo } }
@@ -135,9 +132,7 @@ describe SitePrism::Loadable do
 
     let(:inheriting_loadable) { Class.new(loadable) }
 
-    before do
-      inheriting_loadable.load_validation { [valid2?, 'valid2 failed'] }
-    end
+    before { inheriting_loadable.load_validation { [true_thing?, 'valid2 failed'] } }
 
     it { is_expected.to be_loaded }
 
@@ -150,7 +145,7 @@ describe SitePrism::Loadable do
     it 'does not check load_validations if already loaded' do
       instance.loaded = true
 
-      expect(instance).not_to receive(:valid2?)
+      expect(instance).not_to receive(:true_thing?)
 
       instance.loaded?
     end
