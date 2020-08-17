@@ -2,7 +2,14 @@
 ### Removed
 
 ### Added
-- Added `elements_missing` method which returns all missing elements from the expected_elements list ([ineverov])
+
+### Changed
+
+### Fixed
+
+## [3.6] - 2020-08-17
+### Added
+- Added `#elements_missing` method which returns all missing elements from the expected_elements list ([ineverov])
 
 ### Changed
 - **Required Ruby Version is now 2.4+**
@@ -1031,7 +1038,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[Unreleased]: https://github.com/site-prism/site_prism/compare/v3.5...master
+[Unreleased]: https://github.com/site-prism/site_prism/compare/v3.6...master
+[3.6]:        https://github.com/site-prism/site_prism/compare/v3.5...v3.6
 [3.5]:        https://github.com/site-prism/site_prism/compare/v3.4.2...v3.5
 [3.4.2]:      https://github.com/site-prism/site_prism/compare/v3.4.1...v3.4.2
 [3.4.1]:      https://github.com/site-prism/site_prism/compare/v3.4...v3.4.1
