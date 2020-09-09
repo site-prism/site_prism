@@ -298,7 +298,13 @@ expect(@account_page).to be_displayed
 ```
 
 Calling `#displayed?` will return true if the browser's current URL
-matches the page's template and false if it doesn't.
+matches the page's template and false if it doesn't. It will wait for
+`Capybara.default_max_wait_time` seconds or you can pass an explicit
+wait time in seconds as the first argument like this:
+
+```ruby
+expect(@account_page).to be_displayed(10) # wait up to 10 seconds
+```
 
 #### Specifying parameter values for templated URLs
 
