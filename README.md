@@ -431,8 +431,11 @@ as a string.
 #### Accessing the individual element
 
 The `element` method will add a number of methods to instances of the
-particular Page class. The first method to be added is the name of the
-element. So using the following example:
+particular Page class. The first method added is the name of the
+element. It finds the element using [Capybara::Node::Finders#find](https://www.rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Finders#find-instance_method)
+returning a [Capybara::Node::Element](https://www.rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Element) or
+raising [Capybara::ElementNotFound](https://www.rubydoc.info/github/jnicklas/capybara/master/Capybara/ElementNotFound)
+if the element can not be found. For example:
 
 ```ruby
 class Home < SitePrism::Page
@@ -482,6 +485,8 @@ Then(/^the search field exists$/) do
 end
 ```
 
+The method delegates to [Capybara::Node::Matchers#has_selector?](https://www.rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Matchers#has_selector%3F-instance_method)
+
 #### Testing that an element does not exist
 
 To test that an element does not exist on the page, it is not possible to just call
@@ -502,6 +507,8 @@ Then(/^the search field exists$/)do
 end
 ```
 
+The method delegates to [Capybara::Node::Matchers#has_no_selector?](https://www.rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Matchers#has_no_selector%3F-instance_method)
+
 #### Waiting for an element to become visible
 
 A method that gets added by calling `element` is the
@@ -516,6 +523,8 @@ of seconds to wait in-line or configuring the default wait time.
 @home.wait_until_search_field_visible(wait: 10)
 ```
 
+The method delegates to [Capybara::Node::Matchers#has_selector?](https://www.rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Matchers#has_selector%3F-instance_method)
+
 #### Waiting for an element to become invisible
 
 Another method added by calling `element` is the
@@ -529,6 +538,8 @@ the wait time in the same way.
 # or...
 @home.wait_until_search_field_invisible(wait: 10)
 ```
+
+The method delegates to [Capybara::Node::Matchers#has_no_selector?](https://www.rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Matchers#has_no_selector%3F-instance_method)
 
 #### CSS Selectors vs. XPath Expressions
 
