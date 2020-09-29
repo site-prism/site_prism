@@ -6,6 +6,7 @@
 ### Changed
 
 ### Fixed
+- Updated the maximum version of Capybara to `<= 3.33` to support Ruby 2.7+
 
 ## [3.6] - 2020-08-17
 ### Added
