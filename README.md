@@ -7,7 +7,7 @@ _A Page Object Model DSL for Capybara_
 SitePrism gives you a simple, clean and semantic DSL for describing your site using the Page Object Model pattern,
 for use with Capybara in automated acceptance testing.
 
-Find the pretty documentation here: http://rdoc.info/gems/site_prism/frames
+Find the pretty documentation here: https://rdoc.info/gems/site_prism/frames
 
 Make sure to add your project/company to https://github.com/site-prism/site_prism/wiki/Who-is-using-SitePrism
 
