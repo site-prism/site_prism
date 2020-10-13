@@ -5,6 +5,13 @@
 - Updated README to clarify `displayed?` wait behavior and finder method delgation ([asavageiv])
 
 ### Changed
+**Internal Breaking Change**:
+- Performed a massive refactor of internal SitePrism logic
+  - `SitePrism::Section` now delegates based on the desired approach from `capybara` to delegate through a `#to_capybara_node` call
+  - SitePrism's own `#root_element` now used as a scoping approach, not a `#page` override
+  - All delegation logic now just passes object invocation / arguments to Element / Session accordingly
+  - Extra logging added where appropriate
+([twalpole]) & ([ineverov]) & ([luke-hill])
 
 ### Fixed
 
