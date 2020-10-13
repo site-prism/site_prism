@@ -2,7 +2,6 @@
 
 module SitePrism
   class Section
-    include Capybara::DSL
     include ElementChecker
     include Loadable
     include DSL
@@ -29,29 +28,39 @@ module SitePrism
       within(&block) if block_given?
     end
 
+    ROOT_ELEMENT_METHODS = ::Capybara::Session::NODE_METHODS + [:native]
+    SESSION_METHODS = ::Capybara::Session::DSL_METHODS - ::Capybara::Session::NODE_METHODS
+
+    private_constant :ROOT_ELEMENT_METHODS, :SESSION_METHODS
+
+    ROOT_ELEMENT_METHODS.each do |method|
+      def_delegators :root_element, method
+    end
+
+    SESSION_METHODS.each do |method|
+      def_delegators :capybara_session, method
+    end
+
+    def to_capybara_node
+      @root_element
+    end
+
     def within
       Capybara.within(@root_element) { yield(self) }
     end
 
-    # Capybara::DSL module "delegates" Capybara methods to the "page" method
-    # as such we need to overload this method so that the correct scoping
-    # occurs and calls within a section (For example section.find(element))
-    # correctly scope to look within the section only
+    # This is no longer a necessary method should probably be deprecated/removed
     def page
+      SitePrism::Deprecator.deprecate('Using page inside section')
       return root_element if root_element
 
-      SitePrism.logger.warn('Root Element not found; Falling back to `super`')
-      super
+      SitePrism.logger.warn('Root Element not found; Falling back to Capybara.current_session')
+      capybara_session
     end
 
     def visible?
-      page.visible?
+      @root_element.visible?
     end
-
-    def_delegators :capybara_session,
-                   :execute_script,
-                   :evaluate_script,
-                   :within_frame
 
     def capybara_session
       Capybara.current_session
@@ -61,10 +70,6 @@ module SitePrism
       candidate = parent
       candidate = candidate.parent until candidate.is_a?(SitePrism::Page)
       candidate
-    end
-
-    def native
-      root_element.native
     end
   end
 end
