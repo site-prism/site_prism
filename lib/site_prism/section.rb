@@ -28,28 +28,44 @@ module SitePrism
       within(&block) if block_given?
     end
 
+    private
+
+    def root_element_methods
+      ::Capybara::Session::NODE_METHODS + [:native]
+    end
+
+    def session_methods
+      ::Capybara::Session::DSL_METHODS - ::Capybara::Session::NODE_METHODS
+    end
+
     ROOT_ELEMENT_METHODS = ::Capybara::Session::NODE_METHODS + [:native]
     SESSION_METHODS = ::Capybara::Session::DSL_METHODS - ::Capybara::Session::NODE_METHODS
 
     private_constant :ROOT_ELEMENT_METHODS, :SESSION_METHODS
 
-    ROOT_ELEMENT_METHODS.each do |method|
+    public
+
+    root_element_methods.each do |method|
       def_delegators :root_element, method
     end
 
-    SESSION_METHODS.each do |method|
+    session_methods.each do |method|
       def_delegators :capybara_session, method
     end
 
+    # This scopes our calls inside Section correctly to the `Capybara::Node::Element`
     def to_capybara_node
-      @root_element
+      root_element
     end
 
+    # This allows us to return anything thats passed in as a block to the section at
+    # creation time, so that an anonymous section or such-like will have the extra methods
     def within
       Capybara.within(@root_element) { yield(self) }
     end
 
-    # This is no longer a necessary method should probably be deprecated/removed
+    # This was the old API-style of delegating through the Capybara.page call and over-loading
+    # the method so we always went through our correct `root_element`
     def page
       SitePrism::Deprecator.deprecate('Using page inside section')
       return root_element if root_element
