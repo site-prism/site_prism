@@ -14,6 +14,11 @@
   - `capybara` gem now permitted to go above v3.30
 ([twalpole] & [ineverov] & [luke-hill])
 
+- Gem bumps to dev dependencies
+  - `rubocop` now must be 0.83.x which permits the NewCops param
+  - `selenium-webdriver` minimum supported version is now `3.11`
+([luke-hill])
+
 ### Fixed
 
 ## [3.6] - 2020-08-17

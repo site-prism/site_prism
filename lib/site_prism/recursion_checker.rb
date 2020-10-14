@@ -3,6 +3,7 @@
 module SitePrism
   class RecursionChecker
     attr_reader :instance
+
     private :instance
 
     def initialize(instance)
