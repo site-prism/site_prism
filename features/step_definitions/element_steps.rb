@@ -107,8 +107,8 @@ Then('Capybara matchers still work') do
     expect(page).to have_text('Charlie')
   end
 
-  expect(page).to have_content('Home Page!')
-  expect(page).to have_text('This is the home page')
-  expect(page).to have_link
-  expect(page).to have_link('a')
+  expect(@test_site.home).to have_content('Home Page!')
+  expect(@test_site.home).to have_text('This is the home page')
+  expect(@test_site.home).to have_link
+  expect(@test_site.home).to have_link('a')
 end
