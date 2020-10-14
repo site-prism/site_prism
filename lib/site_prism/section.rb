@@ -15,15 +15,15 @@ module SitePrism
       end
 
       def default_search_arguments
-        @default_search_arguments ||
-          (superclass.respond_to?(:default_search_arguments) && superclass.default_search_arguments) ||
-          nil
+        return @default_search_arguments if @default_search_arguments
+
+        superclass.respond_to?(:default_search_arguments) && superclass.default_search_arguments
       end
 
       private
 
       def root_element_methods
-        ::Capybara::Session::NODE_METHODS + [:native, :visible?]
+        ::Capybara::Session::NODE_METHODS + %i[native visible?]
       end
 
       def session_methods
