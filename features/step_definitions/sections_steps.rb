@@ -23,24 +23,24 @@ Then('I can execute in the context of each section by passing a block to within'
 
   expect(@test_site.nested_sections).to have_search_results(count: 4)
 
-  @test_site.nested_sections.search_results.first.within do |sec|
+  @test_site.nested_sections.search_results.first.within do |section|
     block_inner_executions += 1
 
-    expect(sec).to be_an_instance_of(SearchResults)
-    expect(sec).to have_text('Result 0')
+    expect(section).to be_an_instance_of(SearchResults)
+    expect(section).to have_text('Result 0')
   end
 
-  @test_site.nested_sections.search_results.last.within do |sec|
+  @test_site.nested_sections.search_results.last.within do |section|
     block_inner_executions += 1
-    expect(sec).to be_an_instance_of(SearchResults)
-    expect(sec).to have_text('Result 3')
+    expect(section).to be_an_instance_of(SearchResults)
+    expect(section).to have_text('Result 3')
   end
 
-  @test_site.nested_sections.search_results.each do |sec|
+  @test_site.nested_sections.search_results.each do |section|
     block_inner_executions += 1
 
-    expect(sec).to be_an_instance_of(SearchResults)
-    expect(sec).to have_text(/Result/)
+    expect(section).to be_an_instance_of(SearchResults)
+    expect(section).to have_text(/Result/)
   end
 
   expect(block_inner_executions).to eq 6
