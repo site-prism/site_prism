@@ -87,3 +87,28 @@ end
 Then('I can obtain the native property of a section') do
   expect(@test_site.home.people.native).to be_a Selenium::WebDriver::Element
 end
+
+Then('RSpec matchers still work') do
+  @test_site.home do
+    expect(true).to be true
+    expect(5).to be_odd
+    expect(nil).to be_falsy
+    expect(Class.new).to respond_to(:to_s)
+    expect([]).to be_empty
+  end
+end
+
+Then('Capybara matchers still work') do
+  @test_site.home.people do |section|
+    # Inside here, page is scoped as section
+    expect(section).to have_content('People')
+    expect(page).to have_content('Andy')
+    expect(section).to have_text('Bob')
+    expect(page).to have_text('Charlie')
+  end
+
+  expect(page).to have_content('Home Page!')
+  expect(page).to have_text('This is the home page')
+  expect(page).to have_link
+  expect(page).to have_link('a')
+end
