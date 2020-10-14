@@ -11,6 +11,7 @@
   - SitePrism's own `#root_element` now used as a scoping approach, not a `#page` override
   - All delegation logic now just passes object invocation / arguments to Element / Session accordingly
   - Extra logging added where appropriate
+  - `capybara` gem now permitted to go above v3.30
 ([twalpole] & [ineverov] & [luke-hill])
 
 ### Fixed
