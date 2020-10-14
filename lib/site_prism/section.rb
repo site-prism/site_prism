@@ -37,10 +37,15 @@ module SitePrism
       within(&block) if block_given?
     end
 
+    # Send all root_element methods through `#root_element`
+    # NB: This requires a method called `#to_capybara_node` being created and
+    # then set to this value (Capybara agnostic API)
     root_element_methods.each do |method|
       def_delegators :root_element, method
     end
 
+    # Send all methods that previously acted on the `#page` method that existed previously
+    # through to the same location - But directly as `Capybara.current_session`
     session_methods.each do |method|
       def_delegators :capybara_session, method
     end
