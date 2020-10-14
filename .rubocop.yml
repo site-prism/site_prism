@@ -6,20 +6,21 @@ require:
 
 AllCops:
   TargetRubyVersion: 2.4
+  NewCops: enable
+
+# This allows a longer LineLength whilst ignoring cuke definitions
+Layout/LineLength:
+  Max: 100
+  IgnoredPatterns:
+    - '^Given'
+    - '^When'
+    - '^Then'
 
 # Our gemspec and Spec files contain huge blocks and need to
 Metrics/BlockLength:
   Exclude:
     - './spec/**/*_spec.rb'
     - 'site_prism.gemspec'
-
-# This allows a longer LineLength whilst ignoring cuke definitions
-Metrics/LineLength:
-  Max: 100
-  IgnoredPatterns:
-    - '^Given'
-    - '^When'
-    - '^Then'
 
 # We are a DSL, so we occasionally need to use `.set_` prefixes on our DSL names
 Naming/AccessorMethodName:

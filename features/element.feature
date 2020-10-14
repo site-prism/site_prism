@@ -24,3 +24,11 @@ Feature: Element Methods
   Scenario: Get native property from element
     When I navigate to the home page
     Then I can obtain the native property of an element
+
+  Scenario: Validate existing RSpec matchers still work
+    When I navigate to the home page
+    Then RSpec matchers still work
+
+  Scenario: Validate existing Capybara matchers still work
+    When I navigate to the home page
+    Then Capybara matchers still work

@@ -207,8 +207,8 @@ set_default_search_arguments within section class"
 
     class OtherChildSection < BaseSection; end
 
-    it 'is nil by default' do
-      expect(Section.default_search_arguments).to be_nil
+    it 'is false by default' do
+      expect(Section.default_search_arguments).to be false
     end
 
     it 'returns the default search arguments' do

@@ -22,17 +22,17 @@ Gem::Specification.new do |s|
   s.files        = Dir.glob('lib/**/*') + %w[LICENSE.md README.md]
   s.require_path = 'lib'
   s.add_dependency 'addressable', ['~> 2.5']
-  s.add_dependency 'capybara', ['>= 3.8']
+  s.add_dependency 'capybara', ['~> 3.8']
   s.add_dependency 'site_prism-all_there', ['>= 0.3.1', '< 1.0']
 
   s.add_development_dependency 'cucumber', ['~> 3.1']
   s.add_development_dependency 'pry-byebug'
   s.add_development_dependency 'rake', ['>= 12.3']
   s.add_development_dependency 'rspec', ['~> 3.8']
-  s.add_development_dependency 'rubocop', ['~> 0.81.0']
+  s.add_development_dependency 'rubocop', ['~> 0.83.0']
   s.add_development_dependency 'rubocop-performance', ['~> 1.5.1']
   s.add_development_dependency 'rubocop-rspec', ['~> 1.33.0']
-  s.add_development_dependency 'selenium-webdriver', ['>= 3.9', '< 4.1']
+  s.add_development_dependency 'selenium-webdriver', ['>= 3.11', '< 4.1']
   s.add_development_dependency 'simplecov', ['~> 0.17']
   s.add_development_dependency 'webdrivers', ['~> 4.1']
 end

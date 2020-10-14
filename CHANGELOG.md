@@ -5,6 +5,19 @@
 - Updated README to clarify `displayed?` wait behavior and finder method delgation ([asavageiv])
 
 ### Changed
+**Internal Breaking Change**:
+- Performed a massive refactor of internal SitePrism logic
+  - `SitePrism::Section` now delegates based on the desired approach from `capybara` to delegate through a `#to_capybara_node` call
+  - SitePrism's own `#root_element` now used as a scoping approach, not a `#page` override
+  - All delegation logic now just passes object invocation / arguments to Element / Session accordingly
+  - Extra logging added where appropriate
+  - `capybara` gem now permitted to go above v3.30
+([twalpole] & [ineverov] & [luke-hill])
+
+- Gem bumps to dev dependencies
+  - `rubocop` now must be 0.83.x which permits the NewCops param
+  - `selenium-webdriver` minimum supported version is now `3.11`
+([luke-hill])
 
 ### Fixed
 
@@ -25,7 +38,7 @@
 ### Fixed
 - SitePrism's RSpec matchers fall back to behaviour matching that of the standard RSpec
   built-in matchers when called on anything that is not a SitePrism object.
-([lparry]) & ([luke-hill])
+([lparry] & [luke-hill])
 
 - Fixed up a bunch more RSpec cop offenses and updated the minimum dev requirement of rubocop to `0.81` as it was ancient!
 ([luke-hill])
@@ -34,7 +47,7 @@
 ### Added
 - Added new logging that will notify users (And team!), when a user creates a name with a `no_` prefix
   - This will cause race condition conflicts which are intractable, and as such will be banned in a later release
-([anuj-ssharma]) & ([luke-hill])
+([anuj-ssharma] & [luke-hill])
 
 ### Fixed
 - Fixed warnings about keyword arguments in Ruby 2.7
@@ -120,7 +133,7 @@ will either be changing for version4 or being removed entirely.
 
 ### Fixed
 - Fixed all legacy links to ([natritmeyer])'s Github page. They all now point here.
-([luke-hill]) & ([igas])
+([luke-hill] & [igas])
 
 - Fixed up / Improved some dead documentation links on the README, warning about outdated plugins
 ([luke-hill])
@@ -247,7 +260,7 @@ impending major rubocop release
 
 ### Fixed
 - Fixed an issue that caused SitePrism not to change scopes when two different Capybara sessions were in use
-([luke-hill]) & ([twalpole])
+([luke-hill] & [twalpole])
 
 - Fixed an issue where SitePrism could fail a travis build because of the load order of tests
   - This was caused by a state leakage between a single Unit Test that wasn't caught by an RSpec hook
@@ -429,7 +442,7 @@ impending major rubocop release
 ([luke-hill])
 
 - Altered `HISTORY.md` into more hyperlinked and declarative format
-([luke-hill]) & ([JaniJegoroff])
+([luke-hill] & [JaniJegoroff])
 
 - Tidied up the Sample HTML files so they had less un-required information
 ([luke-hill])
@@ -495,10 +508,10 @@ impending major rubocop release
 ([ineverov])
 
 - Fix implicit waiting not working for some DSL defined methods
-([luke-hill]) & ([tgaff])
+([luke-hill] & [tgaff])
 
 - Add better error message when iFrame's are called without a block (Than a stacktrace)
-([luke-hill]) & ([mdesantis])
+([luke-hill] & [mdesantis])
 
 ## [2.14] - 2018-06-22
 ### Removed
@@ -545,7 +558,7 @@ impending major rubocop release
 ([twalpole])
 
 - rubocop fixes
-([ineverov]) & ([jgs731])
+([ineverov] & [jgs731])
 
 ## [2.13] - 2018-05-21
 ### Removed
@@ -592,7 +605,7 @@ impending major rubocop release
 ([luke-hill])
 
 - Update Travis Environment to now test on Chrome and Firefox
-([RustyNail]) & ([luke-hill])
+([RustyNail] & [luke-hill])
 
 ### Changed
 - Updated development dependencies to be a little more up to date
@@ -633,7 +646,7 @@ impending major rubocop release
 
 ### Changed
 - Use the `.gemspec` file for all gem versions and remove any references to gems in `Gemfile`
-([luke-hill]) & ([tgaff])
+([luke-hill] & [tgaff])
 
 - Compressed `Rakefile` into smaller tasks for Increased Verbosity on Failures
 ([luke-hill])
@@ -695,7 +708,7 @@ impending major rubocop release
 ([RustyNail])
 
 - README / rubocop fixes
-([luke-hill]) & ([iwollmann])
+([luke-hill] & [iwollmann])
 
 ## [2.9.1] - 2018-02-20
 ### Removed
@@ -714,7 +727,7 @@ impending major rubocop release
 
 ### Fixed
 - README / rubocop fixes
-([whoojemaflip]) & ([natritmeyer]) & ([luke-hill])
+([whoojemaflip] & [natritmeyer] & [luke-hill])
 
 - Fixed namespace clashes with sections and rspec
 ([tobithiel])
@@ -738,7 +751,7 @@ impending major rubocop release
 
 ### Fixed
 - README / rubocop fixes
-([nitinsurfs]) & ([cantonic]) & ([bhaibel]) & ([natritmeyer])
+([nitinsurfs] & [cantonic] & [bhaibel] & [natritmeyer])
 
 - Fix a Section Element calling `#text` incorrectly returning the full page text
 ([ddzz])
@@ -756,7 +769,7 @@ impending major rubocop release
 - Use the latest version of Capybara's waiting time method
   - `#default_max_wait_time` from Capybara 2.5 onwards
   - `#default_wait_time` for 2.4 and below
-([tpbowden]) & ([mnohai-mdsol]) & ([tmertens])
+([tpbowden] & [mnohai-mdsol] & [tmertens])
 
 - Simplified `#secure?` method
 ([benlovell])
@@ -796,10 +809,10 @@ impending major rubocop release
 
 ### Fixed
 - README doc fixes
-([vanburg]) & ([csgavino])
+([vanburg] & [csgavino])
 
 - Amended issues that occurred on RSpec 3 by making the suite agnostic to the version used
-([tgaff]) & ([natritmeyer])
+([tgaff] & [natritmeyer])
 
 - Internal test suite altered to avoid conflicting with Capybara's `#title` method
 ([tgaff])
@@ -811,11 +824,11 @@ impending major rubocop release
 
 ### Changed
 - Upped Version Dependency of rspec to `< 4.0`, and altered it to be a development dependency
-([soulcutter]) & ([KarthikDot]) & ([natritmeyer])
+([soulcutter] & [KarthikDot] & [natritmeyer])
 
 ### Fixed
 - README / License data inconsistencies
-([dnesteryuk]) & ([natritmeyer])
+([dnesteryuk] & [natritmeyer])
 
 - Using runtime options but not specifying a wait time would throw a Type mismatch error
   - This will now default to `Capybara.default_max_wait_time` if implicit waiting is enabled
@@ -844,11 +857,11 @@ impending major rubocop release
 
 ### Changed
 - README tweaks relevant to the new version of the gem
-([abotalov]) & ([natritmeyer]) & ([tommyh])
+([abotalov] & [natritmeyer] & [tommyh])
 
 ### Fixed
 - README inconsistencies fixed
-([antonio]) & ([LukasMac]) & ([Mustang949])
+([antonio] & [LukasMac] & [Mustang949])
 
 - Allow `#displayed?` test used in load validations to use newly made `Waiter` class to avoid false failures
 ([tmertens])
