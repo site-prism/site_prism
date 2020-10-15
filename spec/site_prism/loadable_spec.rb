@@ -98,7 +98,10 @@ describe SitePrism::Loadable do
     end
 
     context 'with failing validations' do
-      before { loadable.load_validation { [false_thing?, 'valid1 failed'] } }
+      before do
+        loadable.load_validation { [false_thing?, 'false_thing? failed'] }
+        loadable.load_validation { [true_thing?, 'true_thing? failed'] }
+      end
 
       it 'raises a `FailedLoadValidationError`' do
         expect { instance.when_loaded { :foo } }
@@ -106,12 +109,12 @@ describe SitePrism::Loadable do
       end
 
       it 'can be supplied with a user-defined message' do
-        expect { instance.when_loaded { :foo } }.to raise_error.with_message('valid1 failed')
+        expect { instance.when_loaded { :foo } }.to raise_error.with_message('false_thing? failed')
       end
 
       it 'raises an error immediately on the first validation failure' do
         swallow_bad_validation do
-          expect(instance).to receive(:valid1?).once
+          expect(instance).to receive(:false_thing?).once
 
           instance.when_loaded
         end
@@ -119,7 +122,7 @@ describe SitePrism::Loadable do
 
       it 'does not call other load validations after failing a load validation' do
         swallow_bad_validation do
-          expect(instance).not_to receive(:valid2?)
+          expect(instance).not_to receive(:true_thing?)
 
           instance.when_loaded
         end
