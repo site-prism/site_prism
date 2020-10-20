@@ -2,7 +2,5 @@
 
 require 'simplecov'
 
-SimpleCov.start do
-end
-
-SimpleCov.minimum_coverage 98.5
+SimpleCov.start
+SimpleCov.minimum_coverage 98.9
