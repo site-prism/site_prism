@@ -3,9 +3,6 @@
 require 'simplecov'
 
 SimpleCov.start do
-  add_group 'Features', 'features'
-  add_group 'Specs', 'spec'
-  add_group 'Code', 'lib'
 end
 
-SimpleCov.minimum_coverage 98.3
+SimpleCov.minimum_coverage 98.5
