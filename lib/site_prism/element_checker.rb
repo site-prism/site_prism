@@ -21,10 +21,9 @@ module SitePrism
     # Override: 'one' => Perform one recursive dive into all section/sections
     # items and call #all_there? on all of those items too.
     def all_there?(recursion: :none)
-      if recursion == :none
-        elements_to_check.all? { |name| there?(name) }
-      elsif recursion == :one
-        all_there_with_recursion
+      case recursion
+      when :none; then elements_to_check.all? { |name| there?(name) }
+      when :one;  then all_there_with_recursion
       else
         SitePrism.logger.debug("Input value '#{recursion}'. Valid values are :none or :one.")
         SitePrism.logger.error('Invalid recursion setting, Will not run #all_there?.')

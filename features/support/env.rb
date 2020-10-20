@@ -25,7 +25,7 @@ end
 Capybara.configure do |config|
   config.default_driver = :site_prism
   config.default_max_wait_time = 0.75
-  config.app_host = 'file://' + File.dirname(__FILE__) + '/../../test_site'
+  config.app_host = "file://#{File.dirname(__FILE__)}/../../test_site"
   config.ignore_hidden_elements = false
 end
 
