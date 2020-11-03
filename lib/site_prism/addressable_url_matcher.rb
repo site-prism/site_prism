@@ -4,6 +4,10 @@ require 'digest'
 require 'base64'
 
 module SitePrism
+  # [SitePrism::AddressableUrlMatcher]
+  # Used in a couple of places to allow users to ...
+  #   Specify patterns for loading webpages
+  #   Pass in hashable args or query parameters for loading dynamic pages
   class AddressableUrlMatcher
     attr_reader :pattern
 
