@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 module SitePrism
+  # [SitePrism::Loadable]
+  #
+  # SitePrism Loadable's are defined as checks or waiters which "must" pass before
+  # the rest of the loading logic can be performed on a class or section.
+  #
+  # Loadable's are primarily used with the `#load` method which will auto-execute them all
+  # in their defined order. But they can be used dynamically wherever desired.
   module Loadable
     module ClassMethods
       # The list of load_validations.
