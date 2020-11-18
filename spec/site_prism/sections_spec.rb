@@ -3,16 +3,16 @@
 describe SitePrism::Section do
   let(:page_instance) { page.new }
   let(:page) do
+    plural_sections = Class.new(described_class)
+    plural_sections_with_defaults =
+      Class.new(described_class) do
+        set_default_search_arguments :css, '.section'
+      end
+
     Class.new(SitePrism::Page) do
-      sections :plural_sections, PluralSections, '.tim'
-      sections :plural_sections_with_defaults, PluralSectionsWithDefaults
+      sections :plural_sections, plural_sections, '.tim'
+      sections :plural_sections_with_defaults, plural_sections_with_defaults
     end
-  end
-
-  class PluralSections < SitePrism::Section; end
-
-  class PluralSectionsWithDefaults < SitePrism::Section
-    set_default_search_arguments :css, '.section'
   end
 
   describe '.sections' do

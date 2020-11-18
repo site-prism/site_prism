@@ -14,9 +14,7 @@ Metrics/ModuleLength:
 # Offense count: 27
 RSpec/LeakyConstantDeclaration:
   Exclude:
-    - 'spec/site_prism/page_spec.rb'
     - 'spec/site_prism/section_spec.rb'
-    - 'spec/site_prism/sections_spec.rb'
 
 # Offense count: 2
 RSpec/RepeatedExampleGroupDescription:

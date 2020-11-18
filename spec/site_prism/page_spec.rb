@@ -584,7 +584,7 @@ describe SitePrism::Page do
 
   describe '#secure?' do
     subject(:page) { blank_page }
-    
+
     it 'is true for secure pages' do
       swap_current_url('https://www.secure.com/')
 
