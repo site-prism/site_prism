@@ -29,9 +29,7 @@ Capybara.configure do |config|
   config.ignore_hidden_elements = false
 end
 
-Selenium::WebDriver.logger.level = :debug
 Webdrivers.cache_time = 86_400
-Webdrivers.logger.level = :DEBUG
 
 # This will be required until v4 of SitePrism is released
 require 'site_prism/all_there'
