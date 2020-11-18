@@ -1,22 +1,25 @@
 # frozen_string_literal: true
 
 describe SitePrism::Page do
-  class BlankPage < SitePrism::Page; end
-  class PageWithUrl < SitePrism::Page
-    set_url '/bob'
-  end
-  class PageWithUriTemplate < SitePrism::Page
-    set_url '/users{/username}{?query*}'
-  end
-  class PageWithUrlMatcher < SitePrism::Page
-    set_url_matcher(/bob/)
-  end
-
   let(:locator) { instance_double('Capybara::Node::Element') }
-  let(:blank_page) { BlankPage.new }
-  let(:page_with_url) { PageWithUrl.new }
-  let(:page_with_uri_template) { PageWithUriTemplate.new }
-  let(:page_with_url_matcher) { PageWithUrlMatcher.new }
+  let(:blank_page) do
+    Class.new(described_class).new
+  end
+  let(:page_with_url) do
+    Class.new(described_class) do
+      set_url '/bob'
+    end.new
+  end
+  let(:page_with_uri_template) do
+    Class.new(described_class) do
+      set_url '/users{/username}{?query*}'
+    end.new
+  end
+  let(:page_with_url_matcher) do
+    Class.new(described_class) do
+      set_url_matcher(/bob/)
+    end.new
+  end
 
   before do
     allow(SitePrism::Waiter).to receive(:default_wait_time).and_return(0)
@@ -55,7 +58,7 @@ describe SitePrism::Page do
     end
 
     it 'is nil by default on the Class' do
-      expect(BlankPage.url_matcher).to be_nil
+      expect(described_class.url_matcher).to be_nil
     end
 
     it 'is nil by default on the Instance' do
@@ -107,26 +110,26 @@ describe SitePrism::Page do
   end
 
   describe '#load' do
-    class PageWithLoadValidations < SitePrism::Page
-      set_url '/foo_page'
+    let(:page_with_load_validations) do
+      Class.new(described_class) do
+        set_url '/foo_page'
 
-      def must_be_true
-        true
-      end
+        def must_be_true
+          true
+        end
 
-      def also_true
-        true
-      end
+        def also_true
+          true
+        end
 
-      def foo?
-        true
-      end
+        def foo?
+          true
+        end
 
-      load_validation { [must_be_true, 'It is not true!'] }
-      load_validation { [also_true, 'It is not also true!'] }
+        load_validation { [must_be_true, 'It is not true!'] }
+        load_validation { [also_true, 'It is not also true!'] }
+      end.new
     end
-
-    let(:page_with_load_validations) { PageWithLoadValidations.new }
 
     it "does not allow loading if the url hasn't been set" do
       expect { blank_page.load }.to raise_error(SitePrism::NoUrlForPageError)
@@ -218,12 +221,9 @@ describe SitePrism::Page do
 
     context 'with a full string URL matcher' do
       let(:page) do
-        klass =
-          Class.new(SitePrism::Page) do
-            set_url_matcher('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
-          end
-
-        klass.new
+        Class.new(SitePrism::Page) do
+          set_url_matcher('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
+        end.new
       end
 
       it 'matches with all elements matching' do
@@ -283,12 +283,9 @@ describe SitePrism::Page do
 
     context 'with a minimal URL matcher' do
       let(:page) do
-        klass =
-          Class.new(SitePrism::Page) do
-            set_url_matcher('/foo')
-          end
-
-        klass.new
+        Class.new(SitePrism::Page) do
+          set_url_matcher('/foo')
+        end.new
       end
 
       it 'matches a complex URL by only path' do
@@ -300,12 +297,9 @@ describe SitePrism::Page do
 
     context 'with an implicit matcher' do
       let(:page) do
-        klass =
-          Class.new(SitePrism::Page) do
-            set_url '/foo'
-          end
-
-        klass.new
+        Class.new(SitePrism::Page) do
+          set_url '/foo'
+        end.new
       end
 
       it 'sets the `url_matcher` to the url property' do
@@ -321,12 +315,9 @@ describe SitePrism::Page do
 
     context 'with a parameterized URL matcher' do
       let(:page) do
-        klass =
-          Class.new(SitePrism::Page) do
-            set_url_matcher('{scheme}:///foos{/id}')
-          end
-
-        klass.new
+        Class.new(SitePrism::Page) do
+          set_url_matcher('{scheme}:///foos{/id}')
+        end.new
       end
 
       it 'returns true without expected_mappings provided' do
@@ -362,12 +353,9 @@ describe SitePrism::Page do
 
     context 'with a bogus URL matcher' do
       let(:page) do
-        klass =
-          Class.new(SitePrism::Page) do
-            set_url_matcher(this: "isn't a URL matcher")
-          end
-
-        klass.new
+        Class.new(SitePrism::Page) do
+          set_url_matcher(this: "isn't a URL matcher")
+        end.new
       end
 
       it 'raises an InvalidUrlMatcherError' do
@@ -380,11 +368,11 @@ describe SitePrism::Page do
     subject(:wait_for_page) { page.wait_until_displayed }
 
     context 'with a full string URL matcher' do
-      class PageWithStringFullUrlMatcher < SitePrism::Page
-        set_url_matcher('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
+      let(:page) do
+        Class.new(SitePrism::Page) do
+          set_url_matcher('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
+        end.new
       end
-
-      let(:page) { PageWithStringFullUrlMatcher.new }
 
       it 'matches with all elements matching' do
         swap_current_url('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
@@ -442,11 +430,11 @@ describe SitePrism::Page do
     end
 
     context 'with a minimal URL matcher' do
-      class PageWithStringMinimalUrlMatcher < SitePrism::Page
-        set_url_matcher('/foo')
+      let(:page) do
+        Class.new(described_class) do
+          set_url_matcher('/foo')
+        end.new
       end
-
-      let(:page) { PageWithStringMinimalUrlMatcher.new }
 
       it 'matches a complex URL by only path' do
         swap_current_url('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
@@ -456,11 +444,11 @@ describe SitePrism::Page do
     end
 
     context 'with an implicit matcher' do
-      class PageWithImplicitUrlMatcher < SitePrism::Page
-        set_url '/foo'
+      let(:page) do
+        Class.new(described_class) do
+          set_url '/foo'
+        end.new
       end
-
-      let(:page) { PageWithImplicitUrlMatcher.new }
 
       it 'sets the `url_matcher` to the url property' do
         expect(page.url_matcher).to eq('/foo')
@@ -474,11 +462,11 @@ describe SitePrism::Page do
     end
 
     context 'with a parameterized URL matcher' do
-      class PageWithParameterizedUrlMatcher < SitePrism::Page
-        set_url_matcher('{scheme}:///foos{/id}')
+      let(:page) do
+        Class.new(described_class) do
+          set_url_matcher('{scheme}:///foos{/id}')
+        end.new
       end
-
-      let(:page) { PageWithParameterizedUrlMatcher.new }
 
       it 'passes without expected_mappings provided' do
         swap_current_url('http://localhost:3000/foos/28')
@@ -500,11 +488,11 @@ describe SitePrism::Page do
     end
 
     context 'with a bogus URL matcher' do
-      class PageWithBogusFullUrlMatcher < SitePrism::Page
-        set_url_matcher(this: "isn't a URL matcher")
+      let(:page) do
+        Class.new(described_class) do
+          set_url_matcher(this: "isn't a URL matcher")
+        end.new
       end
-
-      let(:page) { PageWithBogusFullUrlMatcher.new }
 
       it 'raises InvalidUrlMatcherError' do
         expect { wait_for_page }.to raise_error(SitePrism::InvalidUrlMatcherError)
@@ -514,11 +502,11 @@ describe SitePrism::Page do
 
   describe '#url_matches' do
     context 'with a templated matcher' do
-      class PageWithParameterizedUrlMatcher < SitePrism::Page
-        set_url_matcher('{scheme}:///foos{/id}')
+      let(:page) do
+        Class.new(described_class) do
+          set_url_matcher('{scheme}:///foos{/id}')
+        end.new
       end
-
-      let(:page) { PageWithParameterizedUrlMatcher.new }
 
       it 'returns mappings from the current_url' do
         swap_current_url('http://localhost:3000/foos/15')
@@ -534,11 +522,11 @@ describe SitePrism::Page do
     end
 
     context 'with a regexp matcher' do
-      class PageWithRegexpUrlMatcher < SitePrism::Page
-        set_url_matcher(/foos\/(\d+)/)
+      let(:page) do
+        Class.new(described_class) do
+          set_url_matcher(/foos\/(\d+)/)
+        end.new
       end
-
-      let(:page) { PageWithRegexpUrlMatcher.new }
 
       it 'returns regexp MatchData' do
         swap_current_url('http://localhost:3000/foos/15')
@@ -560,11 +548,11 @@ describe SitePrism::Page do
     end
 
     context 'with a bogus URL matcher' do
-      class PageWithBogusFullUrlMatcher < SitePrism::Page
-        set_url_matcher(this: "isn't a URL matcher")
+      let(:page) do
+        Class.new(described_class) do
+          set_url_matcher(this: "isn't a URL matcher")
+        end.new
       end
-
-      let(:page) { PageWithBogusFullUrlMatcher.new }
 
       it 'raises InvalidUrlMatcherError' do
         expect { page.url_matches }
@@ -595,24 +583,24 @@ describe SitePrism::Page do
   end
 
   describe '#secure?' do
-    let(:page) { blank_page }
-
+    subject(:page) { blank_page }
+    
     it 'is true for secure pages' do
       swap_current_url('https://www.secure.com/')
 
-      expect(page).to be_secure
+      expect(blank_page).to be_secure
     end
 
     it 'is false for insecure pages' do
       swap_current_url('http://www.insecure.com/')
 
-      expect(page).not_to be_secure
+      expect(blank_page).not_to be_secure
     end
 
     it 'is false for pages where the prefix is www' do
       swap_current_url('www.unsure.com')
 
-      expect(page).not_to be_secure
+      expect(blank_page).not_to be_secure
     end
   end
 
