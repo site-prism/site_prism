@@ -85,8 +85,8 @@ describe SitePrism do
       let(:klass) { CSSPage }
       let(:frame_caller_args) { [:css, '.iframe'] }
       let(:frame_class) { CSSIFrame }
-      let(:section_locator) { ['span.locator', wait: 0] }
-      let(:element_caller_args) { ['.some_element', wait: 0] }
+      let(:section_locator) { ['span.locator', { wait: 0 }] }
+      let(:element_caller_args) { ['.some_element', { wait: 0 }] }
 
       it_behaves_like 'iFrame'
     end
@@ -96,8 +96,8 @@ describe SitePrism do
       let(:klass) { XPathPage }
       let(:frame_caller_args) { [:xpath, '//*[@class="iframe"]'] }
       let(:frame_class) { XPathIFrame }
-      let(:section_locator) { [:xpath, '//span[@class="locator"]', wait: 0] }
-      let(:element_caller_args) { [:xpath, '//[@class="some_element"]', wait: 0] }
+      let(:section_locator) { [:xpath, '//span[@class="locator"]', { wait: 0 }] }
+      let(:element_caller_args) { [:xpath, '//[@class="some_element"]', { wait: 0 }] }
 
       it_behaves_like 'iFrame'
     end

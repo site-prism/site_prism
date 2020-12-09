@@ -66,11 +66,11 @@ module SitePrism
       raise SitePrism::NoUrlMatcherForPageError unless url_matcher
 
       expected_mappings = args.last.is_a?(::Hash) ? args.pop : {}
-      seconds = args&.first || wait_time
+      seconds = args&.first || Capybara.default_max_wait_time
       Waiter.wait_until_true(seconds) { url_matches?(expected_mappings) }
     end
 
-    def url_matches(seconds = wait_time)
+    def url_matches(seconds = Capybara.default_max_wait_time)
       return unless displayed?(seconds)
       return regexp_backed_matches if url_matcher.is_a?(Regexp)
 
