@@ -310,7 +310,7 @@ module SitePrism
       def extract_section_options(args, &block)
         if args.first.is_a?(Class)
           klass = args.shift
-          section_class = klass if klass.ancestors.include?(SitePrism::Section)
+          section_class = klass if klass <= SitePrism::Section
         end
 
         section_class = deduce_section_class(section_class, &block)

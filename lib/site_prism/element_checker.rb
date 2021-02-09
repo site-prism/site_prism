@@ -21,9 +21,10 @@ module SitePrism
     # Override: 'one' => Perform one recursive dive into all section/sections
     # items and call #all_there? on all of those items too.
     def all_there?(recursion: :none)
-      if recursion == :none
+      case recursion
+      when :none
         elements_to_check.all? { |name| there?(name) }
-      elsif recursion == :one
+      when :one
         all_there_with_recursion
       else
         SitePrism.logger.debug("Input value '#{recursion}'. Valid values are :none or :one.")

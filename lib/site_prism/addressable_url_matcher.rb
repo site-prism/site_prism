@@ -43,12 +43,10 @@ module SitePrism
     def all_expected_mappings_match?(expected_mappings, actual_mappings)
       expected_mappings.all? do |key, expected_value|
         actual_value = actual_mappings[key.to_s]
-        if expected_value.is_a?(Numeric)
-          actual_value == expected_value.to_s
-        elsif expected_value.is_a?(Regexp)
-          actual_value.match(expected_value)
-        else
-          expected_value == actual_value
+        case expected_value
+        when Numeric; then actual_value == expected_value.to_s
+        when Regexp;  then actual_value.match(expected_value)
+        else               expected_value == actual_value
         end
       end
     end
