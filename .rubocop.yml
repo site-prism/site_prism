@@ -8,9 +8,9 @@ AllCops:
   TargetRubyVersion: 2.4
   NewCops: enable
 
-# This allows a longer LineLength whilst ignoring cuke definitions
+# This allows a longer LineLength and ignores cuke definitions
 Layout/LineLength:
-  Max: 100
+  Max: 140
   IgnoredPatterns:
     - '^Given'
     - '^When'
