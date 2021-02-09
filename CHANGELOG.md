@@ -2,6 +2,10 @@
 ### Removed
 
 ### Added
+- Bumped the suite's rubocop gems significantly (As we were tracking behind)
+  - In lieu of this, Some changes were made to the suite styles and auto-config was re-generated
+  - A whole host of documentation updates were made to code-areas lacking it
+([luke-hill])
 
 ### Changed
 - Minor refactors

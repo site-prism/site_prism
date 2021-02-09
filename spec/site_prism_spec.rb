@@ -5,7 +5,7 @@ describe SitePrism do
   before { wipe_logger! }
 
   describe '.configure' do
-    it 'can configure the logger in a configure block' do
+    it 'can configure items in a configure block' do
       expect(described_class).to receive(:configure).once
 
       described_class.configure { |_| :foo }
@@ -50,7 +50,7 @@ describe SitePrism do
         end
       end
 
-      it 'logs messages at all levels above the new severity' do
+      it 'logs messages at all levels equal or above the new severity' do
         expect(lines(log_messages)).to eq(2)
       end
     end

@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 module SitePrism
+  # [SitePrism::DSL]
+  #
+  # This is the core Module Namespace for all of the public-facing DSL methods
+  #   such as `element`. The code here is designed to be used through the defining
+  #   of said items, and not to be instantiated directly.
+  #
+  # The whole package here can be thought of as [@api private]
   module DSL
     def self.included(klass)
       klass.extend ClassMethods
@@ -30,11 +37,6 @@ module SitePrism
     def element_does_not_exist?(*find_args)
       kwargs = find_args.pop
       page.has_no_selector?(*find_args, **kwargs)
-    end
-
-    # The default waiting time set by Capybara's configuration settings.
-    def wait_time
-      Capybara.default_max_wait_time
     end
 
     # Prevent users from calling methods with blocks when they shouldn't be.
@@ -98,7 +100,7 @@ module SitePrism
     def recombine_args(find_args, runtime_args, options)
       options.merge!(find_args.pop) if find_args.last.is_a? Hash
       options.merge!(runtime_args.pop) if runtime_args.last.is_a? Hash
-      options[:wait] = wait_time unless options.key?(:wait)
+      options[:wait] = Capybara.default_max_wait_time unless options.key?(:wait)
     end
 
     module ClassMethods

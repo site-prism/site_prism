@@ -30,10 +30,6 @@ Naming/AccessorMethodName:
 RSpec/MessageSpies:
   EnforcedStyle: receive
 
-# We need to massively improve this! But for now the suite is not under active documentation
-Style/Documentation:
-  Enabled: false
-
 # This is a better style, and should be the default IMO
 Style/RegexpLiteral:
   EnforcedStyle: slashes

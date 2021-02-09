@@ -3,6 +3,8 @@
 require 'site_prism/error'
 require 'addressable/template'
 
+# [SitePrism] namespace
+# We autoload our files underneath here to provide a slightly more optimal load solution
 module SitePrism
   autoload :AddressableUrlMatcher, 'site_prism/addressable_url_matcher'
   autoload :DSL, 'site_prism/dsl'

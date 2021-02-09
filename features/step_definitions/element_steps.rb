@@ -89,7 +89,7 @@ Then('I can obtain the native property of a section') do
 end
 
 Then('RSpec matchers still work') do
-  @test_site.home do
+  @test_site.home.people do
     expect(true).to be true
     expect(5).to be_odd
     expect(nil).to be_falsy

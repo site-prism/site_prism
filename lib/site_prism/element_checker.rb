@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 module SitePrism
+  # [SitePrism::ElementChecker]
+  #
+  # This allows users to run `#all_there?` checks on an instance.
+  #
+  # NB: This functionality is being removed in v4 in favour of the all_there gem
   module ElementChecker
     # Runnable in the scope of any SitePrism::Page or Section.
     # Returns +true+ when "every item" that is being checked is
@@ -22,10 +27,8 @@ module SitePrism
     # items and call #all_there? on all of those items too.
     def all_there?(recursion: :none)
       case recursion
-      when :none
-        elements_to_check.all? { |name| there?(name) }
-      when :one
-        all_there_with_recursion
+      when :none; then elements_to_check.all? { |name| there?(name) }
+      when :one;  then all_there_with_recursion
       else
         SitePrism.logger.debug("Input value '#{recursion}'. Valid values are :none or :one.")
         SitePrism.logger.error('Invalid recursion setting, Will not run #all_there?.')
