@@ -4,6 +4,10 @@
 ### Added
 
 ### Changed
+- Minor refactors
+  - Updated some internal DSL code
+  - Updated development dependencies to be something more reasonable
+([luke-hill])
 
 ### Fixed
 
