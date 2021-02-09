@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/site-prism/site_prism'
   s.metadata = {
     'bug_tracker_uri' => 'https://github.com/site-prism/site_prism/issues',
-    'changelog_uri' => 'https://github.com/site-prism/site_prism/blob/master/CHANGELOG.md',
+    'changelog_uri' => 'https://github.com/site-prism/site_prism/blob/main/CHANGELOG.md',
     'source_code_uri' => 'https://github.com/site-prism/site_prism'
   }
   s.summary     = 'A Page Object Model DSL for Capybara'

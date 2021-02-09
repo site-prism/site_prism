@@ -15,7 +15,7 @@ Make sure to add your project/company to https://github.com/site-prism/site_pris
 
 We love it when people want to get involved with our Open Source Project.
 
-We have a brief set of setup docs [HERE](https://github.com/site-prism/site_prism/blob/master/HACKING.md)
+We have a brief set of setup docs [HERE](https://github.com/site-prism/site_prism/blob/main/HACKING.md)
 
 ## Supported Rubies / Browsers
 
@@ -1504,7 +1504,7 @@ the validations will be performed in the following order:
 **NB:** `SitePrism::Page` **used to** include a default load validation on
 `page.displayed?` however for v3 this has been removed. It is therefore
 necessary to re-define this if you want to retain the behaviour
-from site_prism v2. See [UPGRADING.md](https://github.com/site-prism/site_prism/blob/master/UPGRADING.md#default-load-validations)
+from site_prism v2. See [UPGRADING.md](https://github.com/site-prism/site_prism/blob/main/UPGRADING.md#default-load-validations)
 for more info on this.
 
 ## Using Capybara Query Options
