@@ -19,9 +19,7 @@ module SitePrism
       RSpec::Matchers.define(matcher) do |*args|
         match { |actual| actual.public_send(object_method, *args) }
         match_when_negated do |actual|
-          if actual.respond_to?(negated_object_method)
-            return actual.public_send(negated_object_method, *args)
-          end
+          return actual.public_send(negated_object_method, *args) if actual.respond_to?(negated_object_method)
 
           SitePrism.logger.debug(warning)
           !actual.public_send(object_method, *args)

@@ -92,16 +92,13 @@ module SitePrism
     #
     # If the hash is empty, then the hash is omitted from the payload sent
     # to Capybara, and the find / runtime arguments are sent alone.
+    #
+    # NB: If the +wait+ key is present in the options hash, even as false or 0, It will
+    # be set as the user-supplied value (So user error can be the cause for issues).
     def recombine_args(find_args, runtime_args, options)
       options.merge!(find_args.pop) if find_args.last.is_a? Hash
       options.merge!(runtime_args.pop) if runtime_args.last.is_a? Hash
-      options[:wait] = wait_time unless wait_key_present?(options)
-    end
-
-    # Detect if the +wait+ key is present in the options hash.
-    # Note that setting it to to false or 0, still will return true here.
-    def wait_key_present?(options)
-      options.key?(:wait)
+      options[:wait] = wait_time unless options.key?(:wait)
     end
 
     module ClassMethods
@@ -323,8 +320,7 @@ module SitePrism
         klass = Class.new(klass || SitePrism::Section, &block) if block_given?
         return klass if klass
 
-        raise ArgumentError, "You should provide descendant of \
-SitePrism::Section class or/and a block as the second argument."
+        raise ArgumentError, 'You should provide descendant of SitePrism::Section class or/and a block as the second argument.'
       end
 
       def deduce_search_arguments(section_class, args)
