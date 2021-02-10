@@ -198,11 +198,9 @@ module SitePrism
       end
 
       def mapped_items(legacy: true)
-        if legacy
-          old_mapped_items
-        else
-          new_mapped_items
-        end
+        return old_mapped_items if legacy
+
+        new_mapped_items
       end
 
       private
@@ -217,13 +215,7 @@ module SitePrism
       end
 
       def new_mapped_items
-        @new_mapped_items ||= {
-          element: [],
-          elements: [],
-          section: [],
-          sections: [],
-          iframe: []
-        }
+        @new_mapped_items ||= { element: [], elements: [], section: [], sections: [], iframe: [] }
       end
 
       def build(type, name, *find_args)
@@ -250,11 +242,9 @@ module SitePrism
       end
 
       def create_helper_method(proposed_method_name, *find_args)
-        if find_args.empty?
-          create_error_method(proposed_method_name)
-        else
-          yield
-        end
+        return create_error_method(proposed_method_name) if find_args.empty?
+
+        yield
       end
 
       def create_existence_checker(element_name, *find_args)
@@ -369,8 +359,8 @@ module SitePrism
       end
 
       def invalidate_search_arguments!
-        SitePrism.logger.error("Could not deduce search_arguments")
-        raise(ArgumentError, "search arguments are needed in `section` definition or alternatively use `set_default_search_arguments`")
+        SitePrism.logger.error('Could not deduce search_arguments')
+        raise(ArgumentError, 'search arguments are needed in `section` definition or alternatively use `set_default_search_arguments`')
       end
     end
   end
