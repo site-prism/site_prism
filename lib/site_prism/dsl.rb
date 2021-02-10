@@ -103,9 +103,20 @@ module SitePrism
       options[:wait] = Capybara.default_max_wait_time unless options.key?(:wait)
     end
 
+    # SitePrism::DSL::ClassMethods
+    # This exposes all of the DSL definitions users will use when generating
+    # their POM classes.
+    #
+    # Many of these methods will be used in-line to allow users to generate a multitude of
+    # methods and locators for finding elements / sections on a page or section of a page
     module ClassMethods
       attr_reader :expected_items
 
+      # Creates an instance of a SitePrism Element - This will create several methods designed to
+      # Locate the element -> @return [Capybara::Node::Element]
+      # Check the elements presence or non-presence -> @return [Boolean]
+      # Wait for the elements to be present or not -> @return [TrueClass, SitePrism::Error]
+      # Validate certain properties about the element
       def element(name, *find_args)
         SitePrism::Deprecator.deprecate('Passing a block to :element') if block_given?
         build(:element, name, *find_args) do
@@ -117,6 +128,11 @@ module SitePrism
         end
       end
 
+      # Creates a enumerable instance of a SitePrism Element - This will create several methods designed to
+      # Locate the enumerable element -> @return [Capybara::Result]
+      # Check the elements presence or non-presence -> @return [Boolean]
+      # Wait for the elements to be present or not -> @return [TrueClass, SitePrism::Error]
+      # Validate certain properties about the elements
       def elements(name, *find_args)
         SitePrism::Deprecator.deprecate('Passing a block to :elements') if block_given?
         build(:elements, name, *find_args) do
@@ -128,10 +144,18 @@ module SitePrism
         end
       end
 
+      # Sets the `expected_items` iVar on a class. This property is used in conjunction with
+      # `all_there?` to provide a way of granularising the check made to only interrogate a sub-set
+      # of DSL defined items
       def expected_elements(*elements)
         @expected_items = elements
       end
 
+      # Creates an instance of a SitePrism Section - This will create several methods designed to
+      # Locate the section -> @return [SitePrism::Section]
+      # Check the section presence or non-presence -> @return [Boolean]
+      # Wait for the section to be present or not -> @return [TrueClass, SitePrism::Error]
+      # Validate certain properties about the section
       def section(name, *args, &block)
         section_class, find_args = extract_section_options(args, &block)
         build(:section, name, *find_args) do
@@ -143,6 +167,11 @@ module SitePrism
         end
       end
 
+      # Creates an enumerable instance of a SitePrism Section - This will create several methods designed to
+      # Locate the sections -> @return [Array]
+      # Check the sections presence or non-presence -> @return [Boolean]
+      # Wait for the sections to be present or not -> @return [TrueClass, SitePrism::Error]
+      # Validate certain properties about the section
       def sections(name, *args, &block)
         section_class, find_args = extract_section_options(args, &block)
         build(:sections, name, *find_args) do
@@ -274,6 +303,10 @@ module SitePrism
 
       def create_error_method(name)
         SitePrism.logger.error("#{name} has come from an item with no locators.")
+        SitePrism::Deprecator.soft_deprecate(
+          'DSL definition with no find_args',
+          'All DSL elements should have find_args'
+        )
         define_method(name) { raise SitePrism::InvalidElementError }
       end
 
@@ -328,12 +361,16 @@ module SitePrism
       def deduce_search_arguments(section_class, args)
         extract_search_arguments(args) ||
           extract_search_arguments(section_class.default_search_arguments) ||
-          raise(ArgumentError, "You should provide search arguments \
-in section creation or set_default_search_arguments within section class")
+          invalidate_search_arguments!
       end
 
       def extract_search_arguments(args)
         args if args && !args.empty?
+      end
+
+      def invalidate_search_arguments!
+        SitePrism.logger.error("Could not deduce search_arguments")
+        raise(ArgumentError, "search arguments are needed in `section` definition or alternatively use `set_default_search_arguments`")
       end
     end
   end
