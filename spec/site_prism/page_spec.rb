@@ -66,16 +66,6 @@ describe SitePrism::Page do
     end
   end
 
-  describe '#displayed?' do
-    it 'allow calls if the url matcher has been set' do
-      expect { page_with_url_matcher.displayed? }.not_to raise_error
-    end
-
-    it 'raises an exception if called before the matcher has been set' do
-      expect { blank_page.displayed? }.to raise_error(SitePrism::NoUrlMatcherForPageError)
-    end
-  end
-
   it 'exposes the page title' do
     expect(blank_page).to respond_to(:title)
   end
@@ -213,6 +203,14 @@ describe SitePrism::Page do
   end
 
   describe '#displayed?' do
+    it 'allow calls if the url matcher has been set' do
+      expect { page_with_url_matcher.displayed? }.not_to raise_error
+    end
+
+    it 'raises an exception if called before the matcher has been set' do
+      expect { blank_page.displayed? }.to raise_error(SitePrism::NoUrlMatcherForPageError)
+    end
+
     it 'delegates through #wait_until_displayed' do
       expect(page_with_url).to receive(:wait_until_displayed).with(:foo, :bar, :baz)
 

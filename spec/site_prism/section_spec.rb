@@ -174,8 +174,7 @@ class or/and a block as the second argument."
         end
       end
       let(:error_message) do
-        "You should provide search arguments in section creation or \
-set_default_search_arguments within section class"
+        'search arguments are needed in `section` definition or alternatively use `set_default_search_arguments`'
       end
 
       it 'uses the default search arguments set on the section' do
