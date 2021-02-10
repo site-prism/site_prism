@@ -11,6 +11,16 @@ Find the pretty documentation here: https://rdoc.info/gems/site_prism/frames
 
 Make sure to add your project/company to https://github.com/site-prism/site_prism/wiki/Who-is-using-SitePrism
 
+## Support
+
+Support us with a monthly donation and help us continue our activities by supporting us as a [backer](https://opencollective.com/site-prism#backer)
+
+Become a sponsor and get your logo on our README on Github with a link to your site. [How to Sponsor SitePrism?](https://opencollective.com/site-prism#sponsor)
+
+Free Open Source software can only be maintained with the support of you. If you and/or your company find
+value in SitePrism and would like to contribute financially to its ongoing maintenance and development, 
+then please do so. Visit the OpenCollective links above for more details.
+
 ## Developing / Contributing to SitePrism
 
 We love it when people want to get involved with our Open Source Project.
@@ -19,9 +29,10 @@ We have a brief set of setup docs [HERE](https://github.com/site-prism/site_pris
 
 ## Supported Rubies / Browsers
 
-SitePrism is built and tested to work on Ruby 2.4 - 2.6. Ruby 2.3 (Now EOL), is supported but not tested against.
-If you are using SitePrism with Ruby 2.3 it is highly advisable to upgrade to a more modern Ruby
-such as 2.6 or 2.7, if for any other reason, to get a noticeable speed boost!
+SitePrism is built and tested to work on Ruby 2.4 - 2.7. Ruby 2.4 (Now EOL), is supported but
+this version will be removed from the Support Matrix in the coming months.
+If you are using SitePrism with Ruby 2.4 it is highly advisable to upgrade to a more modern Ruby
+such as 2.7, if for any other reason, to get a noticeable speed boost!
 
 SitePrism should run on all major browsers. The gem's integration tests are run on Chrome and Firefox.
 

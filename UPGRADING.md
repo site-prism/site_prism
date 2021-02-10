@@ -75,4 +75,4 @@ These now become:
 ```
 
 > Note: If after upgrading you see `Unused parameters passed to Capybara::Queries::SelectorQuery : [NUMBER]`
-this may indicate that you need to make this change.
+this may indicate that you still need to make this change.
