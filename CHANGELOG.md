@@ -4,7 +4,12 @@
 ### Added
 
 ### Changed
+- Bumped a whole raft of dev dependencies
+([luke-hill])
 
+- Minor lib/spec optimisations from `rubocop-performance`
+([luke-hill])
+  
 ### Fixed
 
 ## [3.7.1] - 2021-02-19
@@ -1070,7 +1075,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[Unreleased]: https://github.com/site-prism/site_prism/compare/v3.7...main
+[Unreleased]: https://github.com/site-prism/site_prism/compare/v3.7.1...main
+[3.7.1]:      https://github.com/site-prism/site_prism/compare/v3.7...v3.7.1
 [3.7]:        https://github.com/site-prism/site_prism/compare/v3.6...v3.7
 [3.6]:        https://github.com/site-prism/site_prism/compare/v3.5...v3.6
 [3.5]:        https://github.com/site-prism/site_prism/compare/v3.4.2...v3.5
