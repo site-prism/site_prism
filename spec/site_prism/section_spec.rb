@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 describe SitePrism::Section do
-  class Section < SitePrism::Section; end
-
   let(:dont_wait) { { wait: 0 } }
   let(:section_without_block) { described_class.new(SitePrism::Page.new, locator) }
   let!(:locator) { instance_double('Capybara::Node::Element') }
@@ -133,20 +131,23 @@ class or/and a block as the second argument."
   end
 
   describe '.set_default search arguments' do
-    class PageWithSectionWithDefaultSearchArguments < SitePrism::Page
-      class SectionWithDefaultArguments < SitePrism::Section
-        set_default_search_arguments :css, '.section'
+    let(:page_with_section_with_default_search_arguments) do
+      Class.new(SitePrism::Page) do
+        class SectionWithDefaultArguments < SitePrism::Section
+          set_default_search_arguments :css, '.section'
+        end
+
+        class SectionWithDefaultArgumentsForParent < SectionWithDefaultArguments; end
+
+        section :section_using_defaults, SectionWithDefaultArguments
+        section :section_using_defaults_from_parent,
+                SectionWithDefaultArgumentsForParent
+        section :section_with_locator, SectionWithDefaultArguments, '.other-section'
+        sections :sections, SectionWithDefaultArguments
       end
-
-      class SectionWithDefaultArgumentsForParent < SectionWithDefaultArguments; end
-
-      section :section_using_defaults, SectionWithDefaultArguments
-      section :section_using_defaults_from_parent,
-              SectionWithDefaultArgumentsForParent
-      section :section_with_locator, SectionWithDefaultArguments, '.other-section'
-      sections :sections, SectionWithDefaultArguments
     end
-    let(:page) { PageWithSectionWithDefaultSearchArguments.new }
+
+    let(:page) { page_with_section_with_default_search_arguments.new }
     let(:default_search_arguments) { [:css, '.section'] }
 
     context 'when search arguments are provided during the DSL definition' do
@@ -168,7 +169,7 @@ class or/and a block as the second argument."
     context 'when search arguments are not provided during the DSL definition' do
       let(:search_arguments) { default_search_arguments }
       let(:invalid_page) do
-        class ErroredPage < SitePrism::Page
+        Class.new(SitePrism::Page) do
           section :section, SitePrism::Section
         end
       end
