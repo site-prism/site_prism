@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'capybara', ['~> 3.8']
   s.add_dependency 'site_prism-all_there', ['>= 0.3.1', '< 1.0']
 
-  s.add_development_dependency 'cucumber', ['~> 4.0']
+  s.add_development_dependency 'cucumber', ['>= 4.0', '< 5.2']
   s.add_development_dependency 'pry-byebug'
   s.add_development_dependency 'rake', ['~> 13.0']
   s.add_development_dependency 'rspec', ['~> 3.9']
