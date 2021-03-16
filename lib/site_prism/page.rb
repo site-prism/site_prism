@@ -134,7 +134,7 @@ module SitePrism
       visit expanded_url
       if with_validations
         when_loaded(&block)
-      elsif block_given?
+      elsif block
         yield self
       end
     end

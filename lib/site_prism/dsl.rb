@@ -342,7 +342,7 @@ module SitePrism
 
       def deduce_section_class(base_class, &block)
         klass = base_class
-        klass = Class.new(klass || SitePrism::Section, &block) if block_given?
+        klass = Class.new(klass || SitePrism::Section, &block) if block
         return klass if klass
 
         raise ArgumentError, 'You should provide descendant of SitePrism::Section class or/and a block as the second argument.'
