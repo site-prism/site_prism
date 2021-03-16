@@ -195,33 +195,39 @@ class or/and a block as the second argument."
   end
 
   describe '.default_search_arguments' do
-    class BaseSection < SitePrism::Section
-      set_default_search_arguments :css, 'a.b'
+    let(:base_section) do
+      Class.new(SitePrism::Section) do
+        set_default_search_arguments :css, 'a.b'
+      end
     end
 
-    class ChildSection < BaseSection
-      set_default_search_arguments :xpath, '//h3'
+    let(:child_section) do
+      Class.new(base_section) do
+        set_default_search_arguments :xpath, '//h3'
+      end
     end
 
-    class OtherChildSection < BaseSection; end
+    let(:other_child_section) do
+      Class.new(base_section)
+    end
 
     it 'is false by default' do
-      expect(Section.default_search_arguments).to be false
+      expect(described_class.default_search_arguments).to be false
     end
 
     it 'returns the default search arguments' do
-      expect(BaseSection.default_search_arguments).to eq([:css, 'a.b'])
+      expect(base_section.default_search_arguments).to eq([:css, 'a.b'])
     end
 
     context 'when both parent and child class have default_search_arguments' do
       it 'returns the child level arguments' do
-        expect(ChildSection.default_search_arguments).to eq([:xpath, '//h3'])
+        expect(child_section.default_search_arguments).to eq([:xpath, '//h3'])
       end
     end
 
     context 'when only parent class has default_search_arguments' do
       it 'returns the parent level arguments' do
-        expect(OtherChildSection.default_search_arguments).to eq([:css, 'a.b'])
+        expect(other_child_section.default_search_arguments).to eq([:css, 'a.b'])
       end
     end
   end
