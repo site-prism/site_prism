@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 describe SitePrism::Section do
+  let(:section) { class Section < SitePrism::Section; end }
   class Section < SitePrism::Section; end
-  class Page < SitePrism::Page; end
 
   let(:dont_wait) { { wait: 0 } }
-  let(:section_without_block) { described_class.new(Page.new, locator) }
+  let(:section_without_block) { described_class.new(SitePrism::Page.new, locator) }
   let!(:locator) { instance_double('Capybara::Node::Element') }
   let(:section_with_block) do
-    described_class.new(Page.new, locator) { 1 + 1 }
+    described_class.new(SitePrism::Page.new, locator) { 1 + 1 }
   end
 
   it 'responds to Capybara methods' do
@@ -121,7 +121,7 @@ describe SitePrism::Section do
     end
 
     context 'when second argument is not a Class and no block is given' do
-      let(:section) { Page.section(:incorrect_section, '.section') }
+      let(:section) { SitePrism::Page.section(:incorrect_section, '.section') }
       let(:message) do
         "You should provide descendant of SitePrism::Section \
 class or/and a block as the second argument."
@@ -342,7 +342,7 @@ class or/and a block as the second argument."
         ), '.locator-small'
       )
     end
-    let(:page) { Page.new }
+    let(:page) { SitePrism::Page.new }
 
     it 'returns the parent page of a section' do
       expect(section.parent_page).to be_a SitePrism::Page
