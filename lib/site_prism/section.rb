@@ -34,7 +34,7 @@ module SitePrism
     def initialize(parent, root_element, &block)
       @parent = parent
       @root_element = root_element
-      within(&block) if block_given?
+      within(&block) if block
     end
 
     # Send all root_element methods through `#root_element`

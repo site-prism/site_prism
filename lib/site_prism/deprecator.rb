@@ -5,6 +5,7 @@ module SitePrism
   class Deprecator
     class << self
       # @return SitePrism.logger.warn(msg)
+      #
       # Tells the user that they are using old functionality, which needs removing in the
       # next major version
       def deprecate(old, new = nil)
@@ -18,6 +19,7 @@ module SitePrism
       end
 
       # @return SitePrism.logger.debug(msg)
+      #
       # Tells the user that they are using functionality which is non-optimal
       #   The functionality should usually provide a reason for it being poor, as well as an
       #   optional way of upgrading to something different

@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
 describe SitePrism::Section do
-  class Section < SitePrism::Section; end
-  class Page < SitePrism::Page; end
-
   let(:dont_wait) { { wait: 0 } }
-  let(:section_without_block) { described_class.new(Page.new, locator) }
+  let(:section_without_block) { described_class.new(SitePrism::Page.new, locator) }
   let!(:locator) { instance_double('Capybara::Node::Element') }
   let(:section_with_block) do
-    described_class.new(Page.new, locator) { 1 + 1 }
+    described_class.new(SitePrism::Page.new, locator) { 1 + 1 }
   end
 
   it 'responds to Capybara methods' do
@@ -67,7 +64,7 @@ describe SitePrism::Section do
 
       let(:page_with_section) do
         Class.new(SitePrism::Page) do
-          section :section, Section, '.section'
+          section :section, SitePrism::Section, '.section'
         end
       end
 
@@ -105,7 +102,7 @@ describe SitePrism::Section do
 
       let(:page_with_anonymous_section) do
         Class.new(SitePrism::Page) do
-          section :anonymous_section, Section, '.section' do
+          section :anonymous_section, SitePrism::Section, '.section' do
             element :title, 'h1'
           end
         end
@@ -121,7 +118,7 @@ describe SitePrism::Section do
     end
 
     context 'when second argument is not a Class and no block is given' do
-      let(:section) { Page.section(:incorrect_section, '.section') }
+      let(:section) { SitePrism::Page.section(:incorrect_section, '.section') }
       let(:message) do
         "You should provide descendant of SitePrism::Section \
 class or/and a block as the second argument."
@@ -134,20 +131,23 @@ class or/and a block as the second argument."
   end
 
   describe '.set_default search arguments' do
-    class PageWithSectionWithDefaultSearchArguments < SitePrism::Page
-      class SectionWithDefaultArguments < SitePrism::Section
-        set_default_search_arguments :css, '.section'
+    let(:page_with_section_with_default_search_arguments) do
+      Class.new(SitePrism::Page) do
+        class SectionWithDefaultArguments < SitePrism::Section
+          set_default_search_arguments :css, '.section'
+        end
+
+        class SectionWithDefaultArgumentsForParent < SectionWithDefaultArguments; end
+
+        section :section_using_defaults, SectionWithDefaultArguments
+        section :section_using_defaults_from_parent,
+                SectionWithDefaultArgumentsForParent
+        section :section_with_locator, SectionWithDefaultArguments, '.other-section'
+        sections :sections, SectionWithDefaultArguments
       end
-
-      class SectionWithDefaultArgumentsForParent < SectionWithDefaultArguments; end
-
-      section :section_using_defaults, SectionWithDefaultArguments
-      section :section_using_defaults_from_parent,
-              SectionWithDefaultArgumentsForParent
-      section :section_with_locator, SectionWithDefaultArguments, '.other-section'
-      sections :sections, SectionWithDefaultArguments
     end
-    let(:page) { PageWithSectionWithDefaultSearchArguments.new }
+
+    let(:page) { page_with_section_with_default_search_arguments.new }
     let(:default_search_arguments) { [:css, '.section'] }
 
     context 'when search arguments are provided during the DSL definition' do
@@ -169,8 +169,8 @@ class or/and a block as the second argument."
     context 'when search arguments are not provided during the DSL definition' do
       let(:search_arguments) { default_search_arguments }
       let(:invalid_page) do
-        class ErroredPage < SitePrism::Page
-          section :section, Section
+        Class.new(SitePrism::Page) do
+          section :section, SitePrism::Section
         end
       end
       let(:error_message) do
@@ -196,50 +196,56 @@ class or/and a block as the second argument."
   end
 
   describe '.default_search_arguments' do
-    class BaseSection < SitePrism::Section
-      set_default_search_arguments :css, 'a.b'
+    let(:base_section) do
+      Class.new(SitePrism::Section) do
+        set_default_search_arguments :css, 'a.b'
+      end
     end
 
-    class ChildSection < BaseSection
-      set_default_search_arguments :xpath, '//h3'
+    let(:child_section) do
+      Class.new(base_section) do
+        set_default_search_arguments :xpath, '//h3'
+      end
     end
 
-    class OtherChildSection < BaseSection; end
+    let(:other_child_section) do
+      Class.new(base_section)
+    end
 
     it 'is false by default' do
-      expect(Section.default_search_arguments).to be false
+      expect(described_class.default_search_arguments).to be false
     end
 
     it 'returns the default search arguments' do
-      expect(BaseSection.default_search_arguments).to eq([:css, 'a.b'])
+      expect(base_section.default_search_arguments).to eq([:css, 'a.b'])
     end
 
     context 'when both parent and child class have default_search_arguments' do
       it 'returns the child level arguments' do
-        expect(ChildSection.default_search_arguments).to eq([:xpath, '//h3'])
+        expect(child_section.default_search_arguments).to eq([:xpath, '//h3'])
       end
     end
 
     context 'when only parent class has default_search_arguments' do
       it 'returns the parent level arguments' do
-        expect(OtherChildSection.default_search_arguments).to eq([:css, 'a.b'])
+        expect(other_child_section.default_search_arguments).to eq([:css, 'a.b'])
       end
     end
   end
 
   describe '.set_default_search_arguments' do
-    it { expect(Section).to respond_to(:set_default_search_arguments) }
+    it { expect(described_class).to respond_to(:set_default_search_arguments) }
   end
 
   describe '#new' do
-    class NewSection < SitePrism::Section; end
-
-    class NewPage < SitePrism::Page
-      section :new_section, NewSection, '.class-one', css: '.my-css', text: 'Hi'
-      element :new_element, '.class-two'
+    let(:new_page) do
+      Class.new(SitePrism::Page) do
+        section :new_section, SitePrism::Section, '.class-one', css: '.my-css', text: 'Hi'
+        element :new_element, '.class-two'
+      end
     end
 
-    let(:page) { NewPage.new }
+    let(:page) { new_page.new }
 
     context 'with a block given' do
       it 'passes the locator to Capybara.within' do
@@ -332,24 +338,24 @@ class or/and a block as the second argument."
   end
 
   describe '#parent_page' do
-    let(:section) { described_class.new(page, '.locator') }
+    let(:section) { described_class.new(parent, '.locator') }
     let(:deeply_nested_section) do
       described_class.new(
         described_class.new(
           described_class.new(
-            page, '.locator-section-large'
+            parent, '.locator-section-large'
           ), '.locator-section-medium'
         ), '.locator-small'
       )
     end
-    let(:page) { Page.new }
+    let(:parent) { SitePrism::Page.new }
 
     it 'returns the parent page of a section' do
-      expect(section.parent_page).to be_a SitePrism::Page
+      expect(section.parent_page).to eq(parent)
     end
 
     it 'returns the parent page of a deeply nested section' do
-      expect(deeply_nested_section.parent_page).to be_a SitePrism::Page
+      expect(deeply_nested_section.parent_page).to eq(parent)
     end
   end
 

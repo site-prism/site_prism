@@ -2,6 +2,18 @@
 ### Removed
 
 ### Added
+
+### Changed
+- Bumped a whole raft of dev dependencies
+([luke-hill])
+
+- Minor lib/spec optimisations from `rubocop-performance`
+([luke-hill])
+  
+### Fixed
+
+## [3.7.1] - 2021-02-19
+### Added
 - Bumped the suite's rubocop gems significantly (As we were tracking behind)
   - In lieu of this, Some changes were made to the suite styles and auto-config was re-generated
   - A whole host of documentation updates were made to code-areas lacking it
@@ -13,11 +25,9 @@
   - Updated development dependencies to be something more reasonable
 ([luke-hill])
 
-### Fixed
-
 ## [3.7] - 2020-10-15
 ### Added
-- Updated README to clarify `displayed?` wait behavior and finder method delgation ([asavageiv])
+- Updated README to clarify `displayed?` wait behavior and finder method delegation ([asavageiv])
 
 ### Changed
 **Internal Breaking Change**:
@@ -1065,7 +1075,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[Unreleased]: https://github.com/site-prism/site_prism/compare/v3.7...main
+[Unreleased]: https://github.com/site-prism/site_prism/compare/v3.7.1...main
+[3.7.1]:      https://github.com/site-prism/site_prism/compare/v3.7...v3.7.1
 [3.7]:        https://github.com/site-prism/site_prism/compare/v3.6...v3.7
 [3.6]:        https://github.com/site-prism/site_prism/compare/v3.5...v3.6
 [3.5]:        https://github.com/site-prism/site_prism/compare/v3.4.2...v3.5
