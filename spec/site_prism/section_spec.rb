@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 describe SitePrism::Section do
-  let(:dont_wait) { { wait: 0 } }
   let(:section_without_block) { described_class.new(SitePrism::Page.new, locator) }
   let!(:locator) { instance_double('Capybara::Node::Element') }
-  let(:section_with_block) do
-    described_class.new(SitePrism::Page.new, locator) { 1 + 1 }
-  end
 
   it 'responds to Capybara methods' do
     expect(section_without_block).to respond_to(*Capybara::Session::DSL_METHODS)
@@ -150,13 +146,13 @@ class or/and a block as the second argument."
       let(:search_arguments) { ['.other-section'] }
 
       it 'returns the search arguments for a section' do
-        expect(page).to receive(:_find).with(*search_arguments, **dont_wait)
+        expect(page).to receive(:_find).with(*search_arguments, wait: 0)
 
         page.section_with_locator
       end
 
       it 'ignores the `default_search_arguments`' do
-        expect(page).not_to receive(:_find).with(*default_search_arguments, **dont_wait)
+        expect(page).not_to receive(:_find).with(*default_search_arguments, wait: 0)
 
         page.section_with_locator
       end
@@ -174,13 +170,13 @@ class or/and a block as the second argument."
       end
 
       it 'uses the default search arguments set on the section' do
-        expect(page).to receive(:_find).with(*search_arguments, **dont_wait)
+        expect(page).to receive(:_find).with(*search_arguments, wait: 0)
 
         page.section_using_defaults
       end
 
       it 'uses the default_search_arguments set on the parent if none set on section' do
-        expect(page).to receive(:_find).with(*search_arguments, **dont_wait)
+        expect(page).to receive(:_find).with(*search_arguments, wait: 0)
 
         page.section_using_defaults_from_parent
       end
@@ -244,6 +240,10 @@ class or/and a block as the second argument."
     let(:page) { new_page.new }
 
     context 'with a block given' do
+      let(:section_with_block) do
+        described_class.new(SitePrism::Page.new, locator) { 1 + 1 }
+      end
+
       it 'passes the locator to Capybara.within' do
         expect(Capybara).to receive(:within).with(locator)
 
@@ -264,7 +264,7 @@ class or/and a block as the second argument."
       let(:locator_args) { '.class-one' }
 
       it 'passes in a hash of query arguments' do
-        expect(page).to receive(:_find).with(*locator_args, **query_args, **dont_wait)
+        expect(page).to receive(:_find).with(*locator_args, **query_args, wait: 0)
 
         page.new_section
       end
@@ -275,7 +275,7 @@ class or/and a block as the second argument."
       let(:locator_args) { '.class-two' }
 
       it 'passes in an empty hash, which is then sanitized out' do
-        expect(page).to receive(:_find).with(*locator_args, **dont_wait)
+        expect(page).to receive(:_find).with(*locator_args, wait: 0)
 
         page.new_element
       end
