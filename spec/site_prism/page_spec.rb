@@ -5,21 +5,6 @@ describe SitePrism::Page do
   let(:blank_page) do
     Class.new(described_class).new
   end
-  let(:page_with_url) do
-    Class.new(described_class) do
-      set_url '/bob'
-    end.new
-  end
-  let(:page_with_uri_template) do
-    Class.new(described_class) do
-      set_url '/users{/username}{?query*}'
-    end.new
-  end
-  let(:page_with_url_matcher) do
-    Class.new(described_class) do
-      set_url_matcher(/bob/)
-    end.new
-  end
 
   before do
     allow(SitePrism::Waiter).to receive(:default_wait_time).and_return(0)
@@ -34,6 +19,18 @@ describe SitePrism::Page do
   end
 
   describe '#url' do
+    let(:page_with_url) do
+      Class.new(described_class) do
+        set_url '/bob'
+      end.new
+    end
+
+    let(:page_with_uri_template) do
+      Class.new(described_class) do
+        set_url '/users{/username}{?query*}'
+      end.new
+    end
+
     it 'shows the base url of a page object' do
       expect(page_with_url.url).to eq('/bob')
     end
@@ -53,6 +50,18 @@ describe SitePrism::Page do
   end
 
   describe '#url_matcher' do
+    let(:page_with_url) do
+      Class.new(described_class) do
+        set_url '/bob'
+      end.new
+    end
+
+    let(:page_with_url_matcher) do
+      Class.new(described_class) do
+        set_url_matcher(/bob/)
+      end.new
+    end
+
     it 'shows the base url regex matcher of the `SitePrism::Page`' do
       expect(page_with_url_matcher.url_matcher).to eq(/bob/)
     end
@@ -86,6 +95,12 @@ describe SitePrism::Page do
   it { is_expected.to respond_to(*Capybara::Session::DSL_METHODS) }
 
   describe '#page' do
+    let(:page_with_url) do
+      Class.new(described_class) do
+        set_url '/bob'
+      end.new
+    end
+
     subject { page_with_url.page }
 
     context 'with #load called previously' do
@@ -118,6 +133,16 @@ describe SitePrism::Page do
 
         load_validation { [must_be_true, 'It is not true!'] }
         load_validation { [also_true, 'It is not also true!'] }
+      end.new
+    end
+    let(:page_with_url) do
+      Class.new(described_class) do
+        set_url '/bob'
+      end.new
+    end
+    let(:page_with_uri_template) do
+      Class.new(described_class) do
+        set_url '/users{/username}{?query*}'
       end.new
     end
 
@@ -203,6 +228,18 @@ describe SitePrism::Page do
   end
 
   describe '#displayed?' do
+    let(:page_with_url) do
+      Class.new(described_class) do
+        set_url '/bob'
+      end.new
+    end
+
+    let(:page_with_url_matcher) do
+      Class.new(described_class) do
+        set_url_matcher(/bob/)
+      end.new
+    end
+
     it 'allow calls if the url matcher has been set' do
       expect { page_with_url_matcher.displayed? }.not_to raise_error
     end
