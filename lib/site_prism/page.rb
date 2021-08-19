@@ -10,19 +10,34 @@ module SitePrism
     class << self
       attr_reader :url
 
+      # Sets and returns the specific url that will be loaded for a page object
+      #
+      # @return [String]
       def set_url(page_url)
         @url = page_url.to_s
       end
 
+      # Sets and returns the specific url matcher that will be used to validate the page is loaded
+      #
+      # @return [Regexp]
       def set_url_matcher(page_url_matcher)
         @url_matcher = page_url_matcher
       end
 
+      # The specific url matcher that is used to validate the page is loaded.
+      # When one hasn't been previously set, use the url that was set as a direct Regexp exact matcher
+      #
+      # @return [Regexp]
       def url_matcher
         @url_matcher ||= url
       end
     end
 
+    # Where a Capybara HTML fragment has been directly injected into `#load` as a block return this loaded fragment
+    # Where a page has been directly navigated to through traditional means (i.e. Selenium), return an instance of the
+    # current Capybara session (With all applicable methods)
+    #
+    # @return [Capybara::Node::Simple || Capybara::Session]
     def page
       (defined?(@page) && @page) || Capybara.current_session
     end
