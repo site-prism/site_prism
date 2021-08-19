@@ -2,9 +2,6 @@
 
 describe SitePrism::Page do
   let(:locator) { instance_double('Capybara::Node::Element') }
-  let(:blank_page) do
-    Class.new(described_class).new
-  end
 
   before do
     allow(SitePrism::Waiter).to receive(:default_wait_time).and_return(0)
@@ -36,7 +33,7 @@ describe SitePrism::Page do
     end
 
     it 'is nil by default' do
-      expect(blank_page.url).to be_nil
+      expect(subject.url).to be_nil
     end
 
     it 'shows the base url of a page object - omitting the parametrisation parts' do
@@ -71,12 +68,12 @@ describe SitePrism::Page do
     end
 
     it 'is nil by default on the Instance' do
-      expect(blank_page.url_matcher).to be_nil
+      expect(subject.url_matcher).to be_nil
     end
   end
 
   it 'exposes the page title' do
-    expect(blank_page).to respond_to(:title)
+    expect(subject).to respond_to(:title)
   end
 
   it 'raises an exception if passing a block to an element' do
@@ -147,7 +144,7 @@ describe SitePrism::Page do
     end
 
     it "does not allow loading if the url hasn't been set" do
-      expect { blank_page.load }.to raise_error(SitePrism::NoUrlForPageError)
+      expect { subject.load }.to raise_error(SitePrism::NoUrlForPageError)
     end
 
     it 'allows loading if the url has been set' do
@@ -172,7 +169,7 @@ describe SitePrism::Page do
       end
 
       it 'executes and returns the block passed into it at runtime' do
-        expect(blank_page.load('<html>hi<html/>', &:text)).to eq('hi')
+        expect(subject.load('<html>hi<html/>', &:text)).to eq('hi')
       end
 
       it 'yields itself to the passed block' do
@@ -245,7 +242,7 @@ describe SitePrism::Page do
     end
 
     it 'raises an exception if called before the matcher has been set' do
-      expect { blank_page.displayed? }.to raise_error(SitePrism::NoUrlMatcherForPageError)
+      expect { subject.displayed? }.to raise_error(SitePrism::NoUrlMatcherForPageError)
     end
 
     it 'delegates through #wait_until_displayed' do
@@ -602,7 +599,7 @@ describe SitePrism::Page do
         .to receive(:execute_script)
         .with('JUMP!')
 
-      blank_page.execute_script('JUMP!')
+      subject.execute_script('JUMP!')
     end
   end
 
@@ -613,29 +610,29 @@ describe SitePrism::Page do
         .with('How High?')
         .and_return('To the sky!')
 
-      expect(blank_page.evaluate_script('How High?')).to eq('To the sky!')
+      expect(subject.evaluate_script('How High?')).to eq('To the sky!')
     end
   end
 
   describe '#secure?' do
-    subject(:page) { blank_page }
+    subject(:page) { described_class.new }
 
     it 'is true for secure pages' do
       swap_current_url('https://www.secure.com/')
 
-      expect(blank_page).to be_secure
+      expect(page).to be_secure
     end
 
     it 'is false for insecure pages' do
       swap_current_url('http://www.insecure.com/')
 
-      expect(blank_page).not_to be_secure
+      expect(page).not_to be_secure
     end
 
     it 'is false for pages where the prefix is www' do
       swap_current_url('www.unsure.com')
 
-      expect(blank_page).not_to be_secure
+      expect(page).not_to be_secure
     end
   end
 
