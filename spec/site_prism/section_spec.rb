@@ -22,16 +22,15 @@ describe SitePrism::Section do
     end
   end
 
-  describe 'a section' do
-    class SingleSection < SitePrism::Section
-      element :single_section_element, '.foo'
-    end
-
+  describe '.section' do
     let(:page_with_sections) do
       Class.new(SitePrism::Page) do
-        section :single_section, SingleSection, '.bob'
+        single_section = Class.new(SitePrism::Section) do
+          element :single_section_element, '.foo'
+        end
+        section :single_section, single_section, '.bob'
 
-        section :section_with_a_block, SingleSection, '.bob' do
+        section :section_with_a_block, single_section, '.bob' do
           element :block_element, '.btn'
         end
       end
@@ -45,12 +44,11 @@ describe SitePrism::Section do
       allow(page_with_sections_instance).to receive(:_find).and_return(:element)
     end
 
-    it 'is an instance of the defined section class' do
-      expect(page_with_sections_instance.section_with_a_block.class.ancestors)
-        .to include(SingleSection)
+    it 'creates objects that are a subclass of SitePrism::Section' do
+      expect(page_with_sections_instance.section_with_a_block.class.ancestors).to include(described_class)
     end
 
-    it 'has elements from the defined section' do
+    it 'has elements from within the defined section' do
       expect(page_with_sections_instance.section_with_a_block)
         .to respond_to(:single_section_element)
     end
@@ -133,17 +131,15 @@ class or/and a block as the second argument."
   describe '.set_default search arguments' do
     let(:page_with_section_with_default_search_arguments) do
       Class.new(SitePrism::Page) do
-        class SectionWithDefaultArguments < SitePrism::Section
+        section_with_default_arguments = Class.new(SitePrism::Section) do
           set_default_search_arguments :css, '.section'
         end
+        section_with_default_arguments_for_parent = Class.new(section_with_default_arguments)
 
-        class SectionWithDefaultArgumentsForParent < SectionWithDefaultArguments; end
-
-        section :section_using_defaults, SectionWithDefaultArguments
-        section :section_using_defaults_from_parent,
-                SectionWithDefaultArgumentsForParent
-        section :section_with_locator, SectionWithDefaultArguments, '.other-section'
-        sections :sections, SectionWithDefaultArguments
+        section :section_using_defaults, section_with_default_arguments
+        section :section_using_defaults_from_parent, section_with_default_arguments_for_parent
+        section :section_with_locator, section_with_default_arguments, '.other-section'
+        sections :sections, section_with_default_arguments
       end
     end
 
