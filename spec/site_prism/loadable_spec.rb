@@ -139,18 +139,18 @@ describe SitePrism::Loadable do
 
     it { is_expected.to be_loaded }
 
-    it 'returns true if loaded value is cached' do
-      instance.loaded = true
+    context 'when already loaded' do
+      before { instance.loaded = true }
 
-      expect(instance).to be_loaded
-    end
+      it 'returns true if loaded value is cached' do
+        expect(instance).to be_loaded
+      end
 
-    it 'does not check load_validations if already loaded' do
-      instance.loaded = true
+      it 'does not check load_validations if already loaded' do
+        expect(instance).not_to receive(:true_thing?)
 
-      expect(instance).not_to receive(:true_thing?)
-
-      instance.loaded?
+        instance.loaded?
+      end
     end
 
     it 'returns true if all load validations pass' do
