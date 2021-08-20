@@ -2,7 +2,6 @@
 
 describe SitePrism do
   describe 'iFrame' do
-    let!(:locator) { instance_double('Capybara::Node::Element') }
     let(:frame_instance) { frame_class.new }
 
     shared_examples 'iFrame' do
@@ -15,10 +14,10 @@ describe SitePrism do
       describe 'A Page with an iFrame contained within' do
         it 'uses #within_frame delegated through Capybara.current_session' do
           allow(frame_instance)
-            .to receive(:_find).with(*element_caller_args).and_return(locator)
+            .to receive(:_find).with(*element_caller_args)
 
           expect(Capybara.current_session)
-            .to receive(:within_frame).with(*frame_caller_args).and_yield
+            .to receive(:within_frame).with(*frame_caller_args)
 
           page.iframe(&:element_one)
         end
@@ -28,7 +27,7 @@ describe SitePrism do
             .to receive(:within_frame).with(*frame_caller_args).and_yield
 
           expect(frame_instance)
-            .to receive(:_find).with(*element_caller_args).and_return(locator)
+            .to receive(:_find).with(*element_caller_args)
 
           page.iframe(&:element_one)
         end
@@ -36,15 +35,15 @@ describe SitePrism do
 
       describe 'A Section with an iFrame contained within' do
         before do
-          allow(page).to receive(:_find).with(*section_locator).and_return(locator)
+          allow(page).to receive(:_find).with(*section_locator)
         end
 
         it 'uses #within_frame delegated through Capybara.current_session' do
           allow(frame_instance)
-            .to receive(:_find).with(*element_caller_args).and_return(locator)
+            .to receive(:_find).with(*element_caller_args)
 
           expect(Capybara.current_session)
-            .to receive(:within_frame).with(*frame_caller_args).and_yield
+            .to receive(:within_frame).with(*frame_caller_args)
 
           page.section_one.iframe(&:element_one)
         end
@@ -54,7 +53,7 @@ describe SitePrism do
             .to receive(:within_frame).with(*frame_caller_args).and_yield
 
           expect(frame_instance)
-            .to receive(:_find).with(*element_caller_args).and_return(locator)
+            .to receive(:_find).with(*element_caller_args)
 
           page.section_one.iframe(&:element_one)
         end
@@ -82,7 +81,6 @@ describe SitePrism do
 
     context 'with css elements' do
       let(:page) { CSSPage.new }
-      let(:klass) { CSSPage }
       let(:frame_caller_args) { [:css, '.iframe'] }
       let(:frame_class) { CSSIFrame }
       let(:section_locator) { ['span.locator', { wait: 0 }] }
@@ -93,7 +91,6 @@ describe SitePrism do
 
     context 'with xpath elements' do
       let(:page) { XPathPage.new }
-      let(:klass) { XPathPage }
       let(:frame_caller_args) { [:xpath, '//*[@class="iframe"]'] }
       let(:frame_class) { XPathIFrame }
       let(:section_locator) { [:xpath, '//span[@class="locator"]', { wait: 0 }] }

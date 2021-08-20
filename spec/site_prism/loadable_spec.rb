@@ -20,7 +20,6 @@ describe SitePrism::Loadable do
   describe '.load_validations' do
     let(:validation1) { -> { true } }
     let(:validation2) { -> { true } }
-    let(:validation3) { -> { true } }
 
     context 'with no inheritance classes' do
       it 'returns load_validations from the current class' do
@@ -42,11 +41,10 @@ describe SitePrism::Loadable do
       end
 
       it 'ensures that load validations of parents are checked first' do
-        loadable.load_validation(&validation1)
         subklass.load_validation(&validation2)
-        loadable.load_validation(&validation3)
+        loadable.load_validation(&validation1)
 
-        expect(subklass.load_validations).to eq([validation1, validation3, validation2])
+        expect(subklass.load_validations).to eq([validation1, validation2])
       end
     end
 

@@ -197,6 +197,9 @@ module SitePrism
         end
       end
 
+      # Return a list of all mapped items on a SitePrism class instance (Page or Section)
+      # If legacy is set to true (Default) -> @return [Array]
+      # If legacy is set to false (New behaviour) -> @return [Hash]
       def mapped_items(legacy: true)
         return old_mapped_items if legacy
 
