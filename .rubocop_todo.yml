@@ -22,11 +22,11 @@ RSpec/LeadingSubject:
 RSpec/MultipleMemoizedHelpers:
   Max: 8
 
-# Offense count: 8
-# Configuration parameters: IgnoreSharedExamples.
-RSpec/NamedSubject:
-  Exclude:
-    - 'spec/site_prism/page_spec.rb'
+## Offense count: 8
+## Configuration parameters: IgnoreSharedExamples.
+#RSpec/NamedSubject:
+#  Exclude:
+#    - 'spec/site_prism/page_spec.rb'
 
 # Offense count: 4
 RSpec/StubbedMock:
