@@ -70,7 +70,7 @@ describe 'Iframe' do
 
     it 'will throw a warning when creating an iFrame with an invalid locator' do
       log_messages = capture_stdout do
-        described_class.log_level = :WARN
+        SitePrism.log_level = :WARN
         invalid_class
       end
 

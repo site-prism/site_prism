@@ -59,7 +59,7 @@ describe 'Element' do
 
     it 'raises a warning when the name starts with no_' do
       log_messages = capture_stdout do
-        described_class.log_level = :WARN
+        SitePrism.log_level = :WARN
         subject.no_such_element
       end
       expect(lines(log_messages)).to eq 3
