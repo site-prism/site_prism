@@ -17,10 +17,10 @@ RSpec/LeadingSubject:
   Exclude:
     - 'spec/site_prism/page_spec.rb'
 
-# Offense count: 7
-# Configuration parameters: AllowSubject.
-RSpec/MultipleMemoizedHelpers:
-  Max: 8
+## Offense count: 7
+## Configuration parameters: AllowSubject.
+#RSpec/MultipleMemoizedHelpers:
+#  Max: 8
 
 # Offense count: 2
 RSpec/StubbedMock:

@@ -29,28 +29,23 @@ describe SitePrism::Section do
         section :section_with_a_block, single_section, '.bob' do
           element :block_element, '.btn'
         end
-      end
-    end
-
-    let(:page_with_sections_instance) do
-      page_with_sections.new
+      end.new
     end
 
     before do
-      allow(page_with_sections_instance).to receive(:_find).and_return(:element)
+      allow(page_with_sections).to receive(:_find).and_return(:element)
     end
 
     it 'creates objects that are a subclass of SitePrism::Section' do
-      expect(page_with_sections_instance.section_with_a_block.class.ancestors).to include(described_class)
+      expect(page_with_sections.section_with_a_block.class.ancestors).to include(described_class)
     end
 
     it 'has elements from within the defined section' do
-      expect(page_with_sections_instance.section_with_a_block)
-        .to respond_to(:single_section_element)
+      expect(page_with_sections.section_with_a_block).to respond_to(:single_section_element)
     end
 
     it 'has elements from the block' do
-      expect(page_with_sections_instance.section_with_a_block).to respond_to(:block_element)
+      expect(page_with_sections.section_with_a_block).to respond_to(:block_element)
     end
 
     context 'when second argument is a Class' do
@@ -112,20 +107,19 @@ describe SitePrism::Section do
     end
 
     context 'when second argument is not a Class and no block is given' do
-      let(:section) { SitePrism::Page.section(:incorrect_section, '.section') }
+      let(:incorrect_section) { SitePrism::Page.section(:incorrect_section, '.section') }
       let(:message) do
-        "You should provide descendant of SitePrism::Section \
-class or/and a block as the second argument."
+        'You should provide descendant of SitePrism::Section class or/and a block as the second argument.'
       end
 
       it 'raises an ArgumentError' do
-        expect { section }.to raise_error(ArgumentError).with_message(message)
+        expect { incorrect_section }.to raise_error(ArgumentError).with_message(message)
       end
     end
   end
 
   describe '.set_default search arguments' do
-    let(:page_with_section_with_default_search_arguments) do
+    let(:page) do
       Class.new(SitePrism::Page) do
         section_with_default_arguments = Class.new(SitePrism::Section) do
           set_default_search_arguments :css, '.section'
@@ -136,17 +130,13 @@ class or/and a block as the second argument."
         section :section_using_defaults_from_parent, section_with_default_arguments_for_parent
         section :section_with_locator, section_with_default_arguments, '.other-section'
         sections :sections, section_with_default_arguments
-      end
+      end.new
     end
-
-    let(:page) { page_with_section_with_default_search_arguments.new }
     let(:default_search_arguments) { [:css, '.section'] }
 
     context 'when search arguments are provided during the DSL definition' do
-      let(:search_arguments) { ['.other-section'] }
-
       it 'returns the search arguments for a section' do
-        expect(page).to receive(:_find).with(*search_arguments, wait: 0)
+        expect(page).to receive(:_find).with('.other-section', wait: 0)
 
         page.section_with_locator
       end
@@ -159,7 +149,6 @@ class or/and a block as the second argument."
     end
 
     context 'when search arguments are not provided during the DSL definition' do
-      let(:search_arguments) { default_search_arguments }
       let(:invalid_page) do
         Class.new(SitePrism::Page) do
           section :section, SitePrism::Section
@@ -170,13 +159,13 @@ class or/and a block as the second argument."
       end
 
       it 'uses the default search arguments set on the section' do
-        expect(page).to receive(:_find).with(*search_arguments, wait: 0)
+        expect(page).to receive(:_find).with(*default_search_arguments, wait: 0)
 
         page.section_using_defaults
       end
 
       it 'uses the default_search_arguments set on the parent if none set on section' do
-        expect(page).to receive(:_find).with(*search_arguments, wait: 0)
+        expect(page).to receive(:_find).with(*default_search_arguments, wait: 0)
 
         page.section_using_defaults_from_parent
       end
@@ -275,7 +264,7 @@ class or/and a block as the second argument."
       let(:locator_args) { '.class-two' }
 
       it 'passes in an empty hash, which is then sanitized out' do
-        expect(page).to receive(:_find).with(*locator_args, wait: 0)
+        expect(page).to receive(:_find).with(*locator_args, **query_args, wait: 0)
 
         page.new_element
       end

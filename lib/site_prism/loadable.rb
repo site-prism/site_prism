@@ -68,7 +68,6 @@ module SitePrism
       end
     end
 
-
     # [SitePrism::Loadable::ClassMethods]
     # This exposes all of the DSL definitions users will use when generating "loadables"
     #

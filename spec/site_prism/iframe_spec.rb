@@ -79,7 +79,8 @@ describe 'Iframe' do
   end
 
   context 'with css elements' do
-    let(:page) { CSSPage.new }
+    subject(:page) { CSSPage.new }
+
     let(:iframe_caller_args) { [:css, '.iframe'] }
     let(:iframe_class) { CSSIFrame }
     let(:section_locator) { ['span.locator', { wait: 0 }] }
@@ -89,7 +90,8 @@ describe 'Iframe' do
   end
 
   context 'with xpath elements' do
-    let(:page) { XPathPage.new }
+    subject(:page) { XPathPage.new }
+
     let(:iframe_caller_args) { [:xpath, '//*[@class="iframe"]'] }
     let(:iframe_class) { XPathIFrame }
     let(:section_locator) { [:xpath, '//span[@class="locator"]', { wait: 0 }] }
