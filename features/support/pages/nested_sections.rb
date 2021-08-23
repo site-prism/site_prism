@@ -16,9 +16,9 @@ class NestedSections < SitePrism::Page
     element :title, 'h1'
   end
 
-  section :level_1, '.level-1' do
-    section :level_2, '.level-2' do
-      section :level_3, '.level-3' do
+  section :level1, '.level-1' do
+    section :level2, '.level-2' do
+      section :level3, '.level-3' do
         element :deep_span, '.deep-span'
       end
     end

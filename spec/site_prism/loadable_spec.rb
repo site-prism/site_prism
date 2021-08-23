@@ -84,7 +84,7 @@ describe SitePrism::Loadable do
         expect(instance).to receive(:valid2?).once.and_call_original
 
         instance.when_loaded do
-          instance.when_loaded {}
+          instance.when_loaded
         end
       end
 

@@ -1,102 +1,100 @@
 # frozen_string_literal: true
 
-describe SitePrism do
-  describe 'iFrame' do
-    let(:frame_instance) { frame_class.new }
+describe 'Iframe' do
+  let(:iframe_instance) { iframe_class.new }
 
-    shared_examples 'iFrame' do
-      before { allow(frame_class).to receive(:new).and_return(frame_instance) }
+  shared_examples 'iFrame' do
+    before { allow(iframe_class).to receive(:new).and_return(iframe_instance) }
 
-      it 'cannot be called out of block context' do
-        expect { page.iframe }.to raise_error(SitePrism::MissingBlockError)
+    it 'cannot be called out of block context' do
+      expect { page.iframe }.to raise_error(SitePrism::MissingBlockError)
+    end
+
+    describe 'A Page with an iFrame contained within' do
+      it 'uses #within_frame delegated through Capybara.current_session' do
+        allow(iframe_instance)
+          .to receive(:_find).with(*element_caller_args)
+
+        expect(Capybara.current_session)
+          .to receive(:within_frame).with(*iframe_caller_args)
+
+        page.iframe(&:element_one)
       end
 
-      describe 'A Page with an iFrame contained within' do
-        it 'uses #within_frame delegated through Capybara.current_session' do
-          allow(frame_instance)
-            .to receive(:_find).with(*element_caller_args)
+      it 'passes the caller arg to the frame instance to then perform the location check' do
+        allow(Capybara.current_session)
+          .to receive(:within_frame).with(*iframe_caller_args).and_yield
 
-          expect(Capybara.current_session)
-            .to receive(:within_frame).with(*frame_caller_args)
+        expect(iframe_instance)
+          .to receive(:_find).with(*element_caller_args)
 
-          page.iframe(&:element_one)
-        end
-
-        it 'passes the caller arg to the frame instance to then perform the location check' do
-          allow(Capybara.current_session)
-            .to receive(:within_frame).with(*frame_caller_args).and_yield
-
-          expect(frame_instance)
-            .to receive(:_find).with(*element_caller_args)
-
-          page.iframe(&:element_one)
-        end
-      end
-
-      describe 'A Section with an iFrame contained within' do
-        before do
-          allow(page).to receive(:_find).with(*section_locator)
-        end
-
-        it 'uses #within_frame delegated through Capybara.current_session' do
-          allow(frame_instance)
-            .to receive(:_find).with(*element_caller_args)
-
-          expect(Capybara.current_session)
-            .to receive(:within_frame).with(*frame_caller_args)
-
-          page.section_one.iframe(&:element_one)
-        end
-
-        it 'passes the caller arg to the frame instance to then perform the location check' do
-          allow(Capybara.current_session)
-            .to receive(:within_frame).with(*frame_caller_args).and_yield
-
-          expect(frame_instance)
-            .to receive(:_find).with(*element_caller_args)
-
-          page.section_one.iframe(&:element_one)
-        end
+        page.iframe(&:element_one)
       end
     end
 
-    describe '#warn_on_invalid_selector_input' do
-      let(:invalid_class) do
-        Class.new(SitePrism::Page) do
-          iframe :bad_iframe_reference, XPathIFrame, '//xpath'
-        end
+    describe 'A Section with an iFrame contained within' do
+      before do
+        allow(page).to receive(:_find).with(*section_locator)
       end
 
-      before { wipe_logger! }
+      it 'uses #within_frame delegated through Capybara.current_session' do
+        allow(iframe_instance)
+          .to receive(:_find).with(*element_caller_args)
 
-      it 'will throw a warning when creating an iFrame with an invalid locator' do
-        log_messages = capture_stdout do
-          described_class.log_level = :WARN
-          invalid_class
-        end
+        expect(Capybara.current_session)
+          .to receive(:within_frame).with(*iframe_caller_args)
 
-        expect(lines(log_messages)).to eq 2
+        page.section_one.iframe(&:element_one)
+      end
+
+      it 'passes the caller arg to the frame instance to then perform the location check' do
+        allow(Capybara.current_session)
+          .to receive(:within_frame).with(*iframe_caller_args).and_yield
+
+        expect(iframe_instance)
+          .to receive(:_find).with(*element_caller_args)
+
+        page.section_one.iframe(&:element_one)
+      end
+    end
+  end
+
+  describe '#warn_on_invalid_selector_input' do
+    let(:invalid_class) do
+      Class.new(SitePrism::Page) do
+        iframe :bad_iframe_reference, XPathIFrame, '//xpath'
       end
     end
 
-    context 'with css elements' do
-      let(:page) { CSSPage.new }
-      let(:frame_caller_args) { [:css, '.iframe'] }
-      let(:frame_class) { CSSIFrame }
-      let(:section_locator) { ['span.locator', { wait: 0 }] }
-      let(:element_caller_args) { ['.some_element', { wait: 0 }] }
+    before { wipe_logger! }
 
-      it_behaves_like 'iFrame'
+    it 'will throw a warning when creating an iFrame with an invalid locator' do
+      log_messages = capture_stdout do
+        described_class.log_level = :WARN
+        invalid_class
+      end
+
+      expect(lines(log_messages)).to eq 2
     end
+  end
 
-    context 'with xpath elements' do
-      let(:page) { XPathPage.new }
-      let(:frame_caller_args) { [:xpath, '//*[@class="iframe"]'] }
-      let(:frame_class) { XPathIFrame }
-      let(:section_locator) { [:xpath, '//span[@class="locator"]', { wait: 0 }] }
-      let(:element_caller_args) { [:xpath, '//[@class="some_element"]', { wait: 0 }] }
+  context 'with css elements' do
+    let(:page) { CSSPage.new }
+    let(:iframe_caller_args) { [:css, '.iframe'] }
+    let(:iframe_class) { CSSIFrame }
+    let(:section_locator) { ['span.locator', { wait: 0 }] }
+    let(:element_caller_args) { ['.some_element', { wait: 0 }] }
 
-      it_behaves_like 'iFrame'
-    end
+    it_behaves_like 'iFrame'
+  end
+
+  context 'with xpath elements' do
+    let(:page) { XPathPage.new }
+    let(:iframe_caller_args) { [:xpath, '//*[@class="iframe"]'] }
+    let(:iframe_class) { XPathIFrame }
+    let(:section_locator) { [:xpath, '//span[@class="locator"]', { wait: 0 }] }
+    let(:element_caller_args) { [:xpath, '//[@class="some_element"]', { wait: 0 }] }
+
+    it_behaves_like 'iFrame'
   end
 end
