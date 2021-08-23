@@ -9,45 +9,6 @@ module SitePrism
   # Loadable's are primarily used with the `#load` method which will auto-execute them all
   # in their defined order. But they can be used dynamically wherever desired.
   module Loadable
-    module ClassMethods
-      # The list of load_validations.
-      # They will be executed in the order they are defined.
-      #
-      # @return [Array]
-      def load_validations
-        if superclass.respond_to?(:load_validations)
-          superclass.load_validations + _load_validations
-        else
-          _load_validations
-        end
-      end
-
-      # Appends a load validation block to the page class.
-      #
-      # When `loaded?` is called, these blocks are instance_eval'd
-      # against the current page instance.
-      # This allows users to wait for specific events to occur on
-      # the page or certain elements to be loaded before performing
-      # any actions on the page.
-      #
-      # @param block [&block] A block which returns true if the page
-      # loaded successfully, or false if it did not.
-      # This block can contain up to 2 elements in an array
-      # The first is the physical validation test to be truthily evaluated.
-      #
-      # If this does not pass, then the 2nd item (if defined), is output
-      # as an error message to the +FailedLoadValidationError+ that is thrown
-      def load_validation(&block)
-        _load_validations << block
-      end
-
-      private
-
-      def _load_validations
-        @_load_validations ||= []
-      end
-    end
-
     def self.included(base)
       base.extend(ClassMethods)
     end
@@ -104,6 +65,53 @@ module SitePrism
 
         self.load_error = message if message && !passed
         passed
+      end
+    end
+
+
+    # [SitePrism::Loadable::ClassMethods]
+    # This exposes all of the DSL definitions users will use when generating "loadables"
+    #
+    # A "Loadable" is a definition whereby the page object once loaded must pass a boolean check
+    # These loadables are typically provided using the method `load_validation`
+    module ClassMethods
+      # The list of load_validations.
+      # They will be executed in the order they are defined.
+      #
+      # @return [Array]
+      def load_validations
+        if superclass.respond_to?(:load_validations)
+          superclass.load_validations + _load_validations
+        else
+          _load_validations
+        end
+      end
+
+      # Appends a load validation block to the page class.
+      #
+      # When `loaded?` is called, these blocks are instance_eval'd
+      # against the current page instance.
+      # This allows users to wait for specific events to occur on
+      # the page or certain elements to be loaded before performing
+      # any actions on the page.
+      #
+      # @param block [&block] A block which returns true if the page
+      # loaded successfully, or false if it did not.
+      # This block can contain up to 2 elements in an array
+      # The first is the physical validation test to be truthily evaluated.
+      #
+      # If this does not pass, then the 2nd item (if defined), is output
+      # as an error message to the +FailedLoadValidationError+ that is thrown
+      #
+      # @return [Proc]
+      def load_validation(&block)
+        _load_validations << block
+      end
+
+      private
+
+      def _load_validations
+        @_load_validations ||= []
       end
     end
   end
