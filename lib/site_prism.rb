@@ -20,7 +20,7 @@ module SitePrism
   autoload :Waiter, 'site_prism/waiter'
 
   class << self
-    attr_reader :use_all_there_gem
+    attr_reader :use_all_there_gem, :run_validations_on_initialize
 
     def configure
       yield self
