@@ -84,7 +84,7 @@ describe SitePrism::Loadable do
         expect(instance).to receive(:valid2?).once.and_call_original
 
         instance.when_loaded do
-          instance.when_loaded {}
+          instance.when_loaded
         end
       end
 
@@ -131,15 +131,12 @@ describe SitePrism::Loadable do
   end
 
   describe '#loaded?' do
-    subject(:instance) { inheriting_loadable.new }
-
+    let(:instance) { inheriting_loadable.new }
     let(:inheriting_loadable) { Class.new(loadable) }
 
     before do
       inheriting_loadable.load_validation { [valid2?, 'valid2 failed'] }
     end
-
-    it { is_expected.to be_loaded }
 
     it 'returns true if loaded value is cached' do
       instance.loaded = true
@@ -150,7 +147,7 @@ describe SitePrism::Loadable do
     it 'does not check load_validations if already loaded' do
       instance.loaded = true
 
-      expect(instance).not_to receive(:valid2?)
+      expect(instance).to receive(:valid2?)
 
       instance.loaded?
     end

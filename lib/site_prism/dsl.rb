@@ -103,7 +103,7 @@ module SitePrism
       options[:wait] = Capybara.default_max_wait_time unless options.key?(:wait)
     end
 
-    # SitePrism::DSL::ClassMethods
+    # [SitePrism::DSL::ClassMethods]
     # This exposes all of the DSL definitions users will use when generating
     # their POM classes.
     #

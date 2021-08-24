@@ -4,6 +4,10 @@
 ### Added
 
 ### Changed
+- Gem bumps to dev dependencies
+  - `cucumber` can now be any version from 4-8 exclusive
+  - `rubocop` and `rubocop-rspec` have been bumped a major version (Still a healthy amount behind latest)
+    ([luke-hill])
 
 ### Fixed
 

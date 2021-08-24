@@ -11,6 +11,7 @@ class NoTitle < SitePrism::Page
   element :message, 'p'
   elements :missing_messages, 'br'
   sections :missing_sections, 'div' do
+    element :not_here, 'div'
   end
 
   expected_elements :message, :missing_messages
