@@ -84,7 +84,7 @@ describe SitePrism::Loadable do
         expect(instance).to receive(:true_thing?).once.and_call_original
 
         instance.when_loaded do
-          instance.when_loaded {}
+          instance.when_loaded
         end
       end
 
@@ -131,13 +131,10 @@ describe SitePrism::Loadable do
   end
 
   describe '#loaded?' do
-    subject(:instance) { inheriting_loadable.new }
-
+    let(:instance) { inheriting_loadable.new }
     let(:inheriting_loadable) { Class.new(loadable) }
 
     before { inheriting_loadable.load_validation { [true_thing?, 'valid2 failed'] } }
-
-    it { is_expected.to be_loaded }
 
     context 'when already loaded' do
       before { instance.loaded = true }

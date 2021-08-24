@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 describe SitePrism::Page do
+  subject(:page) { described_class.new }
+
   let(:locator) { instance_double('Capybara::Node::Element') }
 
   before do
@@ -33,7 +35,7 @@ describe SitePrism::Page do
     end
 
     it 'is nil by default' do
-      expect(subject.url).to be_nil
+      expect(page.url).to be_nil
     end
 
     it 'shows the base url of a page object - omitting the parametrisation parts' do
@@ -47,11 +49,11 @@ describe SitePrism::Page do
   end
 
   describe '#url_matcher' do
-    let(:page_with_url) do
-      Class.new(described_class) do
-        set_url '/bob'
-      end.new
-    end
+    # let(:page_with_url) do
+    #   Class.new(described_class) do
+    #     set_url '/bob'
+    #   end.new
+    # end
 
     let(:page_with_url_matcher) do
       Class.new(described_class) do
@@ -68,13 +70,11 @@ describe SitePrism::Page do
     end
 
     it 'is nil by default on the Instance' do
-      expect(subject.url_matcher).to be_nil
+      expect(page.url_matcher).to be_nil
     end
   end
 
-  it 'exposes the page title' do
-    expect(subject).to respond_to(:title)
-  end
+  it { is_expected.to respond_to(:title) }
 
   it 'raises an exception if passing a block to an element' do
     expect { CSSPage.new.element_one { :foo } }.to raise_error(SitePrism::UnsupportedBlockError)
@@ -144,7 +144,7 @@ describe SitePrism::Page do
     end
 
     it "does not allow loading if the url hasn't been set" do
-      expect { subject.load }.to raise_error(SitePrism::NoUrlForPageError)
+      expect { page.load }.to raise_error(SitePrism::NoUrlForPageError)
     end
 
     it 'allows loading if the url has been set' do
@@ -169,7 +169,7 @@ describe SitePrism::Page do
       end
 
       it 'executes and returns the block passed into it at runtime' do
-        expect(subject.load('<html>hi<html/>', &:text)).to eq('hi')
+        expect(page.load('<html>hi<html/>', &:text)).to eq('hi')
       end
 
       it 'yields itself to the passed block' do
@@ -242,7 +242,7 @@ describe SitePrism::Page do
     end
 
     it 'raises an exception if called before the matcher has been set' do
-      expect { subject.displayed? }.to raise_error(SitePrism::NoUrlMatcherForPageError)
+      expect { page.displayed? }.to raise_error(SitePrism::NoUrlMatcherForPageError)
     end
 
     it 'delegates through #wait_until_displayed' do
@@ -252,7 +252,7 @@ describe SitePrism::Page do
     end
 
     context 'with a full string URL matcher' do
-      let(:page) do
+      subject(:page) do
         Class.new(SitePrism::Page) do
           set_url_matcher('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
         end.new
@@ -599,7 +599,7 @@ describe SitePrism::Page do
         .to receive(:execute_script)
         .with('JUMP!')
 
-      subject.execute_script('JUMP!')
+      page.execute_script('JUMP!')
     end
   end
 
@@ -610,13 +610,11 @@ describe SitePrism::Page do
         .with('How High?')
         .and_return('To the sky!')
 
-      expect(subject.evaluate_script('How High?')).to eq('To the sky!')
+      expect(page.evaluate_script('How High?')).to eq('To the sky!')
     end
   end
 
   describe '#secure?' do
-    subject(:page) { described_class.new }
-
     it 'is true for secure pages' do
       swap_current_url('https://www.secure.com/')
 
