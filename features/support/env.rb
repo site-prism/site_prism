@@ -19,11 +19,12 @@ SimpleCov.start if defined? SimpleCov
 
 browser = ENV.fetch('BROWSER', 'chrome').to_sym
 
-if browser == :chrome
-  options = Selenium::WebDriver::Chrome::Options.new.tap(&:headless!)
-else
-  options = Selenium::WebDriver::Chrome::Firefox.new.tap(&:headless!)
-end
+options =
+  if browser == :chrome
+    Selenium::WebDriver::Chrome::Options.new.tap(&:headless!)
+  else
+    Selenium::WebDriver::Chrome::Firefox.new.tap(&:headless!)
+  end
 
 Capybara.register_driver :site_prism do |app|
   Capybara::Selenium::Driver.new(app, browser: browser, options: options)
