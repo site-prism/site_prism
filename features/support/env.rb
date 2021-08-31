@@ -21,7 +21,12 @@ browser = ENV.fetch('BROWSER', 'chrome').to_sym
 
 options =
   if browser == :chrome
-    Selenium::WebDriver::Chrome::Options.new.tap(&:headless!)
+    Selenium::WebDriver::Chrome::Options.new.tap do |opts|
+      opts.add_argument('--no-sandbox')
+      opts.headless!
+      opts.add_argument('--disable-dev-shm-usage')
+      opts.add_argument('--disable-gpu')
+    end
   else
     Selenium::WebDriver::Firefox::Options.new.tap(&:headless!)
   end
