@@ -1,0 +1,25 @@
+---
+name: CI
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ['2.4', '2.5', '2.6', '2.7']
+        browser: ['chrome', 'firefox']
+        gemfile: ['Gemfile', 'gemfiles/Gemfile.low_spec', 'gemfiles/Gemfile.webdriver_alpha']
+    env:
+      BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+      BROWSER: ${{ matrix.browser }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler: '2.2.19'
+          bundler-cache: true
+      - run: bundle exec rake specs
+      - run: bundle exec rake cukes
+      - run: bundle exec rake cops

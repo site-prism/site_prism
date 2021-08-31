@@ -27,7 +27,9 @@ services:
   - xvfb
 
 script:
-  - bundle exec rake
+  - bundle exec rake specs
+  - bundle exec rake cukes
+  - bundle exec rake cops
 
 branches:
   only:
