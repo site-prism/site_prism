@@ -18,7 +18,7 @@ require_relative 'sections/all'
 SimpleCov.start if defined? SimpleCov
 
 Capybara.register_driver :site_prism do |app|
-  browser = ENV.fetch('browser', 'chrome').to_sym
+  browser = ENV.fetch('BROWSER', 'chrome').to_sym
   Capybara::Selenium::Driver.new(app, browser: browser)
 end
 
