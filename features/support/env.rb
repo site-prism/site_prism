@@ -23,7 +23,7 @@ options =
   if browser == :chrome
     Selenium::WebDriver::Chrome::Options.new.tap(&:headless!)
   else
-    Selenium::WebDriver::Chrome::Firefox.new.tap(&:headless!)
+    Selenium::WebDriver::Firefox::Options.new.tap(&:headless!)
   end
 
 Capybara.register_driver :site_prism do |app|
