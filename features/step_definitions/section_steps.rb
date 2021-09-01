@@ -141,7 +141,7 @@ Then('the page cannot find a missing element') do
 end
 
 Then('the page contains a deeply nested span') do
-  nested_section = @test_site.nested_sections.level_1.level_2.level_3
+  nested_section = @test_site.nested_sections.level1.level2.level3
 
   expect(nested_section.deep_span.text).to eq('Deep span')
 end

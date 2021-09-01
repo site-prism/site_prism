@@ -74,11 +74,11 @@ When('an error is thrown when loading a page with failing validations') do
 end
 
 Then('I am not made to wait to continue') do
-  expect(@duration).to be < 0.1
+  expect(@duration).to be < time_delay
 end
 
 Then('I am made to wait to continue') do
-  expect(@duration).to be > 0.175
+  expect(@duration).to be > time_delay
 end
 
 Then('the page will not be marked as loaded') do

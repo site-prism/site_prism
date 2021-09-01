@@ -2,6 +2,6 @@
 
 source 'https://rubygems.org'
 
-gem 'selenium-webdriver', '>= 4.0.0.alpha5'
+gem 'selenium-webdriver', '4.0.0.alpha7'
 
 gemspec path: '..'

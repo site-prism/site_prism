@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 When('I wait an overridden time for the section that takes a while to appear') do
-  @test_site.slow.first_section(wait: 0.8)
+  @test_site.slow.first_section(wait: upper_bound_delay)
 end
 
 When('I wait for the section that takes a while to vanish') do
@@ -9,7 +9,7 @@ When('I wait for the section that takes a while to vanish') do
 end
 
 Then("an exception is raised when I wait for a section that won't appear") do
-  expect { @test_site.slow.first_section(wait: 0.05) }
+  expect { @test_site.slow.first_section(wait: lower_bound_delay) }
     .to raise_error(Capybara::ElementNotFound)
 end
 
@@ -23,7 +23,7 @@ Then('the section is no longer visible') do
 end
 
 When('I wait an overridden time for the section to vanish') do
-  @test_site.vanishing.wait_until_delayed_section_invisible(wait: 0.75)
+  @test_site.vanishing.wait_until_delayed_section_invisible(wait: upper_bound_delay)
 end
 
 Then('the slow section appears') do
@@ -31,12 +31,12 @@ Then('the slow section appears') do
 end
 
 Then('an error is raised when waiting an overridden time for the section to vanish') do
-  expect { @test_site.vanishing.wait_until_container_invisible(wait: 0.25) }
+  expect { @test_site.vanishing.wait_until_container_invisible(wait: time_delay) }
     .to raise_error(SitePrism::ElementInvisibilityTimeoutError)
 end
 
 When('I wait for the collection of sections that takes a while to disappear') do
-  @test_site.vanishing.removed_sections(wait: 0.75, count: 0)
+  @test_site.vanishing.removed_sections(wait: upper_bound_delay, count: 0)
 end
 
 Then('the sections are no longer present') do

@@ -9,6 +9,8 @@ module JSHelper
     evaluate_script(script)
   end
 
+  private
+
   def script
     "document.getElementById('first_search_result').children[0].innerHTML"
   end
