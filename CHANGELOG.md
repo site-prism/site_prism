@@ -9,7 +9,12 @@
   - `rubocop` and `rubocop-rspec` have been bumped a major version (Still a healthy amount behind latest)
     ([luke-hill])
 
+- Switched CI from defunct travis to Github Actions
+  ([luke-hill])
+
 ### Fixed
+- All referencess to time delays in feature tests now reference a single set of methods (DRYed up)
+  ([luke-hill])
 
 ## [3.7.2] - 2021-08-23
 ### Changed
