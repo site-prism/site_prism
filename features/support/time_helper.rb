@@ -9,8 +9,6 @@ module TimeHelper
     time_delay * 2
   end
 
-  private
-
   # This is set in the html script `test_site/slow.htm` in the `setTimeout` function
   def time_delay
     0.175

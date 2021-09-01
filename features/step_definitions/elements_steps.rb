@@ -24,6 +24,6 @@ Then('I can see optioned individual people in the people list') do
 end
 
 Then('I can wait a variable time and pass query parameters') do
-  expect { @test_site.home.list_of_people(wait: 10, minimum: 1) }
+  expect { @test_site.home.list_of_people(wait: upper_bound_delay, minimum: 1) }
     .not_to raise_error
 end
