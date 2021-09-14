@@ -1,6 +1,6 @@
 # SitePrism
 [![Gem Version](https://badge.fury.io/rb/site_prism.svg)](https://badge.fury.io/rb/site_prism)
-[![Build Status](https://travis-ci.com/site-prism/site_prism.png)](https://travis-ci.com/site-prism/site_prism)
+[![Build Status](https://github.com/site-prism/site_prism/actions/workflows/ci.yml/badge.svg)](https://github.com/site-prism/site_prism/actions/workflows/ci.yml)
 
 _A Page Object Model DSL for Capybara_
 
