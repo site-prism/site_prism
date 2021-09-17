@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry-byebug'
   s.add_development_dependency 'rake', ['~> 13.0']
   s.add_development_dependency 'rspec', ['~> 3.10']
-  s.add_development_dependency 'rubocop', ['~> 1.3.0']
+  s.add_development_dependency 'rubocop', ['~> 1.11.0']
   s.add_development_dependency 'rubocop-performance', ['~> 1.10.1']
   s.add_development_dependency 'rubocop-rspec', ['~> 2.2.0']
   s.add_development_dependency 'selenium-webdriver', ['>= 3.11', '< 4.1']
