@@ -42,6 +42,11 @@ module SitePrism
       (defined?(@page) && @page) || Capybara.current_session
     end
 
+    # This scopes our calls inside Page correctly to the `Capybara::Session`
+    def to_capybara_node
+      page
+    end
+
     # Loads the page.
     # @param expansion_or_html
     # @param block [&block] An optional block to run once the page is loaded.

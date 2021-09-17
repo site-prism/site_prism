@@ -128,7 +128,7 @@ module SitePrism
     end
 
     # If a slug begins with non-alpha characters, it may denote the start of
-    # a new component (e.g. query or fragment). We emit thie prefix as part of
+    # a new component (e.g. query or fragment). We emit this prefix as part of
     # the substituted slug so that Addressable's URI parser can see it as such.
     def slug_prefix(slug)
       prefix = slug.match(/\A{([^A-Za-z]+)/)

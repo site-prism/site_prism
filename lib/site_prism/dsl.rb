@@ -15,28 +15,28 @@ module SitePrism
 
     private
 
-    # Call `find` inside context set on page/section
+    # Call `find` inside `to_capybara_node` context (Either Capybara::Session or Capybara::Node::Element)
     def _find(*find_args)
       kwargs = find_args.pop
-      page.find(*find_args, **kwargs)
+      to_capybara_node.find(*find_args, **kwargs)
     end
 
-    # Call `all` inside context set on page/section
+    # Call `all` inside `to_capybara_node` context (Either Capybara::Session or Capybara::Node::Element)
     def _all(*find_args)
       kwargs = find_args.pop
-      page.all(*find_args, **kwargs)
+      to_capybara_node.all(*find_args, **kwargs)
     end
 
-    # Call `has_selector?` inside context set on page/section
+    # Call `has_selector?` inside `to_capybara_node` context (Either Capybara::Session or Capybara::Node::Element)
     def element_exists?(*find_args)
       kwargs = find_args.pop
-      page.has_selector?(*find_args, **kwargs)
+      to_capybara_node.has_selector?(*find_args, **kwargs)
     end
 
-    # Call `has_no_selector?` inside context set on page/section
+    # Call `has_no_selector?` inside `to_capybara_node` context (Either Capybara::Session or Capybara::Node::Element)
     def element_does_not_exist?(*find_args)
       kwargs = find_args.pop
-      page.has_no_selector?(*find_args, **kwargs)
+      to_capybara_node.has_no_selector?(*find_args, **kwargs)
     end
 
     # Prevent users from calling methods with blocks when they shouldn't be.

@@ -4,10 +4,16 @@
 ### Added
 
 ### Changed
-- Gem bumps to dev dependencies
+- The internal DSL mapping methods which map the locators/booleans now always use `#to_capybara_node`
+  - This is a long-standing change that was needed and now means the gem is fully conformant to all
+  capybara guides. It should also dramatically reduce Deprecation WARNINGS in the SitePrism logger
+  ([luke-hill])
+
+- Gem bumps to dependencies
+  - `capybara` and `selenium-webdriver` must now be from 2019/20 era 
   - `cucumber` can now be any version from 4-8 exclusive
   - `rubocop` and `rubocop-rspec` have been bumped a major version (Still a healthy amount behind latest)
-    ([luke-hill])
+  ([luke-hill])
 
 - Switched CI from defunct travis to Github Actions
   ([luke-hill])
