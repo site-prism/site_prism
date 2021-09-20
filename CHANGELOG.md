@@ -4,6 +4,11 @@
 ### Added
 
 ### Changed
+
+### Fixed
+
+## [3.7.3] - 2021-09-20
+### Changed
 - The internal DSL mapping methods which map the locators/booleans now always use `#to_capybara_node`
   - This is a long-standing change that was needed and now means the gem is fully conformant to all
   capybara guides. It should also dramatically reduce Deprecation WARNINGS in the SitePrism logger
@@ -1093,7 +1098,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v3.7.2...main
+[main]:       https://github.com/site-prism/site_prism/compare/v3.7.3...main
+[3.7.3]:      https://github.com/site-prism/site_prism/compare/v3.7.2...v3.7.3
 [3.7.2]:      https://github.com/site-prism/site_prism/compare/v3.7.1...v3.7.2
 [3.7.1]:      https://github.com/site-prism/site_prism/compare/v3.7...v3.7.1
 [3.7]:        https://github.com/site-prism/site_prism/compare/v3.6...v3.7
