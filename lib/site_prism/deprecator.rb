@@ -21,8 +21,8 @@ module SitePrism
       # @return SitePrism.logger.debug(msg)
       #
       # Tells the user that they are using functionality which is non-optimal
-      #   The functionality should usually provide a reason for it being poor, as well as an
-      #   optional way of upgrading to something different
+      # The functionality should usually provide a reason for it being poor, as well as an
+      # optional way of upgrading to something different
       #
       # NB: As this is bubbled up at debug level, often users will not see this. So it will
       # never be a candidate for removal directly
