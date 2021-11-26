@@ -23,5 +23,33 @@ describe SitePrism::Waiter do
           .with_message(/#{timeout}/)
       end
     end
+
+    context 'with a custom sleep_duration' do
+      let(:timeout) { 0.1 }
+      let(:sleep_duration_long) { 0.5 }
+      let(:sleep_duration_short) { 0.01 }
+
+      it 'when setting sleep_duration > timeout, error raise and yield execute 2 times' do
+        count = 0
+        swallow_timeout do
+          described_class.wait_until_true(timeout, sleep_duration_long) do
+            count += 1
+            false
+          end
+        end
+        expect(count).to eq(2)
+      end
+
+      it 'when setting sleep_duration < timeout, error raise and yield execute many times' do
+        count = 0
+        swallow_timeout do
+          described_class.wait_until_true(timeout, sleep_duration_short) do
+            count += 1
+            false
+          end
+        end
+        expect(count).to be >= 10
+      end
+    end
   end
 end

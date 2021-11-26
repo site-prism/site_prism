@@ -4,6 +4,8 @@
 ### Added
 
 ### Changed
+- `Waiter.wait_until_true` can now set an optional `sleep_duration`
+([teyamagu])
 
 ### Fixed
 
@@ -1221,3 +1223,4 @@ impending major rubocop release
 [sos4nt]:         https://github.com/sos4nt
 [lparry]:         https://github.com/lparry
 [asavageiv]:      https://github.com/asavageiv
+[teyamagu]:       https://github.com/teyamagu

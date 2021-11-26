@@ -68,6 +68,12 @@ rescue SitePrism::FailedLoadValidationError
   :no_op
 end
 
+def swallow_timeout
+  yield
+rescue SitePrism::TimeoutError
+  :no_op
+end
+
 Capybara.app = MyTestApp.new
 
 RSpec.configure do |rspec|
