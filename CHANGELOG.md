@@ -4,7 +4,7 @@
 ### Added
 
 ### Changed
-- `Waiter.wait_until_true` can be set `sleep_duration`
+- `Waiter.wait_until_true` can now set an optional `sleep_duration`
 ([teyamagu])
 
 ### Fixed
