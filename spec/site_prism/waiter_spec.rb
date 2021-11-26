@@ -23,5 +23,29 @@ describe SitePrism::Waiter do
           .with_message(/#{timeout}/)
       end
     end
+
+    context 'with a custom sleep_duration' do
+      let(:timeout) { 0.1 }
+      let(:sleep_duration_long) { 0.5 }
+      let(:sleep_duration_short) { 0.01 }
+
+      # rubocop:disable RSpec/MultipleExpectations
+      # rubocop:disable Style/Semicolon
+      it 'when setting sleep_duration > timeout, error raise and yield execute 2 times' do
+        count = 0
+        expect { described_class.wait_until_true(timeout, sleep_duration_long) { count += 1; false } }
+          .to raise_error(SitePrism::TimeoutError)
+        expect(count).to eq(2)
+      end
+
+      it 'when setting sleep_duration < timeout, error raise and yield execute many times' do
+        count = 0
+        expect { described_class.wait_until_true(timeout, sleep_duration_short) { count += 1; false } }
+          .to raise_error(SitePrism::TimeoutError)
+        expect(count).to be >= 10
+      end
+      # rubocop:enable Style/Semicolon
+      # rubocop:enable RSpec/MultipleExpectations
+    end
   end
 end
