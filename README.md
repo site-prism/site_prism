@@ -153,6 +153,8 @@ Capybara.configure do |config|
 end
 ```
 
+Sample is [here](./sample/)
+
 ### Using SitePrism with RSpec
 
 If you're using rspec instead, here's what needs requiring:
