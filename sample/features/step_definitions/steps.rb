@@ -13,6 +13,7 @@ Capybara.configure do |config|
 end
 
 # define sections used on multiple pages or multiple times on one page
+
 class Menu < SitePrism::Section
   element :mail, 'a[href*="mail.google.com"]'
   element :news, 'a[href*="news.google.com"]'
