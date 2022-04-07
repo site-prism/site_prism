@@ -29,10 +29,10 @@ We have a brief set of setup docs [HERE](https://github.com/site-prism/site_pris
 
 ## Supported Rubies / Browsers
 
-SitePrism is built and tested to work on Ruby 2.4 - 2.7. Ruby 2.4 (Now EOL), is supported but
+SitePrism is built and tested to work on Ruby 2.5 - 3.1. Ruby 2.5 (Now EOL), is supported but
 this version will be removed from the Support Matrix in the coming months.
-If you are using SitePrism with Ruby 2.4 it is highly advisable to upgrade to a more modern Ruby
-such as 2.7, if for any other reason, to get a noticeable speed boost!
+If you are using SitePrism with Ruby 2.5 it is highly advisable to upgrade to a more modern Ruby
+such as 3.0/3.1, if for any other reason, to get a noticeable speed boost!
 
 SitePrism should run on all major browsers. The gem's integration tests are run on Chrome and Firefox.
 
