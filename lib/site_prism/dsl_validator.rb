@@ -19,16 +19,16 @@ module SitePrism
     end
 
     def prefix_blacklist
-      %w(
+      %w[
         no_
         _
-      )
+      ]
     end
 
     def suffix_blacklist
-      %w(
+      %w[
         _
-      )
+      ]
     end
   end
 end
