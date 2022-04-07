@@ -9,28 +9,26 @@ module SitePrism
     def invalid?(name)
       prefix_blacklist.any? { |prefix| name.start_with?(prefix) } ||
         suffix_blacklist.any? { |prefix| name.end_with?(prefix) } ||
-        generic_blacklist.any? { |prefix| name.include?(prefix) }
+        !name.match?(regex_permission)
     end
 
     private
 
-    def generic_blacklist
-      [
-        " "
-      ]
+    def regex_permission
+      /^\w+$/
     end
 
     def prefix_blacklist
-      [
-        "no_",
-        "_"
-      ]
+      %w(
+        no_
+        _
+      )
     end
 
     def suffix_blacklist
-      [
-        "_"
-      ]
+      %w(
+        _
+      )
     end
   end
 end
