@@ -4,6 +4,9 @@
 ### Added
 
 ### Changed
+- **Required Ruby Version is now 2.5+**
+([luke-hill])
+
 - `Waiter.wait_until_true` can now set an optional `sleep_duration`
 ([teyamagu])
 
