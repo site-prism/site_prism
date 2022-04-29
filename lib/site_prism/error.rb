@@ -49,5 +49,5 @@ module SitePrism
   class AttributeValidationError < SitePrismError; end
 
   # DSL items are not permitted to start with certain prefixes
-  class InvalidDSLPrefixError < SitePrismError; end
+  class InvalidDSLNameError < AttributeValidationError; end
 end
