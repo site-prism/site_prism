@@ -136,13 +136,13 @@ describe SitePrism::Section do
 
     context 'when search arguments are provided during the DSL definition' do
       it 'returns the search arguments for a section' do
-        expect(page).to receive(:_find).with('.other-section', wait: 0)
+        expect(page).to receive(:_find).with('.other-section', { wait: 0 })
 
         page.section_with_locator
       end
 
       it 'ignores the `default_search_arguments`' do
-        expect(page).not_to receive(:_find).with(*default_search_arguments, wait: 0)
+        expect(page).not_to receive(:_find).with(*default_search_arguments, { wait: 0 })
 
         page.section_with_locator
       end
@@ -159,13 +159,13 @@ describe SitePrism::Section do
       end
 
       it 'uses the default search arguments set on the section' do
-        expect(page).to receive(:_find).with(*default_search_arguments, wait: 0)
+        expect(page).to receive(:_find).with(*default_search_arguments, { wait: 0 })
 
         page.section_using_defaults
       end
 
       it 'uses the default_search_arguments set on the parent if none set on section' do
-        expect(page).to receive(:_find).with(*default_search_arguments, wait: 0)
+        expect(page).to receive(:_find).with(*default_search_arguments, { wait: 0 })
 
         page.section_using_defaults_from_parent
       end
@@ -253,7 +253,7 @@ describe SitePrism::Section do
       let(:locator_args) { '.class-one' }
 
       it 'passes in a hash of query arguments' do
-        expect(page).to receive(:_find).with(*locator_args, **query_args, wait: 0)
+        expect(page).to receive(:_find).with(*locator_args, { **query_args, wait: 0 })
 
         page.new_section
       end
@@ -264,7 +264,7 @@ describe SitePrism::Section do
       let(:locator_args) { '.class-two' }
 
       it 'passes in an empty hash, which is then sanitized out' do
-        expect(page).to receive(:_find).with(*locator_args, **query_args, wait: 0)
+        expect(page).to receive(:_find).with(*locator_args, { **query_args, wait: 0 })
 
         page.new_element
       end
