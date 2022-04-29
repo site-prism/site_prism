@@ -28,6 +28,7 @@ module SitePrism
     def suffix_blacklist
       %w[
         _
+        ?
       ]
     end
   end
