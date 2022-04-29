@@ -5,7 +5,6 @@ module SitePrism
     include ElementChecker
     include Loadable
     include DSL
-    extend DSLValidator
     extend Forwardable
 
     attr_reader :root_element, :parent

@@ -6,7 +6,6 @@ module SitePrism
     include ElementChecker
     include Loadable
     include DSL
-    extend DSLValidator
 
     class << self
       attr_reader :url
