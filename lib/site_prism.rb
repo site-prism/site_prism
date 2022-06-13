@@ -2,6 +2,7 @@
 
 require 'site_prism/error'
 require 'addressable/template'
+require 'forwardable'
 
 # [SitePrism] namespace
 # We autoload our files underneath here to provide a slightly more optimal load solution
