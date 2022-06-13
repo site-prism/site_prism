@@ -35,7 +35,7 @@ describe SitePrism::Section do
     before do
       allow(page_instance)
         .to receive(:_all)
-        .with(*search_arguments, wait: 0)
+        .with(*search_arguments, { wait: 0 })
         .and_return(%i[element1 element2])
     end
 

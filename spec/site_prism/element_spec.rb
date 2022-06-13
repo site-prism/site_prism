@@ -93,7 +93,7 @@ describe 'Element' do
         .and_call_original
       allow(page)
         .to receive(:_find)
-        .with('a.b c.d', wait: 0)
+        .with('a.b c.d', { wait: 0 })
         .and_return(element)
     end
 
@@ -114,7 +114,7 @@ describe 'Element' do
         .and_call_original
       allow(page)
         .to receive(:_find)
-        .with('//a[@class="b"]//c[@class="d"]', wait: 0)
+        .with('//a[@class="b"]//c[@class="d"]', { wait: 0 })
         .and_return(element)
     end
 
