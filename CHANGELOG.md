@@ -8,6 +8,8 @@
 ([teyamagu])
 
 ### Fixed
+- Ensure `Forwardable` module is verbosely required in the gem requirements
+([Be-brand])
 
 ## [3.7.3] - 2021-09-20
 ### Changed
@@ -1224,3 +1226,4 @@ impending major rubocop release
 [lparry]:         https://github.com/lparry
 [asavageiv]:      https://github.com/asavageiv
 [teyamagu]:       https://github.com/teyamagu
+[Be-brand]:       https://github.com/Be-brand
