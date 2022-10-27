@@ -2,6 +2,9 @@
 ### Removed
 
 ### Added
+- Initial implementation of whitelisting attributes so we cannot create DSL items with invalid names
+  - This is currently disabled and is experimental in `4.0.beta`
+  ([luke-hill])
 
 ### Changed
 - `Waiter.wait_until_true` can now set an optional `sleep_duration`

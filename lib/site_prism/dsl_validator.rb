@@ -7,7 +7,10 @@ module SitePrism
   # for any entries which are prohibited
   module DSLValidator
     def invalid?(name)
-      prefix_invalid?(name) || suffix_invalid?(name) || characters_invalid?(name)
+      prefix_invalid?(name) ||
+        suffix_invalid?(name) ||
+        characters_invalid?(name) ||
+        blacklisted?(name)
     end
 
     private
@@ -21,7 +24,11 @@ module SitePrism
     end
 
     def characters_invalid?(name)
-      !name.match?(regex_permission).tap { |result| log_failure(name, 'character-set') unless result }
+      !name.match?(regex_permission).tap { |result| log_failure(name, 'character(s)') unless result }
+    end
+
+    def blacklisted?(name)
+      blacklisted_names.include?(name).tap { |result| log_failure(name, 'name (blacklisted entry)') unless result }
     end
 
     def regex_permission
@@ -39,6 +46,13 @@ module SitePrism
       %w[
         _
         ?
+      ]
+    end
+
+    def blacklisted_names
+      %w[
+        attributes
+        no
       ]
     end
 
