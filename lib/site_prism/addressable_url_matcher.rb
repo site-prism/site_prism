@@ -132,7 +132,7 @@ module SitePrism
     # the substituted slug so that Addressable's URI parser can see it as such.
     def slug_prefix(slug)
       prefix = slug.match(/\A{([^A-Za-z]+)/)
-      prefix && prefix[1] || ''
+      (prefix && prefix[1]) || ''
     end
 
     # Generate a repeatable 5 character uniform alphabetical nonsense string
