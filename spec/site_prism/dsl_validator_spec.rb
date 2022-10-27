@@ -32,6 +32,12 @@ describe SitePrism::DSLValidator do
       it { is_expected.to be true }
     end
 
+    context 'with an invalid name' do
+      subject { validator.invalid?('attributes') }
+
+      it { is_expected.to be true }
+    end
+
     context 'with a valid string' do
       subject { validator.invalid?('abcdef123_XYZ') }
 

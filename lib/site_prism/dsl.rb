@@ -223,7 +223,7 @@ module SitePrism
       end
 
       def build(type, name, *find_args)
-        raise InvalidDSLNameError if invalid?(name)
+        raise InvalidDSLNameError if ENV['SITEPRISM_DSL_VALIDATION_ENABLED'] && invalid?(name)
 
         if find_args.empty?
           create_error_method(name)
