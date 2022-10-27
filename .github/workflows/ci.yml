@@ -9,7 +9,7 @@ jobs:
       matrix:
         ruby: ['2.5', '2.6', '2.7', '3.0', '3.1']
         browser: ['chrome', 'firefox']
-        gemfile: ['Gemfile', 'gemfiles/Gemfile.low_spec', 'gemfiles/Gemfile.webdriver_alpha']
+        gemfile: ['Gemfile', 'gemfiles/Gemfile.low_spec']
         exclude:
           # Old Capybara versions aren't designed to work with Ruby 3+
           - { ruby: '3.0', gemfile: 'gemfiles/Gemfile.low_spec' }

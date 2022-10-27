@@ -1,7 +1,0 @@
-# frozen_string_literal: true
-
-source 'https://rubygems.org'
-
-gem 'selenium-webdriver', '4.0.0.alpha7'
-
-gemspec path: '..'
