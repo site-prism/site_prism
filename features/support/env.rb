@@ -16,7 +16,7 @@ require_relative 'js_helper'
 require_relative 'time_helper'
 require_relative 'sections/all'
 
-SimpleCov.start if defined?(SimpleCov) && RUBY_VERSION != '3.1'
+SimpleCov.start if defined?(SimpleCov) && RUBY_VERSION < '3.1'
 
 browser = ENV.fetch('BROWSER', 'chrome').to_sym
 
