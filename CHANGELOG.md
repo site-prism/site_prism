@@ -10,6 +10,11 @@
 - `Waiter.wait_until_true` can now set an optional `sleep_duration`
 ([teyamagu])
 
+- Gem bumps to dev_dependencies
+  - `cucumber` must now be v6+
+  - `rubocop` and `rubocop-rspec` have had large version updates. `rubocop-performance` a small bump in version
+    ([luke-hill])
+
 ### Fixed
 - Ensure `Forwardable` module is verbosely required in the gem requirements
 ([Be-brand])
