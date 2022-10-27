@@ -25,7 +25,7 @@ module SitePrism
     end
 
     def regex_permission
-      /^\w+$/
+      /^[a-z]\w+$/
     end
 
     def prefix_blacklist

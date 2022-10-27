@@ -26,6 +26,12 @@ describe SitePrism::DSLValidator do
       it { is_expected.to be true }
     end
 
+    context 'with a starting upper-case character' do
+      subject { validator.invalid?('MUST_start_lowercase') }
+
+      it { is_expected.to be true }
+    end
+
     context 'with a valid string' do
       subject { validator.invalid?('abcdef123_XYZ') }
 
