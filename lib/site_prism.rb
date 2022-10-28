@@ -9,6 +9,7 @@ require 'forwardable'
 module SitePrism
   autoload :AddressableUrlMatcher, 'site_prism/addressable_url_matcher'
   autoload :DSL, 'site_prism/dsl'
+  autoload :DSLValidator, 'site_prism/dsl_validator'
   autoload :Deprecator, 'site_prism/deprecator'
   autoload :ElementChecker, 'site_prism/element_checker'
   autoload :Loadable, 'site_prism/loadable'
