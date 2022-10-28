@@ -8,13 +8,13 @@ $ cd site_prism
 $ bundle
 ```
 
-Hacking commands you may need are ...
+Commands you may need whilst hacking on SitePrism are ...
 
 ```bash
 $ bundle exec cucumber # Run feature tests on Chrome (Default browser)
 $ bundle exec cucumber BROWSER=firefox # Run feature tests on Firefox
 $ bundle exec rspec # Run all rspec tests
-$ bundle exec rubocop # Runs RuboCop
+$ bundle exec rubocop # Run RuboCop
 ```
 
 - Write your code. Make sure to add tests AND documentation (if appropriate)

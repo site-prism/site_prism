@@ -18,20 +18,19 @@ Gem::Specification.new do |s|
   }
   s.summary     = 'A Page Object Model DSL for Capybara'
   s.description = 'SitePrism gives you a simple, clean and semantic DSL for describing your site.'\
-' SitePrism implements the Page Object Model pattern on top of Capybara.'
+                  ' SitePrism implements the Page Object Model pattern on top of Capybara.'
   s.files        = Dir.glob('lib/**/*') + %w[LICENSE.md README.md]
   s.require_path = 'lib'
   s.add_dependency 'addressable', ['~> 2.6']
   s.add_dependency 'capybara', ['~> 3.15']
   s.add_dependency 'site_prism-all_there', ['>= 0.3.1', '< 1.0']
 
-  s.add_development_dependency 'cucumber', ['> 4', '< 8']
-  s.add_development_dependency 'pry-byebug'
+  s.add_development_dependency 'cucumber', ['> 6', '< 8']
   s.add_development_dependency 'rspec', ['~> 3.10']
-  s.add_development_dependency 'rubocop', ['~> 1.11.0']
-  s.add_development_dependency 'rubocop-performance', ['~> 1.10.1']
-  s.add_development_dependency 'rubocop-rspec', ['~> 2.2.0']
+  s.add_development_dependency 'rubocop', ['~> 1.21.0']
+  s.add_development_dependency 'rubocop-performance', ['~> 1.13.0']
+  s.add_development_dependency 'rubocop-rspec', ['~> 2.7.0']
   s.add_development_dependency 'selenium-webdriver', ['>= 3.13', '< 4.1']
   s.add_development_dependency 'simplecov', ['~> 0.18']
-  s.add_development_dependency 'webdrivers', ['~> 4.6']
+  s.add_development_dependency 'webdrivers', ['~> 4.7']
 end
