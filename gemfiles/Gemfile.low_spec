@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 gem 'addressable', '< 2.7'
 gem 'capybara', '< 3.20'
+gem 'cucumber' '< 7'
 gem 'nokogiri', '< 1.11'
 gem 'selenium-webdriver', '< 3.14'
 gem 'webdrivers', '< 4.1'
