@@ -13,6 +13,10 @@ AllCops:
   TargetRubyVersion: 2.5
   NewCops: enable
 
+# We don't use MFA yet
+Gemspec/RequireMFA:
+  Enabled: false
+
 # This allows a longer LineLength and ignores cuke definitions
 Layout/LineLength:
   Max: 140
