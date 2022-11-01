@@ -16,7 +16,7 @@ AllCops:
 # This allows a longer LineLength and ignores cuke definitions
 Layout/LineLength:
   Max: 140
-  IgnoredPatterns:
+  AllowedPatterns:
     - '^Given'
     - '^When'
     - '^Then'
