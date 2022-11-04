@@ -22,8 +22,6 @@ module SitePrism
   autoload :Waiter, 'site_prism/waiter'
 
   class << self
-    attr_reader :use_all_there_gem
-
     def configure
       yield self
     end
@@ -73,14 +71,6 @@ module SitePrism
     #   => :UNKNOWN # By default
     def log_level
       %i[DEBUG INFO WARN ERROR FATAL UNKNOWN][logger.level]
-    end
-
-    # Whether you wish to use the new experimental all_there dependent gem
-    #   This will be enforced from site_prism v4 onwards as this is where
-    #   the development of this functionality will be focused
-    def use_all_there_gem=(value)
-      logger.debug("Setting use_all_there_gem to #{value}")
-      @use_all_there_gem = value
     end
   end
 end

@@ -1,5 +1,8 @@
 ## [main] - Unreleased
 ### Removed
+- Configuration parameter `.use_all_there_gem`
+  - This is now enabled by default. The sub-gem is automatically required when you `require 'site_prism'`
+  ([luke-hill])
 
 ### Added
 - Initial implementation of whitelisting attributes so we cannot create DSL items with invalid names

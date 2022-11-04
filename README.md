@@ -752,15 +752,6 @@ Work alongside developing this functionality further is being continued in the
 [site_prism-all_there](http://www.github.com/site-prism/site_prism-all_there) repo. So head on over
 there if you're interested in how this feature will work going forwards
 
-NB: At the moment a "primitive" but working copy of this is hosted inside this gem. But if you wish to
-use the bleeding edge version of the logic. Then simply set the following configuration parameter
-
-```ruby
-`require 'site_prism/all_there'`
-
-SitePrism.use_all_there_gem = true
-```
-
 ### Getting the list of missing elements
 
 If `#all_there?` returns false and you wish to get the list of missing elements for debugging purposes

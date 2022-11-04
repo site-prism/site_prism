@@ -52,11 +52,7 @@ module SitePrism
     private
 
     def all_there_with_recursion
-      if SitePrism.use_all_there_gem
-        SitePrism::AllThere::RecursionChecker.new(self).all_there?
-      else
-        RecursionChecker.new(self).all_there?
-      end
+      SitePrism::AllThere::RecursionChecker.new(self).all_there?
     end
 
     # If the page or section has expected_items set, return expected_items that are mapped
