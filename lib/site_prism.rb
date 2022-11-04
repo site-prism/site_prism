@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'site_prism/error'
+require 'site_prism/all_there'
 require 'addressable/template'
 require 'forwardable'
 
