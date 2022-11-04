@@ -9,7 +9,7 @@
 # Offense count: 1
 # Configuration parameters: CountComments, CountAsOne.
 Metrics/ModuleLength:
-  Max: 193
+  Max: 198
 
 # Offense count: 1
 # Cop supports --auto-correct.
