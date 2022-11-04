@@ -16,7 +16,6 @@ module SitePrism
   autoload :Loadable, 'site_prism/loadable'
   autoload :Logger, 'site_prism/logger'
   autoload :Page, 'site_prism/page'
-  autoload :RecursionChecker, 'site_prism/recursion_checker'
   autoload :RspecMatchers, 'site_prism/rspec_matchers'
   autoload :Section, 'site_prism/section'
   autoload :Timer, 'site_prism/timer'
