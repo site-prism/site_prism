@@ -49,41 +49,14 @@ describe SitePrism::ElementChecker do
         subject { page.all_there?(recursion: :one) }
 
         let(:recursion_class) { SitePrism::AllThere::RecursionChecker }
-        let(:recursion_instance) { recursion_class.new(page) }
 
+        # TODO: Remove this once all_there has had a bugfix release to handle missing elements
         before do
           allow(page).to receive(:section_one).and_return(section)
-          allow(recursion_class).to receive(:new).and_return(recursion_instance)
         end
 
-        it { is_expected.to be true }
-
-        it 'checks each item in `expected_elements`' do
-          expected_items.each do |name|
-            expect(recursion_instance).to receive(:there?).with(name).once.and_call_original
-          end
-
-          subject
-        end
-
-        it 'checks all first-generation descendants' do
-          expect(section).to receive(:all_there?).and_call_original
-
-          subject
-        end
-
-        it 'checks whether items one level down are present' do
-          allow(section).to receive(:all_there?).and_call_original
-          allow(section).to receive(:there?).with(:inner_element_two).and_return(true)
-          allow(section).to receive(:there?).with(:iframe).and_return(true)
-
-          expect(section).to receive(:there?).with(:inner_element_one).and_return(true)
-
-          subject
-        end
-
-        it "doesn't check any items that aren't marked as `expected_items`" do
-          expect(page).not_to receive(:there?).with(:element_two)
+        it 'delegates to the AllThere gem' do
+          expect(recursion_class).to receive(:new).with(page).and_call_original
 
           subject
         end
