@@ -25,12 +25,12 @@ Gem::Specification.new do |s|
   s.add_dependency 'capybara', ['~> 3.15']
   s.add_dependency 'site_prism-all_there', ['> 1', '< 2']
 
-  s.add_development_dependency 'cucumber', ['> 6', '< 8']
+  s.add_development_dependency 'cucumber', ['> 6', '< 9']
   s.add_development_dependency 'rspec', ['~> 3.10']
-  s.add_development_dependency 'rubocop', ['~> 1.21.0']
+  s.add_development_dependency 'rubocop', ['~> 1.28.0']
   s.add_development_dependency 'rubocop-performance', ['~> 1.13.0']
   s.add_development_dependency 'rubocop-rspec', ['~> 2.7.0']
-  s.add_development_dependency 'selenium-webdriver', ['>= 3.13', '< 4.1']
+  s.add_development_dependency 'selenium-webdriver', ['>= 3.13', '< 5']
   s.add_development_dependency 'simplecov', ['~> 0.18']
-  s.add_development_dependency 'webdrivers', ['~> 4.7']
+  s.add_development_dependency 'webdrivers', ['~> 4.6']
 end

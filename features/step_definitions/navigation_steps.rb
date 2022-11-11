@@ -74,7 +74,8 @@ When('an error is thrown when loading a page with failing validations') do
 end
 
 Then('I am not made to wait to continue') do
-  expect(@duration).to be < time_delay
+  # The code-flow can make this test take a touch longer
+  expect(@duration).to be < upper_bound_delay
 end
 
 Then('I am made to wait to continue') do
