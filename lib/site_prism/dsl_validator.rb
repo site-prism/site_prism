@@ -58,6 +58,10 @@ module SitePrism
 
     def log_failure(name, type)
       SitePrism.logger.error("DSL item: #{name} has an invalid #{type}")
+      SitePrism.logger.debug("Invalid prefixes: #{prefix_blacklist.join(', ')}")
+      SitePrism.logger.debug("Invalid suffixes: #{suffix_blacklist.join(', ')}")
+      SitePrism.logger.debug("Invalid names: #{blacklisted_names.join(', ')}")
+      SitePrism.logger.debug("DSL Charset REGEX: #{regex_permission.inspect}")
     end
   end
 end
