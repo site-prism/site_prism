@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 module SitePrism
+  # [SitePrism::Section]
+  #
+  # SitePrism Sections are the mid level construct of the POM framework
+  #
+  # Instances of this class represent a a part of a web page that can either sit inside a SitePrism::Page
+  # or sit inside another N sections, which then eventually will sit inside a page
+  #
+  # All method calls made whilst on a page are scoped using `#to_capybara_node` which will be represented by
+  # the current `#root_element`. This is the locator for the section itself and is a mandatory argument
   class Section
     include ElementChecker
     include Loadable

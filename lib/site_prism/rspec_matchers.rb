@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module SitePrism
+  #
+  # @api private
+  #
   class RspecMatchers
     attr_reader :element_name
 
