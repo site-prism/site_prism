@@ -92,13 +92,13 @@ describe SitePrism::Page do
   it { is_expected.to respond_to(*Capybara::Session::DSL_METHODS) }
 
   describe '#page' do
+    subject { page_with_url.page }
+
     let(:page_with_url) do
       Class.new(described_class) do
         set_url '/bob'
       end.new
     end
-
-    subject { page_with_url.page }
 
     context 'with #load called previously' do
       before { page_with_url.instance_variable_set(:@page, :some_value) }

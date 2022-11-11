@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 module SitePrism
+  # [SitePrism::Page]
+  #
+  # SitePrism Pages are the top level construct of the POM framework
+  #
+  # Instances of this class represent a full web page that can either be dynamically navigated to
+  # through clicking buttons or filling in fields, or verbosely loaded by using the `#load` method
+  #
+  # All method calls made whilst on a page are scoped using `#to_capybara_node` which defaults to the
+  # current Capybara session
   class Page
     include Capybara::DSL
     include ElementChecker
