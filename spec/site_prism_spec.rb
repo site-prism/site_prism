@@ -99,26 +99,4 @@ describe SitePrism do
       it { is_expected.to eq(:INFO) }
     end
   end
-
-  describe '.use_all_there_gem' do
-    subject { described_class.use_all_there_gem }
-
-    let!(:original_value) { described_class.use_all_there_gem }
-
-    after { described_class.use_all_there_gem = original_value }
-
-    it { is_expected.to be true }
-
-    context 'when changed to `false`' do
-      before { described_class.use_all_there_gem = false }
-
-      it { is_expected.to be false }
-    end
-  end
-
-  describe '.use_all_there_gem=' do
-    it 'can alter whether site_prism uses the site_prism-all_there gem to perform #all_there?' do
-      expect(described_class).to respond_to(:use_all_there_gem=)
-    end
-  end
 end

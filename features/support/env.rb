@@ -45,8 +45,4 @@ end
 
 Webdrivers.cache_time = 86_400
 
-# This will be required until v4 of SitePrism is released
-require 'site_prism/all_there'
-SitePrism.use_all_there_gem = true
-
 World(TimeHelper)
