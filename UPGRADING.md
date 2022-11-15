@@ -1,6 +1,24 @@
 # Upgrading from SitePrism 3.x to 4.x
 
-Placeholder notes to be added
+## DSL name validation
+
+An initial attempt to start banning invalid DSL names has been introduced through a `DSLValidator` module.
+
+For 4.x this will be disabled by default. We may look to switch this to a default on/toggleable state further down
+the road, but for now this is experimental.
+
+Setting the env variable `SITEPRISM_DSL_VALIDATION_ENABLED` will then perform these checks during the build metaprogram
+phase of suite execution
+
+It is **highly** advisable to set full verbose logging on when using this by using `SitePrism.logger.level = :DEBUG`
+
+## Passing blocks to invalid DSL items
+
+SitePrism 3.x permitted you to create DSL items using a block in all situations. However when you created an item
+that was an `:element`, `:elements` or `:sections` the overall resultant method generation was an error method
+(This is because we don't permit blocks for these DSL items)
+
+Now in 4.x we ban these creations and will hard-fail instantly.
 
 # Upgrading from SitePrism 2.x to 3.x
 
