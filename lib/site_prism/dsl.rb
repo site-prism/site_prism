@@ -57,9 +57,7 @@ module SitePrism
       return unless has_block
 
       SitePrism.logger.debug("Type passed in: #{type}")
-      SitePrism.logger.warn('section / iFrame can only accept blocks.')
       SitePrism.logger.error("#{obj.class}##{name} does not accept blocks")
-
       raise SitePrism::UnsupportedBlockError
     end
 
@@ -105,16 +103,22 @@ module SitePrism
     module ClassMethods
       attr_reader :expected_items
 
+      # Sets the `expected_items` iVar on a class. This property is used in conjunction with
+      # `all_there?` to provide a way of granularising the check made to only interrogate a sub-set
+      # of DSL defined items
+      def expected_elements(*elements)
+        @expected_items = elements
+      end
+
       # Creates an instance of a SitePrism Element - This will create several methods designed to
       # Locate the element -> @return [Capybara::Node::Element]
       # Check the elements presence or non-presence -> @return [Boolean]
       # Wait for the elements to be present or not -> @return [TrueClass, SitePrism::Error]
       # Validate certain properties about the element
       def element(name, *find_args)
-        SitePrism::Deprecator.deprecate('Passing a block to :element') if block_given?
+        raise_if_block(self, name, block_given?, :element)
         build(:element, name, *find_args) do
-          define_method(name) do |*runtime_args, &element_block|
-            raise_if_block(self, name, !element_block.nil?, :element)
+          define_method(name) do |*runtime_args|
             _find(*merge_args(find_args, runtime_args))
           end
         end
@@ -126,20 +130,12 @@ module SitePrism
       # Wait for the elements to be present or not -> @return [TrueClass, SitePrism::Error]
       # Validate certain properties about the elements
       def elements(name, *find_args)
-        SitePrism::Deprecator.deprecate('Passing a block to :elements') if block_given?
+        raise_if_block(self, name, block_given?, :elements)
         build(:elements, name, *find_args) do
-          define_method(name) do |*runtime_args, &element_block|
-            raise_if_block(self, name, !element_block.nil?, :elements)
+          define_method(name) do |*runtime_args|
             _all(*merge_args(find_args, runtime_args))
           end
         end
-      end
-
-      # Sets the `expected_items` iVar on a class. This property is used in conjunction with
-      # `all_there?` to provide a way of granularising the check made to only interrogate a sub-set
-      # of DSL defined items
-      def expected_elements(*elements)
-        @expected_items = elements
       end
 
       # Creates an instance of a SitePrism Section - This will create several methods designed to
@@ -163,10 +159,10 @@ module SitePrism
       # Wait for the sections to be present or not -> @return [TrueClass, SitePrism::Error]
       # Validate certain properties about the section
       def sections(name, *args, &block)
+        raise_if_block(self, name, block_given?, :sections)
         section_class, find_args = extract_section_options(args, &block)
         build(:sections, name, *find_args) do
-          define_method(name) do |*runtime_args, &element_block|
-            raise_if_block(self, name, !element_block.nil?, :sections)
+          define_method(name) do |*runtime_args|
             _all(*merge_args(find_args, runtime_args)).map do |element|
               section_class.new(self, element)
             end
