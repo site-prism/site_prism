@@ -52,7 +52,9 @@ module SitePrism
     def blacklisted_names
       %w[
         attributes
+        html
         no
+        title
       ]
     end
 
