@@ -35,10 +35,6 @@ Metrics/BlockLength:
 Naming/AccessorMethodName:
   Enabled: false
 
-# This allows a slightly longer ExampleLength
-RSpec/ExampleLength:
-  Max: 8
-
 # Stylistic preference to make the RSpec tests flow better
 RSpec/MessageSpies:
   EnforcedStyle: receive
