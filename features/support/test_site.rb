@@ -17,12 +17,12 @@ class TestSite
     @home ||= Home.new
   end
 
-  def nested_sections
-    @nested_sections ||= NestedSections.new
+  def missing_title
+    @missing_title ||= MissingTitle.new
   end
 
-  def no_title
-    @no_title ||= NoTitle.new
+  def nested_sections
+    @nested_sections ||= NestedSections.new
   end
 
   def redirect

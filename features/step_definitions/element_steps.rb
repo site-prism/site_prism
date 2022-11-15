@@ -68,7 +68,7 @@ Then('not all mapped elements are present') do
 end
 
 Then('all missing elements are returned') do
-  expect(@test_site.no_title.elements_missing).to match_array([:missing_messages])
+  expect(@test_site.missing_title.elements_missing).to match_array([:missing_messages])
 end
 
 Then('the previously visible element is invisible') do

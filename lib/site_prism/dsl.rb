@@ -16,6 +16,14 @@ module SitePrism
 
     private
 
+    def raise_if_block(object, name, has_block, type)
+      return unless has_block
+
+      SitePrism.logger.debug("Type passed in: #{type}")
+      SitePrism.logger.error("#{object.class}##{name} cannot accept runtime blocks")
+      raise SitePrism::UnsupportedBlockError
+    end
+
     # Call `find` inside `to_capybara_node` context (Either Capybara::Session or Capybara::Node::Element)
     def _find(*find_args)
       kwargs = find_args.pop
@@ -38,37 +46,6 @@ module SitePrism
     def element_does_not_exist?(*find_args)
       kwargs = find_args.pop
       to_capybara_node.has_no_selector?(*find_args, **kwargs)
-    end
-
-    # Prevent users from calling methods with blocks when they shouldn't be.
-    #
-    # Example (Triggering error):
-    #
-    #       class MyPage
-    #         element :sample, '.css-locator' do
-    #           puts "This won't be output"
-    #         end
-    #       end
-    #
-    # At runtime this will generate a `SitePrism::UnsupportedBlockError`
-    #
-    # The only DSL keywords that can use blocks are :section and :iframe
-    def raise_if_block(obj, name, has_block, type)
-      return unless has_block
-
-      SitePrism.logger.debug("Type passed in: #{type}")
-      SitePrism.logger.warn('section / iFrame can only accept blocks.')
-      SitePrism.logger.error("#{obj.class}##{name} does not accept blocks")
-
-      raise SitePrism::UnsupportedBlockError
-    end
-
-    # Warn users from naming the elements starting with no_
-    def warn_if_dsl_collision(obj, name)
-      return unless name.to_s.start_with?('no_')
-
-      SitePrism.logger.warn("#{obj.class}##{name} should not start with no_")
-      SitePrism::Deprecator.deprecate('Using no_ prefix in DSL definition')
     end
 
     # Sanitize method called before calling any SitePrism DSL method or
@@ -113,17 +90,23 @@ module SitePrism
     module ClassMethods
       attr_reader :expected_items
 
+      # Sets the `expected_items` iVar on a class. This property is used in conjunction with
+      # `all_there?` to provide a way of granularising the check made to only interrogate a sub-set
+      # of DSL defined items
+      def expected_elements(*elements)
+        @expected_items = elements
+      end
+
       # Creates an instance of a SitePrism Element - This will create several methods designed to
       # Locate the element -> @return [Capybara::Node::Element]
       # Check the elements presence or non-presence -> @return [Boolean]
       # Wait for the elements to be present or not -> @return [TrueClass, SitePrism::Error]
       # Validate certain properties about the element
       def element(name, *find_args)
-        SitePrism::Deprecator.deprecate('Passing a block to :element') if block_given?
+        raise_if_block(self, name, block_given?, :element)
         build(:element, name, *find_args) do
-          define_method(name) do |*runtime_args, &element_block|
-            warn_if_dsl_collision(self, name)
-            raise_if_block(self, name, !element_block.nil?, :element)
+          define_method(name) do |*runtime_args, &runtime_block|
+            raise_if_block(self, name, runtime_block, :element)
             _find(*merge_args(find_args, runtime_args))
           end
         end
@@ -135,21 +118,13 @@ module SitePrism
       # Wait for the elements to be present or not -> @return [TrueClass, SitePrism::Error]
       # Validate certain properties about the elements
       def elements(name, *find_args)
-        SitePrism::Deprecator.deprecate('Passing a block to :elements') if block_given?
+        raise_if_block(self, name, block_given?, :elements)
         build(:elements, name, *find_args) do
-          define_method(name) do |*runtime_args, &element_block|
-            warn_if_dsl_collision(self, name)
-            raise_if_block(self, name, !element_block.nil?, :elements)
+          define_method(name) do |*runtime_args, &runtime_block|
+            raise_if_block(self, name, runtime_block, :elements)
             _all(*merge_args(find_args, runtime_args))
           end
         end
-      end
-
-      # Sets the `expected_items` iVar on a class. This property is used in conjunction with
-      # `all_there?` to provide a way of granularising the check made to only interrogate a sub-set
-      # of DSL defined items
-      def expected_elements(*elements)
-        @expected_items = elements
       end
 
       # Creates an instance of a SitePrism Section - This will create several methods designed to
@@ -161,7 +136,6 @@ module SitePrism
         section_class, find_args = extract_section_options(args, &block)
         build(:section, name, *find_args) do
           define_method(name) do |*runtime_args, &runtime_block|
-            warn_if_dsl_collision(self, name)
             section_element = _find(*merge_args(find_args, runtime_args))
             section_class.new(self, section_element, &runtime_block)
           end
@@ -176,8 +150,8 @@ module SitePrism
       def sections(name, *args, &block)
         section_class, find_args = extract_section_options(args, &block)
         build(:sections, name, *find_args) do
-          define_method(name) do |*runtime_args, &element_block|
-            raise_if_block(self, name, !element_block.nil?, :sections)
+          define_method(name) do |*runtime_args, &runtime_block|
+            raise_if_block(self, name, runtime_block, :sections)
             _all(*merge_args(find_args, runtime_args)).map do |element|
               section_class.new(self, element)
             end
@@ -209,19 +183,6 @@ module SitePrism
 
       private
 
-      def old_mapped_items
-        SitePrism::Deprecator.soft_deprecate(
-          '.mapped_items on a class',
-          'To allow easier recursion through the items in conjunction with #all_there?',
-          '.mapped_items(legacy: false)'
-        )
-        @old_mapped_items ||= []
-      end
-
-      def new_mapped_items
-        @new_mapped_items ||= { element: [], elements: [], section: [], sections: [], iframe: [] }
-      end
-
       def build(type, name, *find_args)
         raise InvalidDSLNameError if ENV.fetch('SITEPRISM_DSL_VALIDATION_ENABLED', nil) && invalid?(name)
 
@@ -232,11 +193,6 @@ module SitePrism
           yield
         end
         add_helper_methods(name, *find_args)
-      end
-
-      def map_item(type, name)
-        old_mapped_items << { type => name }
-        new_mapped_items[type] << name.to_sym
       end
 
       def add_helper_methods(name, *find_args)
@@ -304,6 +260,32 @@ module SitePrism
           'All DSL elements should have find_args'
         )
         define_method(name) { raise SitePrism::InvalidElementError }
+      end
+
+      def raise_if_block(parent_object, name, has_block, type)
+        return unless has_block
+
+        SitePrism.logger.debug("Type passed in: #{type}")
+        SitePrism.logger.error("#{name} has been defined as a '#{type}' item in #{parent_object}. It does not accept build-time blocks.")
+        raise SitePrism::UnsupportedBlockError
+      end
+
+      def old_mapped_items
+        SitePrism::Deprecator.soft_deprecate(
+          '.mapped_items on a class',
+          'To allow easier recursion through the items in conjunction with #all_there?',
+          '.mapped_items(legacy: false)'
+        )
+        @old_mapped_items ||= []
+      end
+
+      def new_mapped_items
+        @new_mapped_items ||= { element: [], elements: [], section: [], sections: [], iframe: [] }
+      end
+
+      def map_item(type, name)
+        old_mapped_items << { type => name }
+        new_mapped_items[type] << name.to_sym
       end
 
       def deduce_iframe_scope_find_args(args)

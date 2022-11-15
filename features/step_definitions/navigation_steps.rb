@@ -13,7 +13,7 @@ When('I navigate to the redirect page') do
 end
 
 When('I navigate to a page with no title') do
-  @test_site.no_title.load
+  @test_site.missing_title.load
 end
 
 When('I navigate to the nested section page') do
@@ -49,7 +49,7 @@ Then('I will be redirected to the home page') do
 end
 
 Then('I will be redirected to the page without a title') do
-  expect(@test_site.no_title).to be_displayed
+  expect(@test_site.missing_title).to be_displayed
 end
 
 When('I click the go button') do

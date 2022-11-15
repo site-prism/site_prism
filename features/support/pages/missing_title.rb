@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class NoTitle < SitePrism::Page
-  set_url '/no_title.htm'
-  set_url_matcher(/no_title\.htm$/)
+class MissingTitle < SitePrism::Page
+  set_url '/missing_title.htm'
+  set_url_matcher(/missing_title\.htm$/)
 
   load_validation { has_message? }
 

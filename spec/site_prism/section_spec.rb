@@ -72,7 +72,7 @@ describe SitePrism::Section do
       let(:page_with_anonymous_section) do
         Class.new(SitePrism::Page) do
           section :anonymous_section, '.section' do
-            element :title, 'h1'
+            element :heading, 'h1'
           end
         end
       end
@@ -92,7 +92,7 @@ describe SitePrism::Section do
       let(:page_with_anonymous_section) do
         Class.new(SitePrism::Page) do
           section :anonymous_section, SitePrism::Section, '.section' do
-            element :title, 'h1'
+            element :heading, 'h1'
           end
         end
       end
@@ -345,20 +345,10 @@ describe SitePrism::Section do
   end
 
   describe '#page' do
-    subject(:page_method) { described_class.new('parent', root_element).page }
+    subject(:page_method) { described_class.new('parent', locator).page }
 
-    let(:root_element) { 'root' }
-
-    it { is_expected.to eq('root') }
-
-    context 'when root element is nil' do
-      let(:root_element) { nil }
-
-      before do
-        allow(Capybara).to receive(:current_session).and_return('current session')
-      end
-
-      it { is_expected.to eq('current session') }
+    it 'is not intended to be used anymore' do
+      expect { page_method }.to raise_error(SitePrism::SitePrismError)
     end
   end
 end

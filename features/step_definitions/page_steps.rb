@@ -23,7 +23,7 @@ Then('I can get the page title') do
 end
 
 Then('the page has no title') do
-  expect(@test_site.no_title.title).to eq('')
+  expect(@test_site.missing_title.title).to eq('')
 end
 
 When('I execute some javascript on the page to set a value') do
@@ -35,7 +35,7 @@ Then('I can evaluate some javascript on the page to get the value') do
 end
 
 Then('not all expected elements are present') do
-  expect(@test_site.no_title).not_to be_all_there
+  expect(@test_site.missing_title).not_to be_all_there
 end
 
 Then('all elements marked as expected are present') do

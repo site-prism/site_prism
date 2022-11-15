@@ -64,8 +64,10 @@ module SitePrism
       root_element
     end
 
-    # This allows us to return anything thats passed in as a block to the section at
+    # This allows us to return anything that's passed in as a block to the section at
     # creation time, so that an anonymous section or such-like will have the extra methods
+    #
+    # This can also be used manually at runtime to allow people to abbreviate their calls
     def within
       Capybara.within(root_element) { yield(self) }
     end
@@ -73,11 +75,8 @@ module SitePrism
     # This was the old API-style of delegating through the Capybara.page call and over-loading
     # the method so we always went through our correct `root_element`
     def page
-      SitePrism::Deprecator.deprecate('Using page inside section')
-      return root_element if root_element
-
-      SitePrism.logger.warn('Root Element not found; Falling back to Capybara.current_session')
-      capybara_session
+      SitePrism.logger.fatal('This is not supposed to be used. All delegation now happens automatically!')
+      raise SitePrism::SitePrismError
     end
 
     def capybara_session

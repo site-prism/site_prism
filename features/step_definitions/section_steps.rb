@@ -90,7 +90,7 @@ Then('I can see a section within a section using nested blocks') do
 end
 
 Then('I can see an anonymous section') do
-  expect(@test_site.nested_sections.anonymous_section.title.text)
+  expect(@test_site.nested_sections.anonymous_section.heading.text)
     .to eq('Anonymous Section')
 end
 

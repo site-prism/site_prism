@@ -9,11 +9,11 @@ class NestedSections < SitePrism::Page
   sections :search_results, SearchResults, '.search-result'
 
   section :anonymous_section, '.anonymous-section' do
-    element :title, 'h1'
+    element :heading, 'h1'
   end
 
   sections :anonymous_sections, 'ul.anonymous-sections li' do
-    element :title, 'h1'
+    element :heading, 'h1'
   end
 
   section :level1, '.level-1' do
