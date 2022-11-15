@@ -57,14 +57,6 @@ describe 'Element' do
       end
     end
 
-    it 'raises a warning when the name starts with no_' do
-      log_messages = capture_stdout do
-        SitePrism.log_level = :WARN
-        subject.no_such_element
-      end
-      expect(lines(log_messages)).to eq 3
-    end
-
     describe '#elements_present' do
       it 'only lists the SitePrism objects that are present on the page' do
         expect(page.elements_present.sort).to eq(expected_elements.sort)
