@@ -8,17 +8,30 @@ For 4.x this will be disabled by default. We may look to switch this to a defaul
 the road, but for now this is experimental.
 
 Setting the env variable `SITEPRISM_DSL_VALIDATION_ENABLED` will then perform these checks during the build metaprogram
-phase of suite execution
+phase of suite execution.
 
-It is **highly** advisable to set full verbose logging on when using this by using `SitePrism.logger.level = :DEBUG`
+It is **highly** advisable to set full verbose logging on when using this by using `SitePrism.logger.level = :DEBUG`.
 
 ## Passing blocks to invalid DSL items
 
 SitePrism 3.x permitted you to create DSL items using a block in all situations. However when you created an item
 that was an `:element`, `:elements` or `:sections` the overall resultant method generation was an error method
-(This is because we don't permit blocks for these DSL items)
+(This is because we don't permit blocks for these DSL items).
 
 Now in 4.x we ban these creations and will hard-fail instantly.
+
+## Avoiding using #page when not on a page
+
+In SitePrism 3.x (Specifically when using capybara < 3.29), often people would want to obtain their "current" scope,
+either deliberately or by using a chained method. The way we used to do this was by calling `#page`, which would then
+return your scope. From later versions of capybara they implemented a `#to_capybara_node` method which would be called
+and pre-chained to ensure your scope was correct.
+
+At SitePrism, we left in the legacy method, now the method will crash with a fatal error (We will remove this method
+entirely in 2023, so you'll get a standard Ruby NoMethodError).
+
+If you want to obtain your full page scoping. Using `#parent_page` will get you your top level page, or simply using
+`#parent` will get you to go up one level of scoping.
 
 # Upgrading from SitePrism 2.x to 3.x
 
@@ -41,8 +54,7 @@ class MyPage < SitePrism::Page
 end
 ```
 
-You can also create a `BasePage` class if you want to retain this functionality
-across all your Pages
+You can also create a `BasePage` class if you want to retain this functionality across all your pages ...
 
 ```ruby
 class BasePage < SitePrism::Page
@@ -80,7 +92,7 @@ timeout by re-configuring `Capybara.default_max_wait_time`.
 ## `wait_until` methods
 
 Previously `wait_until` methods accepted a numerical value for wait time.
-The wait time should now be passed using hash args like: `wait: <seconds>`
+The wait time should now be passed using hash args like: `wait: <seconds>`.
 
 For example, previously:
 
