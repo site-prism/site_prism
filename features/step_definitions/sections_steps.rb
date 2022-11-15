@@ -12,7 +12,7 @@ end
 Then('I can see a collection of anonymous sections') do
   anonymous_sections = @test_site.nested_sections.anonymous_sections
   anonymous_sections.each_with_index do |section, index|
-    expect(section.title.text).to eq("Section #{index}")
+    expect(section.heading.text).to eq("Section #{index}")
   end
 
   expect(anonymous_sections.size).to eq(2)

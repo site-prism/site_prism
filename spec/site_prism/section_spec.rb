@@ -72,7 +72,7 @@ describe SitePrism::Section do
       let(:page_with_anonymous_section) do
         Class.new(SitePrism::Page) do
           section :anonymous_section, '.section' do
-            element :title, 'h1'
+            element :heading, 'h1'
           end
         end
       end
@@ -92,7 +92,7 @@ describe SitePrism::Section do
       let(:page_with_anonymous_section) do
         Class.new(SitePrism::Page) do
           section :anonymous_section, SitePrism::Section, '.section' do
-            element :title, 'h1'
+            element :heading, 'h1'
           end
         end
       end
