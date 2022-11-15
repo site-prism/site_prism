@@ -55,8 +55,10 @@ module SitePrism
       root_element
     end
 
-    # This allows us to return anything thats passed in as a block to the section at
+    # This allows us to return anything that's passed in as a block to the section at
     # creation time, so that an anonymous section or such-like will have the extra methods
+    #
+    # This can also be used manually at runtime to allow people to abbreviate their calls
     def within
       Capybara.within(root_element) { yield(self) }
     end
