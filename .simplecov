@@ -3,4 +3,4 @@
 require 'simplecov'
 
 SimpleCov.start
-SimpleCov.minimum_coverage 99.1
+SimpleCov.minimum_coverage 98.8
