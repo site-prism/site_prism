@@ -1,15 +1,27 @@
-## [main] - Unreleased
+## [4.0.beta] - Unreleased
 ### Removed
 - Configuration parameter `.use_all_there_gem`
   - This is now enabled by default. The sub-gem is automatically required when you `require 'site_prism'`
   ([luke-hill])
 
+- You are no longer able to call `#page` inside a section to obtain the current scope.
+  - Either use it implicitly via calls which will be scoped using capybara
+  - Or use `self.root_element` to obtain your current scope
+  ([luke-hill])
+
 ### Added
 - Initial implementation of whitelisting attributes so we cannot create DSL items with invalid names
-  - This is currently disabled and is experimental in `4.0.beta`
+  - This is currently disabled by default and is experimental in `4.0.beta` (To enable use environment key
+  **SITEPRISM_DSL_VALIDATION_ENABLED**)
   ([luke-hill])
 
 ### Changed
+**Breaking Change**:
+- Passing unrequired blocks is now not permitted
+  - Passing a build-time block to `element` or `elements` will now throw an error on initial thread execution
+  - Passing a runtime block to `element`, `elements` or `sections` will now throw an error when called
+  ([luke-hill])
+
 - **Required Ruby Version is now 2.5+**
 ([luke-hill])
 
@@ -19,7 +31,7 @@
 - Gem bumps to dev_dependencies
   - `cucumber` must now be v6+
   - `rubocop` and `rubocop-rspec` have had large version updates. `rubocop-performance` a small bump in version
-    ([luke-hill])
+  ([luke-hill])
 
 ### Fixed
 - Ensure `Forwardable` module is verbosely required in the gem requirements

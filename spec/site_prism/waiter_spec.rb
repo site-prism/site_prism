@@ -2,40 +2,41 @@
 
 describe SitePrism::Waiter do
   describe '.wait_until_true' do
-    it 'throws a Timeout exception if the block does not become true' do
-      allow(Capybara).to receive(:default_max_wait_time).and_return(0.1)
+    let(:default_duration) { 0.1 }
+    let(:default_timeout) { 0.1 }
 
-      expect { described_class.wait_until_true { false } }
+    def execute_waiter(timeout = default_timeout, duration = default_duration, &block)
+      described_class.wait_until_true(timeout, duration, &block)
+    end
+
+    it 'throws a Timeout exception if the block does not become true' do
+      expect { execute_waiter(default_timeout) { false } }
         .to raise_error(SitePrism::TimeoutError)
-        .with_message(/0.1/)
+        .with_message(/#{default_timeout}/)
     end
 
     it 'returns true if block is truthy' do
-      expect(described_class.wait_until_true { :foo }).to be true
+      expect(execute_waiter { true }).to be true
     end
 
     context 'with a custom timeout' do
-      let(:timeout) { 0.18 }
+      let(:custom_timeout) { 0.18 }
 
       it 'alters the error message' do
-        expect { described_class.wait_until_true(timeout) { false } }
+        expect { execute_waiter(custom_timeout) { false } }
           .to raise_error(SitePrism::TimeoutError)
-          .with_message(/#{timeout}/)
+          .with_message(/#{custom_timeout}/)
       end
     end
 
     context 'with a custom sleep_duration' do
-      let(:timeout) { 0.1 }
-      let(:sleep_duration_long) { 0.5 }
-      let(:sleep_duration_short) { 0.01 }
+      let(:long_sleep_duration) { 0.5 }
+      let(:short_sleep_duration) { 0.01 }
 
       it 'when setting sleep_duration > timeout, error raise and yield execute 2 times' do
         count = 0
         swallow_timeout do
-          described_class.wait_until_true(timeout, sleep_duration_long) do
-            count += 1
-            false
-          end
+          execute_waiter(default_timeout, long_sleep_duration) { false.tap { count += 1 } }
         end
         expect(count).to eq(2)
       end
@@ -43,10 +44,7 @@ describe SitePrism::Waiter do
       it 'when setting sleep_duration < timeout, error raise and yield execute many times' do
         count = 0
         swallow_timeout do
-          described_class.wait_until_true(timeout, sleep_duration_short) do
-            count += 1
-            false
-          end
+          execute_waiter(default_timeout, short_sleep_duration) { false.tap { count += 1 } }
         end
         expect(count).to be >= 10
       end
