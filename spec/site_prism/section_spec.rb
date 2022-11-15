@@ -345,20 +345,10 @@ describe SitePrism::Section do
   end
 
   describe '#page' do
-    subject(:page_method) { described_class.new('parent', root_element).page }
+    subject(:page_method) { described_class.new('parent', locator).page }
 
-    let(:root_element) { 'root' }
-
-    it { is_expected.to eq('root') }
-
-    context 'when root element is nil' do
-      let(:root_element) { nil }
-
-      before do
-        allow(Capybara).to receive(:current_session).and_return('current session')
-      end
-
-      it { is_expected.to eq('current session') }
+    it 'is not intended to be used anymore' do
+      expect { page_method }.to raise_error(SitePrism::SitePrismError)
     end
   end
 end

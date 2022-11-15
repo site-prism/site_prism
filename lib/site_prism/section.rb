@@ -64,11 +64,8 @@ module SitePrism
     # This was the old API-style of delegating through the Capybara.page call and over-loading
     # the method so we always went through our correct `root_element`
     def page
-      SitePrism::Deprecator.deprecate('Using page inside section')
-      return root_element if root_element
-
-      SitePrism.logger.warn('Root Element not found; Falling back to Capybara.current_session')
-      capybara_session
+      SitePrism.logger.fatal('This is not supposed to be used. All delegation now happens automatically!')
+      raise SitePrism::SitePrismError
     end
 
     def capybara_session
