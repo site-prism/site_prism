@@ -6,7 +6,7 @@
 ### Changed
 
 ### Fixed
-- iFrames also ban unrequired blocks (This was missed)
+- iFrames also ban redundant blocks from being passed in at build time
   ([luke-hill])
 
 ## [4.0.beta] - 2022-11-28
