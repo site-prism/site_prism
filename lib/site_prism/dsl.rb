@@ -175,7 +175,7 @@ module SitePrism
       # Return a list of all mapped items on a SitePrism class instance (Page or Section)
       # If legacy is set to true (Default) -> @return [Array]
       # If legacy is set to false (New behaviour) -> @return [Hash]
-      def mapped_items(legacy: true)
+      def mapped_items(legacy: false)
         return old_mapped_items if legacy
 
         new_mapped_items
@@ -271,10 +271,9 @@ module SitePrism
       end
 
       def old_mapped_items
-        SitePrism::Deprecator.soft_deprecate(
-          '.mapped_items on a class',
-          'To allow easier recursion through the items in conjunction with #all_there?',
-          '.mapped_items(legacy: false)'
+        SitePrism::Deprecator.deprecate(
+          '.mapped_items structure (internally), on a class',
+          'Thew new .mapped_items structure',
         )
         @old_mapped_items ||= []
       end
