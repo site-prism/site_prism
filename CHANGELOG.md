@@ -1139,7 +1139,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v3.7.3...main
+[main]:       https://github.com/site-prism/site_prism/compare/v4.0.beta...main
+[4.0.beta]:   https://github.com/site-prism/site_prism/compare/v3.7.3...v4.0.beta
 [3.7.3]:      https://github.com/site-prism/site_prism/compare/v3.7.2...v3.7.3
 [3.7.2]:      https://github.com/site-prism/site_prism/compare/v3.7.1...v3.7.2
 [3.7.1]:      https://github.com/site-prism/site_prism/compare/v3.7...v3.7.1
