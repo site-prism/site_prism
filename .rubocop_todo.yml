@@ -11,11 +11,6 @@
 Metrics/ModuleLength:
   Max: 197
 
-# Offense count: 3
-# Configuration parameters: AllowSubject.
-RSpec/MultipleMemoizedHelpers:
-  Max: 6
-
 # Offense count: 1
 RSpec/StubbedMock:
   Exclude:

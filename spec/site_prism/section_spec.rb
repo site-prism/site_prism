@@ -154,9 +154,6 @@ describe SitePrism::Section do
           section :section, SitePrism::Section
         end
       end
-      let(:error_message) do
-        'search arguments are needed in `section` definition or alternatively use `set_default_search_arguments`'
-      end
 
       it 'uses the default search arguments set on the section' do
         expect(page).to receive(:_find).with(*default_search_arguments, { wait: 0 })
@@ -171,7 +168,9 @@ describe SitePrism::Section do
       end
 
       it 'raises an ArgumentError if no default_search_arguments exist in the inheritane tree' do
-        expect { invalid_page }.to raise_error(ArgumentError).with_message(error_message)
+        expect { invalid_page }
+          .to raise_error(ArgumentError)
+          .with_message('search arguments are needed in `section` definition or alternatively use `set_default_search_arguments`')
       end
     end
   end
@@ -219,14 +218,12 @@ describe SitePrism::Section do
   end
 
   describe '#new' do
-    let(:new_page) do
+    let(:page) do
       Class.new(SitePrism::Page) do
         section :new_section, SitePrism::Section, '.class-one', css: '.my-css', text: 'Hi'
         element :new_element, '.class-two'
-      end
+      end.new
     end
-
-    let(:page) { new_page.new }
 
     context 'with a block given' do
       let(:section_with_block) do
