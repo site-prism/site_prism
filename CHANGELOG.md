@@ -1,4 +1,15 @@
-## [4.0.beta] - Unreleased
+## [main] - Unreleased
+### Removed
+
+### Added
+
+### Changed
+
+### Fixed
+- iFrames also ban unrequired blocks (This was missed)
+  ([luke-hill])
+
+## [4.0.beta] - 2022-11-28
 ### Removed
 - Configuration parameter `.use_all_there_gem`
   - This is now enabled by default. The sub-gem is automatically required when you `require 'site_prism'`
