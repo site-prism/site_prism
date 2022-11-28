@@ -1,4 +1,15 @@
-## [4.0.beta] - Unreleased
+## [main] - Unreleased
+### Removed
+
+### Added
+
+### Changed
+
+### Fixed
+- iFrames also ban redundant blocks from being passed in at build time
+  ([luke-hill])
+
+## [4.0.beta] - 2022-11-28
 ### Removed
 - Configuration parameter `.use_all_there_gem`
   - This is now enabled by default. The sub-gem is automatically required when you `require 'site_prism'`
@@ -1128,7 +1139,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v3.7.3...main
+[main]:       https://github.com/site-prism/site_prism/compare/v4.0.beta...main
+[4.0.beta]:   https://github.com/site-prism/site_prism/compare/v3.7.3...v4.0.beta
 [3.7.3]:      https://github.com/site-prism/site_prism/compare/v3.7.2...v3.7.3
 [3.7.2]:      https://github.com/site-prism/site_prism/compare/v3.7.1...v3.7.2
 [3.7.1]:      https://github.com/site-prism/site_prism/compare/v3.7...v3.7.1
