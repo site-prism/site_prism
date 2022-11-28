@@ -68,13 +68,13 @@ describe 'Iframe' do
 
     before { wipe_logger! }
 
-    it 'will throw a warning when creating an iFrame with an invalid locator' do
+    it 'will throw a warning when creating an iFrame with an ambiguous locator' do
       log_messages = capture_stdout do
         SitePrism.log_level = :WARN
         invalid_class
       end
 
-      expect(lines(log_messages)).to eq 2
+      expect(lines(log_messages)).to eq 4
     end
   end
 
