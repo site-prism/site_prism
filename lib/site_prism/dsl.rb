@@ -192,10 +192,10 @@ module SitePrism
           map_item(type, name)
           yield
         end
-        add_helper_methods(name, *find_args)
+        add_helper_methods(name, type, *find_args)
       end
 
-      def add_helper_methods(name, *find_args)
+      def add_helper_methods(name, _type, *find_args)
         create_existence_checker(name, *find_args)
         create_nonexistence_checker(name, *find_args)
         SitePrism::RspecMatchers.new(name)._create_rspec_existence_matchers if defined?(RSpec)
