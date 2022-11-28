@@ -176,9 +176,9 @@ module SitePrism
       # If legacy is set to true (Default) -> @return [Array]
       # If legacy is set to false (New behaviour) -> @return [Hash]
       def mapped_items(legacy: false)
-        return old_mapped_items if legacy
+        return legacy_mapped_items if legacy
 
-        new_mapped_items
+        @mapped_items ||= { element: [], elements: [], section: [], sections: [], iframe: [] }
       end
 
       private
@@ -270,21 +270,17 @@ module SitePrism
         raise SitePrism::UnsupportedBlockError
       end
 
-      def old_mapped_items
+      def legacy_mapped_items
         SitePrism::Deprecator.deprecate(
           '.mapped_items structure (internally), on a class',
           'Thew new .mapped_items structure',
         )
-        @old_mapped_items ||= []
-      end
-
-      def new_mapped_items
-        @new_mapped_items ||= { element: [], elements: [], section: [], sections: [], iframe: [] }
+        @legacy_mapped_items ||= []
       end
 
       def map_item(type, name)
-        old_mapped_items << { type => name }
-        new_mapped_items[type] << name.to_sym
+        mapped_items(legacy: true) << { type => name }
+        mapped_items[type] << name.to_sym
       end
 
       def deduce_iframe_scope_find_args(args)
