@@ -16,7 +16,7 @@ module SitePrism
 
     private
 
-    def raise_if_block(object, name, has_block, type)
+    def raise_if_runtime_block_supplied(object, name, has_block, type)
       return unless has_block
 
       SitePrism.logger.debug("Type passed in: #{type}")
@@ -103,10 +103,10 @@ module SitePrism
       # Wait for the elements to be present or not -> @return [TrueClass, SitePrism::Error]
       # Validate certain properties about the element
       def element(name, *find_args)
-        raise_if_block(self, name, block_given?, :element)
+        raise_if_build_time_block_supplied(self, name, block_given?, :element)
         build(:element, name, *find_args) do
           define_method(name) do |*runtime_args, &runtime_block|
-            raise_if_block(self, name, runtime_block, :element)
+            raise_if_runtime_block_supplied(self, name, runtime_block, :element)
             _find(*merge_args(find_args, runtime_args))
           end
         end
@@ -118,10 +118,10 @@ module SitePrism
       # Wait for the elements to be present or not -> @return [TrueClass, SitePrism::Error]
       # Validate certain properties about the elements
       def elements(name, *find_args)
-        raise_if_block(self, name, block_given?, :elements)
+        raise_if_build_time_block_supplied(self, name, block_given?, :elements)
         build(:elements, name, *find_args) do
           define_method(name) do |*runtime_args, &runtime_block|
-            raise_if_block(self, name, runtime_block, :elements)
+            raise_if_runtime_block_supplied(self, name, runtime_block, :elements)
             _all(*merge_args(find_args, runtime_args))
           end
         end
@@ -151,7 +151,7 @@ module SitePrism
         section_class, find_args = extract_section_options(args, &block)
         build(:sections, name, *find_args) do
           define_method(name) do |*runtime_args, &runtime_block|
-            raise_if_block(self, name, runtime_block, :sections)
+            raise_if_runtime_block_supplied(self, name, runtime_block, :sections)
             _all(*merge_args(find_args, runtime_args)).map do |element|
               section_class.new(self, element)
             end
@@ -160,7 +160,7 @@ module SitePrism
       end
 
       def iframe(name, klass, *args)
-        SitePrism.logger.debug('Block passed into iFrame construct at build time') if block_given?
+        raise_if_build_time_block_supplied(self, name, block_given?, :elements)
         element_find_args = deduce_iframe_element_find_args(args)
         scope_find_args = deduce_iframe_scope_find_args(args)
         build(:iframe, name, *element_find_args) do
@@ -254,15 +254,15 @@ module SitePrism
       end
 
       def create_error_method(name)
-        SitePrism.logger.error("#{name} has come from an item with no locators.")
-        SitePrism::Deprecator.soft_deprecate(
+        SitePrism::Deprecator.deprecate(
           'DSL definition with no find_args',
-          'All DSL elements should have find_args'
+          'DSL definition with at least 1 find_arg'
         )
+        SitePrism.logger.error("#{name} has come from an item with no locators.")
         define_method(name) { raise SitePrism::InvalidElementError }
       end
 
-      def raise_if_block(parent_object, name, has_block, type)
+      def raise_if_build_time_block_supplied(parent_object, name, has_block, type)
         return unless has_block
 
         SitePrism.logger.debug("Type passed in: #{type}")
