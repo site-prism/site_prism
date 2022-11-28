@@ -4,6 +4,10 @@
 ### Added
 
 ### Changed
+- All soft deprecations have now been changed / amended into full deprecations
+  - You now get a full deprecation when attempting to build DSL items without finders
+  - `.mapped_items` now by default is structured the new hash-way
+  ([luke-hill])
 
 ### Fixed
 - iFrames also ban redundant blocks from being passed in at build time
