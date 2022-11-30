@@ -743,7 +743,7 @@ Passing `:none` (default), will not change the functionality. However passing in
 
 Work alongside developing this functionality further is being continued in the
 [site_prism-all_there](http://www.github.com/site-prism/site_prism-all_there) repo. So head on over
-there if you're interested in how this feature will work going forwards
+there if you're interested in how this feature will evolve going forwards
 
 ### Getting the list of missing elements
 
@@ -823,15 +823,14 @@ class People < SitePrism::Section
 end
 
 class Home < SitePrism::Page
-  # section people_with_block will have `headline` and
-  # `footer` elements in it
+  # section people_with_block will have `headline` and `footer` elements in it
   section :people_with_block, People do
     element :headline, 'h2'
   end
 end
 ```
 
-The 3rd argument (Locators), can be omitted if you are re-using the same
+The 3rd argument (Locator), can be omitted if you are re-using the same
 locator for all references to the section Class. In order to do this,
 simply tell SitePrism that you want to use default search arguments.
 
@@ -867,7 +866,7 @@ end
 # the page and section in action
 
 @home = Home.new
-@home.menu #=> <MenuSection...>
+@home.menu #=> <Menu...>
 ```
 
 When the `menu` method is called against `@home`, an instance of `Menu`
@@ -967,7 +966,9 @@ Then('the home page menu contains a link to the various search functions') do
 end
 ```
 
-Note that on an individual section it's possible to pass a block directly to the section without using `within`.  Because the block is executed only during `Section` initialization this won't work when accessing a single Section from an array of Sections.  For that reason we recommend using `within` which works in either case.
+Note that on an individual section it's possible to pass a block directly to the section without using `within`.
+Because the block is executed only during `Section` initialization this won't work when accessing a single
+Section from an array of Sections. For that reason we recommend using `within` which works in either case.
 
 ```ruby
 Then('the home page menu contains a link to the various search functions') do
@@ -1122,26 +1123,22 @@ class Home < SitePrism::Page
   section :login_and_registration, LoginRegistrationForm, 'div.login-registration'
 end
 
-# how to login (fatuous, but demonstrates the point):
+# Then you could log in like so ...
 
 Then('I sign in') do
   @home = Home.new
   @home.load
-  expect(@home).to have_login_and_registration
-  expect(@home.login_and_registration).to have_username
-  @home.login_and_registration.login.username.set 'bob'
-  @home.login_and_registration.login.password.set 'p4ssw0rd'
+  @home.login_and_registration.login.username.send_keys('bob')
+  @home.login_and_registration.login.password.send_keys('p4ssw0rd')
   @home.login_and_registration.login.sign_in.click
 end
 
-# how to sign up:
+# And you could sign up like so ...
 
-When('I enter my name into the home page's registration form') do
+When('I sign up') do
   @home = Home.new
   @home.load
-  expect(@home.login_and_registration).to have_first_name
-  expect(@home.login_and_registration).to have_last_name
-  @home.login_and_registration.first_name.set 'Bob'
+  @home.login_and_registration.first_name.send_keys('Bob')
   # ...
 end
 ```
@@ -1181,7 +1178,7 @@ can be called in a page or a section.
 
 The only difference between `section` and `sections` is that whereas the
 first returns an instance of the supplied section class, the second
-returns an array containing as many instances of the section class as
+returns a `Capybara::Result` containing as many instances of the section class as
 there are capybara elements found by the supplied css selector. This is
 better explained in the following example ...
 
@@ -1228,12 +1225,14 @@ The css selector that is passed as the 3rd argument to the
 elements. Each capybara element found using the css selector is used to
 create a new instance of `SearchResults` and becomes its root
 element. So if the css selector finds 3 `li` elements, calling
-`search_results` will return an array containing 3 instances of
+`search_results` will return a `Capybara::Result` containing 3 instances of
 `SearchResults`, each with one of the `li` elements as it's root element.
 
 ##### Accessing Within a Collection of Sections
 
-When using an iterator such as `each` to pass a block through to a collection of sections it is possible to skip using `within`.  However some caution is warranted when accessing the Sections directly from an array, as the block can only be executed when the section is being initialized.  The following does not work:
+When using an iterator such as `each` to pass a block through to a collection of sections it is
+possible to skip using `within`. However some caution is warranted when accessing the
+Sections directly from an array, as the block can only be executed when the section is being initialized.  The following does not work:
 
 ```rb
   @home.search_results.first do |result|
@@ -1436,8 +1435,8 @@ The error message is ignored unless the boolean value is evaluated as falsey.
 
 ```ruby
 class SomePage < SitePrism::Page
-  element :foo_element, '.foo'
-  load_validation { [has_foo_element?, 'did not have foo element!'] }
+  element :foo, '.foo'
+  load_validation { [has_foo?, 'did not have foo element!'] }
 end
 ```
 
@@ -1483,8 +1482,8 @@ class FooPage < BasePage
   section :form, '#form'
   element :some_other_element, '.myelement'
 
-  load_validation { [has_form?, 'form did not appear'] }
-  load_validation { [has_some_other_element?, 'some other element did not appear'] }
+  load_validation { [has_form?(wait: 5), 'form did not appear'] }
+  load_validation { [has_some_other_element?(wait: 5), 'some other element did not appear'] }
 end
 ```
 
@@ -1494,12 +1493,6 @@ the validations will be performed in the following order:
 1. The `BasePage` validation will wait for the loading message to disappear.
 2. The `FooPage` validation will wait for the `form` element to be present.
 3. The `FooPage` validation will wait for the `some_other_element` element to be present.
-
-**NB:** `SitePrism::Page` **used to** include a default load validation on
-`page.displayed?` however for v3 this has been removed. It is therefore
-necessary to re-define this if you want to retain the behaviour
-from site_prism v2. See [UPGRADING.md](https://github.com/site-prism/site_prism/blob/main/UPGRADING.md#default-load-validations)
-for more info on this.
 
 ## Using Capybara Query Options
 
@@ -1528,7 +1521,7 @@ fail if the page has not finished loading the section(s):
 ```ruby
 @home = Home.new
 # ...
-expect(@home.search_results.size).to == 25 # This may fail!
+expect(@home.search_results.size).to eq(25) # This may fail!
 ```
 
 The above query can be rewritten to utilize the Capybara `:count` option
@@ -1539,9 +1532,9 @@ the page within the timeout:
 
 ```ruby
 @home = Home.new
-@home.has_search_results?(count: 25)
+@home.has_search_results?(count: 25) # will wait default wait time
 # OR
-@home.search_results(count: 25)
+@home.search_results(count: 25, wait: 5) # will wait 5 seconds
 ```
 
 Now we can write pretty, non-failing tests without hard coding these options
