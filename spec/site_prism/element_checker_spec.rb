@@ -90,7 +90,7 @@ describe SitePrism::ElementChecker do
 
       let(:present) { expected_items[1..-1] }
       let(:missing) { expected_items[0] }
-      let(:not_expected) { page.class.mapped_items(legacy: true).map(&:values).flatten - expected_items }
+      let(:not_expected) { page.class.mapped_items.values.flatten - expected_items }
 
       it 'calls #there? for missing elements' do
         present.each { |name| allow(page).to receive(:there?).with(name).once.and_call_original }
