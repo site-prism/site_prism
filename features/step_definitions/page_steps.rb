@@ -57,3 +57,17 @@ end
 Then('all elements and first-generation descendants are not present') do
   expect(@test_site.nested_sections).not_to be_all_there(recursion: :one)
 end
+
+Then('all mapped elements are present') do
+  mapped_item_names =
+    @test_site.dynamic.class.mapped_items.values.flatten
+
+  expect(@test_site.dynamic.elements_present).to match_array(mapped_item_names)
+end
+
+Then('not all mapped elements are present') do
+  mapped_item_names =
+    @test_site.home.class.mapped_items.values.flatten
+
+  expect(@test_site.home.elements_present).not_to match_array(mapped_item_names)
+end
