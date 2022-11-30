@@ -87,14 +87,14 @@ When('I navigate to the google home page') do
 end
 
 Then('the home page should contain the menu and the search form') do
-  @home.wait_until_menu_visible # menu loads after a second or 2, give it time to arrive
+  @home.wait_until_menu_visible(wait: 5)
   expect(@home).to have_menu
   expect(@home).to have_search_field
   expect(@home).to have_search_button
 end
 
 When('I search for Sausages') do
-  @home.search_field.set 'Sausages'
+  @home.search_field.send_keys('Sausages')
   @home.search_button.click
 end
 
@@ -104,7 +104,7 @@ Then('the search results page is displayed') do
 end
 
 Then('the search results page contains 10 individual search results') do
-  @results_page.wait_until_search_results_visible
+  @results_page.wait_until_search_results_visible(wait: 5)
   expect(@results_page).to have_search_results(count: 10)
 end
 
