@@ -1734,7 +1734,7 @@ all over the place. Here's an example of this common problem:
 ```ruby
 @home = Home.new # <-- noise
 @home.load
-@home.search_field.set 'Sausages'
+@home.search_field.send_keys('Sausages')
 @home.search_field.search_button.click
 @results_page = SearchResults.new # <-- noise
 expect(@results_page).to have_search_result_items
@@ -1744,7 +1744,7 @@ The annoyance (and, later, maintenance nightmare) is having to create
 `@home` and `@results_page`. It would be better to not have to create
 instances of pages all over your tests.
 
-The way I've dealt with this problem is to create a class containing
+One way you can deal with this problem is to create a class containing
 methods that return instances of the pages. Eg:
 
 ```ruby
@@ -1801,8 +1801,8 @@ end
 The only thing that needs instantiating is the `App` class - from then on
 pages don't need to be initialized, they are now returned by methods on `@app`.
 
-It is possible to further optimise this, by using Cucumber/RSpec hooks, amongst
-other things. However the investigation and optimisation of this (and other
+It is possible to further optimise this, by using Cucumber/RSpec hooks, memoization as well
+as many other things. However the investigation and optimisation of this (and other
 aspects of SitePrism), is left as an exercise to the Reader.
 
 Happy testing from all of the SitePrism team!
