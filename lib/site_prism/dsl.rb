@@ -175,10 +175,10 @@ module SitePrism
       # Return a list of all mapped items on a SitePrism class instance (Page or Section)
       # If legacy is set to true (Default) -> @return [Array]
       # If legacy is set to false (New behaviour) -> @return [Hash]
-      def mapped_items(legacy: true)
-        return old_mapped_items if legacy
+      def mapped_items(legacy: false)
+        return legacy_mapped_items if legacy
 
-        new_mapped_items
+        @mapped_items ||= { element: [], elements: [], section: [], sections: [], iframe: [] }
       end
 
       private
@@ -192,10 +192,10 @@ module SitePrism
           map_item(type, name)
           yield
         end
-        add_helper_methods(name, *find_args)
+        add_helper_methods(name, type, *find_args)
       end
 
-      def add_helper_methods(name, *find_args)
+      def add_helper_methods(name, _type, *find_args)
         create_existence_checker(name, *find_args)
         create_nonexistence_checker(name, *find_args)
         SitePrism::RspecMatchers.new(name)._create_rspec_existence_matchers if defined?(RSpec)
@@ -254,11 +254,11 @@ module SitePrism
       end
 
       def create_error_method(name)
-        SitePrism.logger.error("#{name} has come from an item with no locators.")
-        SitePrism::Deprecator.soft_deprecate(
+        SitePrism::Deprecator.deprecate(
           'DSL definition with no find_args',
-          'All DSL elements should have find_args'
+          'DSL definition with at least 1 find_arg'
         )
+        SitePrism.logger.error("#{name} has come from an item with no locators.")
         define_method(name) { raise SitePrism::InvalidElementError }
       end
 
@@ -270,22 +270,17 @@ module SitePrism
         raise SitePrism::UnsupportedBlockError
       end
 
-      def old_mapped_items
-        SitePrism::Deprecator.soft_deprecate(
-          '.mapped_items on a class',
-          'To allow easier recursion through the items in conjunction with #all_there?',
-          '.mapped_items(legacy: false)'
+      def legacy_mapped_items
+        SitePrism::Deprecator.deprecate(
+          '.mapped_items structure (internally), on a class',
+          'Thew new .mapped_items structure'
         )
-        @old_mapped_items ||= []
-      end
-
-      def new_mapped_items
-        @new_mapped_items ||= { element: [], elements: [], section: [], sections: [], iframe: [] }
+        @legacy_mapped_items ||= []
       end
 
       def map_item(type, name)
-        old_mapped_items << { type => name }
-        new_mapped_items[type] << name.to_sym
+        mapped_items(legacy: true) << { type => name }
+        mapped_items[type] << name.to_sym
       end
 
       def deduce_iframe_scope_find_args(args)

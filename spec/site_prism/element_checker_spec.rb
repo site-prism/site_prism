@@ -90,7 +90,7 @@ describe SitePrism::ElementChecker do
 
       let(:present) { expected_items[1..-1] }
       let(:missing) { expected_items[0] }
-      let(:not_expected) { page.class.mapped_items.map(&:values).flatten - expected_items }
+      let(:not_expected) { page.class.mapped_items.values.flatten - expected_items }
 
       it 'calls #there? for missing elements' do
         present.each { |name| allow(page).to receive(:there?).with(name).once.and_call_original }
@@ -108,7 +108,7 @@ describe SitePrism::ElementChecker do
       end
 
       it 'does not calls #there? for elements not defined as expected' do
-        expect(page).not_to receive(:there?).with(not_expected.first)
+        expect(page).not_to receive(:there?).with(array_including(*not_expected))
 
         subject
       end

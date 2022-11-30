@@ -53,20 +53,6 @@ Then('I can see the CLASS of the link') do
   expect(@test_site.home.a_link['class']).to eq('a')
 end
 
-Then('all mapped elements are present') do
-  mapped_item_names =
-    @test_site.dynamic.class.mapped_items.map(&:values).flatten
-
-  expect(@test_site.dynamic.elements_present).to match_array(mapped_item_names)
-end
-
-Then('not all mapped elements are present') do
-  mapped_item_names =
-    @test_site.home.class.mapped_items.map(&:values).flatten
-
-  expect(@test_site.home.elements_present).not_to match_array(mapped_item_names)
-end
-
 Then('all missing elements are returned') do
   expect(@test_site.missing_title.elements_missing).to match_array([:missing_messages])
 end
