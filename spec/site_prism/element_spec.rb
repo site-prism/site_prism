@@ -76,7 +76,7 @@ describe 'Element' do
 
     let(:page) { CSSPage.new }
     let(:klass) { CSSPage }
-    let(:element) { instance_double('Capybara::Node::Element') }
+    let(:element) { instance_double(Capybara::Node::Element) }
 
     before do
       allow(page)
@@ -97,7 +97,7 @@ describe 'Element' do
 
     let(:page) { XPathPage.new }
     let(:klass) { XPathPage }
-    let(:element) { instance_double('Capybara::Node::Element') }
+    let(:element) { instance_double(Capybara::Node::Element) }
 
     before do
       allow(page)

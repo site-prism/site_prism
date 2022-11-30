@@ -2,7 +2,7 @@
 
 describe SitePrism::Section do
   let(:section_without_block) { described_class.new(SitePrism::Page.new, locator) }
-  let!(:locator) { instance_double('Capybara::Node::Element') }
+  let!(:locator) { instance_double(Capybara::Node::Element) }
 
   it 'responds to Capybara methods' do
     expect(section_without_block).to respond_to(*Capybara::Session::DSL_METHODS)

@@ -61,8 +61,6 @@ describe SitePrism::Loadable do
   end
 
   describe '#when_loaded' do
-    let(:james_bond) { instance_spy('007') }
-
     context 'with passing load validations' do
       before { loadable.load_validation { true_thing? } }
 
@@ -73,10 +71,10 @@ describe SitePrism::Loadable do
       end
 
       it 'executes the inner-most nesting when applicable' do
-        expect(james_bond).to receive(:drink_martini).once
+        expect(instance).to receive(:drink_martini).once
 
         instance.when_loaded do
-          instance.when_loaded { james_bond.drink_martini }
+          instance.when_loaded { instance.drink_martini }
         end
       end
 

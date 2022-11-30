@@ -3,7 +3,7 @@
 describe SitePrism::Page do
   subject(:page) { described_class.new }
 
-  let(:locator) { instance_double('Capybara::Node::Element') }
+  let(:locator) { instance_double(Capybara::Node::Element) }
 
   before do
     allow(SitePrism::Waiter).to receive(:default_wait_time).and_return(0)
@@ -575,7 +575,7 @@ describe SitePrism::Page do
       it "returns nil if current_url doesn't match the url_matcher" do
         swap_current_url('http://localhost:3000/bars/15')
 
-        expect(page.url_matches).to be nil
+        expect(page.url_matches).to be_nil
       end
     end
 
@@ -635,6 +635,6 @@ describe SitePrism::Page do
   end
 
   def swap_current_url(url)
-    allow(page).to receive(:page).and_return(instance_double('FakedPage', current_url: url))
+    allow(page).to receive(:page).and_return(instance_double(FakedPage, current_url: url))
   end
 end
