@@ -1572,7 +1572,7 @@ The following element methods allow Capybara options to be passed as arguments t
 ## Test views with Page objects
 
 It's possible to use the same page objects of integration tests for view tests, too,
-just pass the rendered HTML to the ```load``` method:
+just pass the rendered HTML to the `load` method:
 
 ```ruby
 require 'spec_helper'
@@ -1680,8 +1680,8 @@ When('I log in') do
 
   @home.login_frame do |frame|
     #`frame` is an instance of the `LoginFrame` class
-    frame.username.set 'admin'
-    frame.password.set 'p4ssword'
+    frame.username.send_keys('admin')
+    frame.password.send_keys('p4ssword')
   end
 end
 ```
@@ -1723,14 +1723,6 @@ Capybara.using_wait_time(20) do
   @home.search_results
 end
 ```
-
-## Using SitePrism with VCR
-
-There's a SitePrism plugin called `site_prism.vcr` that lets you use
-SitePrism with the VCR gem. Check it out [HERE](https://github.com/dnesteryuk/site_prism.vcr)
-
-Note that as of 2016 this plugin doesn't appear to have been under active development. Also it is
-still pinned to the `2.x` series of site_prism so use it of your own accord.
 
 # Epilogue
 
