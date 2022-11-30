@@ -7,6 +7,6 @@ gem 'capybara', '< 3.28'
 gem 'cucumber', '< 7'
 gem 'nokogiri', '< 1.12'
 gem 'selenium-webdriver', '< 4.1'
-gem 'webdrivers', '< 4.1'
+gem 'webdrivers', '< 5'
 
 gemspec path: '..'
