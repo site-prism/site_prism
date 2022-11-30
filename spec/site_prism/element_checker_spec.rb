@@ -108,7 +108,7 @@ describe SitePrism::ElementChecker do
       end
 
       it 'does not calls #there? for elements not defined as expected' do
-        expect(page).not_to receive(:there?).with(not_expected.first)
+        expect(page).not_to receive(:there?).with(array_including(*not_expected))
 
         subject
       end
