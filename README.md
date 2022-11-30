@@ -81,34 +81,34 @@ end
 
 # now for some tests
 
-When(/^I navigate to the google home page$/) do
+When('I navigate to the google home page') do
   @home = Home.new
   @home.load
 end
 
-Then(/^the home page should contain the menu and the search form$/) do
+Then('the home page should contain the menu and the search form') do
   @home.wait_until_menu_visible # menu loads after a second or 2, give it time to arrive
   expect(@home).to have_menu
   expect(@home).to have_search_field
   expect(@home).to have_search_button
 end
 
-When(/^I search for Sausages$/) do
+When('I search for Sausages') do
   @home.search_field.set 'Sausages'
   @home.search_button.click
 end
 
-Then(/^the search results page is displayed$/) do
+Then('the search results page is displayed') do
   @results_page = SearchResults.new
   expect(@results_page).to be_displayed
 end
 
-Then(/^the search results page contains 10 individual search results$/) do
+Then('the search results page contains 10 individual search results') do
   @results_page.wait_until_search_results_visible
   expect(@results_page).to have_search_results(count: 10)
 end
 
-Then(/^the search results contain a link to the wikipedia sausages page$/) do
+Then('the search results contain a link to the wikipedia sausages page') do
   expect(@results_page.search_result_links).to include('http://en.wikipedia.org/wiki/Sausage')
 end
 ```
@@ -367,7 +367,7 @@ end
 SitePrism's `#displayed?` predicate method allows for semantic code in your tests:
 
 ```ruby
-Then(/^the account page is displayed$/) do
+Then('the account page is displayed') do
   expect(@account_page).to be_displayed
   expect(@some_other_page).not_to be_displayed
 end
@@ -492,7 +492,7 @@ end
 ...which makes for nice test code:
 
 ```ruby
-Then(/^the search field exists$/) do
+Then('the search field exists') do
   expect(@home).to have_search_field
 end
 ```
@@ -514,7 +514,7 @@ Using the above example:
 ...which makes for nice test code:
 
 ```ruby
-Then(/^the search field exists$/)do
+Then('the search field exists')do
   expect(@home).to have_no_search_field #NB: NOT => expect(@home).not_to have_search_field
 end
 ```
@@ -663,7 +663,7 @@ Then the following method is available:
 This in turn allows the following nice test code
 
 ```ruby
-Then(/^there should be some names listed on the page$/) do
+Then('there should be some names listed on the page') do
   expect(@friends_page).to have_names #=> This only passes if there is at least one `name`
 end
 ```
@@ -704,7 +704,7 @@ are present in the browser and `false` if they're not all there.
 
 # and...
 
-Then(/^the friends page contains all the expected elements$/) do
+Then('the friends page contains all the expected elements') do
   expect(@friends_page).to be_all_there
 end
 ```
@@ -949,7 +949,7 @@ end
 This then leads to some pretty test code ...
 
 ```ruby
-Then(/^the home page menu contains a link to the various search functions$/) do
+Then('the home page menu contains a link to the various search functions') do
   expect(@home.menu).to have_search
   expect(@home.menu.search['href']).to include('google.com')
   expect(@home.menu).to have_images
@@ -964,7 +964,7 @@ similar to Capybara's `within` method and allows for shorter test code
 particularly with nested sections. Test code that might have to repeat the block name can be shortened up this way.
 
 ```ruby
-Then(/^the home page menu contains a link to the various search functions$/) do
+Then('the home page menu contains a link to the various search functions') do
   @home.menu.within do |menu|
     expect(menu).to have_search
     expect(menu.search['href']).to include('google.com')
@@ -977,7 +977,7 @@ end
 Note that on an individual section it's possible to pass a block directly to the section without using `within`.  Because the block is executed only during `Section` initialization this won't work when accessing a single Section from an array of Sections.  For that reason we recommend using `within` which works in either case.
 
 ```ruby
-Then(/^the home page menu contains a link to the various search functions$/) do
+Then('the home page menu contains a link to the various search functions') do
   @home.menu do |menu|  # possible, but prefer: `@home.menu.within`
     expect(menu).to have_search
   end
@@ -1131,7 +1131,7 @@ end
 
 # how to login (fatuous, but demonstrates the point):
 
-Then(/^I sign in$/) do
+Then('I sign in') do
   @home = Home.new
   @home.load
   expect(@home).to have_login_and_registration
@@ -1143,7 +1143,7 @@ end
 
 # how to sign up:
 
-When(/^I enter my name into the home page's registration form$/) do
+When('I enter my name into the home page's registration form') do
   @home = Home.new
   @home.load
   expect(@home.login_and_registration).to have_first_name
@@ -1220,7 +1220,7 @@ end
 This allows for pretty tests ...
 
 ```ruby
-Then(/^there are lots of search_results$/) do
+Then('there are lots of search_results') do
   expect(@results_page.search_results.size).to eq(10)
 
   @home.search_results.each do |result|
@@ -1304,7 +1304,7 @@ Here's how to test for the existence of the section:
 This allows for some pretty tests ...
 
 ```ruby
-Then(/^there are search results on the page$/) do
+Then('there are search results on the page') do
   expect(@home).to have_search_results
 end
 ```
@@ -1555,7 +1555,7 @@ Now we can write pretty, non-failing tests without hard coding these options
 into our page and section classes:
 
 ```ruby
-Then(/^there are search results on the page$/) do
+Then('there are search results on the page') do
   expect(@results_page).to have_search_results(count: 25)
 end
 ```
@@ -1688,7 +1688,7 @@ class Home < SitePrism::Page
 end
 
 # cucumber step that performs login
-When(/^I log in$/) do
+When('I log in') do
   @home = Home.new
   @home.load
 
@@ -1803,17 +1803,17 @@ end
 # and here's how to use it
 
 #first line of the test...
-Given(/^I start on the home page$/) do
+Given('I start on the home page') do
   @app = App.new
   @app.home.load
 end
 
-When(/^I search for Sausages$/) do
+When('I search for Sausages') do
   @app.home.search_field.set 'Sausages'
   @app.home.search_button.click
 end
 
-Then(/^I am on the results page$/) do
+Then('I am on the results page') do
   expect(@app.results_page).to be_displayed
 end
 
