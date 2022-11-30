@@ -9,6 +9,14 @@
   - `.mapped_items` now by default is structured the new hash-way
   ([luke-hill])
 
+- Removed a load of redundant code from README
+  ([luke-hill])
+
+- Gem bumps to dev_dependencies
+  - `webdrivers` now can use all v5 revisions (helps with CI compatibility with selenium)
+  - `rubocop-rspec` bumped to latest ruby2.5 compliant version
+    ([luke-hill])
+
 ### Fixed
 - iFrames also ban redundant blocks from being passed in at build time
   ([luke-hill])
