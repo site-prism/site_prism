@@ -173,7 +173,7 @@ to then use instances of those classes in your tests.
 
 If a class represents a page then each element of the page is
 represented by a method that, when called, returns a reference to that
-element that can then be acted upon (clicked, set text value), or
+element that can then be acted upon (clicked, type in some text), or
 queried (is it enabled? / visible?).
 
 SitePrism is based around this concept, but goes further as you'll see
@@ -216,7 +216,7 @@ class Home < SitePrism::Page
 end
 ```
 
-Note that setting a URL is optional - you only need to set a url if you want to be able to
+Note that setting a URL is **optional** - you only need to set a url if you want to be able to
 navigate directly to that page. It makes sense to set the URL for a page model of a
 home page or a login page, but probably not a search results page.
 
@@ -243,8 +243,7 @@ See https://github.com/sporkmonger/addressable for more details on parameterized
 
 ### Navigating to the Page
 
-Once the URL has been set (using `set_url`), you can navigate directly
-to the page using `#load`:
+Once the URL has been set (using `set_url`), you can navigate directly to the page using `#load`:
 
 ```ruby
 @home_page = Home.new
@@ -279,8 +278,6 @@ end
 
 This will tell whichever capybara driver you have configured to
 navigate to the URL set against that page's class.
-
-See https://github.com/sporkmonger/addressable for more details on parameterized URLs.
 
 ### Verifying that a particular page is displayed
 
