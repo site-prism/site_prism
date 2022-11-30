@@ -134,7 +134,6 @@ require 'capybara'
 require 'capybara/cucumber'
 require 'selenium-webdriver'
 require 'site_prism'
-require 'site_prism/all_there' # Optional but needed to perform more complex matching
 ```
 
 The driver creation is identical to how you would normally create a Capybara driver,
@@ -143,7 +142,7 @@ a sample Selenium one could look something like this...
 ```ruby
 Capybara.register_driver :site_prism do |app|
   browser = ENV.fetch('browser', 'firefox').to_sym
-  Capybara::Selenium::Driver.new(app, browser: browser, desired_capabilities: capabilities)
+  Capybara::Selenium::Driver.new(app, browser: browser, options: options)
 end
 
 # Then tell Capybara to use the Driver you've just defined as its default driver
@@ -161,7 +160,6 @@ require 'capybara'
 require 'capybara/rspec'
 require 'selenium-webdriver'
 require 'site_prism'
-require 'site_prism/all_there' # Optional but needed to perform more complex matching
 ```
 
 And again, as above, a sample driver is no different to a normal driver instantiation in Capybara.
