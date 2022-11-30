@@ -314,8 +314,7 @@ wait time in seconds as the first argument like this:
 #### Specifying parameter values for templated URLs
 
 Sometimes you want to verify not just that the current URL matches the
-template, but that you're looking at a specific page matching that
-template.
+template, but that you're looking at a specific page matching that template.
 
 Given the previous example, if you wanted to ensure that the browser had loaded
 account number 22, you could assert the following:
@@ -342,7 +341,7 @@ when comparing your page's URL template to the current_url:
 @account_page.load(id: 22, query: { token: 'ca2786616a4285bc', color: 'irrelevant' })
 
 expect(@account_page).to be_displayed(id: 22)
-expect(@account_page.url_matches['query']['token']).to eq('ca2786616a4285bc')
+expect(@account_page.url_matches.dig('query', 'token')).to eq('ca2786616a4285bc')
 ```
 
 #### Falling back to basic regexp matchers
@@ -370,8 +369,7 @@ end
 
 ### Getting the Current Page's URL
 
-SitePrism allows you to get the current page's URL. Here's how it's
-done:
+SitePrism allows you to get the current page's URL. Here's how it's done:
 
 ```ruby
 class Account < SitePrism::Page
@@ -457,8 +455,8 @@ end
 @home.load
 
 @home.search_field #=> will return the capybara element found using the selector
-@home.search_field.set 'the search string' #=> `search_field` returns a capybara element, so use the capybara API to deal with it
-@home.search_field.text #=> standard method on a capybara element; returns a string
+@home.search_field.send_keys('the search string')
+@home.search_field['value'] #=> standard method on a capybara element (field); returns the string value
 ```
 
 #### Testing for the existence of the element
@@ -494,9 +492,9 @@ end
 
 #### Testing that an element does not exist
 
-To test that an element does not exist on the page, it is not possible to just call
+To test that an element does not exist on the page, you should not call
 `#not_to have_search_field`. SitePrism supplies the `#has_no_<element>?` method
-that should be used to test for non-existence.
+that should be used instead to test for non-existence.
 This method delegates to [Capybara::Node::Matchers#has_no_selector?](https://www.rubydoc.info/github/teamcapybara/capybara/master/Capybara/Node/Matchers#has_no_selector%3F-instance_method)
 Using the above example:
 
@@ -524,7 +522,7 @@ to become visible. You can customise the wait time by supplying a number
 of seconds to wait in-line or configuring the default wait time.
 
 ```ruby
-@home.wait_until_search_field_visible
+@home.wait_until_search_field_visible # using the default wait time set
 # or...
 @home.wait_until_search_field_visible(wait: 10)
 ```
@@ -539,7 +537,7 @@ wait time for the element to become invisible. You can as with the visibility
 waiter, customise the wait time in the same way.
 
 ```ruby
-@home.wait_until_search_field_invisible
+@home.wait_until_search_field_invisible # using the default wait time set
 # or...
 @home.wait_until_search_field_invisible(wait: 10)
 ```
