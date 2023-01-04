@@ -49,12 +49,6 @@ describe SitePrism::Page do
   end
 
   describe '#url_matcher' do
-    # let(:page_with_url) do
-    #   Class.new(described_class) do
-    #     set_url '/bob'
-    #   end.new
-    # end
-
     let(:page_with_url_matcher) do
       Class.new(described_class) do
         set_url_matcher(/bob/)
