@@ -77,7 +77,7 @@ describe 'Element' do
     let(:element) { instance_double(Capybara::Node::Element) }
 
     before do
-      allow(page).to receive(:element).with(:no_such_element, 'a.b c.d').and_call_original
+      allow(klass).to receive(:element).with(:no_such_element, 'a.b c.d').and_call_original
       allow(page).to receive(:_find).with('a.b c.d', { wait: 0 }).and_return(element)
       allow(page).to receive(:has_no_element_two?).once.and_call_original
     end
@@ -93,7 +93,7 @@ describe 'Element' do
     let(:element) { instance_double(Capybara::Node::Element) }
 
     before do
-      allow(page).to receive(:element).with(:no_such_element, '//a[@class="b"]//c[@class="d"]').and_call_original
+      allow(klass).to receive(:element).with(:no_such_element, '//a[@class="b"]//c[@class="d"]').and_call_original
       allow(page).to receive(:_find).with('//a[@class="b"]//c[@class="d"]', { wait: 0 }).and_return(element)
       allow(page).to receive(:has_no_element_two?).once.and_call_original
     end
