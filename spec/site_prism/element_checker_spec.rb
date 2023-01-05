@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe SitePrism::ElementChecker do
-  let!(:section_locator) { instance_double('Capybara::Node::Element') }
+  let!(:section_locator) { instance_double(Capybara::Node::Element) }
 
   shared_examples 'a page' do
     describe '#all_there?' do

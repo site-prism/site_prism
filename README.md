@@ -81,34 +81,34 @@ end
 
 # now for some tests
 
-When(/^I navigate to the google home page$/) do
+When('I navigate to the google home page') do
   @home = Home.new
   @home.load
 end
 
-Then(/^the home page should contain the menu and the search form$/) do
-  @home.wait_until_menu_visible # menu loads after a second or 2, give it time to arrive
+Then('the home page should contain the menu and the search form') do
+  @home.wait_until_menu_visible(wait: 5)
   expect(@home).to have_menu
   expect(@home).to have_search_field
   expect(@home).to have_search_button
 end
 
-When(/^I search for Sausages$/) do
-  @home.search_field.set 'Sausages'
+When('I search for Sausages') do
+  @home.search_field.send_keys('Sausages')
   @home.search_button.click
 end
 
-Then(/^the search results page is displayed$/) do
+Then('the search results page is displayed') do
   @results_page = SearchResults.new
   expect(@results_page).to be_displayed
 end
 
-Then(/^the search results page contains 10 individual search results$/) do
-  @results_page.wait_until_search_results_visible
+Then('the search results page contains 10 individual search results') do
+  @results_page.wait_until_search_results_visible(wait: 5)
   expect(@results_page).to have_search_results(count: 10)
 end
 
-Then(/^the search results contain a link to the wikipedia sausages page$/) do
+Then('the search results contain a link to the wikipedia sausages page') do
   expect(@results_page.search_result_links).to include('http://en.wikipedia.org/wiki/Sausage')
 end
 ```
@@ -134,7 +134,6 @@ require 'capybara'
 require 'capybara/cucumber'
 require 'selenium-webdriver'
 require 'site_prism'
-require 'site_prism/all_there' # Optional but needed to perform more complex matching
 ```
 
 The driver creation is identical to how you would normally create a Capybara driver,
@@ -143,7 +142,7 @@ a sample Selenium one could look something like this...
 ```ruby
 Capybara.register_driver :site_prism do |app|
   browser = ENV.fetch('browser', 'firefox').to_sym
-  Capybara::Selenium::Driver.new(app, browser: browser, desired_capabilities: capabilities)
+  Capybara::Selenium::Driver.new(app, browser: browser, options: options)
 end
 
 # Then tell Capybara to use the Driver you've just defined as its default driver
@@ -161,7 +160,6 @@ require 'capybara'
 require 'capybara/rspec'
 require 'selenium-webdriver'
 require 'site_prism'
-require 'site_prism/all_there' # Optional but needed to perform more complex matching
 ```
 
 And again, as above, a sample driver is no different to a normal driver instantiation in Capybara.
@@ -175,7 +173,7 @@ to then use instances of those classes in your tests.
 
 If a class represents a page then each element of the page is
 represented by a method that, when called, returns a reference to that
-element that can then be acted upon (clicked, set text value), or
+element that can then be acted upon (clicked, type in some text), or
 queried (is it enabled? / visible?).
 
 SitePrism is based around this concept, but goes further as you'll see
@@ -218,7 +216,7 @@ class Home < SitePrism::Page
 end
 ```
 
-Note that setting a URL is optional - you only need to set a url if you want to be able to
+Note that setting a URL is **optional** - you only need to set a url if you want to be able to
 navigate directly to that page. It makes sense to set the URL for a page model of a
 home page or a login page, but probably not a search results page.
 
@@ -245,8 +243,7 @@ See https://github.com/sporkmonger/addressable for more details on parameterized
 
 ### Navigating to the Page
 
-Once the URL has been set (using `set_url`), you can navigate directly
-to the page using `#load`:
+Once the URL has been set (using `set_url`), you can navigate directly to the page using `#load`:
 
 ```ruby
 @home_page = Home.new
@@ -281,8 +278,6 @@ end
 
 This will tell whichever capybara driver you have configured to
 navigate to the URL set against that page's class.
-
-See https://github.com/sporkmonger/addressable for more details on parameterized URLs.
 
 ### Verifying that a particular page is displayed
 
@@ -319,8 +314,7 @@ wait time in seconds as the first argument like this:
 #### Specifying parameter values for templated URLs
 
 Sometimes you want to verify not just that the current URL matches the
-template, but that you're looking at a specific page matching that
-template.
+template, but that you're looking at a specific page matching that template.
 
 Given the previous example, if you wanted to ensure that the browser had loaded
 account number 22, you could assert the following:
@@ -347,7 +341,7 @@ when comparing your page's URL template to the current_url:
 @account_page.load(id: 22, query: { token: 'ca2786616a4285bc', color: 'irrelevant' })
 
 expect(@account_page).to be_displayed(id: 22)
-expect(@account_page.url_matches['query']['token']).to eq('ca2786616a4285bc')
+expect(@account_page.url_matches.dig('query', 'token')).to eq('ca2786616a4285bc')
 ```
 
 #### Falling back to basic regexp matchers
@@ -367,7 +361,7 @@ end
 SitePrism's `#displayed?` predicate method allows for semantic code in your tests:
 
 ```ruby
-Then(/^the account page is displayed$/) do
+Then('the account page is displayed') do
   expect(@account_page).to be_displayed
   expect(@some_other_page).not_to be_displayed
 end
@@ -375,8 +369,7 @@ end
 
 ### Getting the Current Page's URL
 
-SitePrism allows you to get the current page's URL. Here's how it's
-done:
+SitePrism allows you to get the current page's URL. Here's how it's done:
 
 ```ruby
 class Account < SitePrism::Page
@@ -462,8 +455,8 @@ end
 @home.load
 
 @home.search_field #=> will return the capybara element found using the selector
-@home.search_field.set 'the search string' #=> `search_field` returns a capybara element, so use the capybara API to deal with it
-@home.search_field.text #=> standard method on a capybara element; returns a string
+@home.search_field.send_keys('the search string')
+@home.search_field['value'] #=> standard method on a capybara element (field); returns the string value
 ```
 
 #### Testing for the existence of the element
@@ -492,16 +485,16 @@ end
 ...which makes for nice test code:
 
 ```ruby
-Then(/^the search field exists$/) do
+Then('the search field exists') do
   expect(@home).to have_search_field
 end
 ```
 
 #### Testing that an element does not exist
 
-To test that an element does not exist on the page, it is not possible to just call
+To test that an element does not exist on the page, you should not call
 `#not_to have_search_field`. SitePrism supplies the `#has_no_<element>?` method
-that should be used to test for non-existence.
+that should be used instead to test for non-existence.
 This method delegates to [Capybara::Node::Matchers#has_no_selector?](https://www.rubydoc.info/github/teamcapybara/capybara/master/Capybara/Node/Matchers#has_no_selector%3F-instance_method)
 Using the above example:
 
@@ -514,7 +507,7 @@ Using the above example:
 ...which makes for nice test code:
 
 ```ruby
-Then(/^the search field exists$/)do
+Then('the search field exists')do
   expect(@home).to have_no_search_field #NB: NOT => expect(@home).not_to have_search_field
 end
 ```
@@ -529,7 +522,7 @@ to become visible. You can customise the wait time by supplying a number
 of seconds to wait in-line or configuring the default wait time.
 
 ```ruby
-@home.wait_until_search_field_visible
+@home.wait_until_search_field_visible # using the default wait time set
 # or...
 @home.wait_until_search_field_visible(wait: 10)
 ```
@@ -544,7 +537,7 @@ wait time for the element to become invisible. You can as with the visibility
 waiter, customise the wait time in the same way.
 
 ```ruby
-@home.wait_until_search_field_invisible
+@home.wait_until_search_field_invisible # using the default wait time set
 # or...
 @home.wait_until_search_field_invisible(wait: 10)
 ```
@@ -663,7 +656,7 @@ Then the following method is available:
 This in turn allows the following nice test code
 
 ```ruby
-Then(/^there should be some names listed on the page$/) do
+Then('there should be some names listed on the page') do
   expect(@friends_page).to have_names #=> This only passes if there is at least one `name`
 end
 ```
@@ -704,7 +697,7 @@ are present in the browser and `false` if they're not all there.
 
 # and...
 
-Then(/^the friends page contains all the expected elements$/) do
+Then('the friends page contains all the expected elements') do
   expect(@friends_page).to be_all_there
 end
 ```
@@ -750,7 +743,7 @@ Passing `:none` (default), will not change the functionality. However passing in
 
 Work alongside developing this functionality further is being continued in the
 [site_prism-all_there](http://www.github.com/site-prism/site_prism-all_there) repo. So head on over
-there if you're interested in how this feature will work going forwards
+there if you're interested in how this feature will evolve going forwards
 
 ### Getting the list of missing elements
 
@@ -830,15 +823,14 @@ class People < SitePrism::Section
 end
 
 class Home < SitePrism::Page
-  # section people_with_block will have `headline` and
-  # `footer` elements in it
+  # section people_with_block will have `headline` and `footer` elements in it
   section :people_with_block, People do
     element :headline, 'h2'
   end
 end
 ```
 
-The 3rd argument (Locators), can be omitted if you are re-using the same
+The 3rd argument (Locator), can be omitted if you are re-using the same
 locator for all references to the section Class. In order to do this,
 simply tell SitePrism that you want to use default search arguments.
 
@@ -874,7 +866,7 @@ end
 # the page and section in action
 
 @home = Home.new
-@home.menu #=> <MenuSection...>
+@home.menu #=> <Menu...>
 ```
 
 When the `menu` method is called against `@home`, an instance of `Menu`
@@ -949,7 +941,7 @@ end
 This then leads to some pretty test code ...
 
 ```ruby
-Then(/^the home page menu contains a link to the various search functions$/) do
+Then('the home page menu contains a link to the various search functions') do
   expect(@home.menu).to have_search
   expect(@home.menu.search['href']).to include('google.com')
   expect(@home.menu).to have_images
@@ -964,7 +956,7 @@ similar to Capybara's `within` method and allows for shorter test code
 particularly with nested sections. Test code that might have to repeat the block name can be shortened up this way.
 
 ```ruby
-Then(/^the home page menu contains a link to the various search functions$/) do
+Then('the home page menu contains a link to the various search functions') do
   @home.menu.within do |menu|
     expect(menu).to have_search
     expect(menu.search['href']).to include('google.com')
@@ -974,10 +966,12 @@ Then(/^the home page menu contains a link to the various search functions$/) do
 end
 ```
 
-Note that on an individual section it's possible to pass a block directly to the section without using `within`.  Because the block is executed only during `Section` initialization this won't work when accessing a single Section from an array of Sections.  For that reason we recommend using `within` which works in either case.
+Note that on an individual section it's possible to pass a block directly to the section without using `within`.
+Because the block is executed only during `Section` initialization this won't work when accessing a single
+Section from an array of Sections. For that reason we recommend using `within` which works in either case.
 
 ```ruby
-Then(/^the home page menu contains a link to the various search functions$/) do
+Then('the home page menu contains a link to the various search functions') do
   @home.menu do |menu|  # possible, but prefer: `@home.menu.within`
     expect(menu).to have_search
   end
@@ -1129,26 +1123,22 @@ class Home < SitePrism::Page
   section :login_and_registration, LoginRegistrationForm, 'div.login-registration'
 end
 
-# how to login (fatuous, but demonstrates the point):
+# Then you could log in like so ...
 
-Then(/^I sign in$/) do
+Then('I sign in') do
   @home = Home.new
   @home.load
-  expect(@home).to have_login_and_registration
-  expect(@home.login_and_registration).to have_username
-  @home.login_and_registration.login.username.set 'bob'
-  @home.login_and_registration.login.password.set 'p4ssw0rd'
+  @home.login_and_registration.login.username.send_keys('bob')
+  @home.login_and_registration.login.password.send_keys('p4ssw0rd')
   @home.login_and_registration.login.sign_in.click
 end
 
-# how to sign up:
+# And you could sign up like so ...
 
-When(/^I enter my name into the home page's registration form$/) do
+When('I sign up') do
   @home = Home.new
   @home.load
-  expect(@home.login_and_registration).to have_first_name
-  expect(@home.login_and_registration).to have_last_name
-  @home.login_and_registration.first_name.set 'Bob'
+  @home.login_and_registration.first_name.send_keys('Bob')
   # ...
 end
 ```
@@ -1188,7 +1178,7 @@ can be called in a page or a section.
 
 The only difference between `section` and `sections` is that whereas the
 first returns an instance of the supplied section class, the second
-returns an array containing as many instances of the section class as
+returns a `Capybara::Result` containing as many instances of the section class as
 there are capybara elements found by the supplied css selector. This is
 better explained in the following example ...
 
@@ -1220,7 +1210,7 @@ end
 This allows for pretty tests ...
 
 ```ruby
-Then(/^there are lots of search_results$/) do
+Then('there are lots of search_results') do
   expect(@results_page.search_results.size).to eq(10)
 
   @home.search_results.each do |result|
@@ -1235,12 +1225,14 @@ The css selector that is passed as the 3rd argument to the
 elements. Each capybara element found using the css selector is used to
 create a new instance of `SearchResults` and becomes its root
 element. So if the css selector finds 3 `li` elements, calling
-`search_results` will return an array containing 3 instances of
+`search_results` will return a `Capybara::Result` containing 3 instances of
 `SearchResults`, each with one of the `li` elements as it's root element.
 
 ##### Accessing Within a Collection of Sections
 
-When using an iterator such as `each` to pass a block through to a collection of sections it is possible to skip using `within`.  However some caution is warranted when accessing the Sections directly from an array, as the block can only be executed when the section is being initialized.  The following does not work:
+When using an iterator such as `each` to pass a block through to a collection of sections it is
+possible to skip using `within`. However some caution is warranted when accessing the
+Sections directly from an array, as the block can only be executed when the section is being initialized.  The following does not work:
 
 ```rb
   @home.search_results.first do |result|
@@ -1304,7 +1296,7 @@ Here's how to test for the existence of the section:
 This allows for some pretty tests ...
 
 ```ruby
-Then(/^there are search results on the page$/) do
+Then('there are search results on the page') do
   expect(@home).to have_search_results
 end
 ```
@@ -1443,8 +1435,8 @@ The error message is ignored unless the boolean value is evaluated as falsey.
 
 ```ruby
 class SomePage < SitePrism::Page
-  element :foo_element, '.foo'
-  load_validation { [has_foo_element?, 'did not have foo element!'] }
+  element :foo, '.foo'
+  load_validation { [has_foo?, 'did not have foo element!'] }
 end
 ```
 
@@ -1490,8 +1482,8 @@ class FooPage < BasePage
   section :form, '#form'
   element :some_other_element, '.myelement'
 
-  load_validation { [has_form?, 'form did not appear'] }
-  load_validation { [has_some_other_element?, 'some other element did not appear'] }
+  load_validation { [has_form?(wait: 5), 'form did not appear'] }
+  load_validation { [has_some_other_element?(wait: 5), 'some other element did not appear'] }
 end
 ```
 
@@ -1501,12 +1493,6 @@ the validations will be performed in the following order:
 1. The `BasePage` validation will wait for the loading message to disappear.
 2. The `FooPage` validation will wait for the `form` element to be present.
 3. The `FooPage` validation will wait for the `some_other_element` element to be present.
-
-**NB:** `SitePrism::Page` **used to** include a default load validation on
-`page.displayed?` however for v3 this has been removed. It is therefore
-necessary to re-define this if you want to retain the behaviour
-from site_prism v2. See [UPGRADING.md](https://github.com/site-prism/site_prism/blob/main/UPGRADING.md#default-load-validations)
-for more info on this.
 
 ## Using Capybara Query Options
 
@@ -1535,7 +1521,7 @@ fail if the page has not finished loading the section(s):
 ```ruby
 @home = Home.new
 # ...
-expect(@home.search_results.size).to == 25 # This may fail!
+expect(@home.search_results.size).to eq(25) # This may fail!
 ```
 
 The above query can be rewritten to utilize the Capybara `:count` option
@@ -1546,16 +1532,16 @@ the page within the timeout:
 
 ```ruby
 @home = Home.new
-@home.has_search_results?(count: 25)
+@home.has_search_results?(count: 25) # will wait default wait time
 # OR
-@home.search_results(count: 25)
+@home.search_results(count: 25, wait: 5) # will wait 5 seconds
 ```
 
 Now we can write pretty, non-failing tests without hard coding these options
 into our page and section classes:
 
 ```ruby
-Then(/^there are search results on the page$/) do
+Then('there are search results on the page') do
   expect(@results_page).to have_search_results(count: 25)
 end
 ```
@@ -1586,7 +1572,7 @@ The following element methods allow Capybara options to be passed as arguments t
 ## Test views with Page objects
 
 It's possible to use the same page objects of integration tests for view tests, too,
-just pass the rendered HTML to the ```load``` method:
+just pass the rendered HTML to the `load` method:
 
 ```ruby
 require 'spec_helper'
@@ -1688,14 +1674,14 @@ class Home < SitePrism::Page
 end
 
 # cucumber step that performs login
-When(/^I log in$/) do
+When('I log in') do
   @home = Home.new
   @home.load
 
   @home.login_frame do |frame|
     #`frame` is an instance of the `LoginFrame` class
-    frame.username.set 'admin'
-    frame.password.set 'p4ssword'
+    frame.username.send_keys('admin')
+    frame.password.send_keys('p4ssword')
   end
 end
 ```
@@ -1738,14 +1724,6 @@ Capybara.using_wait_time(20) do
 end
 ```
 
-## Using SitePrism with VCR
-
-There's a SitePrism plugin called `site_prism.vcr` that lets you use
-SitePrism with the VCR gem. Check it out [HERE](https://github.com/dnesteryuk/site_prism.vcr)
-
-Note that as of 2016 this plugin doesn't appear to have been under active development. Also it is
-still pinned to the `2.x` series of site_prism so use it of your own accord.
-
 # Epilogue
 
 So, we've seen how to use SitePrism to put together page objects made up
@@ -1756,7 +1734,7 @@ all over the place. Here's an example of this common problem:
 ```ruby
 @home = Home.new # <-- noise
 @home.load
-@home.search_field.set 'Sausages'
+@home.search_field.send_keys('Sausages')
 @home.search_field.search_button.click
 @results_page = SearchResults.new # <-- noise
 expect(@results_page).to have_search_result_items
@@ -1766,7 +1744,7 @@ The annoyance (and, later, maintenance nightmare) is having to create
 `@home` and `@results_page`. It would be better to not have to create
 instances of pages all over your tests.
 
-The way I've dealt with this problem is to create a class containing
+One way you can deal with this problem is to create a class containing
 methods that return instances of the pages. Eg:
 
 ```ruby
@@ -1803,17 +1781,17 @@ end
 # and here's how to use it
 
 #first line of the test...
-Given(/^I start on the home page$/) do
+Given('I start on the home page') do
   @app = App.new
   @app.home.load
 end
 
-When(/^I search for Sausages$/) do
+When('I search for Sausages') do
   @app.home.search_field.set 'Sausages'
   @app.home.search_button.click
 end
 
-Then(/^I am on the results page$/) do
+Then('I am on the results page') do
   expect(@app.results_page).to be_displayed
 end
 
@@ -1823,8 +1801,8 @@ end
 The only thing that needs instantiating is the `App` class - from then on
 pages don't need to be initialized, they are now returned by methods on `@app`.
 
-It is possible to further optimise this, by using Cucumber/RSpec hooks, amongst
-other things. However the investigation and optimisation of this (and other
+It is possible to further optimise this, by using Cucumber/RSpec hooks, memoization as well
+as many other things. However the investigation and optimisation of this (and other
 aspects of SitePrism), is left as an exercise to the Reader.
 
 Happy testing from all of the SitePrism team!
