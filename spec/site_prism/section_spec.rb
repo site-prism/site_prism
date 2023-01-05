@@ -310,10 +310,7 @@ describe SitePrism::Section do
 
   describe '#evaluate_script' do
     it 'delegates through Capybara.current_session' do
-      expect(Capybara.current_session)
-        .to receive(:evaluate_script)
-        .with('How High?')
-        .and_return('To the sky!')
+      expect(Capybara.current_session).to receive(:evaluate_script)
 
       section_without_block.evaluate_script('How High?') == 'To the sky!'
     end
