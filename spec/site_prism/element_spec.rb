@@ -24,13 +24,11 @@ describe 'Element' do
     it { is_expected.to respond_to(:wait_until_element_one_invisible) }
 
     it 'supports rspec existence matchers' do
-      expect(subject).to have_element_one
+      expect(page).to have_element_one
     end
 
     it 'calls the SitePrism matcher when using an rspec negated existence matcher' do
-      allow(subject).to receive(:has_no_element_two?).once.and_call_original
-
-      expect(subject).not_to have_element_two
+      expect(page).not_to have_element_two
     end
 
     context 'when other classes have the overlapping methods defined' do
@@ -79,14 +77,9 @@ describe 'Element' do
     let(:element) { instance_double(Capybara::Node::Element) }
 
     before do
-      allow(page)
-        .to receive(:element)
-        .with(:no_such_element, 'a.b c.d')
-        .and_call_original
-      allow(page)
-        .to receive(:_find)
-        .with('a.b c.d', { wait: 0 })
-        .and_return(element)
+      allow(page).to receive(:element).with(:no_such_element, 'a.b c.d').and_call_original
+      allow(page).to receive(:_find).with('a.b c.d', { wait: 0 }).and_return(element)
+      allow(page).to receive(:has_no_element_two?).once.and_call_original
     end
 
     it_behaves_like 'an element'
@@ -100,14 +93,9 @@ describe 'Element' do
     let(:element) { instance_double(Capybara::Node::Element) }
 
     before do
-      allow(page)
-        .to receive(:element)
-        .with(:no_such_element, '//a[@class="b"]//c[@class="d"]')
-        .and_call_original
-      allow(page)
-        .to receive(:_find)
-        .with('//a[@class="b"]//c[@class="d"]', { wait: 0 })
-        .and_return(element)
+      allow(page).to receive(:element).with(:no_such_element, '//a[@class="b"]//c[@class="d"]').and_call_original
+      allow(page).to receive(:_find).with('//a[@class="b"]//c[@class="d"]', { wait: 0 }).and_return(element)
+      allow(page).to receive(:has_no_element_two?).once.and_call_original
     end
 
     it_behaves_like 'an element'

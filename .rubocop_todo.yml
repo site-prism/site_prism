@@ -15,9 +15,3 @@ Metrics/ModuleLength:
 RSpec/StubbedMock:
   Exclude:
     - 'spec/site_prism/section_spec.rb'
-
-# Offense count: 2
-RSpec/SubjectStub:
-  Exclude:
-    - 'spec/site_prism/element_spec.rb'
-    - 'spec/site_prism/page_spec.rb'
