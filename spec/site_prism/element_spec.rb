@@ -28,6 +28,8 @@ describe 'Element' do
     end
 
     it 'calls the SitePrism matcher when using an rspec negated existence matcher' do
+      expect(page).to receive(:has_no_element_two?).once.and_call_original
+
       expect(page).not_to have_element_two
     end
 
@@ -76,12 +78,6 @@ describe 'Element' do
     let(:klass) { CSSPage }
     let(:element) { instance_double(Capybara::Node::Element) }
 
-    before do
-      allow(klass).to receive(:element).with(:no_such_element, 'a.b c.d').and_call_original
-      allow(page).to receive(:_find).with('a.b c.d', { wait: 0 }).and_return(element)
-      allow(page).to receive(:has_no_element_two?).once.and_call_original
-    end
-
     it_behaves_like 'an element'
   end
 
@@ -91,12 +87,6 @@ describe 'Element' do
     let(:page) { XPathPage.new }
     let(:klass) { XPathPage }
     let(:element) { instance_double(Capybara::Node::Element) }
-
-    before do
-      allow(klass).to receive(:element).with(:no_such_element, '//a[@class="b"]//c[@class="d"]').and_call_original
-      allow(page).to receive(:_find).with('//a[@class="b"]//c[@class="d"]', { wait: 0 }).and_return(element)
-      allow(page).to receive(:has_no_element_two?).once.and_call_original
-    end
 
     it_behaves_like 'an element'
   end
