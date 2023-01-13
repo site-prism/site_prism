@@ -39,6 +39,7 @@ Naming/AccessorMethodName:
 RSpec/MessageSpies:
   EnforcedStyle: receive
 
+# We need to test the RSpec matcher is correctly calling the has_no method
 RSpec/MultipleExpectations:
   Exclude:
     - spec/site_prism/element_spec.rb
