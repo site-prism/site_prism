@@ -17,8 +17,8 @@ Gem::Specification.new do |s|
     'source_code_uri' => 'https://github.com/site-prism/site_prism'
   }
   s.summary     = 'A Page Object Model DSL for Capybara'
-  s.description = 'SitePrism gives you a simple, clean and semantic DSL for describing your site.'\
-                  ' SitePrism implements the Page Object Model pattern on top of Capybara.'
+  s.description = 'SitePrism gives you a simple, clean and semantic DSL for describing your site. ' \
+                  'SitePrism implements the Page Object Model pattern on top of Capybara.'
   s.files        = Dir.glob('lib/**/*') + %w[LICENSE.md README.md]
   s.require_path = 'lib'
   s.add_dependency 'addressable', ['~> 2.6']
@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'cucumber', ['> 6', '< 9']
   s.add_development_dependency 'rspec', ['~> 3.10']
-  s.add_development_dependency 'rubocop', ['~> 1.28.0']
+  s.add_development_dependency 'rubocop', ['~> 1.31.0']
   s.add_development_dependency 'rubocop-performance', ['~> 1.15.0']
   s.add_development_dependency 'rubocop-rspec', ['~> 2.10.0']
   s.add_development_dependency 'selenium-webdriver', ['~> 4.0']
