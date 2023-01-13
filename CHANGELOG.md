@@ -4,6 +4,9 @@
 ### Added
 
 ### Changed
+- **Developmental Ruby Version is now 2.6+** (2.5 is still permissible but not supported)
+  ([luke-hill])
+
 - All soft deprecations have now been changed / amended into full deprecations
   - You now get a full deprecation when attempting to build DSL items without finders
   - `.mapped_items` now by default is structured the new hash-way
@@ -14,7 +17,7 @@
 
 - Gem bumps to dev_dependencies
   - `webdrivers` now can use all v5 revisions (helps with CI compatibility with selenium)
-  - `rubocop-rspec` bumped to latest ruby2.5 compliant version
+  - `rubocop` gems all bumped to latest ruby2.5 compliant version
     ([luke-hill])
 
 ### Fixed
