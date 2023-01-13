@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 describe SitePrism::Page do
-  subject(:page) { described_class.new }
-
+  let(:page) { described_class.new }
   let(:locator) { instance_double(Capybara::Node::Element) }
 
   before do

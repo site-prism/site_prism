@@ -21,15 +21,15 @@ Gemspec/RequireMFA:
 Layout/LineLength:
   Max: 140
   AllowedPatterns:
-    - '^Given'
-    - '^When'
-    - '^Then'
+    - ^Given
+    - ^When
+    - ^Then
 
 # Our gemspec and Spec files contain huge blocks and need to
 Metrics/BlockLength:
   Exclude:
-    - './spec/**/*_spec.rb'
-    - 'site_prism.gemspec'
+    - ./spec/**/*_spec.rb
+    - site_prism.gemspec
 
 # We are a DSL, so we occasionally need to use `.set_` prefixes on our DSL names
 Naming/AccessorMethodName:
@@ -38,6 +38,11 @@ Naming/AccessorMethodName:
 # Stylistic preference to make the RSpec tests flow better
 RSpec/MessageSpies:
   EnforcedStyle: receive
+
+# We need to test the RSpec matcher is correctly calling the has_no method
+RSpec/MultipleExpectations:
+  Exclude:
+    - spec/site_prism/element_spec.rb
 
 # We don't need to document any testing code
 Style/Documentation:

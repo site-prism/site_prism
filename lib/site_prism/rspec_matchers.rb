@@ -43,8 +43,8 @@ module SitePrism
     end
 
     def warning
-      "The RSpec matcher '#{matcher}' was added by SitePrism, but the object under test "\
-        "does not respond to '#{negated_object_method}' and is probably not a SitePrism object. "\
+      "The RSpec matcher '#{matcher}' was added by SitePrism, but the object under test " \
+        "does not respond to '#{negated_object_method}' and is probably not a SitePrism object. " \
         'Falling back to the default RSpec matcher.'
     end
   end
