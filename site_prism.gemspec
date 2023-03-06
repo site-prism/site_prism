@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.add_dependency 'addressable', ['~> 2.6']
   s.add_dependency 'capybara', ['~> 3.15']
-  s.add_dependency 'site_prism-all_there', ['> 1', '< 2']
+  s.add_dependency 'site_prism-all_there', ['~> 2.0']
 
   s.add_development_dependency 'cucumber', ['> 6', '< 9']
   s.add_development_dependency 'rspec', ['~> 3.10']
