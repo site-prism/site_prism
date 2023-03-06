@@ -28,7 +28,7 @@ module SitePrism
     def all_there?(recursion: :none)
       case recursion
       when :none; then elements_to_check.all? { |name| there?(name) }
-      when :one;  then SitePrism::AllThere::RecursionChecker.new(self).all_there?
+      when :one;  then SitePrism::AllThere::RecursionChecker.new(self).all_there?(recursion)
       else
         SitePrism.logger.debug("Input value '#{recursion}'. Valid values are :none or :one.")
         SitePrism.logger.error('Invalid recursion setting, Will not run #all_there?.')
