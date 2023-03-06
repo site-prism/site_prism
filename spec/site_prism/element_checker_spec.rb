@@ -5,6 +5,12 @@ describe SitePrism::ElementChecker do
 
   shared_examples 'a page' do
     describe '#all_there?' do
+      let(:all_there_checker) { SitePrism::AllThere::RecursionChecker.new(page) }
+
+      before do
+        allow(SitePrism::AllThere::RecursionChecker).to receive(:new).and_return(all_there_checker)
+      end
+
       context 'with the default recursion setting' do
         subject { page.all_there? }
 
@@ -12,14 +18,14 @@ describe SitePrism::ElementChecker do
 
         it 'checks only the `expected_elements`' do
           expected_items.each do |name|
-            expect(page).to receive(:there?).with(name).once.and_call_original
+            expect(all_there_checker).to receive(:there?).with(name).once.and_call_original
           end
 
           subject
         end
 
         it "does not check items that aren't defined as `expected_elements`" do
-          expect(page).not_to receive(:there?).with(:element_two)
+          expect(all_there_checker).not_to receive(:there?).with(:element_two)
 
           subject
         end
@@ -32,14 +38,14 @@ describe SitePrism::ElementChecker do
 
         it 'checks only the `expected_elements`' do
           expected_items.each do |name|
-            expect(page).to receive(:there?).with(name).once.and_call_original
+            expect(all_there_checker).to receive(:there?).with(name).once.and_call_original
           end
 
           subject
         end
 
         it "does not check items that aren't defined as `expected_elements`" do
-          expect(page).not_to receive(:there?).with(:element_two)
+          expect(all_there_checker).not_to receive(:there?).with(:element_two)
 
           subject
         end
