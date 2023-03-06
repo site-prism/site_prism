@@ -72,13 +72,6 @@ module SitePrism
       Capybara.within(root_element) { yield(self) }
     end
 
-    # This was the old API-style of delegating through the Capybara.page call and over-loading
-    # the method so we always went through our correct `root_element`
-    def page
-      SitePrism.logger.fatal('This is not supposed to be used. All delegation now happens automatically!')
-      raise SitePrism::SitePrismError
-    end
-
     def capybara_session
       Capybara.current_session
     end
