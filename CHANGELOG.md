@@ -1,6 +1,11 @@
 ## [main] - Unreleased
 ### Removed
+- Removed a load of redundant code from README
+  ([luke-hill])
 
+- Removed some redundant legacy tests for `#all_there?`
+  - These are now tested in the sub-gem and the responsibility lies there
+  ([luke-hill])
 ### Added
 
 ### Changed
@@ -12,12 +17,14 @@
   - `.mapped_items` now by default is structured the new hash-way
   ([luke-hill])
 
-- Removed a load of redundant code from README
-  ([luke-hill])
-
 - Gem bumps to dev_dependencies
   - `webdrivers` now can use all v5 revisions (helps with CI compatibility with selenium)
   - `rubocop` gems all bumped to latest ruby2.5 compliant version
+    ([luke-hill])
+
+- `SitePrism::Page#page` is now deprecated
+  - Use either the Capybara.current_session method or directly interrogate your input fragment
+  - Any method calls have already been delegated using `#to_capybara_node`
     ([luke-hill])
 
 ### Fixed

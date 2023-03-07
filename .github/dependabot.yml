@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: "bundler"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    ignore:
+        # We don't pin capybara as plenty of people might need old(er) versions
+      - dependency-name: "capybara"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

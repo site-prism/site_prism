@@ -704,9 +704,9 @@ end
 
 You may wish to have elements declared in a page object class that are not
 always guaranteed to be present (success or error messages, etc.).
-If you'd still like to test such a page with `all_there?` you can declare
-`expected_elements` on your page object class that narrows the elements
-included in `all_there?` check to those that definitely should be present.
+If you'd still like to test such a page with `#all_there?` you can declare
+`.expected_elements` on your page class that narrows the elements
+included in `#all_there?` check to those that definitely should be present.
 
 ```ruby
 class TestPage < SitePrism::Page
@@ -741,9 +741,9 @@ for this at the moment are `:none` and `:one`
 Passing `:none` (default), will not change the functionality. However passing in `:one` will cause
 `site_prism` to recurse through all `section` / `sections` items defined in your present scope.
 
-Work alongside developing this functionality further is being continued in the
+Work to develop this is contained in the
 [site_prism-all_there](http://www.github.com/site-prism/site_prism-all_there) repo. So head on over
-there if you're interested in how this feature will evolve going forwards
+there if you're interested in this area more
 
 ### Getting the list of missing elements
 

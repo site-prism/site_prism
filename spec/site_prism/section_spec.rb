@@ -337,12 +337,4 @@ describe SitePrism::Section do
       expect(deeply_nested_section.parent_page).to eq(parent)
     end
   end
-
-  describe '#page' do
-    subject(:page_method) { described_class.new('parent', locator).page }
-
-    it 'is not intended to be used anymore' do
-      expect { page_method }.to raise_error(SitePrism::SitePrismError)
-    end
-  end
 end

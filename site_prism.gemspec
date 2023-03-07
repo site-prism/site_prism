@@ -5,7 +5,7 @@ require './lib/site_prism/version'
 Gem::Specification.new do |s|
   s.name        = 'site_prism'
   s.version     = SitePrism::VERSION
-  s.required_ruby_version = '>= 2.5'
+  s.required_ruby_version = '>= 2.6'
   s.platform    = Gem::Platform::RUBY
   s.license     = 'BSD-3-Clause'
   s.authors     = ['Luke Hill', 'Nat Ritmeyer']
@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.add_dependency 'addressable', ['~> 2.6']
   s.add_dependency 'capybara', ['~> 3.15']
-  s.add_dependency 'site_prism-all_there', ['> 1', '< 2']
+  s.add_dependency 'site_prism-all_there', ['~> 2.0']
 
   s.add_development_dependency 'cucumber', ['> 6', '< 9']
   s.add_development_dependency 'rspec', ['~> 3.10']

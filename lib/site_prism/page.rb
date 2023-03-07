@@ -48,6 +48,7 @@ module SitePrism
     #
     # @return [Capybara::Node::Simple || Capybara::Session]
     def page
+      SitePrism::Deprecator.deprecate('Calling #page on a SitePrism::Page instance')
       (defined?(@page) && @page) || Capybara.current_session
     end
 
