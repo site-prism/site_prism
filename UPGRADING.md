@@ -20,7 +20,7 @@ that was an `:element`, `:elements` or `:sections` the overall resultant method 
 
 Now in 4.x we ban these creations and will hard-fail instantly.
 
-## Removal of #page
+## Removal of #page for SitePrism::Section
 
 In SitePrism 3.x (Specifically when using capybara < 3.29), often people would want to obtain their "current" scope,
 either deliberately or by using a chained method. The way we used to do this was by calling `#page`, which would then
