@@ -24,7 +24,7 @@ describe SitePrism::ElementChecker do
     describe '#elements_missing' do
       subject { page.elements_missing }
 
-      let(:present) { expected_items[1..-1] }
+      let(:present) { expected_items[1..] }
       let(:missing) { expected_items[0] }
       let(:not_expected) { page.class.mapped_items.values.flatten - expected_items }
 
@@ -37,7 +37,7 @@ describe SitePrism::ElementChecker do
 
       it 'calls #there? for present elements' do
         allow(page).to receive(:there?).with(missing).once.and_return(false)
-        present[1..-1].each { |name| allow(page).to receive(:there?).with(name).once }
+        present[1..].each { |name| allow(page).to receive(:there?).with(name).once }
         expect(page).to receive(:there?).with(present[0]).once.and_return(true)
 
         subject
