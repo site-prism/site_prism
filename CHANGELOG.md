@@ -22,6 +22,11 @@
   - `rubocop` gems all bumped to latest ruby2.5 compliant version
     ([luke-hill])
 
+- `SitePrism::Page#page` is now deprecated
+  - Use either the Capybara.current_session method or directly interrogate your input fragment
+  - Any method calls have already been delegated using `#to_capybara_node`
+    ([luke-hill])
+
 ### Fixed
 - iFrames also ban redundant blocks from being passed in at build time
   ([luke-hill])

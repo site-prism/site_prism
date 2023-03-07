@@ -20,15 +20,21 @@ that was an `:element`, `:elements` or `:sections` the overall resultant method 
 
 Now in 4.x we ban these creations and will hard-fail instantly.
 
-## Avoiding using #page when not on a page
+## Removal of #page
 
 In SitePrism 3.x (Specifically when using capybara < 3.29), often people would want to obtain their "current" scope,
 either deliberately or by using a chained method. The way we used to do this was by calling `#page`, which would then
 return your scope. From later versions of capybara they implemented a `#to_capybara_node` method which would be called
 and pre-chained to ensure your scope was correct.
 
-At SitePrism, we left in the legacy method, now the method will crash with a fatal error (We will remove this method
-entirely in 2023, so you'll get a standard Ruby NoMethodError).
+At SitePrism, we left in the legacy method. However in the v4 beta the method will crash with a
+fatal error (And this will be removed entirely in the v4 proper -> so you'll get a standard Ruby `NoMethodError`).
+
+When operating on a regular `SitePrism::Page` object the call to `#page` will still work and it
+will still return either the `Capybara::String` that was passed in as a html fragment or the
+current `Capybara::Session`.
+
+**However ...** This is also not advisable, and as such this is now going to be deprecated
 
 If you want to obtain your full page scoping. Using `#parent_page` will get you your top level page, or simply using
 `#parent` will get you to go up one level of scoping.
