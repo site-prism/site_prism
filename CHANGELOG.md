@@ -1,6 +1,11 @@
 ## [main] - Unreleased
 ### Removed
+- Removed a load of redundant code from README
+  ([luke-hill])
 
+- Removed some redundant legacy tests for `#all_there?`
+  - These are now tested in the sub-gem and the responsibility lies there
+  ([luke-hill])
 ### Added
 
 ### Changed
@@ -10,9 +15,6 @@
 - All soft deprecations have now been changed / amended into full deprecations
   - You now get a full deprecation when attempting to build DSL items without finders
   - `.mapped_items` now by default is structured the new hash-way
-  ([luke-hill])
-
-- Removed a load of redundant code from README
   ([luke-hill])
 
 - Gem bumps to dev_dependencies
