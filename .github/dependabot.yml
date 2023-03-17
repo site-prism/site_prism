@@ -5,8 +5,9 @@ updates:
     schedule:
       interval: "daily"
     ignore:
-        # We don't pin capybara as plenty of people might need old(er) versions
+      # We don't pin capybara/selenium-webdriver as plenty of people might need old(er) versions
       - dependency-name: "capybara"
+      - dependency-name: "selenium-webdriver"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

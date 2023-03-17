@@ -2,11 +2,11 @@
 
 source 'https://rubygems.org'
 
-gem 'addressable', '< 2.8'
-gem 'capybara', '< 3.28'
-gem 'cucumber', '< 7'
-gem 'nokogiri', '< 1.12'
-gem 'selenium-webdriver', '< 4.1'
+gem 'addressable', '< 2.9'
+gem 'capybara', '< 3.36'
+gem 'cucumber', '< 8'
+gem 'nokogiri', '< 1.13'
+gem 'selenium-webdriver', '< 4.2'
 gem 'webdrivers', '< 5'
 
 gemspec path: '..'

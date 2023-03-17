@@ -556,7 +556,7 @@ describe SitePrism::Page do
       it 'returns regexp MatchData' do
         swap_current_url('http://localhost:3000/foos/15')
 
-        expect(page.url_matches).to be_kind_of(MatchData)
+        expect(page.url_matches).to be_a(MatchData)
       end
 
       it 'lets you get at the captures' do

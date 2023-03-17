@@ -21,15 +21,15 @@ Gem::Specification.new do |s|
                   'SitePrism implements the Page Object Model pattern on top of Capybara.'
   s.files        = Dir.glob('lib/**/*') + %w[LICENSE.md README.md]
   s.require_path = 'lib'
-  s.add_dependency 'addressable', ['~> 2.6']
-  s.add_dependency 'capybara', ['~> 3.15']
+  s.add_dependency 'addressable', ['~> 2.8']
+  s.add_dependency 'capybara', ['~> 3.27']
   s.add_dependency 'site_prism-all_there', ['~> 2.0']
 
   s.add_development_dependency 'cucumber', ['> 6', '< 9']
   s.add_development_dependency 'rspec', ['~> 3.10']
-  s.add_development_dependency 'rubocop', ['~> 1.31.0']
-  s.add_development_dependency 'rubocop-performance', '~> 1.16.0'
-  s.add_development_dependency 'rubocop-rspec', '~> 2.12.1'
+  s.add_development_dependency 'rubocop', ['~> 1.40.0']
+  s.add_development_dependency 'rubocop-performance', ['~> 1.16.0']
+  s.add_development_dependency 'rubocop-rspec', ['~> 2.15.0']
   s.add_development_dependency 'selenium-webdriver', ['~> 4.0']
   s.add_development_dependency 'simplecov', ['~> 0.18']
   s.add_development_dependency 'webdrivers', ['> 4.6', '< 6']
