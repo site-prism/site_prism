@@ -6,7 +6,11 @@
 - Removed some redundant legacy tests for `#all_there?`
   - These are now tested in the sub-gem and the responsibility lies there
   ([luke-hill])
+
 ### Added
+- Added in dependabot to keep ontop of all package updates
+  - Will set some ignores for `capybara` and `selenium-webdriver` to enable us to support old(er), versions
+  ([luke-hill])
 
 ### Changed
 - **Required Ruby Version is now 2.6+**
@@ -23,7 +27,7 @@
     ([luke-hill])
 
 - `SitePrism::Page#page` is now deprecated
-  - Use either the Capybara.current_session method or directly interrogate your input fragment
+  - Use either `Capybara.current_session` or directly interrogate your input fragment
   - Any method calls have already been delegated using `#to_capybara_node`
     ([luke-hill])
 
@@ -37,7 +41,7 @@
   - This is now enabled by default. The sub-gem is automatically required when you `require 'site_prism'`
   ([luke-hill])
 
-- You are no longer able to call `#page` inside a section to obtain the current scope.
+- You are no longer able to call `#page` inside a `SitePrism::Section` to obtain the current scope.
   - Either use it implicitly via calls which will be scoped using capybara
   - Or use `self.root_element` to obtain your current scope
   ([luke-hill])
