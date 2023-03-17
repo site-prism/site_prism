@@ -25,12 +25,6 @@ Layout/LineLength:
     - ^When
     - ^Then
 
-# Our gemspec and Spec files contain huge blocks and need to
-Metrics/BlockLength:
-  Exclude:
-    - ./spec/**/*_spec.rb
-    - site_prism.gemspec
-
 # We are a DSL, so we occasionally need to use `.set_` prefixes on our DSL names
 Naming/AccessorMethodName:
   Enabled: false
