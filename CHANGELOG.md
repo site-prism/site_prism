@@ -10,6 +10,7 @@
 ### Added
 - Added in dependabot to keep ontop of all package updates
   - Will set some ignores for `capybara` and `selenium-webdriver` to enable us to support old(er), versions
+  - `rubocop` packages aren't fully updated as they were lagging a long way behind
   ([luke-hill])
 
 ### Changed
