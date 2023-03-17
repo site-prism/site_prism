@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'cucumber', ['> 6', '< 9']
   s.add_development_dependency 'rspec', ['~> 3.10']
-  s.add_development_dependency 'rubocop', ['~> 1.31.0']
+  s.add_development_dependency 'rubocop', ['~> 1.40.0']
   s.add_development_dependency 'rubocop-performance', ['~> 1.16.0']
   s.add_development_dependency 'rubocop-rspec', ['~> 2.12.1']
   s.add_development_dependency 'selenium-webdriver', ['~> 4.0']
