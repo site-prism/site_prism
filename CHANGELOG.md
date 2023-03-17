@@ -9,7 +9,7 @@
 ### Added
 
 ### Changed
-- **Developmental Ruby Version is now 2.6+** (2.5 is still permissible but not supported)
+- **Required Ruby Version is now 2.6+**
   ([luke-hill])
 
 - All soft deprecations have now been changed / amended into full deprecations
