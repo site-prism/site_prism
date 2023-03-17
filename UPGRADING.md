@@ -34,10 +34,11 @@ When operating on a regular `SitePrism::Page` object the call to `#page` will st
 will still return either the `Capybara::String` that was passed in as a html fragment or the
 current `Capybara::Session`.
 
-**However ...** This is also not advisable, and as such this is now going to be deprecated
+**However ...** This is also not advisable, and as such this is now deprecated
 
-If you want to obtain your full page scoping. Using `#parent_page` will get you your top level page, or simply using
-`#parent` will get you to go up one level of scoping.
+Instead if you want to obtain your full page scope. Use `#parent_page` to get to your top level page, or simply using
+`#parent` will get you to go up one level of scoping. If you're already on the `SitePrism::Page` instance, calling `Capybara.current_session`
+will return you in the current session scope.
 
 # Upgrading from SitePrism 2.x to 3.x
 
