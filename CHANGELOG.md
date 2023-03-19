@@ -32,6 +32,9 @@
   - Any method calls have already been delegated using `#to_capybara_node`
     ([luke-hill])
 
+- Fixing bug with Ruby 3 keyword arguments
+  ([diego-aslz])
+
 ### Fixed
 - iFrames also ban redundant blocks from being passed in at build time
   ([luke-hill])
@@ -83,7 +86,7 @@
   ([luke-hill])
 
 - Gem bumps to dependencies
-  - `capybara` and `selenium-webdriver` must now be from 2019/20 era 
+  - `capybara` and `selenium-webdriver` must now be from 2019/20 era
   - `cucumber` can now be any version from 4-8 exclusive
   - `rubocop` and `rubocop-rspec` have been bumped a major version (Still a healthy amount behind latest)
   ([luke-hill])
