@@ -6,7 +6,7 @@ class Home < SitePrism::Page
 
   # individual elements
   element :header, :xpath, '//h1'
-  element :welcome_message, 'body > span'
+  element :welcome_message, '.welcome'
   element :go_button, '[value="Go!"]'
   element :a_link, '#link_div > a.a'
   element :nonexistent_element, 'input#nonexistent'
