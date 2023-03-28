@@ -57,8 +57,6 @@ module SitePrism
 
     private
 
-    # If any load validations from page subclasses returns false,
-    # immediately return false.
     def load_validations_pass?
       self.class.load_validations.all? do |validation|
         passed, message = instance_eval(&validation)
