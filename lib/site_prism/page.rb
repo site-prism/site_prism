@@ -53,8 +53,10 @@ module SitePrism
     end
 
     # This scopes our calls inside Page correctly to the `Capybara::Session`
+    #
+    # @return [Capybara::Node::Simple || Capybara::Session]
     def to_capybara_node
-      page
+      (defined?(@page) && @page) || Capybara.current_session
     end
 
     # Loads the page.

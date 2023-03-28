@@ -38,7 +38,7 @@ module SitePrism
       kwargs = find_args.pop
       to_capybara_node.has_selector?(*find_args, **kwargs)
     end
-    
+
     def element_does_not_exist?(*find_args)
       kwargs = find_args.pop
       to_capybara_node.has_no_selector?(*find_args, **kwargs)
