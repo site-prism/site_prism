@@ -4,7 +4,7 @@ module SitePrism
   #
   # @api private
   #
-  class RspecMatchers
+  class RSpecMatchers
     attr_reader :element_name
 
     def initialize(element_name)
