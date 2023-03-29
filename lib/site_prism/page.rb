@@ -88,12 +88,21 @@ module SitePrism
       return_yield || true
     end
 
+    # Returns true if the page is displayed within the requisite time
+    # Returns false if the page is not displayed within the requisite time
+    #
+    # @return [Boolean]
     def displayed?(*args)
       wait_until_displayed(*args)
     rescue SitePrism::TimeoutError
       false
     end
 
+    # Wait until the page is displayed according to input arguments
+    # If no url_matcher is provided we don't know how to determine if the page is displayed. So we return an error
+    # Then we wait until the url matches the expected mappings
+    #
+    # @return [Boolean]
     def wait_until_displayed(*args)
       raise SitePrism::NoUrlMatcherForPageError unless url_matcher
 
@@ -102,6 +111,13 @@ module SitePrism
       Waiter.wait_until_true(seconds) { url_matches?(expected_mappings) }
     end
 
+    # Return the matching information of a page
+    #
+    # Return nil if the page is not displayed correctly
+    # Return the regex matches if we have provided a regexp style url_matcher
+    # Otherwise fall back to an addressable-style template of matches
+    #
+    # @return [Nil || MatchData || Hash]
     def url_matches(seconds = Capybara.default_max_wait_time)
       return unless displayed?(seconds)
       return regexp_backed_matches if url_matcher.is_a?(Regexp)
