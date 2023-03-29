@@ -109,14 +109,24 @@ module SitePrism
       template_backed_matches
     end
 
+    # Returns the templated url from the set_url property defined during the page definition
+    # Returns `nil` if there was not a property set (i.e. the page should not be directly loaded)
+    #
+    # @return [NilClass || String]
     def url(expansion = {})
       self.class.url && Addressable::Template.new(self.class.url).expand(expansion).to_s
     end
 
+    # Returns the url_matcher property defined during the page definition
+    #
+    # @return [Regexp]
     def url_matcher
       self.class.url_matcher
     end
 
+    # Returns true if the page is secure, otherwise returns false
+    #
+    # @return [Boolean]
     def secure?
       page.current_url.start_with?('https')
     end
