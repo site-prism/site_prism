@@ -39,6 +39,9 @@
 - iFrames also ban redundant blocks from being passed in at build time
   ([luke-hill])
 
+- Prevent calls to `#to_capybara_node` happening internally from triggering deprecation messages
+  ([luke-hill])
+
 ## [4.0.beta] - 2022-11-28
 ### Removed
 - Configuration parameter `.use_all_there_gem`
