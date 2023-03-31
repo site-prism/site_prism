@@ -3,10 +3,10 @@
 module SitePrism
   # [SitePrism::Waiter]
   class Waiter
-    # @return Boolean
-    #
     # A looper that will wait until the passed in block evaluates to true
     # Alternatively it will time out once the wait_time is exceeded
+    #
+    # @return [Boolean]
     def self.wait_until_true(wait_time = Capybara.default_max_wait_time, sleep_duration = 0.05)
       Timer.run(wait_time) do |timer|
         loop do

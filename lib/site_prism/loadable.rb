@@ -43,10 +43,11 @@ module SitePrism
 
     # Check if the page is loaded.
     #
-    # On failure, if an error was reported by a failing validation,
-    # it will be available via the `load_error` accessor.
+    # On failure, if an error was reported by a failing validation, it will be available via the `load_error` accessor
     #
-    # @return [Boolean] True if the page loaded successfully; otherwise false.
+    # It will return true if the page has been loaded successfully; otherwise it returns false
+    #
+    # @return [Boolean]
     def loaded?
       self.load_error = nil
 
