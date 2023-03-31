@@ -32,6 +32,9 @@
   - Any method calls have already been delegated using `#to_capybara_node`
     ([luke-hill])
 
+- Massively updated the internal documentation of the codebase
+  ([luke-hill])
+
 ### Fixed
 - iFrames also ban redundant blocks from being passed in at build time
   ([luke-hill])

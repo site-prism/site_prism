@@ -45,8 +45,6 @@ module SitePrism
 
     private
 
-    # If the page or section has expected_items set, return expected_items that are mapped
-    # otherwise just return the list of all mapped_items
     def elements_to_check
       if _expected_items
         SitePrism.logger.debug('Expected Items has been set.')
