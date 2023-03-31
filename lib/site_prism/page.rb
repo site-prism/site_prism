@@ -9,7 +9,7 @@ module SitePrism
   # through clicking buttons or filling in fields, or verbosely loaded by using the `#load` method
   #
   # All method calls made whilst on a page are scoped using `#to_capybara_node` which defaults to the
-  # current Capybara session
+  # current Capybara session or the `@page` that has been loaded in-line
   class Page
     include Capybara::DSL
     include ElementChecker
