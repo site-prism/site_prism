@@ -32,8 +32,17 @@
   - Any method calls have already been delegated using `#to_capybara_node`
     ([luke-hill])
 
+- Internal RSpec matcher class renamed from `RspecMatchers` to `RSpecMatchers`
+  ([luke-hill])
+
+- Massively updated the internal documentation of the codebase
+  ([luke-hill])
+
 ### Fixed
 - iFrames also ban redundant blocks from being passed in at build time
+  ([luke-hill])
+
+- Prevent calls to `#to_capybara_node` happening internally from triggering deprecation messages
   ([luke-hill])
 
 ## [4.0.beta] - 2022-11-28

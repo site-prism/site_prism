@@ -24,25 +24,21 @@ module SitePrism
       raise SitePrism::UnsupportedBlockError
     end
 
-    # Call `find` inside `to_capybara_node` context (Either Capybara::Session or Capybara::Node::Element)
     def _find(*find_args)
       kwargs = find_args.pop
       to_capybara_node.find(*find_args, **kwargs)
     end
 
-    # Call `all` inside `to_capybara_node` context (Either Capybara::Session or Capybara::Node::Element)
     def _all(*find_args)
       kwargs = find_args.pop
       to_capybara_node.all(*find_args, **kwargs)
     end
 
-    # Call `has_selector?` inside `to_capybara_node` context (Either Capybara::Session or Capybara::Node::Element)
     def element_exists?(*find_args)
       kwargs = find_args.pop
       to_capybara_node.has_selector?(*find_args, **kwargs)
     end
 
-    # Call `has_no_selector?` inside `to_capybara_node` context (Either Capybara::Session or Capybara::Node::Element)
     def element_does_not_exist?(*find_args)
       kwargs = find_args.pop
       to_capybara_node.has_no_selector?(*find_args, **kwargs)
@@ -198,7 +194,7 @@ module SitePrism
       def add_helper_methods(name, _type, *find_args)
         create_existence_checker(name, *find_args)
         create_nonexistence_checker(name, *find_args)
-        SitePrism::RspecMatchers.new(name)._create_rspec_existence_matchers if defined?(RSpec)
+        SitePrism::RSpecMatchers.new(name)._create_rspec_existence_matchers if defined?(RSpec)
         create_visibility_waiter(name, *find_args)
         create_invisibility_waiter(name, *find_args)
       end

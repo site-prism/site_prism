@@ -16,7 +16,7 @@ module SitePrism
   autoload :Loadable, 'site_prism/loadable'
   autoload :Logger, 'site_prism/logger'
   autoload :Page, 'site_prism/page'
-  autoload :RspecMatchers, 'site_prism/rspec_matchers'
+  autoload :RSpecMatchers, 'site_prism/rspec_matchers'
   autoload :Section, 'site_prism/section'
   autoload :Timer, 'site_prism/timer'
   autoload :Waiter, 'site_prism/waiter'
