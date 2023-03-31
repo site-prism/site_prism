@@ -11,6 +11,9 @@ module SitePrism
       @element_name = element_name
     end
 
+    # Create the positive and negative rspec matchers that will use the SitePrism boolean methods
+    #
+    # @return [Symbol]
     def _create_rspec_existence_matchers
       SitePrism.logger.debug('Including all relevant matcher names / warnings in RSpec scope.')
       create_rspec_existence_matchers(matcher, object_method, negated_object_method, warning)
