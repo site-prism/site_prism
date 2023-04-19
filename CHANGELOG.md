@@ -1,5 +1,14 @@
 ## [main] - Unreleased
 ### Removed
+
+### Added
+
+### Changed
+
+### Fixed
+
+## [4.0] - 2023-04-19
+### Removed
 - Removed a load of redundant code from README
   ([luke-hill])
 
