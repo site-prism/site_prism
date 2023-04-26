@@ -13,7 +13,7 @@ module SitePrism
       def lines(string)
         string.split("\n").length
       end
-      
+
       def swallow_missing_element
         yield
       rescue Capybara::ElementNotFound
