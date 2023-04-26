@@ -14,7 +14,7 @@ require_relative 'support/helper_methods'
 require_relative 'support/mocked_items'
 
 Capybara.default_max_wait_time = 0
-Capybara.app = SitePrism::Support::MyTestApp.new
+Capybara.app = SitePrism::Support::App.new
 
 RSpec.configure do |rspec|
   rspec.include SitePrism::Support::HelperMethods
