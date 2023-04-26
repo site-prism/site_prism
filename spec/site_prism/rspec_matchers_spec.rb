@@ -1,7 +1,15 @@
 # frozen_string_literal: true
 
 describe SitePrism::RspecMatchers do
-  include Capybara::DSL
+  let(:page) do
+    Class.new(SitePrism::Page) do
+      set_url '/'
+
+      element :link, 'a'
+      element :table, 'table'
+    end
+  end
+  let(:instance) { page.new }
 
   around do |example|
     app = Capybara.app
