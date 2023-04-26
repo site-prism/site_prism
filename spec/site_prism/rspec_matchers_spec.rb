@@ -15,8 +15,14 @@ describe SitePrism::RspecMatchers do
     app = Capybara.app
 
     begin
-      Capybara.app = ->(_env) { [200, {}, <<-HTML] }
-        <html><head></head><body><a href="#">a</a><table id="my-table"></table></body></html>
+      Capybara.app = ->(_env) { [200, {}, <<~HTML.gsub(/^\s+/, '')] }
+        <html>
+          <head></head>
+          <body>
+            <a href="#">a</a>
+            <table id="my-table"></table>
+          </body>
+        </html>
       HTML
 
       example.run
@@ -26,14 +32,14 @@ describe SitePrism::RspecMatchers do
   end
 
   it 'works with Ruby 3 keyword arguments for links' do
-    visit '/'
+    instance.load
 
-    expect(page).to have_link('a', href: '#')
+    expect(instance).to have_link('a', href: '#')
   end
 
   it 'works with Ruby 3 keyword arguments for tables' do
-    visit '/'
+    instance.load
 
-    expect(page).to have_table('my-table', rows: [])
+    expect(instance).to have_table('my-table', rows: [])
   end
 end
