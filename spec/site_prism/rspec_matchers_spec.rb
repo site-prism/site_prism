@@ -19,7 +19,7 @@ describe SitePrism::RspecMatchers do
         <html>
           <head></head>
           <body>
-            <a href="#">a</a>
+            <a href="#">foo-link</a>
             <table id="my-table"></table>
           </body>
         </html>
@@ -34,12 +34,12 @@ describe SitePrism::RspecMatchers do
   it 'works with Ruby 3 keyword arguments for links' do
     instance.load
 
-    expect(instance).to have_link('a', href: '#')
+    expect(instance).to have_link(text: 'foo-link', href: '#')
   end
 
   it 'works with Ruby 3 keyword arguments for tables' do
     instance.load
 
-    expect(instance).to have_table('my-table', rows: [])
+    expect(instance).to have_table(id: 'my-table', rows: [])
   end
 end
