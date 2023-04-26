@@ -11,7 +11,7 @@ $LOAD_PATH << './features/support'
 require_relative 'fixtures/all'
 
 Capybara.default_max_wait_time = 0
-Capybara.app = MyTestApp.new
+Capybara.app = SitePrism::Support::MyTestApp.new
 
 RSpec.configure do |rspec|
   rspec.include SitePrism::Support::HelperMethods
