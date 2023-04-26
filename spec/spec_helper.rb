@@ -33,46 +33,11 @@ class MyTestApp
   end
 end
 
-def capture_stdout
-  original_stdout = $stdout
-  $stdout = StringIO.new
-  yield
-  $stdout.string
-ensure
-  $stdout = original_stdout
-end
-
-def wipe_logger!
-  return unless SitePrism.instance_variable_get(:@logger)
-
-  SitePrism.remove_instance_variable(:@logger)
-end
-
-def lines(string)
-  string.split("\n").length
-end
-
-def swallow_missing_element
-  yield
-rescue Capybara::ElementNotFound
-  :no_op
-end
-
-def swallow_bad_validation
-  yield
-rescue SitePrism::FailedLoadValidationError
-  :no_op
-end
-
-def swallow_timeout
-  yield
-rescue SitePrism::TimeoutError
-  :no_op
-end
-
 Capybara.app = MyTestApp.new
 
 RSpec.configure do |rspec|
+  rspec.include SitePrism::Support::HelperMethods
+
   [CSSPage, XPathPage].each do |page_klass|
     SitePrism::SpecHelper.present_on_page.each do |method|
       rspec.before do
