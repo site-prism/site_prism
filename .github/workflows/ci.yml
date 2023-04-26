@@ -29,7 +29,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-          bundler: '2.3.26'
+          bundler: '2.4.10'
           bundler-cache: true
       - run: bundle exec rspec
       - run: bundle exec cucumber
