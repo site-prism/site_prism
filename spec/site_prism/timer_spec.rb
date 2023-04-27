@@ -94,12 +94,14 @@ describe SitePrism::Timer do
 
     it 'stops the timer thread' do
       thread = timer.start
+
       expect { timer.stop }.to change(thread, :alive?).from(true).to(false)
     end
 
     it 'marks the timer as done' do
       timer.start
       timer.stop
+
       expect(timer).to be_done
     end
 
@@ -108,12 +110,14 @@ describe SitePrism::Timer do
 
       it 'does not fail because of the missing timer thread' do
         timer.start
+
         expect { timer.stop }.not_to raise_error
       end
 
       it 'marks the timer as done' do
         timer.start
         timer.stop
+
         expect(timer).to be_done
       end
     end

@@ -2,10 +2,14 @@
 ### Removed
 
 ### Added
+- CI now runs the low-spec gemfile on old rubies (Capybara versions are out of the unsupported window)
+  ([luke-hill])
 
 ### Changed
 
 ### Fixed
+- Lots of cross leaked items in RSpec have now been fixed and isolated
+  ([luke-hill])
 
 ## [4.0] - 2023-04-19
 ### Removed
