@@ -10,9 +10,7 @@ describe SitePrism::Waiter do
     end
 
     it 'throws a Timeout exception if the block does not become true' do
-      expect { execute_waiter(default_timeout) { false } }
-        .to raise_error(SitePrism::TimeoutError)
-        .with_message(/#{default_timeout}/)
+      expect { execute_waiter(default_timeout) { false } }.to raise_error(SitePrism::TimeoutError).with_message(/#{default_timeout}/)
     end
 
     it 'returns true if block is truthy' do
@@ -23,9 +21,7 @@ describe SitePrism::Waiter do
       let(:custom_timeout) { 0.18 }
 
       it 'alters the error message' do
-        expect { execute_waiter(custom_timeout) { false } }
-          .to raise_error(SitePrism::TimeoutError)
-          .with_message(/#{custom_timeout}/)
+        expect { execute_waiter(custom_timeout) { false } }.to raise_error(SitePrism::TimeoutError).with_message(/#{custom_timeout}/)
       end
     end
 
