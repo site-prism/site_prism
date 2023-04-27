@@ -390,13 +390,13 @@ describe SitePrism::Page do
   end
 
   describe '#wait_until_displayed' do
-    subject(:wait_for_page) { page.new.wait_until_displayed }
+    subject(:wait_for_page) { page.wait_until_displayed }
 
     context 'with a full string URL matcher' do
       let(:page) do
         Class.new(SitePrism::Page) do
           set_url_matcher('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
-        end
+        end.new
       end
 
       it 'matches with all elements matching' do
@@ -458,7 +458,7 @@ describe SitePrism::Page do
       let(:page) do
         Class.new(described_class) do
           set_url_matcher('/foo')
-        end
+        end.new
       end
 
       it 'matches a complex URL by only path' do
@@ -472,11 +472,11 @@ describe SitePrism::Page do
       let(:page) do
         Class.new(described_class) do
           set_url '/foo'
-        end
+        end.new
       end
 
       it 'sets the `url_matcher` to the url property' do
-        expect(page.new.url_matcher).to eq('/foo')
+        expect(page.url_matcher).to eq('/foo')
       end
 
       it 'matches a realistic local dev URL' do
@@ -490,7 +490,7 @@ describe SitePrism::Page do
       let(:page) do
         Class.new(described_class) do
           set_url_matcher('{scheme}:///foos{/id}')
-        end
+        end.new
       end
 
       it 'passes without expected_mappings provided' do
@@ -502,13 +502,13 @@ describe SitePrism::Page do
       it 'passes with correct expected_mappings provided' do
         swap_current_url('http://localhost:3000/foos/28')
 
-        expect { page.new.wait_until_displayed(id: 28) }.not_to raise_error
+        expect { page.wait_until_displayed(id: 28) }.not_to raise_error
       end
 
       it 'fails with incorrect expected_mappings provided' do
         swap_current_url('http://localhost:3000/foos/28')
 
-        expect { page.new.wait_until_displayed(id: 17) }.to raise_error(SitePrism::TimeoutError)
+        expect { page.wait_until_displayed(id: 17) }.to raise_error(SitePrism::TimeoutError)
       end
     end
 
@@ -516,7 +516,7 @@ describe SitePrism::Page do
       let(:page) do
         Class.new(described_class) do
           set_url_matcher(this: "isn't a URL matcher")
-        end
+        end.new
       end
 
       it 'raises InvalidUrlMatcherError' do
@@ -526,13 +526,13 @@ describe SitePrism::Page do
   end
 
   describe '#url_matches' do
-    let(:url_matches) { page.new.url_matches }
+    let(:url_matches) { page.url_matches }
 
     context 'with a templated matcher' do
       let(:page) do
         Class.new(described_class) do
           set_url_matcher('{scheme}:///foos{/id}')
-        end
+        end.new
       end
 
       it 'returns mappings from the current_url' do
@@ -552,7 +552,7 @@ describe SitePrism::Page do
       let(:page) do
         Class.new(described_class) do
           set_url_matcher(/foos\/(\d+)/)
-        end
+        end.new
       end
 
       it 'returns regexp MatchData' do
@@ -564,7 +564,7 @@ describe SitePrism::Page do
       it 'lets you get at the captures' do
         swap_current_url('http://localhost:3000/foos/15')
 
-        expect(page.new.url_matches[1]).to eq('15')
+        expect(page.url_matches[1]).to eq('15')
       end
 
       it "returns nil if current_url doesn't match the url_matcher" do
@@ -578,7 +578,7 @@ describe SitePrism::Page do
       let(:page) do
         Class.new(described_class) do
           set_url_matcher(this: "isn't a URL matcher")
-        end
+        end.new
       end
 
       it 'raises InvalidUrlMatcherError' do
