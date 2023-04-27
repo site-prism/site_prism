@@ -97,7 +97,7 @@ describe SitePrism::AddressableUrlMatcher do
     end
 
     it 'matches everything at once' do
-      expect_matches("{scheme}://{user}:{password}@{host}:8443/foos{/foo_id}/bars{/id}{?params*}#middle").to be true
+      expect_matches('{scheme}://{user}:{password}@{host}:8443/foos{/foo_id}/bars{/id}{?params*}#middle').to be true
     end
 
     it "doesn't match on root path" do
