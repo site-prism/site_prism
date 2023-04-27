@@ -9,9 +9,7 @@ $LOAD_PATH << './lib'
 $LOAD_PATH << './features/support'
 
 require_relative 'fixtures/all'
-require_relative 'support/app'
-require_relative 'support/helper_methods'
-require_relative 'support/mocked_items'
+require_relative 'support/all'
 
 Capybara.default_max_wait_time = 0
 Capybara.app = SitePrism::Support::App.new
