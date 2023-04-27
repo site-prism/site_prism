@@ -390,13 +390,13 @@ describe SitePrism::Page do
   end
 
   describe '#wait_until_displayed' do
-    subject(:wait_for_page) { page.wait_until_displayed }
+    subject(:wait_for_page) { page.new.wait_until_displayed }
 
     context 'with a full string URL matcher' do
       let(:page) do
         Class.new(SitePrism::Page) do
           set_url_matcher('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
-        end.new
+        end
       end
 
       it 'matches with all elements matching' do
@@ -458,7 +458,7 @@ describe SitePrism::Page do
       let(:page) do
         Class.new(described_class) do
           set_url_matcher('/foo')
-        end.new
+        end
       end
 
       it 'matches a complex URL by only path' do
@@ -472,11 +472,11 @@ describe SitePrism::Page do
       let(:page) do
         Class.new(described_class) do
           set_url '/foo'
-        end.new
+        end
       end
 
       it 'sets the `url_matcher` to the url property' do
-        expect(page.url_matcher).to eq('/foo')
+        expect(page.new.url_matcher).to eq('/foo')
       end
 
       it 'matches a realistic local dev URL' do
@@ -490,25 +490,25 @@ describe SitePrism::Page do
       let(:page) do
         Class.new(described_class) do
           set_url_matcher('{scheme}:///foos{/id}')
-        end.new
+        end
       end
 
       it 'passes without expected_mappings provided' do
         swap_current_url('http://localhost:3000/foos/28')
 
-        expect { page.wait_until_displayed }.not_to raise_error
+        expect { wait_for_page }.not_to raise_error
       end
 
       it 'passes with correct expected_mappings provided' do
         swap_current_url('http://localhost:3000/foos/28')
 
-        expect { page.wait_until_displayed(id: 28) }.not_to raise_error
+        expect { page.new.wait_until_displayed(id: 28) }.not_to raise_error
       end
 
       it 'fails with incorrect expected_mappings provided' do
         swap_current_url('http://localhost:3000/foos/28')
 
-        expect { page.wait_until_displayed(id: 17) }.to raise_error(SitePrism::TimeoutError)
+        expect { page.new.wait_until_displayed(id: 17) }.to raise_error(SitePrism::TimeoutError)
       end
     end
 
@@ -516,7 +516,7 @@ describe SitePrism::Page do
       let(:page) do
         Class.new(described_class) do
           set_url_matcher(this: "isn't a URL matcher")
-        end.new
+        end
       end
 
       it 'raises InvalidUrlMatcherError' do
@@ -526,23 +526,25 @@ describe SitePrism::Page do
   end
 
   describe '#url_matches' do
+    let(:url_matches) { page.new.url_matches }
+
     context 'with a templated matcher' do
       let(:page) do
         Class.new(described_class) do
           set_url_matcher('{scheme}:///foos{/id}')
-        end.new
+        end
       end
 
       it 'returns mappings from the current_url' do
         swap_current_url('http://localhost:3000/foos/15')
 
-        expect(page.url_matches).to eq('scheme' => 'http', 'id' => '15')
+        expect(url_matches).to eq('scheme' => 'http', 'id' => '15')
       end
 
       it "returns nil if current_url doesn't match the url_matcher" do
         swap_current_url('http://localhost:3000/bars/15')
 
-        expect(page.url_matches).to be_nil
+        expect(url_matches).to be_nil
       end
     end
 
@@ -550,25 +552,25 @@ describe SitePrism::Page do
       let(:page) do
         Class.new(described_class) do
           set_url_matcher(/foos\/(\d+)/)
-        end.new
+        end
       end
 
       it 'returns regexp MatchData' do
         swap_current_url('http://localhost:3000/foos/15')
 
-        expect(page.url_matches).to be_a(MatchData)
+        expect(url_matches).to be_a(MatchData)
       end
 
       it 'lets you get at the captures' do
         swap_current_url('http://localhost:3000/foos/15')
 
-        expect(page.url_matches[1]).to eq('15')
+        expect(page.new.url_matches[1]).to eq('15')
       end
 
       it "returns nil if current_url doesn't match the url_matcher" do
         swap_current_url('http://localhost:3000/bars/15')
 
-        expect(page.url_matches).to be_nil
+        expect(url_matches).to be_nil
       end
     end
 
@@ -576,21 +578,18 @@ describe SitePrism::Page do
       let(:page) do
         Class.new(described_class) do
           set_url_matcher(this: "isn't a URL matcher")
-        end.new
+        end
       end
 
       it 'raises InvalidUrlMatcherError' do
-        expect { page.url_matches }
-          .to raise_error(SitePrism::InvalidUrlMatcherError)
+        expect { url_matches }.to raise_error(SitePrism::InvalidUrlMatcherError)
       end
     end
   end
 
   describe '#execute_script' do
     it 'delegates through Capybara.current_session' do
-      expect(Capybara.current_session)
-        .to receive(:execute_script)
-        .with('JUMP!')
+      expect(Capybara.current_session).to receive(:execute_script).with('JUMP!')
 
       page.execute_script('JUMP!')
     end
@@ -598,10 +597,7 @@ describe SitePrism::Page do
 
   describe '#evaluate_script' do
     it 'delegates through Capybara.current_session' do
-      allow(Capybara.current_session)
-        .to receive(:evaluate_script)
-        .with('How High?')
-        .and_return('To the sky!')
+      allow(Capybara.current_session).to receive(:evaluate_script).with('How High?').and_return('To the sky!')
 
       expect(page.evaluate_script('How High?')).to eq('To the sky!')
     end
