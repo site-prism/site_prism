@@ -36,9 +36,8 @@ module SitePrism
       stop
     end
 
-    # Start the Timer in a separate process
-    #
-    # Return [True]
+    private
+
     def start
       stop
       return if wait_time.zero?
@@ -50,9 +49,6 @@ module SitePrism
       end
     end
 
-    # Forcibly stop the timer, and kill any threads created by it
-    #
-    # Return [True]
     def stop
       if @thread
         @thread.kill
