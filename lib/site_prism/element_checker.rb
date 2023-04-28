@@ -13,10 +13,16 @@ module SitePrism
     # for how the definition of "every item" is derived.
     #
     # Example
-    # @my_page.mapped_items
-    # { element => :button_one, element => :button_two, section => :filters }
+    # @my_page.class.mapped_items
+    #  {
+    #    element => [:button_one, :button_two],
+    #    elements => [:button_collection_one, :button_collection_two],
+    #    section => [:filters],
+    #    sections => [:search_result],
+    #    iframe => []
+    #  }
     # @my_page.all_there?
-    # => true - If the three items above are all present
+    # => true - If the items above are all present
     #
     # Note that #elements_to_check will check the hash of mapped_items
     #

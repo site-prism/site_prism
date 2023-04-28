@@ -29,6 +29,11 @@ Layout/LineLength:
 Naming/AccessorMethodName:
   Enabled: false
 
+# This will be present until v5 beta
+Naming/MemoizedInstanceVariableName:
+  Exclude:
+    - 'lib/site_prism/page.rb'
+
 # Stylistic preference to make the RSpec tests flow better
 RSpec/MessageSpies:
   EnforcedStyle: receive
