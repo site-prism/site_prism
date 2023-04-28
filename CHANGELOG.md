@@ -6,6 +6,10 @@
   ([luke-hill])
 
 ### Changed
+- `Autoload` is now removed from all remaining support classes that used it
+  ([luke-hill])
+- The `SitePrism::Timer` class is now designed to be api-private
+  ([luke-hill])
 
 ### Fixed
 - Lots of cross leaked items in RSpec have now been fixed and isolated

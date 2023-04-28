@@ -2,25 +2,25 @@
 
 require 'site_prism/error'
 require 'site_prism/all_there'
+
 require 'addressable/template'
 require 'forwardable'
 
-# [SitePrism] namespace
-# We autoload our files underneath here to provide a slightly more optimal load solution
-module SitePrism
-  autoload :AddressableUrlMatcher, 'site_prism/addressable_url_matcher'
-  autoload :DSL, 'site_prism/dsl'
-  autoload :DSLValidator, 'site_prism/dsl_validator'
-  autoload :Deprecator, 'site_prism/deprecator'
-  autoload :ElementChecker, 'site_prism/element_checker'
-  autoload :Loadable, 'site_prism/loadable'
-  autoload :Logger, 'site_prism/logger'
-  autoload :Page, 'site_prism/page'
-  autoload :RSpecMatchers, 'site_prism/rspec_matchers'
-  autoload :Section, 'site_prism/section'
-  autoload :Timer, 'site_prism/timer'
-  autoload :Waiter, 'site_prism/waiter'
+require 'site_prism/addressable_url_matcher'
+require 'site_prism/dsl'
+require 'site_prism/dsl_validator'
+require 'site_prism/deprecator'
+require 'site_prism/element_checker'
+require 'site_prism/loadable'
+require 'site_prism/logger'
+require 'site_prism/page'
+require 'site_prism/rspec_matchers'
+require 'site_prism/section'
+require 'site_prism/timer'
+require 'site_prism/waiter'
 
+# [SitePrism]
+module SitePrism
   class << self
     def configure
       yield self
