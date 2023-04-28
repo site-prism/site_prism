@@ -10,6 +10,8 @@ module SitePrism
     #
     # ~~~~~~~~~~~~~ PREVIOUS DOCUMENTATION ~~~~~~~~~~~~~
     #
+    # [SitePrism::DSL]
+    #
     # This is the core Module Namespace for all of the public-facing DSL methods
     #   such as `element`. The code here is designed to be used through the defining
     #   of said items, and not to be instantiated directly.
