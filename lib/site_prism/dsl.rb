@@ -270,7 +270,7 @@ module SitePrism
         @legacy_mapped_items ||= begin
           SitePrism::Deprecator.deprecate(
             '.mapped_items structure (internally), on a class',
-            'Thew new .mapped_items structure'
+            'the new .mapped_items structure'
           )
           []
         end
