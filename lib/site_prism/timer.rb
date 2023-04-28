@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 module SitePrism
-  # [SitePrism::Timer]
-  #
-  # Used to count asynchronously towards an overall desired duration or condition (Block)
   #
   # @api private
   #
