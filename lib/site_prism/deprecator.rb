@@ -27,9 +27,9 @@ module SitePrism
       # NB: As this is bubbled up at debug level, often users will not see this. So it will
       # never be a candidate for removal directly
       def soft_deprecate(old, reason, new = nil)
-        debug("The #{old} method is changing, as is SitePrism, and is now configurable.")
+        debug("The #{old} method is changing, as is SitePrism, and is now advised to be changed.")
         debug("REASON: #{reason}.")
-        debug('Moving forwards into SitePrism v4, the default behaviour will change.')
+        debug('Moving forwards into SitePrism v5, the default behaviour will change.')
         debug("We advise you change to using #{new}") if new
       end
 
