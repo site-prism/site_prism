@@ -1,6 +1,8 @@
 1-11 -> N/A
 11-15 -> TBD
-16-26 -> TBD
+16-26 -> builder.rb
 27-85 -> locators.rb
 86-170 -> d_s_l.rb
-171-347 -> TBD
+171-181 -> TBD
+182-268 -> builder.rb
+269-347 -> TBD

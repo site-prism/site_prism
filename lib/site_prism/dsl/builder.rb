@@ -24,25 +24,93 @@ module SitePrism
         raise SitePrism::UnsupportedBlockError
       end
 
-      def build(type, name, *find_args)
-        raise InvalidDSLNameError if ENV.fetch('SITEPRISM_DSL_VALIDATION_ENABLED', nil) && invalid?(name)
+      class << self
+        def raise_if_build_time_block_supplied(parent_object, name, has_block, type)
+          return unless has_block
 
-        if find_args.empty?
-          create_error_method(name)
-        else
-          map_item(type, name)
+          SitePrism.logger.debug("Type passed in: #{type}")
+          SitePrism.logger.error("#{name} has been defined as a '#{type}' item in #{parent_object}. It does not accept build-time blocks.")
+          raise SitePrism::UnsupportedBlockError
+        end
+
+        def build(type, name, *find_args)
+          raise InvalidDSLNameError if ENV.fetch('SITEPRISM_DSL_VALIDATION_ENABLED', nil) && invalid?(name)
+
+          if find_args.empty?
+            create_error_method(name)
+          else
+            map_item(type, name)
+            yield
+          end
+          add_helper_methods(name, type, *find_args)
+        end
+
+        def create_error_method(name)
+          SitePrism::Deprecator.deprecate(
+            'DSL definition with no find_args',
+            'DSL definition with at least 1 find_arg'
+          )
+          SitePrism.logger.error("#{name} has come from an item with no locators.")
+          define_method(name) { raise SitePrism::InvalidElementError }
+        end
+
+        def add_helper_methods(name, _type, *find_args)
+          create_existence_checker(name, *find_args)
+          create_nonexistence_checker(name, *find_args)
+          SitePrism::RSpecMatchers.new(name)._create_rspec_existence_matchers if defined?(RSpec)
+          create_visibility_waiter(name, *find_args)
+          create_invisibility_waiter(name, *find_args)
+        end
+
+        def create_existence_checker(element_name, *find_args)
+          method_name = "has_#{element_name}?"
+          create_helper_method(method_name, *find_args) do
+            define_method(method_name) do |*runtime_args|
+              args = merge_args(find_args, runtime_args)
+              element_exists?(*args)
+            end
+          end
+        end
+
+        def create_nonexistence_checker(element_name, *find_args)
+          method_name = "has_no_#{element_name}?"
+          create_helper_method(method_name, *find_args) do
+            define_method(method_name) do |*runtime_args|
+              args = merge_args(find_args, runtime_args)
+              element_does_not_exist?(*args)
+            end
+          end
+        end
+
+        def create_visibility_waiter(element_name, *find_args)
+          method_name = "wait_until_#{element_name}_visible"
+          create_helper_method(method_name, *find_args) do
+            define_method(method_name) do |*runtime_args|
+              args = merge_args(find_args, runtime_args, visible: true)
+              return true if element_exists?(*args)
+
+              raise SitePrism::ElementVisibilityTimeoutError
+            end
+          end
+        end
+
+        def create_invisibility_waiter(element_name, *find_args)
+          method_name = "wait_until_#{element_name}_invisible"
+          create_helper_method(method_name, *find_args) do
+            define_method(method_name) do |*runtime_args|
+              args = merge_args(find_args, runtime_args, visible: true)
+              return true if element_does_not_exist?(*args)
+
+              raise SitePrism::ElementInvisibilityTimeoutError
+            end
+          end
+        end
+
+        def create_helper_method(proposed_method_name, *find_args)
+          return create_error_method(proposed_method_name) if find_args.empty?
+
           yield
         end
-        add_helper_methods(name, type, *find_args)
-      end
-
-      def create_error_method(name)
-        SitePrism::Deprecator.deprecate(
-          'DSL definition with no find_args',
-          'DSL definition with at least 1 find_arg'
-        )
-        SitePrism.logger.error("#{name} has come from an item with no locators.")
-        define_method(name) { raise SitePrism::InvalidElementError }
       end
     end
   end
