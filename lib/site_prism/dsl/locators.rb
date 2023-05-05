@@ -25,14 +25,6 @@ module SitePrism
 
       private
 
-      def raise_if_runtime_block_supplied(object, name, has_block, type)
-        return unless has_block
-
-        SitePrism.logger.debug("Type passed in: #{type}")
-        SitePrism.logger.error("#{object.class}##{name} cannot accept runtime blocks")
-        raise SitePrism::UnsupportedBlockError
-      end
-
       def _find(*find_args)
         kwargs = find_args.pop
         to_capybara_node.find(*find_args, **kwargs)
