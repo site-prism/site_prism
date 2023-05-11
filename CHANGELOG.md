@@ -21,6 +21,10 @@
 - Lots of cross leaked items in RSpec have now been fixed and isolated
   ([luke-hill])
 
+- Lots of spam from deprecation messages (that are auto-triggered), have now been reduce
+  - They are now memoized and fire just once when they're initially invoked
+  ([luke-hill])
+
 ## [4.0] - 2023-04-19
 ### Removed
 - Removed a load of redundant code from README
