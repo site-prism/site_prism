@@ -2,6 +2,13 @@
 ### Removed
 
 ### Added
+
+### Changed
+
+### Fixed
+
+## [4.0.1] - 2023-05-11
+### Added
 - CI now runs the low-spec gemfile on old rubies (Capybara versions are out of the unsupported window)
   ([luke-hill])
 
@@ -9,8 +16,13 @@
 - `Autoload` is now removed from all remaining support classes that used it
   ([luke-hill])
 
-- The `SitePrism::Timer` class is now designed to be api-private
+- Fixed the `SitePrism::Timer` class to be api-private
   ([luke-hill])
+
+- Gem bumps to dev_dependencies
+  - `webdrivers` is now pinned to v5 versions
+  - `rubocop` gems all bumped to latest ruby2.6 compliant version
+    ([luke-hill])
 
 ### Fixed
 - Lots of cross leaked items in RSpec have now been fixed and isolated
@@ -1197,7 +1209,9 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v4.0.beta...main
+[main]:       https://github.com/site-prism/site_prism/compare/v4.0.1...main
+[4.0.1]:      https://github.com/site-prism/site_prism/compare/v4.0...v4.0.1
+[4.0]:        https://github.com/site-prism/site_prism/compare/v4.0.beta...v4.0
 [4.0.beta]:   https://github.com/site-prism/site_prism/compare/v3.7.3...v4.0.beta
 [3.7.3]:      https://github.com/site-prism/site_prism/compare/v3.7.2...v3.7.3
 [3.7.2]:      https://github.com/site-prism/site_prism/compare/v3.7.1...v3.7.2

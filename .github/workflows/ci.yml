@@ -24,7 +24,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-          bundler: '2.4.10'
+          bundler: '2.4.12'
           bundler-cache: true
       - run: bundle exec rspec
       - run: bundle exec cucumber

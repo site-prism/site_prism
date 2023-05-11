@@ -18,33 +18,33 @@ describe SitePrism::Loadable do
   let(:instance) { loadable.new }
 
   describe '.load_validations' do
-    let(:validation1) { -> { true } }
-    let(:validation2) { -> { true } }
+    let(:alpha_validation) { -> { true } }
+    let(:beta_validation) { -> { true } }
 
-    context 'with no inheritance classes' do
+    context 'with no inheritance' do
       it 'returns load_validations from the current class' do
-        loadable.load_validation(&validation1)
-        loadable.load_validation(&validation2)
+        loadable.load_validation(&alpha_validation)
+        loadable.load_validation(&beta_validation)
 
-        expect(loadable.load_validations).to eq([validation1, validation2])
+        expect(loadable.load_validations).to eq([alpha_validation, beta_validation])
       end
     end
 
-    context 'with inheritance classes' do
+    context 'with inheritance' do
       let(:subklass) { Class.new(loadable) }
 
-      it 'returns load_validations from the current and inherited classes' do
-        loadable.load_validation(&validation1)
-        subklass.load_validation(&validation2)
+      it 'returns load_validations from both the current AND inherited classes' do
+        loadable.load_validation(&alpha_validation)
+        subklass.load_validation(&beta_validation)
 
-        expect(subklass.load_validations).to eq([validation1, validation2])
+        expect(subklass.load_validations).to eq([alpha_validation, beta_validation])
       end
 
       it 'ensures that load validations of parents are checked first' do
-        subklass.load_validation(&validation2)
-        loadable.load_validation(&validation1)
+        subklass.load_validation(&beta_validation)
+        loadable.load_validation(&alpha_validation)
 
-        expect(subklass.load_validations).to eq([validation1, validation2])
+        expect(subklass.load_validations).to eq([alpha_validation, beta_validation])
       end
     end
 
