@@ -4,6 +4,7 @@ require 'site_prism/error'
 require 'site_prism/all_there'
 
 require 'addressable/template'
+require 'capybara/dsl'
 require 'forwardable'
 
 require 'site_prism/addressable_url_matcher'
