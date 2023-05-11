@@ -2,6 +2,13 @@
 ### Removed
 
 ### Added
+
+### Changed
+
+### Fixed
+
+## [4.0.1] - 2023-05-11
+### Added
 - CI now runs the low-spec gemfile on old rubies (Capybara versions are out of the unsupported window)
   ([luke-hill])
 
@@ -1202,7 +1209,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v4.0...main
+[main]:       https://github.com/site-prism/site_prism/compare/v4.0.1...main
+[4.0.1]:      https://github.com/site-prism/site_prism/compare/v4.0...v4.0.1
 [4.0]:        https://github.com/site-prism/site_prism/compare/v4.0.beta...v4.0
 [4.0.beta]:   https://github.com/site-prism/site_prism/compare/v3.7.3...v4.0.beta
 [3.7.3]:      https://github.com/site-prism/site_prism/compare/v3.7.2...v3.7.3
