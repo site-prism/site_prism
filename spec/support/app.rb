@@ -14,13 +14,13 @@ module SitePrism
             <body>
               <a href="#" class="foo">foo-link</a>
               <table id="my-table">a table here</table>
-              <div class="inner_element_one">
+              <div class="one">
                 Inner element one text
               </div>
-              <div class="inner_element_two">
+              <div class="two">
                 Inner element two text
               </div>
-              <iframe id="the_iframe" name="the_iframe"></iframe>
+              <iframe class="iframe" name="the_iframe"></iframe>
             </body>
           </html>
         HTML
