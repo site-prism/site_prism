@@ -28,20 +28,4 @@ RSpec.configure do |rspec|
       end
     end
   end
-
-  [CSSSection, XPathSection].each do |section_klass|
-    SitePrism::Support::MockedItems.present_on_section.each do |method|
-      rspec.before do
-        root_element = instance_double(Capybara::Node::Element)
-        section_instance = section_klass.new(
-          @page_instance,
-          root_element
-        )
-        allow(section_klass).to receive(:new).and_return(section_instance)
-
-        allow(section_instance).to receive("has_#{method}?").and_return(true)
-        allow(section_instance).to receive("has_no_#{method}?").and_return(false)
-      end
-    end
-  end
 end
