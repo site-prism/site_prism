@@ -496,7 +496,7 @@ describe SitePrism::Page do
       it 'passes without expected_mappings provided' do
         swap_current_url('http://localhost:3000/foos/28')
 
-        expect { page.wait_until_displayed }.not_to raise_error
+        expect { wait_for_page }.not_to raise_error
       end
 
       it 'passes with correct expected_mappings provided' do
@@ -526,6 +526,8 @@ describe SitePrism::Page do
   end
 
   describe '#url_matches' do
+    let(:url_matches) { page.url_matches }
+
     context 'with a templated matcher' do
       let(:page) do
         Class.new(described_class) do
@@ -536,13 +538,13 @@ describe SitePrism::Page do
       it 'returns mappings from the current_url' do
         swap_current_url('http://localhost:3000/foos/15')
 
-        expect(page.url_matches).to eq('scheme' => 'http', 'id' => '15')
+        expect(url_matches).to eq('scheme' => 'http', 'id' => '15')
       end
 
       it "returns nil if current_url doesn't match the url_matcher" do
         swap_current_url('http://localhost:3000/bars/15')
 
-        expect(page.url_matches).to be_nil
+        expect(url_matches).to be_nil
       end
     end
 
@@ -556,7 +558,7 @@ describe SitePrism::Page do
       it 'returns regexp MatchData' do
         swap_current_url('http://localhost:3000/foos/15')
 
-        expect(page.url_matches).to be_a(MatchData)
+        expect(url_matches).to be_a(MatchData)
       end
 
       it 'lets you get at the captures' do
@@ -568,7 +570,7 @@ describe SitePrism::Page do
       it "returns nil if current_url doesn't match the url_matcher" do
         swap_current_url('http://localhost:3000/bars/15')
 
-        expect(page.url_matches).to be_nil
+        expect(url_matches).to be_nil
       end
     end
 
@@ -580,17 +582,14 @@ describe SitePrism::Page do
       end
 
       it 'raises InvalidUrlMatcherError' do
-        expect { page.url_matches }
-          .to raise_error(SitePrism::InvalidUrlMatcherError)
+        expect { url_matches }.to raise_error(SitePrism::InvalidUrlMatcherError)
       end
     end
   end
 
   describe '#execute_script' do
     it 'delegates through Capybara.current_session' do
-      expect(Capybara.current_session)
-        .to receive(:execute_script)
-        .with('JUMP!')
+      expect(Capybara.current_session).to receive(:execute_script).with('JUMP!')
 
       page.execute_script('JUMP!')
     end
@@ -598,10 +597,7 @@ describe SitePrism::Page do
 
   describe '#evaluate_script' do
     it 'delegates through Capybara.current_session' do
-      allow(Capybara.current_session)
-        .to receive(:evaluate_script)
-        .with('How High?')
-        .and_return('To the sky!')
+      allow(Capybara.current_session).to receive(:evaluate_script).with('How High?').and_return('To the sky!')
 
       expect(page.evaluate_script('How High?')).to eq('To the sky!')
     end

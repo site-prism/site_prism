@@ -9,7 +9,7 @@ module SitePrism
   # through clicking buttons or filling in fields, or verbosely loaded by using the `#load` method
   #
   # All method calls made whilst on a page are scoped using `#to_capybara_node` which defaults to the
-  # current Capybara session
+  # current Capybara session or the `@page` that has been loaded in-line
   class Page
     include Capybara::DSL
     include ElementChecker
@@ -48,13 +48,17 @@ module SitePrism
     #
     # @return [Capybara::Node::Simple || Capybara::Session]
     def page
-      SitePrism::Deprecator.deprecate('Calling #page on a SitePrism::Page instance')
-      (defined?(@page) && @page) || Capybara.current_session
+      @_page ||= begin
+        SitePrism::Deprecator.deprecate('Calling #page on a SitePrism::Page instance')
+        to_capybara_node
+      end
     end
 
     # This scopes our calls inside Page correctly to the `Capybara::Session`
+    #
+    # @return [Capybara::Node::Simple || Capybara::Session]
     def to_capybara_node
-      page
+      (defined?(@page) && @page) || Capybara.current_session
     end
 
     # Loads the page.
@@ -86,12 +90,21 @@ module SitePrism
       return_yield || true
     end
 
+    # Returns true if the page is displayed within the requisite time
+    # Returns false if the page is not displayed within the requisite time
+    #
+    # @return [Boolean]
     def displayed?(*args)
       wait_until_displayed(*args)
     rescue SitePrism::TimeoutError
       false
     end
 
+    # Wait until the page is displayed according to input arguments
+    # If no url_matcher is provided we don't know how to determine if the page is displayed. So we return an error
+    # Then we wait until the url matches the expected mappings
+    #
+    # @return [Boolean]
     def wait_until_displayed(*args)
       raise SitePrism::NoUrlMatcherForPageError unless url_matcher
 
@@ -100,6 +113,13 @@ module SitePrism
       Waiter.wait_until_true(seconds) { url_matches?(expected_mappings) }
     end
 
+    # Return the matching information of a page
+    #
+    # Return nil if the page is not displayed correctly
+    # Return the regex matches if we have provided a regexp style url_matcher
+    # Otherwise fall back to an addressable-style template of matches
+    #
+    # @return [Nil || MatchData || Hash]
     def url_matches(seconds = Capybara.default_max_wait_time)
       return unless displayed?(seconds)
       return regexp_backed_matches if url_matcher.is_a?(Regexp)
@@ -107,14 +127,24 @@ module SitePrism
       template_backed_matches
     end
 
+    # Returns the templated url from the set_url property defined during the page definition
+    # Returns `nil` if there was not a property set (i.e. the page should not be directly loaded)
+    #
+    # @return [NilClass || String]
     def url(expansion = {})
       self.class.url && Addressable::Template.new(self.class.url).expand(expansion).to_s
     end
 
+    # Returns the url_matcher property defined during the page definition
+    #
+    # @return [Regexp]
     def url_matcher
       self.class.url_matcher
     end
 
+    # Returns true if the page is secure, otherwise returns false
+    #
+    # @return [Boolean]
     def secure?
       page.current_url.start_with?('https')
     end

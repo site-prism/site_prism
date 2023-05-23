@@ -15,7 +15,8 @@ module SitePrism
       @pattern = pattern
     end
 
-    # @return the hash of extracted mappings from
+    # @return Hash
+    #
     # parsing the provided URL according to our pattern,
     # or nil if the URL doesn't conform to the matcher template.
     def mappings(url)
@@ -30,6 +31,8 @@ module SitePrism
       result
     end
 
+    # @return Boolean
+    #
     # Determine whether URL matches our pattern, and
     # optionally whether the extracted mappings match
     # a hash of expected values.  You can specify values
@@ -38,21 +41,24 @@ module SitePrism
       actual_mappings = mappings(url)
       return false unless actual_mappings
 
-      expected_mappings.empty? ||
-        all_expected_mappings_match?(expected_mappings, actual_mappings)
+      expected_mappings.empty? || all_expected_mappings_match?(expected_mappings, actual_mappings)
     end
 
     private
 
-    def all_expected_mappings_match?(expected_mappings, actual_mappings)
-      expected_mappings.all? do |key, expected_value|
-        actual_value = actual_mappings[key.to_s]
-        case expected_value
-        when Numeric; then actual_value == expected_value.to_s
-        when Regexp;  then actual_value.match(expected_value)
-        else               expected_value == actual_value
-        end
-      end
+    def component_matches(component, uri)
+      component_template = component_templates[component]
+      return {} unless component_template
+
+      component_url = uri.public_send(component).to_s
+      mappings = component_template.extract(component_url)
+      return mappings if mappings
+
+      # To support Addressable's expansion of queries - ensure it's parsing the fragment as appropriate (e.g. {?params*})
+      prefix = component_prefixes[component]
+      return nil unless prefix
+
+      component_template.extract(prefix + component_url)
     end
 
     def component_templates
@@ -73,27 +79,6 @@ module SitePrism
       end
     end
 
-    # Returns empty hash if the template omits the component or a set of
-    # substitutions if the provided URI component matches the template
-    # component or nil if the match fails.
-    def component_matches(component, uri)
-      component_template = component_templates[component]
-      return {} unless component_template
-
-      component_url = uri.public_send(component).to_s
-      mappings = component_template.extract(component_url)
-      return mappings if mappings
-
-      # to support Addressable's expansion of queries
-      # ensure it's parsing the fragment as appropriate (e.g. {?params*})
-      prefix = component_prefixes[component]
-      return nil unless prefix
-
-      component_template.extract(prefix + component_url)
-    end
-
-    # Convert the pattern into an Addressable URI by substituting
-    # the template slugs with nonsense strings.
     def to_substituted_uri
       url = pattern
       substitutions.each_pair { |slug, value| url = url.sub(slug, value) }
@@ -102,13 +87,6 @@ module SitePrism
       rescue Addressable::URI::InvalidURIError
         SitePrism.logger.fatal("Ensure you don't use templated port numbers.")
         raise SitePrism::InvalidUrlMatcherError
-      end
-    end
-
-    def substitutions
-      @substitutions ||= slugs.each_with_index.reduce({}) do |memo, slug_index|
-        slug, index = slug_index
-        memo.merge(slug => slug_prefix(slug) + substitution_value(index))
       end
     end
 
@@ -127,6 +105,24 @@ module SitePrism
       pattern.scan(/{[^}]+}/)
     end
 
+    def all_expected_mappings_match?(expected_mappings, actual_mappings)
+      expected_mappings.all? do |key, expected_value|
+        actual_value = actual_mappings[key.to_s]
+        case expected_value
+        when Numeric; then actual_value == expected_value.to_s
+        when Regexp;  then actual_value.match(expected_value)
+        else               expected_value == actual_value
+        end
+      end
+    end
+
+    def substitutions
+      @substitutions ||= slugs.each_with_index.reduce({}) do |memo, slug_index|
+        slug, index = slug_index
+        memo.merge(slug => slug_prefix(slug) + substitution_value(index))
+      end
+    end
+
     # If a slug begins with non-alpha characters, it may denote the start of
     # a new component (e.g. query or fragment). We emit this prefix as part of
     # the substituted slug so that Addressable's URI parser can see it as such.
@@ -135,8 +131,7 @@ module SitePrism
       (prefix && prefix[1]) || ''
     end
 
-    # Generate a repeatable 5 character uniform alphabetical nonsense string
-    # to allow parsing as a URI
+    # Generate a repeatable 5 character uniform alphabetical nonsense string to allow parsing as a URI
     def substitution_value(index)
       sha = Digest::SHA1.digest(index.to_s)
       Base64.urlsafe_encode64(sha).gsub(/[^A-Za-z]/, '')[0..5]

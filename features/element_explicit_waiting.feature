@@ -15,7 +15,7 @@ Feature: Waiting for an Element
     Then an exception is raised when I wait for an element that won't appear
 
   Scenario: Wait for Element Visibility - Positive - Overridden Timeout
-    And I wait for a specific amount of time until an element is visible
+    When I wait for a specific amount of time until an element is visible
     Then the previously invisible element is visible
     And I am not made to wait for the full overridden duration
 

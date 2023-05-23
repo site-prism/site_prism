@@ -1,5 +1,41 @@
 ## [main] - Unreleased
 ### Removed
+
+### Added
+
+### Changed
+
+### Fixed
+- Fixing bug with Ruby 3 keyword arguments
+  ([diego-aslz])
+
+## [4.0.1] - 2023-05-11
+### Added
+- CI now runs the low-spec gemfile on old rubies (Capybara versions are out of the unsupported window)
+  ([luke-hill])
+
+### Changed
+- `Autoload` is now removed from all remaining support classes that used it
+  ([luke-hill])
+
+- Fixed the `SitePrism::Timer` class to be api-private
+  ([luke-hill])
+
+- Gem bumps to dev_dependencies
+  - `webdrivers` is now pinned to v5 versions
+  - `rubocop` gems all bumped to latest ruby2.6 compliant version
+    ([luke-hill])
+
+### Fixed
+- Lots of cross leaked items in RSpec have now been fixed and isolated
+  ([luke-hill])
+
+- Lots of spam from deprecation messages (that are auto-triggered), have now been reduce
+  - They are now memoized and fire just once when they're initially invoked
+  ([luke-hill])
+
+## [4.0] - 2023-04-19
+### Removed
 - Removed a load of redundant code from README
   ([luke-hill])
 
@@ -32,11 +68,17 @@
   - Any method calls have already been delegated using `#to_capybara_node`
     ([luke-hill])
 
-- Fixing bug with Ruby 3 keyword arguments
-  ([diego-aslz])
+- Internal RSpec matcher class renamed from `RspecMatchers` to `RSpecMatchers`
+  ([luke-hill])
+
+- Massively updated the internal documentation of the codebase
+  ([luke-hill])
 
 ### Fixed
 - iFrames also ban redundant blocks from being passed in at build time
+  ([luke-hill])
+
+- Prevent calls to `#to_capybara_node` happening internally from triggering deprecation messages
   ([luke-hill])
 
 ## [4.0.beta] - 2022-11-28
@@ -1169,7 +1211,9 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v4.0.beta...main
+[main]:       https://github.com/site-prism/site_prism/compare/v4.0.1...main
+[4.0.1]:      https://github.com/site-prism/site_prism/compare/v4.0...v4.0.1
+[4.0]:        https://github.com/site-prism/site_prism/compare/v4.0.beta...v4.0
 [4.0.beta]:   https://github.com/site-prism/site_prism/compare/v3.7.3...v4.0.beta
 [3.7.3]:      https://github.com/site-prism/site_prism/compare/v3.7.2...v3.7.3
 [3.7.2]:      https://github.com/site-prism/site_prism/compare/v3.7.1...v3.7.2
