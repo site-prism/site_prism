@@ -6,8 +6,14 @@
 ### Changed
 
 ### Fixed
+
+## [4.0.2] - 2023-05-23
+### Fixed
+- Fixing loading issue where SitePrism would crash if `capybara/dsl` wasn't preloaded
+  ([leoarnold])
+
 - Fixing bug with Ruby 3 keyword arguments
-  ([diego-aslz])
+  ([diego-aslz] & [luke-hill])
 
 ## [4.0.1] - 2023-05-11
 ### Added
@@ -1339,3 +1345,5 @@ impending major rubocop release
 [asavageiv]:      https://github.com/asavageiv
 [teyamagu]:       https://github.com/teyamagu
 [Be-brand]:       https://github.com/Be-brand
+[diego-aslz]:     https://github.com/diego-aslz
+[leoarnold]:      https://github.com/leoarnold
