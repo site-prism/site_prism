@@ -3,5 +3,5 @@
 class CSSSection < SitePrism::Section
   element :inner_element_one, '.one'
   element :inner_element_two, '.two'
-  iframe :iframe, CSSIFrame, '.iframe'
+  iframe :iframe, CSSIFrame, '.inner-iframe'
 end
