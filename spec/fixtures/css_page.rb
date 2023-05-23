@@ -14,7 +14,7 @@ class CSSPage < SitePrism::Page
 
   sections :sections_one, Blank, 'span.locator'
 
-  iframe :iframe, CSSIFrame, '.outer-iframe'
+  iframe :iframe, CSSIFrame, '.outer-missing-iframe'
 
   expected_elements :element_one, :elements_one, :section_one, :sections_one
 end

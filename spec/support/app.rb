@@ -23,7 +23,6 @@ module SitePrism
                 </div>
                 <iframe class="inner-iframe" name="the_inner_iframe"></iframe>
               </span>
-              <iframe class="outer-iframe" name="the_outer_iframe"></iframe>
             </body>
           </html>
         HTML

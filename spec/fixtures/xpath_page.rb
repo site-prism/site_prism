@@ -14,7 +14,7 @@ class XPathPage < SitePrism::Page
 
   sections :sections_one, Blank, :xpath, '//span[@class="locator"]'
 
-  iframe :iframe, XPathIFrame, :xpath, '//*[@class="outer-iframe"]'
+  iframe :iframe, XPathIFrame, :xpath, '//*[@class="outer-missing-iframe"]'
 
   expected_elements :element_one, :elements_one, :section_one, :sections_one
 end
