@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class XPathPage < SitePrism::Page
+  set_url '/'
+
   element :element_one, :xpath, '//a[@class="b"]//c[@class="d"]'
   element :element_two, :xpath, '//w[@class="x"]//y[@class="z"]'
   element :element_three, :xpath, '//span[@class="alert-success"]'

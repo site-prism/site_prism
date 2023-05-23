@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CSSPage < SitePrism::Page
+  set_url '/'
+
   element :element_one, 'a.b c.d'
   element :element_two, 'w.x y.z'
   element :element_three, 'span.alert-success'
