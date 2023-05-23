@@ -6,6 +6,8 @@
 ### Changed
 
 ### Fixed
+- Fixing bug with Ruby 3 keyword arguments
+  ([diego-aslz])
 
 ## [4.0.1] - 2023-05-11
 ### Added
@@ -126,7 +128,7 @@
   ([luke-hill])
 
 - Gem bumps to dependencies
-  - `capybara` and `selenium-webdriver` must now be from 2019/20 era 
+  - `capybara` and `selenium-webdriver` must now be from 2019/20 era
   - `cucumber` can now be any version from 4-8 exclusive
   - `rubocop` and `rubocop-rspec` have been bumped a major version (Still a healthy amount behind latest)
   ([luke-hill])
