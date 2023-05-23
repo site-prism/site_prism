@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe SitePrism::RspecMatchers do
+describe SitePrism::RSpecMatchers do
   let(:page) do
     Class.new(SitePrism::Page) do
       set_url '/'
@@ -19,8 +19,8 @@ describe SitePrism::RspecMatchers do
         <html>
           <head></head>
           <body>
-            <a href="#">foo-link</a>
-            <table id="my-table"></table>
+            <a href="#" class="foo">foo-link</a>
+            <table id="my-table">a table here</table>
           </body>
         </html>
       HTML
@@ -34,12 +34,12 @@ describe SitePrism::RspecMatchers do
   it 'works with Ruby 3 keyword arguments for links' do
     instance.load
 
-    expect(instance).to have_link(text: 'foo-link', href: '#')
+    expect(instance).to have_link(text: 'foo-link', class: 'foo')
   end
 
   it 'works with Ruby 3 keyword arguments for tables' do
     instance.load
 
-    expect(instance).to have_table(id: 'my-table', rows: [])
+    expect(instance).to have_table(text: 'a table here', id: 'my-table')
   end
 end
