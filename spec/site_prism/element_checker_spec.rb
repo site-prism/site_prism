@@ -2,7 +2,6 @@
 
 describe SitePrism::ElementChecker do
   let!(:section_locator) { instance_double(Capybara::Node::Element) }
-  let(:expected) { %i[element_one element_two element_three elements_one section_one sections_one iframe] }
 
   shared_examples 'a page' do
     describe '#all_there?' do
@@ -30,7 +29,7 @@ describe SitePrism::ElementChecker do
       it 'calls #there? on all expected elements that are mapped' do
         page.load
         
-        expected.each do | item|
+        expected_items.each do | item|
           expect(page).to receive(:there?).with(item).once
         end
 
@@ -59,7 +58,7 @@ describe SitePrism::ElementChecker do
       it 'lists the SitePrism objects that are present on the page' do
         page.load
 
-        expect(page.elements_present).to eq(expected)
+        expect(page.elements_present).to eq(expected_items)
       end
     end
   end
