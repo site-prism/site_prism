@@ -18,5 +18,5 @@ class CSSPage < SitePrism::Page
 
   iframe :iframe, CSSIFrame, '.iframe'
 
-  expected_elements :element_one, :elements_one, :element_three, :section_one, :sections_one, :iframe
+  expected_elements :element_one, :element_two, :element_three, :elements_one, :section_one, :sections_one, :iframe
 end
