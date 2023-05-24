@@ -12,21 +12,17 @@ describe 'Iframe' do
 
     describe 'A Page with an iFrame contained within' do
       it 'uses #within_frame delegated through Capybara.current_session' do
-        allow(iframe_instance)
-          .to receive(:_find).with(*element_caller_args)
+        allow(iframe_instance).to receive(:_find).with(*element_caller_args)
 
-        expect(Capybara.current_session)
-          .to receive(:within_frame).with(*iframe_caller_args)
+        expect(Capybara.current_session).to receive(:within_frame).with(*iframe_caller_args)
 
         page.iframe(&:element_one)
       end
 
       it 'passes the caller arg to the frame instance to then perform the location check' do
-        allow(Capybara.current_session)
-          .to receive(:within_frame).with(*iframe_caller_args).and_yield
+        allow(Capybara.current_session).to receive(:within_frame).with(*iframe_caller_args).and_yield
 
-        expect(iframe_instance)
-          .to receive(:_find).with(*element_caller_args)
+        expect(iframe_instance).to receive(:_find).with(*element_caller_args)
 
         page.iframe(&:element_one)
       end
@@ -38,21 +34,17 @@ describe 'Iframe' do
       end
 
       it 'uses #within_frame delegated through Capybara.current_session' do
-        allow(iframe_instance)
-          .to receive(:_find).with(*element_caller_args)
+        allow(iframe_instance).to receive(:_find).with(*element_caller_args)
 
-        expect(Capybara.current_session)
-          .to receive(:within_frame).with(*iframe_caller_args)
+        expect(Capybara.current_session).to receive(:within_frame).with(*iframe_caller_args)
 
         page.section_one.iframe(&:element_one)
       end
 
       it 'passes the caller arg to the frame instance to then perform the location check' do
-        allow(Capybara.current_session)
-          .to receive(:within_frame).with(*iframe_caller_args).and_yield
+        allow(Capybara.current_session).to receive(:within_frame).with(*iframe_caller_args).and_yield
 
-        expect(iframe_instance)
-          .to receive(:_find).with(*element_caller_args)
+        expect(iframe_instance).to receive(:_find).with(*element_caller_args)
 
         page.section_one.iframe(&:element_one)
       end
@@ -81,7 +73,7 @@ describe 'Iframe' do
   context 'with css elements' do
     subject(:page) { CSSPage.new }
 
-    let(:iframe_caller_args) { [:css, '.inner-iframe'] }
+    let(:iframe_caller_args) { [:css, '.iframe'] }
     let(:iframe_class) { CSSIFrame }
     let(:section_locator) { ['span.locator', { wait: 0 }] }
     let(:element_caller_args) { ['.some_element', { wait: 0 }] }
@@ -92,7 +84,7 @@ describe 'Iframe' do
   context 'with xpath elements' do
     subject(:page) { XPathPage.new }
 
-    let(:iframe_caller_args) { [:xpath, '//*[@class="inner-iframe"]'] }
+    let(:iframe_caller_args) { [:xpath, '//*[@class="iframe"]'] }
     let(:iframe_class) { XPathIFrame }
     let(:section_locator) { [:xpath, '//span[@class="locator"]', { wait: 0 }] }
     let(:element_caller_args) { [:xpath, '//[@class="some_element"]', { wait: 0 }] }
