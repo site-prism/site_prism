@@ -18,7 +18,7 @@ describe SitePrism::ElementChecker do
       let(:not_expected) { page.class.mapped_items.values.flatten - expected_items }
 
       it 'calls #there? on all expected elements that are mapped' do
-        expected_items.each do | item|
+        expected_items.each do |item|
           expect(page).to receive(:there?).with(item).once
         end
 
@@ -26,7 +26,7 @@ describe SitePrism::ElementChecker do
       end
 
       it 'does not calls #there? for elements not defined as expected' do
-        not_expected.each do | item|
+        not_expected.each do |item|
           expect(page).not_to receive(:there?).with(item)
         end
 
