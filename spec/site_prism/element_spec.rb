@@ -4,9 +4,9 @@ describe 'Element' do
   # This stops the stdout process leaking between tests
   before { wipe_logger! }
 
-  let(:expected_elements) { SitePrism::Support::MockedItems.present_on_page }
-
   shared_examples 'an element' do
+    let(:dsl_array) { %i[element_one element_two element_three elements_one section_one sections_one iframe] }
+
     describe '.element' do
       it 'can be set on `SitePrism::Page`' do
         expect(SitePrism::Page).to respond_to(:element)
@@ -24,13 +24,17 @@ describe 'Element' do
     it { is_expected.to respond_to(:wait_until_element_one_invisible) }
 
     it 'supports rspec existence matchers' do
+      page.load
+
       expect(page).to have_element_one
     end
 
     it 'calls the SitePrism matcher when using an rspec negated existence matcher' do
-      expect(page).to receive(:has_no_element_two?).once.and_call_original
+      page.load
 
-      expect(page).not_to have_element_two
+      expect(page).to receive(:has_no_missing_elements_two?).once.and_call_original
+
+      expect(page).not_to have_missing_elements_two
     end
 
     context 'when other classes have the overlapping methods defined' do
@@ -59,14 +63,15 @@ describe 'Element' do
 
     describe '#elements_present' do
       it 'only lists the SitePrism objects that are present on the page' do
-        expect(page.elements_present.sort).to eq(expected_elements.sort)
+        page.load
+
+        expect(page.elements_present).to eq(dsl_array)
       end
     end
 
     describe '.expected_elements' do
       it 'sets the value of expected_items' do
-        expect(klass.expected_items)
-          .to eq(%i[element_one element_two element_three elements_one section_one sections_one iframe])
+        expect(klass.expected_items).to eq(dsl_array)
       end
     end
   end
