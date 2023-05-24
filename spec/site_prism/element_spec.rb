@@ -66,7 +66,7 @@ describe 'Element' do
     describe '.expected_elements' do
       it 'sets the value of expected_items' do
         expect(klass.expected_items)
-          .to eq(%i[element_one elements_one section_one sections_one])
+          .to eq(%i[element_one elements_one element_three section_one sections_one iframe])
       end
     end
   end

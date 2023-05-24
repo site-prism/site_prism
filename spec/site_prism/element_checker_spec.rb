@@ -62,7 +62,7 @@ describe SitePrism::ElementChecker do
     describe '#elements_present' do
       it 'lists the SitePrism objects that are present on the page' do
         expect(page.elements_present)
-          .to eq(%i[element_one element_three elements_one section_one sections_one])
+          .to eq(%i[element_one element_three elements_one section_one sections_one iframe])
       end
     end
   end
