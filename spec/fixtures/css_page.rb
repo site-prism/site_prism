@@ -7,8 +7,8 @@ class CSSPage < SitePrism::Page
   element :element_two, 'div.present-wrapper div.valid-two'
   element :element_three, 'span.alert-success'
 
-  elements :elements_one, 'a.a b.b'
-  elements :elements_two, '.many'
+  elements :elements_one, 'div[class^=valid]'
+  elements :missing_elements_two, '.many'
 
   element :no_such_element, 'div.present-wrapper div.invalid-one'
 

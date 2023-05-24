@@ -7,8 +7,8 @@ class XPathPage < SitePrism::Page
   element :element_two, :xpath, '//div[@class="present-wrapper"]//div[@class="valid-two"]'
   element :element_three, :xpath, '//span[@class="alert-success"]'
 
-  elements :elements_one, :xpath, '//a[@class="a"]//b[@class="b"]'
-  elements :elements_two, :xpath, '//*[@class="many"]'
+  elements :elements_one, :xpath, '//div[starts-with(@class="valid")]'
+  elements :missing_elements_two, :xpath, '//*[@class="many"]'
 
   element :no_such_element, '//div[@class="present-wrapper"]//div[@class="invalid-one"]'
 

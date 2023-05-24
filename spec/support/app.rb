@@ -14,6 +14,7 @@ module SitePrism
             <body>
               <a href="#" class="foo">foo-link</a>
               <table id="my-table">a table here</table>
+              <span class="alert-success">
               // CSSPage/XPathPage
               <div class="present-wrapper">
                 <div class="valid-one">
