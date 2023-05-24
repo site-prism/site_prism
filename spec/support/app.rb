@@ -21,7 +21,11 @@ module SitePrism
                 <div class="two">
                   Inner element two text
                 </div>
-                <iframe class="inner-iframe" name="the_inner_iframe"></iframe>
+                <iframe class="iframe" name="the_inner_iframe">
+                  <html><head></head><body>
+                    <span id="some_text_in_an_iframe">Some text in an iframe</span>
+                  </body></html>
+                </iframe>
               </span>
             </body>
           </html>
