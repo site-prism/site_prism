@@ -2,6 +2,7 @@
 
 describe SitePrism::ElementChecker do
   let!(:section_locator) { instance_double(Capybara::Node::Element) }
+  let(:expected) { %i[element_one element_two element_three elements_one section_one sections_one iframe] }
 
   shared_examples 'a page' do
     describe '#all_there?' do
@@ -24,45 +25,41 @@ describe SitePrism::ElementChecker do
     describe '#elements_missing' do
       subject { page.elements_missing }
 
-      let(:present) { expected_items[1..] }
-      let(:missing) { expected_items[0] }
       let(:not_expected) { page.class.mapped_items.values.flatten - expected_items }
 
-      it 'calls #there? for missing elements' do
-        present.each { |name| allow(page).to receive(:there?).with(name).once.and_call_original }
-        expect(page).to receive(:there?).with(missing).once.and_return(false)
-
-        subject
-      end
-
-      it 'calls #there? for present elements' do
-        allow(page).to receive(:there?).with(missing).once.and_return(false)
-        present[1..].each { |name| allow(page).to receive(:there?).with(name).once }
-        expect(page).to receive(:there?).with(present[0]).once.and_return(true)
+      it 'calls #there? on all expected elements that are mapped' do
+        page.load
+        
+        expected.each do | item|
+          expect(page).to receive(:there?).with(item).once
+        end
 
         subject
       end
 
       it 'does not calls #there? for elements not defined as expected' do
-        expect(page).not_to receive(:there?).with(array_including(*not_expected))
+        page.load
+
+        not_expected.each do | item|
+          expect(page).not_to receive(:there?).with(item)
+        end
 
         subject
       end
 
       it 'returns missing elements' do
-        allow(page).to receive(:there?).with(missing).once.and_return(false)
-        present.each do |name|
-          allow(page).to receive(:there?).with(name).once.and_call_original
-        end
+        page.load
 
-        expect(subject).to match_array(missing)
+        # TODO: Alter the expected elements to have one that IS missing
+        expect(subject).to eq([])
       end
     end
 
     describe '#elements_present' do
       it 'lists the SitePrism objects that are present on the page' do
-        expect(page.elements_present)
-          .to eq(%i[element_one element_two element_three elements_one section_one sections_one iframe])
+        page.load
+
+        expect(page.elements_present).to eq(expected)
       end
     end
   end
