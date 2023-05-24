@@ -14,13 +14,23 @@ module SitePrism
             <body>
               <a href="#" class="foo">foo-link</a>
               <table id="my-table">a table here</table>
+              // CSSPage/XPathPage
+              <div class="present-wrapper">
+                <div class="valid-one">
+                  Regular element one text
+                </div>
+                <div class="valid-two">
+                  Regular element one text
+                </div>
+              </div>
+              // CSSSection/XPathSection
               <span class="locator">
-                <div class="one">
+                <span class="one">
                   Inner element one text
-                </div>
-                <div class="two">
+                </span>
+                <span class="two">
                   Inner element two text
-                </div>
+                </span>
                 <iframe class="iframe" name="the_inner_iframe">
                   <html><head></head><body>
                     <span id="some_text_in_an_iframe">Some text in an iframe</span>

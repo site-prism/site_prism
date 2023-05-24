@@ -3,14 +3,14 @@
 class CSSPage < SitePrism::Page
   set_url '/'
 
-  element :element_one, 'div.present-wrapper c.d'
-  element :element_two, 'w.x y.z'
+  element :element_one, 'div.present-wrapper div.valid-one'
+  element :element_two, 'div.present-wrapper div.valid-two'
   element :element_three, 'span.alert-success'
 
   elements :elements_one, 'a.a b.b'
   elements :elements_two, '.many'
 
-  element :no_such_element, 'div.present-wrapper c.d'
+  element :no_such_element, 'div.present-wrapper div.invalid-one'
 
   section :section_one, CSSSection, 'span.locator'
 
