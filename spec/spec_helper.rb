@@ -16,16 +16,4 @@ Capybara.app = SitePrism::Support::App.new
 
 RSpec.configure do |rspec|
   rspec.include SitePrism::Support::HelperMethods
-
-  [CSSPage, XPathPage].each do |page_klass|
-    SitePrism::Support::MockedItems.present_on_page.each do |method|
-      rspec.before do
-        @page_instance = page_klass.new
-        allow(page_klass).to receive(:new).and_return(@page_instance)
-
-        allow(@page_instance).to receive("has_#{method}?").and_return(true)
-        allow(@page_instance).to receive("has_no_#{method}?").and_return(false)
-      end
-    end
-  end
 end
