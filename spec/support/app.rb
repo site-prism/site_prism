@@ -6,7 +6,7 @@ module SitePrism
       def call(_env)
         [200, {}, [html]]
       end
-      
+
       def html
         <<~HTML.gsub(/^\s+/, '')
           <html>
