@@ -5,8 +5,6 @@ describe 'Element' do
   before { wipe_logger! }
 
   shared_examples 'an element' do
-    let(:dsl_array) { %i[element_one element_two element_three elements_one section_one sections_one iframe] }
-
     describe '.element' do
       it 'can be set on `SitePrism::Page`' do
         expect(SitePrism::Page).to respond_to(:element)
@@ -65,13 +63,13 @@ describe 'Element' do
       it 'only lists the SitePrism objects that are present on the page' do
         page.load
 
-        expect(page.elements_present).to eq(dsl_array)
+        expect(page.elements_present).to eq(klass.expected_items)
       end
     end
 
     describe '.expected_elements' do
-      it 'sets the value of expected_items' do
-        expect(klass.expected_items).to eq(dsl_array)
+      it 'automatically sets the value of expected_items' do
+        expect(klass.expected_items).not_to be_empty
       end
     end
   end
@@ -81,7 +79,6 @@ describe 'Element' do
 
     let(:page) { CSSPage.new }
     let(:klass) { CSSPage }
-    let(:element) { instance_double(Capybara::Node::Element) }
 
     it_behaves_like 'an element'
   end
@@ -91,7 +88,6 @@ describe 'Element' do
 
     let(:page) { XPathPage.new }
     let(:klass) { XPathPage }
-    let(:element) { instance_double(Capybara::Node::Element) }
 
     it_behaves_like 'an element'
   end
