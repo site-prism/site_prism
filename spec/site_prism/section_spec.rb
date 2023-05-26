@@ -178,7 +178,7 @@ describe SitePrism::Section do
   describe '.default_search_arguments' do
     let(:base_section) do
       Class.new(SitePrism::Section) do
-        set_default_search_arguments :css, 'a.b'
+        set_default_search_arguments :css, 'div.present-wrapper'
       end
     end
 
@@ -197,7 +197,7 @@ describe SitePrism::Section do
     end
 
     it 'returns the default search arguments' do
-      expect(base_section.default_search_arguments).to eq([:css, 'a.b'])
+      expect(base_section.default_search_arguments).to eq([:css, 'div.present-wrapper'])
     end
 
     context 'when both parent and child class have default_search_arguments' do
@@ -208,7 +208,7 @@ describe SitePrism::Section do
 
     context 'when only parent class has default_search_arguments' do
       it 'returns the parent level arguments' do
-        expect(other_child_section.default_search_arguments).to eq([:css, 'a.b'])
+        expect(other_child_section.default_search_arguments).to eq([:css, 'div.present-wrapper'])
       end
     end
   end

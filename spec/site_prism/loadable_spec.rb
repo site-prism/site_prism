@@ -5,11 +5,11 @@ describe SitePrism::Loadable do
     Class.new do
       include SitePrism::Loadable
 
-      def false_thing?
+      def false?
         false
       end
 
-      def true_thing?
+      def true?
         true
       end
     end
@@ -49,20 +49,19 @@ describe SitePrism::Loadable do
     end
 
     it 'has no default load validations' do
-      expect(loadable.load_validations.length).to eq(0)
+      expect(loadable.load_validations).to be_empty
     end
   end
 
   describe '.load_validation' do
     it 'adds a single validation to the load_validations list' do
-      expect { loadable.load_validation { true } }
-        .to change { loadable.load_validations.size }.by(1)
+      expect { loadable.load_validation { true } }.to change { loadable.load_validations.size }.by(1)
     end
   end
 
   describe '#when_loaded' do
     context 'with passing load validations' do
-      before { loadable.load_validation { true_thing? } }
+      before { loadable.load_validation { true? } }
 
       it 'executes and yields itself to the provided block when all load validations pass' do
         expect(instance).to receive(:foo)
@@ -79,11 +78,9 @@ describe SitePrism::Loadable do
       end
 
       it 'executes validations only once for nested calls' do
-        expect(instance).to receive(:true_thing?).once.and_call_original
+        expect(instance).to receive(:true?).once.and_call_original
 
-        instance.when_loaded do
-          instance.when_loaded
-        end
+        instance.when_loaded { instance.when_loaded }
       end
 
       it 'resets the loaded cache at the end of the block' do
@@ -97,8 +94,8 @@ describe SitePrism::Loadable do
 
     context 'with failing validations' do
       before do
-        loadable.load_validation { [false_thing?, 'false_thing? failed'] }
-        loadable.load_validation { [true_thing?, 'true_thing? failed'] }
+        loadable.load_validation { [false?, 'false? failed'] }
+        loadable.load_validation { [true?, 'true? failed'] }
       end
 
       it 'raises a `FailedLoadValidationError`' do
@@ -107,12 +104,12 @@ describe SitePrism::Loadable do
       end
 
       it 'can be supplied with a user-defined message' do
-        expect { instance.when_loaded { :foo } }.to raise_error.with_message('false_thing? failed')
+        expect { instance.when_loaded { :foo } }.to raise_error.with_message('false? failed')
       end
 
       it 'raises an error immediately on the first validation failure' do
         swallow_bad_validation do
-          expect(instance).to receive(:false_thing?).once
+          expect(instance).to receive(:false?).once
 
           instance.when_loaded
         end
@@ -120,7 +117,7 @@ describe SitePrism::Loadable do
 
       it 'does not call other load validations after failing a load validation' do
         swallow_bad_validation do
-          expect(instance).not_to receive(:true_thing?)
+          expect(instance).not_to receive(:true?)
 
           instance.when_loaded
         end
@@ -132,7 +129,7 @@ describe SitePrism::Loadable do
     let(:instance) { inheriting_loadable.new }
     let(:inheriting_loadable) { Class.new(loadable) }
 
-    before { inheriting_loadable.load_validation { [true_thing?, 'valid2 failed'] } }
+    before { inheriting_loadable.load_validation { [true?, 'true? failed'] } }
 
     context 'when already loaded' do
       before { instance.loaded = true }
@@ -142,7 +139,7 @@ describe SitePrism::Loadable do
       end
 
       it 'does not check load_validations if already loaded' do
-        expect(instance).not_to receive(:true_thing?)
+        expect(instance).not_to receive(:true?)
 
         instance.loaded?
       end

@@ -11,26 +11,6 @@ describe SitePrism::RSpecMatchers do
   end
   let(:instance) { page.new }
 
-  around do |example|
-    app = Capybara.app
-
-    begin
-      Capybara.app = ->(_env) { [200, {}, <<~HTML.gsub(/^\s+/, '')] }
-        <html>
-          <head></head>
-          <body>
-            <a href="#" class="foo">foo-link</a>
-            <table id="my-table">a table here</table>
-          </body>
-        </html>
-      HTML
-
-      example.run
-    ensure
-      Capybara.app = app
-    end
-  end
-
   it 'works with Ruby 3 keyword arguments for links' do
     instance.load
 

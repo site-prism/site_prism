@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 class CSSPage < SitePrism::Page
-  element :element_one, 'a.b c.d'
-  element :element_two, 'w.x y.z'
+  set_url '/'
+
+  element :element_one, 'div.present-wrapper div.valid-one'
+  element :element_two, 'div.present-wrapper div.valid-two'
   element :element_three, 'span.alert-success'
 
-  elements :elements_one, 'a.a b.b'
-  elements :elements_two, '.many'
+  elements :elements_one, 'div[class^=valid]'
+  elements :missing_elements_two, '.many'
 
-  element :no_such_element, 'a.b c.d'
+  element :no_such_element, 'div.present-wrapper div.invalid-one'
 
   section :section_one, CSSSection, 'span.locator'
 
@@ -16,5 +18,5 @@ class CSSPage < SitePrism::Page
 
   iframe :iframe, CSSIFrame, '.iframe'
 
-  expected_elements :element_one, :elements_one, :section_one, :sections_one
+  expected_elements :element_one, :element_two, :element_three, :elements_one, :section_one, :sections_one, :iframe
 end
