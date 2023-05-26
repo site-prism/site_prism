@@ -25,13 +25,16 @@ module SitePrism
       end
 
       class << self
-        def raise_if_build_time_block_supplied(parent_object, name, has_block, type)
-          return unless has_block
+        # Return a list of all mapped items on a SitePrism class instance (Page or Section)
+        # If legacy is set to true (Default) -> @return [Array]
+        # If legacy is set to false (New behaviour) -> @return [Hash]
+        def mapped_items(legacy: false)
+          return legacy_mapped_items if legacy
 
-          SitePrism.logger.debug("Type passed in: #{type}")
-          SitePrism.logger.error("#{name} has been defined as a '#{type}' item in #{parent_object}. It does not accept build-time blocks.")
-          raise SitePrism::UnsupportedBlockError
+          @mapped_items ||= { element: [], elements: [], section: [], sections: [], iframe: [] }
         end
+
+        private
 
         def build(type, name, *find_args)
           raise InvalidDSLNameError if ENV.fetch('SITEPRISM_DSL_VALIDATION_ENABLED', nil) && invalid?(name)
@@ -123,15 +126,6 @@ module SitePrism
         def map_item(type, name)
           mapped_items(legacy: true) << { type => name }
           mapped_items[type] << name.to_sym
-        end
-
-        # Return a list of all mapped items on a SitePrism class instance (Page or Section)
-        # If legacy is set to true (Default) -> @return [Array]
-        # If legacy is set to false (New behaviour) -> @return [Hash]
-        def mapped_items(legacy: false)
-          return legacy_mapped_items if legacy
-
-          @mapped_items ||= { element: [], elements: [], section: [], sections: [], iframe: [] }
         end
       end
     end

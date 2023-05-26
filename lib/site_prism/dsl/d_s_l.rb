@@ -106,6 +106,16 @@ module SitePrism
             end
           end
         end
+
+        private
+
+        def raise_if_build_time_block_supplied(parent_object, name, has_block, type)
+          return unless has_block
+
+          SitePrism.logger.debug("Type passed in: #{type}")
+          SitePrism.logger.error("#{name} has been defined as a '#{type}' item in #{parent_object}. It does not accept build-time blocks.")
+          raise SitePrism::UnsupportedBlockError
+        end
       end
     end
   end
