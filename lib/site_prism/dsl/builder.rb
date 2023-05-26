@@ -111,6 +111,28 @@ module SitePrism
 
           yield
         end
+
+        def legacy_mapped_items
+          SitePrism::Deprecator.deprecate(
+            '.mapped_items structure (internally), on a class',
+            'Thew new .mapped_items structure'
+          )
+          @legacy_mapped_items ||= []
+        end
+
+        def map_item(type, name)
+          mapped_items(legacy: true) << { type => name }
+          mapped_items[type] << name.to_sym
+        end
+
+        # Return a list of all mapped items on a SitePrism class instance (Page or Section)
+        # If legacy is set to true (Default) -> @return [Array]
+        # If legacy is set to false (New behaviour) -> @return [Hash]
+        def mapped_items(legacy: false)
+          return legacy_mapped_items if legacy
+
+          @mapped_items ||= { element: [], elements: [], section: [], sections: [], iframe: [] }
+        end
       end
     end
   end
