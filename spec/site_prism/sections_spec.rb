@@ -33,10 +33,7 @@ describe SitePrism::Section do
     let(:search_arguments) { [:css, '.section'] }
 
     before do
-      allow(page_instance)
-        .to receive(:_all)
-        .with(*search_arguments, { wait: 0 })
-        .and_return(%i[element1 element2])
+      allow(page_instance).to receive(:_all).with(*search_arguments, { wait: 0 }).and_return(%i[element1 element2])
     end
 
     it 'uses the `default_search_arguments` that have been set' do
