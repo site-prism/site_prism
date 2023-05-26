@@ -4,9 +4,7 @@ describe SitePrism::Page do
   let(:page) { described_class.new }
   let(:locator) { instance_double(Capybara::Node::Element) }
 
-  before do
-    allow(SitePrism::Waiter).to receive(:default_wait_time).and_return(0)
-  end
+  before { allow(SitePrism::Waiter).to receive(:default_wait_time).and_return(0) }
 
   it 'responds to set_url' do
     expect(described_class).to respond_to(:set_url)
@@ -67,15 +65,12 @@ describe SitePrism::Page do
     end
   end
 
-  it { is_expected.to respond_to(:title) }
-
   it 'raises an exception if passing a block to an element' do
     expect { CSSPage.new.element_one { :foo } }.to raise_error(SitePrism::UnsupportedBlockError)
   end
 
   it 'raises an exception if passing a block to elements' do
-    expect { CSSPage.new.elements_one { :any_old_block } }
-      .to raise_error(SitePrism::UnsupportedBlockError)
+    expect { CSSPage.new.elements_one { :any_old_block } }.to raise_error(SitePrism::UnsupportedBlockError)
   end
 
   it 'raises an exception if passing a block to sections' do
@@ -184,8 +179,7 @@ describe SitePrism::Page do
       end
 
       it 'still executes and returns the block passed into it when load validations are disabled' do
-        expect(page_with_load_validations.load(with_validations: false) { :return_this })
-          .to eq(:return_this)
+        expect(page_with_load_validations.load(with_validations: false) { :return_this }).to eq(:return_this)
       end
     end
 
@@ -211,8 +205,7 @@ describe SitePrism::Page do
       end
 
       it 'still executes and returns the block passed into it when load validations are disabled' do
-        expect(page_with_load_validations.load(with_validations: false) { :return_this })
-          .to eq(:return_this)
+        expect(page_with_load_validations.load(with_validations: false) { :return_this }).to eq(:return_this)
       end
     end
   end
@@ -348,31 +341,19 @@ describe SitePrism::Page do
       it 'returns true without expected_mappings provided' do
         swap_current_url('http://localhost:3000/foos/28')
 
-        expect(page.displayed?).to be true
+        expect(page).to be_displayed
       end
 
       it 'returns true with correct expected_mappings provided' do
         swap_current_url('http://localhost:3000/foos/28')
 
-        expect(page.displayed?(id: 28)).to be true
+        expect(page).to be_displayed(id: 28)
       end
 
       it 'returns false with incorrect expected_mappings provided' do
         swap_current_url('http://localhost:3000/foos/28')
 
-        expect(page.displayed?(id: 17)).to be false
-      end
-
-      it 'passes through incorrect expected_mappings from the be_displayed matcher' do
-        swap_current_url('http://localhost:3000/foos/28')
-
         expect(page).not_to be_displayed(id: 17)
-      end
-
-      it 'passes through correct expected_mappings from the be_displayed matcher' do
-        swap_current_url('http://localhost:3000/foos/28')
-
-        expect(page).to be_displayed(id: 28)
       end
     end
 
