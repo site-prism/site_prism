@@ -127,6 +127,40 @@ module SitePrism
           mapped_items(legacy: true) << { type => name }
           mapped_items[type] << name.to_sym
         end
+
+        def extract_section_options(args, &block)
+          if args.first.is_a?(Class)
+            klass = args.shift
+            section_class = klass if klass <= SitePrism::Section
+          end
+
+          section_class = deduce_section_class(section_class, &block)
+          arguments = deduce_search_arguments(section_class, args)
+          [section_class, arguments]
+        end
+
+        def deduce_section_class(base_class, &block)
+          klass = base_class
+          klass = Class.new(klass || SitePrism::Section, &block) if block
+          return klass if klass
+
+          raise ArgumentError, 'You should provide descendant of SitePrism::Section class or/and a block as the second argument.'
+        end
+
+        def deduce_search_arguments(section_class, args)
+          extract_search_arguments(args) ||
+            extract_search_arguments(section_class.default_search_arguments) ||
+            invalidate_search_arguments!
+        end
+
+        def extract_search_arguments(args)
+          args if args && !args.empty?
+        end
+
+        def invalidate_search_arguments!
+          SitePrism.logger.error('Could not deduce search_arguments')
+          raise(ArgumentError, 'search arguments are needed in `section` definition or alternatively use `set_default_search_arguments`')
+        end
       end
     end
   end
