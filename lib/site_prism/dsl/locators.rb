@@ -2,21 +2,21 @@
 
 module SitePrism
   module DSL
-    # [SitePrism::DSL::Locators]
+    #
+    # @api private
+    #
+    # ~~~~~~~~~~~~~ TEMP DOCUMENTATION ~~~~~~~~~~~~~
     #
     # This is a newly migrated experimental way of partitioning the SitePrism internal DSL
     #
     # It is currently completely switched off and disabled / untested, and will remain this way for all of v4
     #
-    # ~~~~~~~~~~~~~ PREVIOUS DOCUMENTATION ~~~~~~~~~~~~~
+    # ~~~~~~~~~~~~~~~
     #
-    # [SitePrism::DSL]
+    # [SitePrism::DSL::Locators]
     #
-    # This is the core Module Namespace for all of the public-facing DSL methods
-    #   such as `element`. The code here is designed to be used through the defining
-    #   of said items, and not to be instantiated directly.
-    #
-    # The whole package here can be thought of as [@api private]
+    # The locator logic for scoping and accessing all items, boolean tests and waiters
+    # 
     module Locators
       def self.included
         SitePrism.logger.error('The new experimental DSL partitioning has been required. Code will now crash!')
