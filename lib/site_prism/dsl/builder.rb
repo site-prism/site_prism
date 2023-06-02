@@ -13,6 +13,17 @@ module SitePrism
     # [SitePrism::DSL::ClassMethods]
     #
     # No docs present - all private
+    # ~~~~~~~~~~~~~~~
+    #
+    # [SitePrism::DSL::Builder]
+    #
+    # The Building logic - Initially coming from `.build`
+    #   This will take a request to build from a DSL invocation such as `element` and generate a series of
+    #   helper methods and waiters. It will also generate the correct classes for `SitePrism::Section` objects
+    #
+    #   Whilst doing all of this, it will also build up a "map" of objects in memory which can be used for
+    #   future interrogation. There are 2 ways of this being stored currently (Legacy stores as an array, Non-legacy as a hash)
+    # 
     module Builder
       private
 
