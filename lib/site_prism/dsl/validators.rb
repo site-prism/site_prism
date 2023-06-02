@@ -2,7 +2,7 @@
 
 module SitePrism
   module DSL
-    # [SitePrism::DSL::Validator]
+    # [SitePrism::DSL::Validators]
     #
     # This is a newly migrated experimental way of partitioning the SitePrism internal DSL
     #
@@ -10,10 +10,9 @@ module SitePrism
     #
     # ~~~~~~~~~~~~~ PREVIOUS DOCUMENTATION ~~~~~~~~~~~~~
     #
-    # [SitePrism::DSLValidator]
-    #
     # This is the new validator module which will check all DSL items against a whitelist
     # for any entries which are prohibited
+    #
     module Validators
       def self.included
         SitePrism.logger.error('The new experimental DSL partitioning has been required. Code will now crash!')
