@@ -116,6 +116,35 @@ module SitePrism
           SitePrism.logger.error("#{name} has been defined as a '#{type}' item in #{parent_object}. It does not accept build-time blocks.")
           raise SitePrism::UnsupportedBlockError
         end
+
+        def deduce_iframe_element_find_args(args)
+          warn_on_invalid_selector_input(args)
+          case args[0]
+          when Integer then "iframe:nth-of-type(#{args[0] + 1})"
+          when String  then [:css, args[0]]
+          else args
+          end
+        end
+
+        def deduce_iframe_scope_find_args(args)
+          warn_on_invalid_selector_input(args)
+          case args[0]
+          when Integer then [args[0]]
+          when String  then [:css, args[0]]
+          else args
+          end
+        end
+
+        def warn_on_invalid_selector_input(args)
+          return unless looks_like_xpath?(args[0])
+
+          SitePrism.logger.warn('The arguments passed in look like xpath. Check your locators.')
+          SitePrism.logger.debug("Default locator strategy: #{Capybara.default_selector}")
+        end
+
+        def looks_like_xpath?(arg)
+          arg.is_a?(String) && arg.start_with?('/', './')
+        end
       end
     end
   end
