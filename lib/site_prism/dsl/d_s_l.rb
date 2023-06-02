@@ -16,6 +16,13 @@ module SitePrism
     #
     # Many of these methods will be used in-line to allow users to generate a multitude of
     # methods and locators for finding elements / sections on a page or section of a page
+    # ~~~~~~~~~~~~~~~
+    #
+    # [SitePrism::DSL::D_S_L]
+    #
+    # The meta-program definitions for using SitePrism during runtime. This internal DSL contains all the common public
+    # interface methods you will use on `SitePrism::Page` and `SitePrism::Section` objects
+    #
     module D_S_L
       attr_reader :expected_items
 

@@ -23,7 +23,7 @@ module SitePrism
     #
     #   Whilst doing all of this, it will also build up a "map" of objects in memory which can be used for
     #   future interrogation. There are 2 ways of this being stored currently (Legacy stores as an array, Non-legacy as a hash)
-    # 
+    #
     module Builder
       private
 
