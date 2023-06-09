@@ -18,7 +18,7 @@ module SitePrism
         SitePrism.logger.error('The new experimental DSL partitioning has been required. Code will now crash!')
         raise SitePrismError
       end
-      
+
       def invalid?(name)
         prefix_invalid?(name) ||
           suffix_invalid?(name) ||
