@@ -7,8 +7,7 @@ Then('I can see elements in the section') do
 end
 
 Then('I can see a section in a section') do
-  expect(@test_site.nested_sections.top.middle)
-    .to have_bottom(text: 'something')
+  expect(@test_site.nested_sections.top.middle).to have_bottom(text: 'something')
 end
 
 Then('I can access elements within the section using a block') do
@@ -44,15 +43,13 @@ Then('I can execute elements in the context of a section by passing a block to w
 end
 
 Then('I cannot access elements that are not in the section using a block') do
-  expect do
-    @test_site.home.people { |section| expect(section).to have_not_here }
-  end.to raise_error(RSpec::Expectations::ExpectationNotMetError)
+  expect { @test_site.home.people { |section| expect(section).to have_not_here } }
+    .to raise_error(RSpec::Expectations::ExpectationNotMetError)
 end
 
 Then('I cannot access elements that are not in the section using within') do
-  expect do
-    @test_site.home.people.within { |section| expect(section).to have_not_here }
-  end.to raise_error(RSpec::Expectations::ExpectationNotMetError)
+  expect { @test_site.home.people.within { |section| expect(section).to have_not_here } }
+    .to raise_error(RSpec::Expectations::ExpectationNotMetError)
 end
 
 Then('access to elements is constrained to those within the section') do
@@ -90,8 +87,7 @@ Then('I can see a section within a section using nested blocks') do
 end
 
 Then('I can see an anonymous section') do
-  expect(@test_site.nested_sections.anonymous_section.heading.text)
-    .to eq('Anonymous Section')
+  expect(@test_site.nested_sections.anonymous_section.heading.text).to eq('Anonymous Section')
 end
 
 Then('the section is visible') do
@@ -99,8 +95,7 @@ Then('the section is visible') do
 end
 
 Then('I can access the sections root element') do
-  expect(@test_site.home.people.root_element.class)
-    .to eq(Capybara::Node::Element)
+  expect(@test_site.home.people.root_element.class).to eq(Capybara::Node::Element)
 end
 
 When('I execute some javascript to set a value') do
@@ -108,8 +103,7 @@ When('I execute some javascript to set a value') do
 end
 
 Then('I can evaluate some javascript to get the value') do
-  expect(@test_site.nested_sections.search_results.first.first_search_result)
-    .to eq('wibble')
+  expect(@test_site.nested_sections.search_results.first.first_search_result).to eq('wibble')
 end
 
 Then('I can get access to a page through a section') do
@@ -147,8 +141,7 @@ Then('the page contains a deeply nested span') do
 end
 
 Then("I can see a section's full text") do
-  expect(@test_site.home.people.text)
-    .to eq('People Andy Bob Charlie Dave Not-a-person')
+  expect(@test_site.home.people.text).to eq('People Andy Bob Charlie Dave Not-a-person')
 end
 
 Then('I can see elements from the parent section') do

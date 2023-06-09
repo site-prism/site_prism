@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 Then('I can see an expected bit of the html') do
-  expect(@test_site.home.html)
-    .to include('<span class="welcome">This is the home page')
+  expect(@test_site.home.html).to include('<span class="welcome">This is the home page')
 end
 
 Then('I can see an expected bit of text') do
-  expect(@test_site.home.text)
-    .to include('This is the home page, there is some stuff on it')
+  expect(@test_site.home.text).to include('This is the home page, there is some stuff on it')
 end
 
 Then('I can see the expected url') do
@@ -59,15 +57,13 @@ Then('all elements and first-generation descendants are not present') do
 end
 
 Then('all mapped elements are present') do
-  mapped_item_names =
-    @test_site.dynamic.class.mapped_items.values.flatten
+  mapped_item_names = @test_site.dynamic.class.mapped_items.values.flatten
 
   expect(@test_site.dynamic.elements_present).to match_array(mapped_item_names)
 end
 
 Then('not all mapped elements are present') do
-  mapped_item_names =
-    @test_site.home.class.mapped_items.values.flatten
+  mapped_item_names = @test_site.home.class.mapped_items.values.flatten
 
   expect(@test_site.home.elements_present).not_to match_array(mapped_item_names)
 end
