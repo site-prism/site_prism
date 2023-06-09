@@ -26,11 +26,6 @@ module SitePrism
     module D_S_L
       attr_reader :expected_items
 
-      def self.included(klass)
-        SitePrism.logger.error('The new experimental DSL partitioning has been required. Code will now crash!')
-        raise SitePrismError
-      end
-
       class << self
         # Sets the `expected_items` iVar on a class. This property is used in conjunction with
         # `all_there?` to provide a way of granularising the check made to only interrogate a sub-set

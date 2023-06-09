@@ -18,11 +18,6 @@ module SitePrism
     # The locator logic for scoping and accessing all items, boolean tests and waiters
     #
     module Locators
-      def self.included
-        SitePrism.logger.error('The new experimental DSL partitioning has been required. Code will now crash!')
-        raise SitePrismError
-      end
-
       private
 
       def _find(*find_args)
