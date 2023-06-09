@@ -3,8 +3,6 @@
 require 'site_prism/error'
 require 'site_prism/all_there'
 
-require 'site_prism/logger'
-
 require 'addressable/template'
 require 'forwardable'
 
@@ -14,7 +12,7 @@ require 'site_prism/dsl_validator'
 require 'site_prism/deprecator'
 require 'site_prism/element_checker'
 require 'site_prism/loadable'
-# require 'site_prism/logger' # Moved higher to avoid load errors
+require 'site_prism/logger'
 require 'site_prism/page'
 require 'site_prism/rspec_matchers'
 require 'site_prism/section'
