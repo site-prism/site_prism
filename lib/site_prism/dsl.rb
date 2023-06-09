@@ -346,6 +346,11 @@
 # end
 
 # Placeholder reference whilst we try stitch up items
+require 'site_prism/dsl/builder'
+require 'site_prism/dsl/d_s_l'
+require 'site_prism/dsl/locators'
+require 'site_prism/dsl/validators'
+
 module SitePrism
   module DSL
     include Builder
