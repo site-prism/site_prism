@@ -4,24 +4,8 @@ module SitePrism
   module DSL
     # [SitePrism::DSL::D_S_L]
     #
-    # This is a newly migrated experimental way of partitioning the SitePrism internal DSL
-    #
-    # It is currently completely switched off and disabled / untested, and will remain this way for all of v4
-    #
-    # ~~~~~~~~~~~~~ PREVIOUS DOCUMENTATION ~~~~~~~~~~~~~
-    #
-    # [SitePrism::DSL::ClassMethods]
-    # This exposes all of the DSL definitions users will use when generating
-    # their POM classes.
-    #
-    # Many of these methods will be used in-line to allow users to generate a multitude of
-    # methods and locators for finding elements / sections on a page or section of a page
-    # ~~~~~~~~~~~~~~~
-    #
-    # [SitePrism::DSL::D_S_L]
-    #
     # The meta-program definitions for using SitePrism during runtime. This internal DSL contains all the common public
-    # interface methods you will use on `SitePrism::Page` and `SitePrism::Section` objects
+    # DSL methods you will use on `SitePrism::Page` and `SitePrism::Section` objects
     #
     module D_S_L
       attr_reader :expected_items

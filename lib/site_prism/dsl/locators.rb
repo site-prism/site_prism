@@ -2,17 +2,6 @@
 
 module SitePrism
   module DSL
-    #
-    # @api private
-    #
-    # ~~~~~~~~~~~~~ TEMP DOCUMENTATION ~~~~~~~~~~~~~
-    #
-    # This is a newly migrated experimental way of partitioning the SitePrism internal DSL
-    #
-    # It is currently completely switched off and disabled / untested, and will remain this way for all of v4
-    #
-    # ~~~~~~~~~~~~~~~
-    #
     # [SitePrism::DSL::Locators]
     #
     # The locator logic for scoping and accessing all items, boolean tests and waiters

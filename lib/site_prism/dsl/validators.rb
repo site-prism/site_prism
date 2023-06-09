@@ -4,12 +4,6 @@ module SitePrism
   module DSL
     # [SitePrism::DSL::Validators]
     #
-    # This is a newly migrated experimental way of partitioning the SitePrism internal DSL
-    #
-    # It is currently completely switched off and disabled / untested, and will remain this way for all of v4
-    #
-    # ~~~~~~~~~~~~~ PREVIOUS DOCUMENTATION ~~~~~~~~~~~~~
-    #
     # This is the new validator module which will check all DSL items against a whitelist
     # for any entries which are prohibited
     #

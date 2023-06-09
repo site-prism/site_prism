@@ -4,27 +4,18 @@ module SitePrism
   module DSL
     # [SitePrism::DSL::Builder]
     #
-    # This is a newly migrated experimental way of partitioning the SitePrism internal DSL
-    #
-    # It is currently completely switched off and disabled / untested, and will remain this way for all of v4
-    #
-    # ~~~~~~~~~~~~~ PREVIOUS DOCUMENTATION ~~~~~~~~~~~~~
-    #
-    # [SitePrism::DSL::ClassMethods]
-    #
-    # No docs present - all private
-    # ~~~~~~~~~~~~~~~
-    #
-    # [SitePrism::DSL::Builder]
-    #
     # The Building logic - Initially coming from `.build`
     #   This will take a request to build from a DSL invocation such as `element` and generate a series of
     #   helper methods and waiters. It will also generate the correct classes for `SitePrism::Section` objects
     #
     #   Whilst doing all of this, it will also build up a "map" of objects in memory which can be used for
-    #   future interrogation. There are 2 ways of this being stored currently (Legacy stores as an array, Non-legacy as a hash)
+    #   future interrogation. There are 2 ways of this being stored currently (Default as a hash, Legacy as an array)
     #
     module Builder
+      def self.included(klass)
+        klass.extend ClassMethods
+      end
+
       private
 
       def raise_if_runtime_block_supplied(object, name, has_block, type)
@@ -35,10 +26,10 @@ module SitePrism
         raise SitePrism::UnsupportedBlockError
       end
 
-      def self.included(klass)
-        klass.extend ClassMethods
-      end
-
+      # [SitePrism::DSL::Builder::ClassMethods]
+      #
+      # @api private
+      #
       module ClassMethods
         # Return a list of all mapped items on a SitePrism class instance (Page or Section)
         # If legacy is set to true (Default) -> @return [Array]
