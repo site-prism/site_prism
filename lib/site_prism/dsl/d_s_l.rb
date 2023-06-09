@@ -24,9 +24,9 @@ module SitePrism
     # interface methods you will use on `SitePrism::Page` and `SitePrism::Section` objects
     #
     module D_S_L
-      attr_reader :expected_items
-
       class << self
+        attr_reader :expected_items
+
         # Sets the `expected_items` iVar on a class. This property is used in conjunction with
         # `all_there?` to provide a way of granularising the check made to only interrogate a sub-set
         # of DSL defined items
