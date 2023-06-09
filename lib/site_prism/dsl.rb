@@ -17,10 +17,20 @@ module SitePrism
   #
   module DSL
     def self.included(klass)
-      klass.include Builder
+      klass.extend Builder
       klass.extend D_S_L
       klass.include Locators
       klass.extend Validators
+    end
+
+    private
+
+    def raise_if_runtime_block_supplied(object, name, has_block, type)
+      return unless has_block
+
+      SitePrism.logger.debug("Type passed in: #{type}")
+      SitePrism.logger.error("#{object.class}##{name} cannot accept runtime blocks")
+      raise SitePrism::UnsupportedBlockError
     end
   end
 end
