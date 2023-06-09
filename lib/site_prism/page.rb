@@ -14,7 +14,7 @@ module SitePrism
     include Capybara::DSL
     include ElementChecker
     include Loadable
-    include DSL
+    include SitePrism::DSL
 
     class << self
       attr_reader :url

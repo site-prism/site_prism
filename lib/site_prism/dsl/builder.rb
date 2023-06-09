@@ -35,7 +35,11 @@ module SitePrism
         raise SitePrism::UnsupportedBlockError
       end
 
-      class << self
+      def self.included(klass)
+        klass.extend ClassMethods
+      end
+
+      module ClassMethods
         # Return a list of all mapped items on a SitePrism class instance (Page or Section)
         # If legacy is set to true (Default) -> @return [Array]
         # If legacy is set to false (New behaviour) -> @return [Hash]
