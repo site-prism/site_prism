@@ -8,7 +8,10 @@
   (No more hard-coded mocked responses, meaning our unit tests are **much more** realistic!)
   ([luke-hill])
 
+- Optimised some recursion logic to use the `site_prism-all_there` sub-gem ([luke-hill])
+
 ### Fixed
+- `#elements_present` properly respects `.expected_items` when set ([luke-hill])
 
 ## [4.0.2] - 2023-05-23
 ### Fixed
