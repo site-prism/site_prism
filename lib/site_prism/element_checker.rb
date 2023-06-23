@@ -39,7 +39,7 @@ module SitePrism
     #
     # @return [Array]
     def elements_present
-      _mapped_items.select { |name| there?(name) }
+      elements_to_check.select { |name| there?(name) }
     end
 
     # Returns each element that is not currently present inside the scope being tested
