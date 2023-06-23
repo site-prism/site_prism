@@ -52,20 +52,7 @@ module SitePrism
     private
 
     def elements_to_check
-      if _expected_items
-        SitePrism.logger.debug('Expected Items has been set.')
-        _mapped_items & _expected_items
-      else
-        _mapped_items
-      end
-    end
-
-    def _mapped_items
-      self.class.mapped_items.values.flatten.uniq
-    end
-
-    def _expected_items
-      self.class.expected_items
+      SitePrism::AllThere::ExpectedItems.new(self).send(:mapped_checklist)
     end
 
     def there?(name)
