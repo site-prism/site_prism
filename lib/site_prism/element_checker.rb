@@ -54,7 +54,7 @@ module SitePrism
     def elements_to_check
       if _expected_items
         SitePrism.logger.debug('Expected Items has been set.')
-        _mapped_items.select { |name| _expected_items.include?(name) }
+        _mapped_items & _expected_items
       else
         _mapped_items
       end
