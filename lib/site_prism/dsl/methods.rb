@@ -2,12 +2,12 @@
 
 module SitePrism
   module DSL
-    # [SitePrism::DSL::D_S_L]
+    # [SitePrism::DSL::Methods]
     #
-    # The meta-program definitions for using SitePrism during runtime. This internal DSL contains all the common public
-    # DSL methods you will use on `SitePrism::Page` and `SitePrism::Section` objects
+    # The meta-programmed methods for using SitePrism during runtime. This public DSL contains all the methods
+    # you will use on `SitePrism::Page` or `SitePrism::Section` classes
     #
-    module D_S_L
+    module Methods
       attr_reader :expected_items
 
       # Sets the `expected_items` iVar on a class. This property is used in conjunction with

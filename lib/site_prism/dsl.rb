@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'site_prism/dsl/builder'
-require 'site_prism/dsl/d_s_l'
+require 'site_prism/dsl/methods'
 require 'site_prism/dsl/locators'
 require 'site_prism/dsl/validators'
 
@@ -10,14 +10,14 @@ module SitePrism
   #
   # This is the core internal Module for SitePrism. Internally it consists of four moving parts - plus some generic methods in this module
   #   Builder -> The way in which the .build method generates lots of instance-methods on a Class/Section instance
-  #   D_S_L -> TO BE RENAMED - But the internal DSL metaprogram methods, such as `element` or `section`
+  #   Methods -> The public DSL metaprogram methods, such as `element` or `section`
   #   Locators -> We are scoped to capybara, and as such our locators need to be scoped using `#to_capybara_node`
   #   Validators -> EXPERIMENTAL: A new module used to ensure names of all DSL items conform to certain rules
   #
   module DSL
     def self.included(klass)
       klass.extend Builder
-      klass.extend D_S_L
+      klass.extend Methods
       klass.include Locators
       klass.extend Validators
     end
