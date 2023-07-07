@@ -4,6 +4,11 @@
 ### Added
 
 ### Changed
+
+### Fixed
+
+## [4.0.3] - 2023-07-07
+### Changed
 - The unit tests now by default use a proper rack app and test using a mocked html response
   (No more hard-coded mocked responses, meaning our unit tests are **much more** realistic!)
   ([luke-hill])
@@ -1223,7 +1228,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v4.0.2...main
+[main]:       https://github.com/site-prism/site_prism/compare/v4.0.3...main
+[4.0.3]:      https://github.com/site-prism/site_prism/compare/v4.0.2...v4.0.3
 [4.0.2]:      https://github.com/site-prism/site_prism/compare/v4.0.1...v4.0.2
 [4.0.1]:      https://github.com/site-prism/site_prism/compare/v4.0...v4.0.1
 [4.0]:        https://github.com/site-prism/site_prism/compare/v4.0.beta...v4.0
