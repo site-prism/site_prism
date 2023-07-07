@@ -2,17 +2,53 @@
 ### Removed
 
 ### Added
+
+### Changed
+
+### Fixed
+
+## [4.0.3] - 2023-07-07
+### Changed
+- The unit tests now by default use a proper rack app and test using a mocked html response
+  (No more hard-coded mocked responses, meaning our unit tests are **much more** realistic!)
+  ([luke-hill])
+
+- Optimised some recursion logic to use the `site_prism-all_there` sub-gem ([luke-hill])
+
+### Fixed
+- `#elements_present` properly respects `.expected_items` when set ([luke-hill])
+
+## [4.0.2] - 2023-05-23
+### Fixed
+- Fixing loading issue where SitePrism would crash if `capybara/dsl` wasn't preloaded
+  ([leoarnold])
+
+- Fixing bug with Ruby 3 keyword arguments
+  ([diego-aslz] & [luke-hill])
+
+## [4.0.1] - 2023-05-11
+### Added
 - CI now runs the low-spec gemfile on old rubies (Capybara versions are out of the unsupported window)
   ([luke-hill])
 
 ### Changed
 - `Autoload` is now removed from all remaining support classes that used it
   ([luke-hill])
-- The `SitePrism::Timer` class is now designed to be api-private
+
+- Fixed the `SitePrism::Timer` class to be api-private
   ([luke-hill])
+
+- Gem bumps to dev_dependencies
+  - `webdrivers` is now pinned to v5 versions
+  - `rubocop` gems all bumped to latest ruby2.6 compliant version
+    ([luke-hill])
 
 ### Fixed
 - Lots of cross leaked items in RSpec have now been fixed and isolated
+  ([luke-hill])
+
+- Lots of spam from deprecation messages (that are auto-triggered), have now been reduce
+  - They are now memoized and fire just once when they're initially invoked
   ([luke-hill])
 
 ## [4.0] - 2023-04-19
@@ -109,7 +145,7 @@
   ([luke-hill])
 
 - Gem bumps to dependencies
-  - `capybara` and `selenium-webdriver` must now be from 2019/20 era 
+  - `capybara` and `selenium-webdriver` must now be from 2019/20 era
   - `cucumber` can now be any version from 4-8 exclusive
   - `rubocop` and `rubocop-rspec` have been bumped a major version (Still a healthy amount behind latest)
   ([luke-hill])
@@ -1192,7 +1228,11 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v4.0.beta...main
+[main]:       https://github.com/site-prism/site_prism/compare/v4.0.3...main
+[4.0.3]:      https://github.com/site-prism/site_prism/compare/v4.0.2...v4.0.3
+[4.0.2]:      https://github.com/site-prism/site_prism/compare/v4.0.1...v4.0.2
+[4.0.1]:      https://github.com/site-prism/site_prism/compare/v4.0...v4.0.1
+[4.0]:        https://github.com/site-prism/site_prism/compare/v4.0.beta...v4.0
 [4.0.beta]:   https://github.com/site-prism/site_prism/compare/v3.7.3...v4.0.beta
 [3.7.3]:      https://github.com/site-prism/site_prism/compare/v3.7.2...v3.7.3
 [3.7.2]:      https://github.com/site-prism/site_prism/compare/v3.7.1...v3.7.2
@@ -1318,3 +1358,5 @@ impending major rubocop release
 [asavageiv]:      https://github.com/asavageiv
 [teyamagu]:       https://github.com/teyamagu
 [Be-brand]:       https://github.com/Be-brand
+[diego-aslz]:     https://github.com/diego-aslz
+[leoarnold]:      https://github.com/leoarnold

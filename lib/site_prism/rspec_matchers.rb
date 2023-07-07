@@ -22,14 +22,27 @@ module SitePrism
     private
 
     def create_rspec_existence_matchers(matcher, object_method, negated_object_method, warning)
-      RSpec::Matchers.define(matcher) do |*args|
-        match { |actual| actual.public_send(object_method, *args) }
+      forward = forwarder(object_method)
+
+      RSpec::Matchers.define(matcher) do |*args, **options|
+        match { |actual| forward.call(actual, args, options) }
         match_when_negated do |actual|
-          return actual.public_send(negated_object_method, *args) if actual.respond_to?(negated_object_method)
+          return forward.call(actual, args, options, negated_object_method) if actual.respond_to?(negated_object_method)
 
           SitePrism.logger.debug(warning)
-          !actual.public_send(object_method, *args)
+          !forward.call(actual, args, options)
         end
+      end
+    end
+
+    def forwarder(object_method)
+      lambda do |actual, args, options, method_name = object_method|
+        # To support Ruby 2.6. Otherwise methods that expect no arguments would fail with
+        # "wrong number of arguments (given 1, expected 0)" because Ruby 2.6 considers `method(**{})` the
+        # same as `method({})` (passing the empty Hash as an argument)
+        next actual.public_send(method_name, *args) if options.empty?
+
+        actual.public_send(method_name, *args, **options)
       end
     end
 

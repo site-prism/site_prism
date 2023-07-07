@@ -4,7 +4,7 @@
 
 An initial attempt to start banning invalid DSL names has been introduced through a `DSLValidator` module.
 
-For 4.x this will be disabled by default. We may look to switch this to a default on/toggleable state further down
+For `4.x` this will be disabled by default. We may look to switch this to a default on/toggleable state further down
 the road, but for now this is experimental.
 
 Setting the env variable `SITEPRISM_DSL_VALIDATION_ENABLED` will then perform these checks during the build metaprogram
@@ -14,15 +14,15 @@ It is **highly** advisable to set full verbose logging on when using this by usi
 
 ## Passing blocks to invalid DSL items
 
-SitePrism 3.x permitted you to create DSL items using a block in all situations. However when you created an item
+SitePrism `3.x` permitted you to create DSL items using a block in all situations. However when you created an item
 that was an `:element`, `:elements` or `:sections` the overall resultant method generation was an error method
 (This is because we don't permit blocks for these DSL items).
 
-Now in 4.x we ban these creations and will hard-fail instantly.
+Now in `4.x` we ban these creations and will hard-fail instantly.
 
 ## Removal of #page for SitePrism::Section
 
-In SitePrism 3.x (Specifically when using capybara < 3.29), often people would want to obtain their "current" scope,
+In SitePrism `3.x` (Specifically when using capybara < `3.29`), often people would want to obtain their "current" scope,
 either deliberately or by using a chained method. The way we used to do this was by calling `#page`, which would then
 return your scope. From later versions of capybara they implemented a `#to_capybara_node` method which would be called
 and pre-chained to ensure your scope was correct.
@@ -87,9 +87,9 @@ for previous names.
 Previously `site_prism` (As of `2.17.1`), had 3 configuration options. These were ...
 
 ```ruby
-  default_load_validations = true #=> Whether the default load validation for displayed? was set 
-  use_implicit_waits = false #=> Whether site_prism would use Capybara's implicit waiting by default
-  raise_on_wait_fors = false #=> Whether running wait_for_<element/section> methods that failed would crash
+  SitePrism.default_load_validations = true #=> Whether the default load validation for displayed? was set 
+  SitePrism.use_implicit_waits = false #=> Whether site_prism would use Capybara's implicit waiting by default
+  SitePrism.raise_on_wait_fors = false #=> Whether running wait_for_<element/section> methods that failed would crash
 ```
 
 These have all been removed with the `3.0` release. Implicit Waiting is

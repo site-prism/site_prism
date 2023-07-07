@@ -4,6 +4,7 @@ require 'site_prism/error'
 require 'site_prism/all_there'
 
 require 'addressable/template'
+require 'capybara/dsl'
 require 'forwardable'
 
 require 'site_prism/addressable_url_matcher'
@@ -42,14 +43,10 @@ module SitePrism
       @logger ||= SitePrism::Logger.new.create
     end
 
-    # `Logger#reopen` was added in Ruby 2.3 - Which is now the minimum version
-    # for the site_prism gem
+    # Configure where you want the output of the site_prism logs to go (Default is $stdout)
     #
-    # This writer method allows you to configure where you want the output of
-    # the site_prism logs to go (Default is $stdout)
-    #
-    # example: SitePrism.log_path = 'site_prism.log' would save all
-    # log messages to `./site_prism.log`
+    # To save all logs to a specific output file
+    #   SitePrism.log_path = 'site_prism.log'
     def log_path=(logdev)
       logger.reopen(logdev)
     end
@@ -67,8 +64,7 @@ module SitePrism
     end
 
     # To query what level is being logged
-    #   SitePrism.log_level
-    #   => :UNKNOWN # By default
+    #   SitePrism.log_level # => :UNKNOWN # By default
     def log_level
       %i[DEBUG INFO WARN ERROR FATAL UNKNOWN][logger.level]
     end
