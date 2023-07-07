@@ -4,7 +4,7 @@ module SitePrism
   module DSL
     # [SitePrism::DSL::Locators]
     #
-    # The locator logic for scoping and accessing all items, boolean tests and waiters
+    # The locator logic for scoping all items - for use in locators, boolean tests and waiters
     #
     module Locators
       private
