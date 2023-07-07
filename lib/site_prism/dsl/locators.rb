@@ -6,6 +6,8 @@ module SitePrism
     #
     # The locator logic for scoping all items - for use in locators, boolean tests and waiters
     #
+    # @api private
+    #
     module Locators
       private
 

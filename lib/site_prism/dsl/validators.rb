@@ -7,6 +7,8 @@ module SitePrism
     # This is the new validator module which will check all DSL items against a whitelist
     # for any entries which break specific rules
     #
+    # @api private
+    #
     module Validators
       def invalid?(name)
         prefix_invalid?(name) ||
