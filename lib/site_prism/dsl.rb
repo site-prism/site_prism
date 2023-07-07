@@ -8,11 +8,11 @@ require 'site_prism/dsl/validators'
 module SitePrism
   # [SitePrism::DSL]
   #
-  # This is the core internal Module for SitePrism. Internally it consists of four moving parts - plus some generic methods in this module
-  #   Builder -> The way in which the .build method generates lots of instance-methods on a Class/Section instance
+  # This is the core internal workings of SitePrism. It consists of four moving parts - plus some generic methods included here
+  #   Builder -> The way in which the .build method generates lots of instance-methods on a SitePrism::Page or SitePrism::Section instance
   #   Methods -> The public DSL metaprogram methods, such as `element` or `section`
-  #   Locators -> We are scoped to capybara, and as such our locators need to be scoped using `#to_capybara_node`
-  #   Validators -> EXPERIMENTAL: A new module used to ensure names of all DSL items conform to certain rules
+  #   Locators -> Our locator scoping logic within capybara. By and large leaning on `#to_capybara_node`
+  #   Validators -> EXPERIMENTAL: A new module that ensures names of all DSL items conform to certain rules
   #
   module DSL
     def self.included(klass)
