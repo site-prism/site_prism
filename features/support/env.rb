@@ -5,7 +5,6 @@ require 'simplecov'
 require 'capybara'
 require 'capybara/cucumber'
 require 'selenium-webdriver'
-require 'webdrivers'
 
 $LOAD_PATH << './lib'
 
@@ -42,7 +41,5 @@ Capybara.configure do |config|
   config.app_host = "file://#{File.dirname(__FILE__)}/../../test_site"
   config.ignore_hidden_elements = false
 end
-
-Webdrivers.cache_time = 86_400
 
 World(TimeHelper)

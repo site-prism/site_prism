@@ -7,7 +7,7 @@ gem 'capybara', '< 3.36'
 gem 'cucumber', '< 8'
 gem 'matrix' # Only needed until the minimum version of capybara is > 3.36
 gem 'nokogiri', '< 1.13'
-gem 'selenium-webdriver', '< 4.2'
+gem 'selenium-webdriver', '< 4.10'
 gem 'webdrivers', '< 5.1'
 
 gemspec path: '..'
