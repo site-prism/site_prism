@@ -4,6 +4,8 @@
 ### Added
 
 ### Changed
+- **Required Ruby Version is now 2.7+**
+  ([luke-hill])
 
 ### Fixed
 
