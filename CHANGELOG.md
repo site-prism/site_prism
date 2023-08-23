@@ -1,6 +1,7 @@
 ## [main] - Unreleased
 ### Removed
-
+- Dev Update: All traces of legacy `webdrivers` gem are now replaced with Selenium Manager
+  ([luke-hill])
 ### Added
 
 ### Changed
