@@ -59,6 +59,11 @@ module SitePrism
           html
           no
           title
+          element
+          elements
+          section
+          sections
+          iframe
         ]
       end
 
