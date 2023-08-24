@@ -12,6 +12,10 @@
 - Dev Update: All traces of legacy `webdrivers` gem are now replaced with Selenium Manager
   - Consequently some lower versions of gems are not tested on later rubies owing to CI issues 
     ([luke-hill])
+
+- `SitePrism::Page#page` is now removed. 
+  - Use either `Capybara.current_session` or directly interrogate your input fragment (This is being `#soft_deprecated`)
+
 ### Added
 
 ### Changed
