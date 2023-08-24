@@ -10,7 +10,7 @@ class XPathPage < SitePrism::Page
   elements :elements_one, :xpath, '//div[starts-with(@class, "valid")]'
   elements :missing_elements_two, :xpath, '//*[@class="many"]'
 
-  element :no_such_element, '//div[@class="present-wrapper"]//div[@class="invalid-one"]'
+  element :missing_element, '//div[@class="present-wrapper"]//div[@class="invalid-one"]'
 
   section :section_one, XPathSection, :xpath, '//span[@class="locator"]'
 
