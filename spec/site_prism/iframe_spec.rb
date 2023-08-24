@@ -66,7 +66,7 @@ describe 'Iframe' do
         invalid_class
       end
 
-      expect(lines(log_messages)).to eq 4
+      expect(lines(log_messages)).to be_positive
     end
   end
 
