@@ -1,3 +1,9 @@
+# Upgrading from SitePrism 4.x to 5.x
+
+## Stuff TBD
+
+TBD
+
 # Upgrading from SitePrism 3.x to 4.x
 
 ## DSL name validation
