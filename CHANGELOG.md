@@ -1,5 +1,14 @@
 ## [main] - Unreleased
 ### Removed
+
+### Added
+
+### Changed
+
+### Fixed
+
+## [5.0.beta] - Unreleased
+### Removed
 - Dev Update: All traces of legacy `webdrivers` gem are now replaced with Selenium Manager
   - Consequently some lower versions of gems are not tested on later rubies owing to CI issues 
     ([luke-hill])
