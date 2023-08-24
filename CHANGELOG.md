@@ -1,9 +1,13 @@
 ## [main] - Unreleased
 ### Removed
-
+- Dev Update: All traces of legacy `webdrivers` gem are now replaced with Selenium Manager
+  - Consequently some lower versions of gems are not tested on later rubies owing to CI issues 
+    ([luke-hill])
 ### Added
 
 ### Changed
+- **Required Ruby Version is now 2.7+**
+  ([luke-hill])
 
 ### Fixed
 
@@ -11,7 +15,7 @@
 ### Changed
 - The unit tests now by default use a proper rack app and test using a mocked html response
   (No more hard-coded mocked responses, meaning our unit tests are **much more** realistic!)
-  ([luke-hill])
+    ([luke-hill])
 
 - Optimised some recursion logic to use the `site_prism-all_there` sub-gem ([luke-hill])
 
@@ -49,7 +53,7 @@
 
 - Lots of spam from deprecation messages (that are auto-triggered), have now been reduce
   - They are now memoized and fire just once when they're initially invoked
-  ([luke-hill])
+    ([luke-hill])
 
 ## [4.0] - 2023-04-19
 ### Removed
@@ -58,7 +62,7 @@
 
 - Removed some redundant legacy tests for `#all_there?`
   - These are now tested in the sub-gem and the responsibility lies there
-  ([luke-hill])
+    ([luke-hill])
 
 ### Added
 - Added in dependabot to keep ontop of all package updates
