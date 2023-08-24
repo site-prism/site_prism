@@ -171,7 +171,7 @@ module SitePrism
 
     def load_html_string(string)
       @page = Capybara.string(string)
-      yield self.to_capybara_node if block_given?
+      yield to_capybara_node if block_given?
     end
 
     def load_html_website(html, &block)
@@ -183,7 +183,7 @@ module SitePrism
       if with_validations
         when_loaded(&block)
       elsif block
-        yield self.to_capybara_node
+        yield to_capybara_node
       end
     end
   end
