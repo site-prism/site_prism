@@ -22,6 +22,10 @@
 - **Required Ruby Version is now 2.7+**
   ([luke-hill])
 
+- DSL Validation has moved `DSLValidator` -> `DSL::Validators` and is now implemented by default
+  - To opt out of this set the environment key `SITEPRISM_DSL_VALIDATION_ENABLED="false"`
+    ([luke-hill])
+
 ### Fixed
 
 ## [4.0.3] - 2023-07-07

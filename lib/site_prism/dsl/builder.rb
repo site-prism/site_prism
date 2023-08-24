@@ -26,7 +26,7 @@ module SitePrism
       private
 
       def build(type, name, *find_args)
-        raise InvalidDSLNameError if ENV.fetch('SITEPRISM_DSL_VALIDATION_ENABLED', nil) && invalid?(name)
+        raise InvalidDSLNameError if ENV.fetch('SITEPRISM_DSL_VALIDATION_ENABLED', 'true') == 'true' && invalid?(name)
 
         if find_args.empty?
           create_error_method(name)
