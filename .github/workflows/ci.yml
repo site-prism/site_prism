@@ -16,6 +16,11 @@ jobs:
         ruby: ['2.7', '3.0', '3.1', '3.2']
         browser: ['chrome', 'firefox']
         gemfile: ['Gemfile', 'gemfiles/Gemfile.low_spec']
+        exclude:
+          # Low spec gemfiles are having issues post Selenium Manager release on GHA
+          - { ruby: '3.0', gemfile: 'gemfiles/Gemfile.low_spec' }
+          - { ruby: '3.0', gemfile: 'gemfiles/Gemfile.low_spec' }
+          - { ruby: '3.0', gemfile: 'gemfiles/Gemfile.low_spec' }
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
       BROWSER: ${{ matrix.browser }}
