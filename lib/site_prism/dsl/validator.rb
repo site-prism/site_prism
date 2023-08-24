@@ -20,19 +20,27 @@ module SitePrism
       private
 
       def prefix_invalid?(name)
-        prefix_blacklist.any? { |prefix| name.start_with?(prefix) }.tap { |result| log_failure(name, 'prefix') unless result }
+        return unless prefix_blacklist.any? { |prefix| name.start_with?(prefix) }
+
+        log_failure(name, 'prefix')
       end
 
       def suffix_invalid?(name)
-        suffix_blacklist.any? { |prefix| name.end_with?(prefix) }.tap { |result| log_failure(name, 'suffix') unless result }
+        return unless suffix_blacklist.any? { |prefix| name.end_with?(prefix) }
+
+        log_failure(name, 'suffix')
       end
 
       def characters_invalid?(name)
-        !name.match?(regex_permission).tap { |result| log_failure(name, 'character(s)') unless result }
+        return if name.match?(regex_permission)
+
+        log_failure(name, 'character(s)')
       end
 
       def blacklisted?(name)
-        blacklisted_names.include?(name).tap { |result| log_failure(name, 'name (blacklisted entry)') unless result }
+        return unless blacklisted_names.include?(name)
+
+        log_failure(name, 'name (blacklisted entry)')
       end
 
       def regex_permission
