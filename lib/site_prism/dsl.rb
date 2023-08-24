@@ -3,7 +3,7 @@
 require 'site_prism/dsl/builder'
 require 'site_prism/dsl/methods'
 require 'site_prism/dsl/locators'
-require 'site_prism/dsl/validators'
+require 'site_prism/dsl/validator'
 
 module SitePrism
   # [SitePrism::DSL]
@@ -19,7 +19,7 @@ module SitePrism
       klass.extend Builder
       klass.extend Methods
       klass.include Locators
-      klass.extend Validators
+      klass.extend Validator
     end
 
     private

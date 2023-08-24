@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-describe SitePrism::DSL::Validators do
+describe SitePrism::DSL::Validator do
   let(:validator) do
     Class.new do
-      extend SitePrism::DSL::Validators
+      extend SitePrism::DSL::Validator
     end
   end
 

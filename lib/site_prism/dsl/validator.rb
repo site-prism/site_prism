@@ -9,7 +9,7 @@ module SitePrism
     #
     # @api private
     #
-    module Validators
+    module Validator
       def invalid?(name)
         prefix_invalid?(name) ||
           suffix_invalid?(name) ||
