@@ -15,7 +15,7 @@ module SitePrism
           warn("#{old} is being deprecated and should no longer be used.")
         end
 
-        warn("#{old} will be removed in SitePrism v5. You have been warned!")
+        warn("#{old} will be removed in SitePrism v6. You have been warned!")
       end
 
       private
