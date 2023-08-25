@@ -17,9 +17,7 @@ module SitePrism
       # Return a list of all mapped items on a SitePrism class instance (Page or Section)
       # If legacy is set to false (Default) -> @return [Hash]
       # If legacy is set to true (Old behaviour) -> @return [Array]
-      def mapped_items(legacy: false)
-        return legacy_mapped_items if legacy
-
+      def mapped_items
         @mapped_items ||= { element: [], elements: [], section: [], sections: [], iframe: [] }
       end
 
@@ -27,13 +25,10 @@ module SitePrism
 
       def build(type, name, *find_args)
         raise InvalidDSLNameError if ENV.fetch('SITEPRISM_DSL_VALIDATION_ENABLED', 'true') == 'true' && invalid?(name)
+        return invalid_element(name) if find_args.empty?
 
-        if find_args.empty?
-          invalid_element(name)
-        else
-          map_item(type, name)
-          yield
-        end
+        mapped_items[type] << name.to_sym
+        yield
         add_helper_methods(name, type, *find_args)
       end
 
@@ -97,21 +92,6 @@ module SitePrism
         return invalid_element(proposed_method_name) if find_args.empty?
 
         yield
-      end
-
-      def legacy_mapped_items
-        @legacy_mapped_items ||= begin
-          SitePrism::Deprecator.deprecate(
-            '.mapped_items structure (internally), on a class',
-            'the new .mapped_items structure'
-          )
-          []
-        end
-      end
-
-      def map_item(type, name)
-        mapped_items(legacy: true) << { type => name }
-        mapped_items[type] << name.to_sym
       end
 
       def extract_section_options(args, &block)
