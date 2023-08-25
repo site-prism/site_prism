@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe 'Element' do
-  # This stops the stdout process leaking between tests
+  # Stop the $stdout process leaking cross-tests
   before { wipe_logger! }
 
   shared_examples 'an element' do

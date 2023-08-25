@@ -58,6 +58,7 @@ describe 'Iframe' do
       end
     end
 
+    # Stop the $stdout process leaking cross-tests
     before { wipe_logger! }
 
     it 'will throw a warning when creating an iFrame with an ambiguous locator' do
