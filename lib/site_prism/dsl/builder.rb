@@ -29,7 +29,7 @@ module SitePrism
         raise InvalidDSLNameError if ENV.fetch('SITEPRISM_DSL_VALIDATION_ENABLED', 'true') == 'true' && invalid?(name)
 
         if find_args.empty?
-          crash_for_invalid_name(name)
+          invalid_element(name)
         else
           map_item(type, name)
           yield
@@ -37,10 +37,8 @@ module SitePrism
         add_helper_methods(name, type, *find_args)
       end
 
-      def crash_for_invalid_name(name)
-        message = "#{name} has come from an item with no locators."
-        SitePrism.logger.error(message)
-        raise SitePrism::InvalidElementError, message
+      def invalid_element(name)
+        raise SitePrism::InvalidElementError, "#{name} has come from an item with no locators."
       end
 
       def add_helper_methods(name, _type, *find_args)
@@ -96,7 +94,7 @@ module SitePrism
       end
 
       def create_helper_method(proposed_method_name, *find_args)
-        return crash_for_invalid_name(proposed_method_name) if find_args.empty?
+        return invalid_element(proposed_method_name) if find_args.empty?
 
         yield
       end
