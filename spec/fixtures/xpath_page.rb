@@ -18,5 +18,6 @@ class XPathPage < SitePrism::Page
 
   iframe :iframe, XPathIFrame, :xpath, '//*[@class="iframe"]'
 
-  expected_elements :element_one, :element_two, :element_three, :elements_one, :section_one, :sections_one, :iframe
+  # missing_element is here to provide negative testing
+  expected_elements :element_one, :element_two, :element_three, :elements_one, :section_one, :sections_one, :missing_element, :iframe
 end

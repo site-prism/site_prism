@@ -34,14 +34,13 @@ describe SitePrism::ElementChecker do
       end
 
       it 'returns missing elements' do
-        # TODO: Alter the expected elements to have one that IS missing
-        expect(subject).to eq([])
+        expect(subject).to eq([:missing_element])
       end
     end
 
     describe '#elements_present' do
       it 'lists the SitePrism objects that are present on the page' do
-        expect(page.elements_present).to eq(expected_items)
+        expect(page.elements_present).to eq(expected_items - [:missing_element])
       end
     end
   end
