@@ -15,8 +15,8 @@ module SitePrism
     #
     module Builder
       # Return a list of all mapped items on a SitePrism class instance (Page or Section)
-      # If legacy is set to false (Default) -> @return [Hash]
-      # If legacy is set to true (Old behaviour) -> @return [Array]
+      #
+      # @return [Hash]
       def mapped_items
         @mapped_items ||= { element: [], elements: [], section: [], sections: [], iframe: [] }
       end
