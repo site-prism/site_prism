@@ -24,12 +24,20 @@ module SitePrism
       private
 
       def build(type, name, *find_args)
-        raise InvalidDSLNameError if ENV.fetch('SITEPRISM_DSL_VALIDATION_ENABLED', 'true') == 'true' && invalid?(name)
+        return invalid_element_name if invalid_element_name?(name)
         return invalid_element(name) if find_args.empty?
 
         mapped_items[type] << name.to_sym
         yield
         add_helper_methods(name, type, *find_args)
+      end
+
+      def invalid_element_name
+        raise InvalidDSLNameError
+      end
+
+      def invalid_element_name?(name)
+        ENV.fetch('SITEPRISM_DSL_VALIDATION_ENABLED', 'true') == 'true' && invalid?(name)
       end
 
       def invalid_element(name)
