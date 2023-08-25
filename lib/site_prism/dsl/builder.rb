@@ -33,7 +33,7 @@ module SitePrism
       end
 
       def invalid_element_name
-        raise InvalidDSLNameError
+        raise InvalidDSLNameError, dsl_name_error
       end
 
       def invalid_element_name?(name)
