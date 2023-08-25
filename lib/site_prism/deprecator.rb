@@ -18,29 +18,10 @@ module SitePrism
         warn("#{old} will be removed in SitePrism v5. You have been warned!")
       end
 
-      # @return [SitePrism.logger.debug(msg)]
-      #
-      # Tells the user that they are using functionality which is non-optimal
-      # The functionality should usually provide a reason for it being poor, as well as an
-      # optional way of upgrading to something different
-      #
-      # NB: As this is bubbled up at debug level, often users will not see this. So it will
-      # never be a candidate for removal directly
-      def soft_deprecate(old, reason, new = nil)
-        debug("The #{old} method is changing, as is SitePrism, and is now advised to be changed.")
-        debug("REASON: #{reason}.")
-        debug('Moving forwards into SitePrism v5, the default behaviour will change.')
-        debug("We advise you change to using #{new}") if new
-      end
-
       private
 
       def warn(msg)
         SitePrism.logger.warn(msg)
-      end
-
-      def debug(msg)
-        SitePrism.logger.debug(msg)
       end
     end
   end
