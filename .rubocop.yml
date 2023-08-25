@@ -25,9 +25,9 @@ Layout/LineLength:
     - ^When
     - ^Then
 
-# Don't count long arrays/hashes as long methods
+# Don't count long arrays/hashes/heredocs as long methods
 Metrics/MethodLength:
-  CountAsOne: ['array', 'hash']
+  CountAsOne: ['array', 'hash', 'heredoc']
 
 # We are a DSL, so we occasionally need to use `.set_` prefixes on our DSL names
 Naming/AccessorMethodName:
