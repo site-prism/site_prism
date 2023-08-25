@@ -14,4 +14,4 @@ Metrics/ClassLength:
 # Offense count: 1
 # Configuration parameters: CountComments, CountAsOne.
 Metrics/ModuleLength:
-  Max: 195
+  Max: 130

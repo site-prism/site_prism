@@ -10,7 +10,7 @@ class CSSPage < SitePrism::Page
   elements :elements_one, 'div[class^=valid]'
   elements :missing_elements_two, '.many'
 
-  element :no_such_element, 'div.present-wrapper div.invalid-one'
+  element :missing_element, 'div.present-wrapper div.invalid-one'
 
   section :section_one, CSSSection, 'span.locator'
 

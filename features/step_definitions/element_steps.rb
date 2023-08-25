@@ -33,8 +33,7 @@ end
 Then('I can see the welcome message') do
   expect(@test_site.home).to have_welcome_message
 
-  expect(@test_site.home.welcome_message.text)
-    .to eq('This is the home page, there is some stuff on it')
+  expect(@test_site.home.welcome_message.text).to eq('This is the home page, there is some stuff on it')
 end
 
 Then('I can see the welcome message using a capybara text query') do
@@ -66,8 +65,7 @@ When('I remove the parent section of the element') do
 end
 
 Then('I can obtain the native property of an element') do
-  expect(@test_site.home.header.native)
-    .to be_a Selenium::WebDriver::Element
+  expect(@test_site.home.header.native).to be_a Selenium::WebDriver::Element
 end
 
 Then('I can obtain the native property of a section') do

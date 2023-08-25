@@ -1,13 +1,33 @@
 ## [main] - Unreleased
 ### Removed
+
+### Added
+
+### Changed
+
+### Fixed
+
+## [5.0.beta] - Unreleased
+### Removed
 - Dev Update: All traces of legacy `webdrivers` gem are now replaced with Selenium Manager
   - Consequently some lower versions of gems are not tested on later rubies owing to CI issues 
     ([luke-hill])
+
+- `SitePrism::Page#page` is now removed. 
+  - Use either `Capybara.current_session` or directly interrogate your input fragment (This is being `#soft_deprecated`)
+
 ### Added
 
 ### Changed
 - **Required Ruby Version is now 2.7+**
   ([luke-hill])
+
+- Internal change: All DSL code has been segregated and moved around. No method name changes
+  ([luke-hill])
+
+- DSL Validation has moved `DSLValidator` -> `DSL::Validator` and is now implemented by default
+  - To opt out of this set the environment key `SITEPRISM_DSL_VALIDATION_ENABLED="false"`
+    ([luke-hill])
 
 ### Fixed
 

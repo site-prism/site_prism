@@ -48,6 +48,6 @@ module SitePrism
   # Generic Attribute validation family of errors inherit from this error
   class AttributeValidationError < SitePrismError; end
 
-  # DSL items are not permitted to start with certain prefixes
+  # DSL items are not permitted to be named in certain ways
   class InvalidDSLNameError < AttributeValidationError; end
 end

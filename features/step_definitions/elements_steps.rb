@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 Then('I can get the text values for the group of elements') do
-  expect(@test_site.home.list_of_people.map(&:text))
-    .to eq(%w[Andy Bob Charlie Dave])
+  expect(@test_site.home.list_of_people.map(&:text)).to eq(%w[Andy Bob Charlie Dave])
 end
 
 Then('the page does not have a group of elements') do
@@ -24,6 +23,5 @@ Then('I can see optioned individual people in the people list') do
 end
 
 Then('I can wait a variable time and pass query parameters') do
-  expect { @test_site.home.list_of_people(wait: upper_bound_delay, minimum: 1) }
-    .not_to raise_error
+  expect { @test_site.home.list_of_people(wait: upper_bound_delay, minimum: 1) }.not_to raise_error
 end

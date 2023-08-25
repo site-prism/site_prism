@@ -16,12 +16,6 @@ module SitePrism
         string.split("\n").length
       end
 
-      def swallow_missing_element
-        yield
-      rescue Capybara::ElementNotFound
-        :no_op
-      end
-
       def swallow_bad_validation
         yield
       rescue SitePrism::FailedLoadValidationError

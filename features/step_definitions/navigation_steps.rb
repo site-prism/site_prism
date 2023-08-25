@@ -69,8 +69,7 @@ When('I navigate a page with load validations') do
 end
 
 When('an error is thrown when loading a page with failing validations') do
-  expect { @test_site.crash.load }
-    .to raise_error(SitePrism::FailedLoadValidationError)
+  expect { @test_site.crash.load }.to raise_error(SitePrism::FailedLoadValidationError)
 end
 
 Then('I am not made to wait to continue') do

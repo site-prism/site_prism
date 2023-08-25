@@ -88,15 +88,7 @@ describe SitePrism::Page do
       end.new
     end
 
-    context 'with #load called previously' do
-      before { page_with_url.instance_variable_set(:@page, :some_value) }
-
-      it { is_expected.to eq(:some_value) }
-    end
-
-    context 'with #load not called previously' do
-      it { is_expected.to eq(Capybara.current_session) }
-    end
+    it { is_expected.to eq(Capybara.current_session) }
   end
 
   describe '#load' do

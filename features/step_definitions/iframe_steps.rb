@@ -59,6 +59,5 @@ Then('I can see elements in an iframe with capybara query options') do
 end
 
 Then('I cannot interact with an iFrame outside of a block') do
-  expect { @test_site.home.id_iframe }
-    .to raise_error(SitePrism::MissingBlockError)
+  expect { @test_site.home.id_iframe }.to raise_error(SitePrism::MissingBlockError)
 end

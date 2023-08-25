@@ -42,18 +42,6 @@ module SitePrism
       end
     end
 
-    # Where a Capybara HTML fragment has been directly injected into `#load` as a block return this loaded fragment
-    # Where a page has been directly navigated to through traditional means (i.e. Selenium), return an instance of the
-    # current Capybara session (With all applicable methods)
-    #
-    # @return [Capybara::Node::Simple || Capybara::Session]
-    def page
-      @_page ||= begin
-        SitePrism::Deprecator.deprecate('Calling #page on a SitePrism::Page instance')
-        to_capybara_node
-      end
-    end
-
     # This scopes our calls inside Page correctly to the `Capybara::Session`
     #
     # @return [Capybara::Node::Simple || Capybara::Session]
@@ -183,7 +171,7 @@ module SitePrism
 
     def load_html_string(string)
       @page = Capybara.string(string)
-      yield self if block_given?
+      yield to_capybara_node if block_given?
     end
 
     def load_html_website(html, &block)
@@ -195,7 +183,7 @@ module SitePrism
       if with_validations
         when_loaded(&block)
       elsif block
-        yield self
+        yield to_capybara_node
       end
     end
   end
