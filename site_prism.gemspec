@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'site_prism-all_there', '>= 2', '< 4'
 
   s.add_development_dependency 'automation_helpers', ['~> 4.0']
-  s.add_development_dependency 'cucumber', '> 7', '< 9'
+  s.add_development_dependency 'cucumber', '> 7', '< 10'
   s.add_development_dependency 'rspec', ['~> 3.12']
   s.add_development_dependency 'rubocop', '~> 1.53.0'
   s.add_development_dependency 'rubocop-performance', '~> 1.19.0'
