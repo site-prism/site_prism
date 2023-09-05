@@ -36,4 +36,8 @@ class TestSite
   def vanishing
     @vanishing ||= Vanishing.new
   end
+
+  def shadow_root
+    @shadow_root ||= ShadowRoot.new
+  end
 end

@@ -1686,6 +1686,22 @@ When('I log in') do
 end
 ```
 
+## Shadow Root
+
+SitePrism allows you to interact with Shadow Root too.
+
+### Creating an Shadow Root
+
+You can use the `section` methods and provide the arguments. Specify the reference name for the Shadow Root, the CSS selector to locate it, and add the `:shadow_root` option. For example:
+
+```ruby
+class Home < SitePrism::Page
+  section :foo, '.foo', :shadow_root do
+    element :bar, '.bar'
+  end
+end
+```
+
 ## SitePrism Configuration
 
 SitePrism can be configured to change its behaviour.

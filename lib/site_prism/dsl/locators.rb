@@ -13,7 +13,11 @@ module SitePrism
 
       def _find(*find_args)
         kwargs = find_args.pop
-        to_capybara_node.find(*find_args, **kwargs)
+        is_shadow_root = find_args.delete(:shadow_root)
+        el = to_capybara_node.find(*find_args, **kwargs)
+        return el.shadow_root if is_shadow_root
+
+        el
       end
 
       def _all(*find_args)
@@ -22,11 +26,13 @@ module SitePrism
       end
 
       def element_exists?(*find_args)
+        find_args.delete(:shadow_root)
         kwargs = find_args.pop
         to_capybara_node.has_selector?(*find_args, **kwargs)
       end
 
       def element_does_not_exist?(*find_args)
+        find_args.delete(:shadow_root)
         kwargs = find_args.pop
         to_capybara_node.has_no_selector?(*find_args, **kwargs)
       end

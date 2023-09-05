@@ -87,3 +87,7 @@ Feature: Page Sections
   Scenario: Get native property from section
     When I navigate to the home page
     Then I can obtain the native property of a section
+
+  Scenario: shadow-root section
+    When I navigate to the shadow root page
+    Then I can see elements from the section composed of Shadow Root

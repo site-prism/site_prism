@@ -28,6 +28,10 @@ When('I navigate to the vanishing page') do
   @test_site.vanishing.load
 end
 
+When('I navigate to the shadow root page') do
+  @test_site.shadow_root.load
+end
+
 Then('I am on the home page') do
   expect(@test_site.home).to be_displayed
 end
