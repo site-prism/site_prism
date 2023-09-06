@@ -13,7 +13,7 @@ module SitePrism
 
       def _find(*find_args)
         kwargs = find_args.pop
-        is_shadow_root = find_args.delete(:shadow_root)
+        is_shadow_root = find_args.delete(:shadow_root) { false }
         el = to_capybara_node.find(*find_args, **kwargs)
         return el.shadow_root if is_shadow_root
 
