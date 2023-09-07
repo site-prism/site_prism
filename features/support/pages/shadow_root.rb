@@ -5,7 +5,7 @@ class ShadowRoot < SitePrism::Page
   set_url_matcher(/shadow_root\.htm$/)
 
   # shadow-root
-  section :shadow_root_section, '#shadow-root', :shadow_root do
+  section :shadow_root_section, '#shadow-root', shadow_root: true do
     element :some_text, 'p'
   end
 end

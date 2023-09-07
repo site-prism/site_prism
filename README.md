@@ -1696,7 +1696,7 @@ You can use the `section` methods and provide the arguments. Specify the referen
 
 ```ruby
 class Home < SitePrism::Page
-  section :foo, '.foo', :shadow_root do
+  section :foo, '.foo', shadow_root: true do
     element :bar, '.bar'
   end
 end
