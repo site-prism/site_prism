@@ -152,6 +152,6 @@ Then('I can see elements from the block') do
   expect(@test_site.home.people).to have_headline_clone
 end
 
-Then('I can see elements from the section composed of Shadow Root') do
+Then('I can see elements from the section composed of shadow roots') do
   expect(@test_site.shadow_root.shadow_root_section).to have_some_text
 end
