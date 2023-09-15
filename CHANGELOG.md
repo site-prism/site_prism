@@ -2,6 +2,8 @@
 ### Removed
 
 ### Added
+- Support for Shadow Root
+  - You can define it by setting `:shadow_root` to true when defining a `section` ([souchan2000])
 
 ### Changed
 
@@ -1384,3 +1386,4 @@ impending major rubocop release
 [Be-brand]:       https://github.com/Be-brand
 [diego-aslz]:     https://github.com/diego-aslz
 [leoarnold]:      https://github.com/leoarnold
+[souchan2000]:    https://github.com/souchan2000
