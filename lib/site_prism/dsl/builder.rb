@@ -24,8 +24,8 @@ module SitePrism
       private
 
       def build(type, name, *find_args)
-        return invalid_element_name if invalid_element_name?(name)
-        return invalid_element(name) if find_args.empty?
+        invalid_element_name if invalid_element_name?(name)
+        invalid_element(name) if find_args.empty?
 
         mapped_items[type] << name.to_sym
         yield
