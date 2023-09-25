@@ -90,4 +90,4 @@ Feature: Page Sections
 
   Scenario: shadow-root section
     When I navigate to the shadow root page
-    Then I can see elements from the section composed of shadow roots
+    Then I can see elements from the section composed of a shadow root
