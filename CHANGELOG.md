@@ -19,6 +19,10 @@
 ### Added
 
 ### Changed
+- **Breaking Change**: When building any page or section object, you must pass in valid constructors to the SitePrism DSL
+(For more info see: [UPGRADING.md](./UPGRADING.md))
+  ([luke-hill])
+
 - **Required Ruby Version is now 2.7+**
   ([luke-hill])
 
@@ -147,8 +151,7 @@
   ([luke-hill])
 
 ### Changed
-**Breaking Change**:
-- Passing unrequired blocks is now not permitted
+- **Breaking Change**: Passing non-required blocks is now not permitted
   - Passing a build-time block to `element` or `elements` will now throw an error on initial thread execution
   - Passing a runtime block to `element`, `elements` or `sections` will now throw an error when called
   ([luke-hill])
@@ -214,8 +217,7 @@
 - Updated README to clarify `displayed?` wait behavior and finder method delegation ([asavageiv])
 
 ### Changed
-**Internal Breaking Change**:
-- Performed a massive refactor of internal SitePrism logic
+- **Internal Breaking Change**: Performed a massive refactor of internal SitePrism logic
   - `SitePrism::Section` now delegates based on the desired approach from `capybara` to delegate through a `#to_capybara_node` call
   - SitePrism's own `#root_element` now used as a scoping approach, not a `#page` override
   - All delegation logic now just passes object invocation / arguments to Element / Session accordingly
