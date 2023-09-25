@@ -33,11 +33,6 @@ Metrics/MethodLength:
 Naming/AccessorMethodName:
   Enabled: false
 
-# This will be present until v5 beta
-Naming/MemoizedInstanceVariableName:
-  Exclude:
-    - 'lib/site_prism/page.rb'
-
 # This is a single standardised transform
 RSpec/FilePath:
   CustomTransform:
