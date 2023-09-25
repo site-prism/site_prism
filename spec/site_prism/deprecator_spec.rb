@@ -11,7 +11,7 @@ describe SitePrism::Deprecator do
         described_class.deprecate('old', 'new')
       end
 
-      expect(lines(log_messages)).to eq 2
+      expect(lines(log_messages)).to eq(2)
     end
   end
 end
