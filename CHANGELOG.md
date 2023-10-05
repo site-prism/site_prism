@@ -34,7 +34,7 @@
     ([luke-hill])
 
 - Version bumps
-  - `site_prism-all_there` can now use any version up in v3
+  - `site_prism-all_there` any version up to v3 can now be used
   - `rubocop` and associated gems have had partial bumps
   - Ensure users are using the patched form of `addressable`
   - `capybara` now must be at least v3.31
