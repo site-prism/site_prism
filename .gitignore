@@ -1,6 +1,11 @@
 .DS_Store
-Gemfile.lock
-coverage/*
-.idea
 .env
+.idea
+.yardoc
+
+Gemfile.lock
+
+coverage/*
+doc/*
+
 *.log*
