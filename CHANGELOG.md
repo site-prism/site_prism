@@ -24,7 +24,7 @@
     ([luke-hill])
 
 - `SitePrism::Page#page` is now removed. 
-  - Use either `Capybara.current_session` or directly interrogate your input fragment (This is being deprecated)
+  - Use either `Capybara.current_session` or directly interrogate your input fragment (This is now deprecated)
 
 ### Changed
 - **Required Ruby Version is now 2.7+**
