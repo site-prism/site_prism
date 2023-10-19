@@ -139,8 +139,8 @@ describe SitePrism::Page do
       expect { page_with_load_validations.load(username: 'foobar') }.not_to raise_error
     end
 
-    it 'loads the html' do
-      expect { page_with_url.load('<html/>') }.not_to raise_error
+    it 'loads an in-line html fragment' do
+      expect { page.load('<html/>') }.not_to raise_error
     end
 
     context 'with Passing Load Validations' do
