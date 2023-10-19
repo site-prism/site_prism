@@ -33,7 +33,7 @@
 - Internal change: All DSL code has been segregated and moved around. No method name changes
   ([luke-hill])
 
-- DSL Validation has moved `DSLValidator` -> `DSL::Validator` and is now implemented by default
+- **Breaking Change:** DSL Validation has moved `DSLValidator` -> `DSL::Validator` and is now implemented by default
   - To opt out of this set the environment key `SITEPRISM_DSL_VALIDATION_ENABLED="false"`
     ([luke-hill])
 
