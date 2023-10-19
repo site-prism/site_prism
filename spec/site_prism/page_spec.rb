@@ -596,6 +596,18 @@ describe SitePrism::Page do
     end
   end
 
+  describe 'an invalid page' do
+    let(:page) do
+      Class.new(described_class) do
+        element :my_element_without_locator
+      end
+    end
+
+    it 'raises SitePrism::InvalidElementError' do
+      expect { page.new }.to raise_error(SitePrism::InvalidElementError)
+    end
+  end
+
   def swap_current_url(url)
     allow(page).to receive(:page).and_return(instance_double(SitePrism::Page, current_url: url))
   end
