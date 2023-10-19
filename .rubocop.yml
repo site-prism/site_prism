@@ -13,7 +13,11 @@ AllCops:
   TargetRubyVersion: 2.7
   NewCops: enable
 
-# We don't use MFA yet
+# Document gem dependencies in the gemspec
+Gemspec/DevelopmentDependencies:
+  Enabled: false
+
+# Don't use MFA
 Gemspec/RequireMFA:
   Enabled: false
 
@@ -33,31 +37,31 @@ Metrics/MethodLength:
 Naming/AccessorMethodName:
   Enabled: false
 
-# This will be present until v5 beta
-Naming/MemoizedInstanceVariableName:
-  Exclude:
-    - 'lib/site_prism/page.rb'
-
 # This is a single standardised transform
+RSpec/SpecFilePathFormat:
+  CustomTransform:
+    RSpecMatchers: rspec_matchers
+
+# This is a single standardised transform - DEPRECATED (Remove in rubocop-rspec v3)
 RSpec/FilePath:
   CustomTransform:
     RSpecMatchers: rspec_matchers
 
-# Stylistic preference to make the RSpec tests flow better
+# Stylistic preference
 RSpec/MessageSpies:
   EnforcedStyle: receive
 
-# We need to test the RSpec matcher is correctly calling the has_no method
+# Test the RSpec matcher is correctly calling the `has_no` method
 RSpec/MultipleExpectations:
   Exclude:
     - spec/site_prism/element_spec.rb
 
-# We don't need to document any testing code
+# Don't document any testing code
 Style/Documentation:
   Exclude:
     - features/**/*
 
-# This is a better style, and should be the default IMO
+# Stylistic preference
 Style/RegexpLiteral:
   EnforcedStyle: slashes
   AllowInnerSlashes: true
