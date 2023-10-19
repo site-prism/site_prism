@@ -4,6 +4,16 @@
 ### Added
 
 ### Changed
+- **Breaking Change**: Any page or section must now have valid constructor names for the SitePrism DSL
+  (For more info see: [UPGRADING.md](./UPGRADING.md))
+  ([luke-hill])
+
+- Version bumps
+  - `site_prism-all_there` any version up to v3 can now be used
+  - `rubocop` and associated gems have had partial bumps
+  - Ensure users are using the patched form of `addressable`
+  - `capybara` now must be at least v3.31
+    ([luke-hill])
 
 ### Fixed
 
@@ -16,13 +26,7 @@
 - `SitePrism::Page#page` is now removed. 
   - Use either `Capybara.current_session` or directly interrogate your input fragment (This is being deprecated)
 
-### Added
-
 ### Changed
-- **Breaking Change**: When building any page or section object, you must pass in valid constructors to the SitePrism DSL
-(For more info see: [UPGRADING.md](./UPGRADING.md))
-  ([luke-hill])
-
 - **Required Ruby Version is now 2.7+**
   ([luke-hill])
 
@@ -32,15 +36,6 @@
 - DSL Validation has moved `DSLValidator` -> `DSL::Validator` and is now implemented by default
   - To opt out of this set the environment key `SITEPRISM_DSL_VALIDATION_ENABLED="false"`
     ([luke-hill])
-
-- Version bumps
-  - `site_prism-all_there` any version up to v3 can now be used
-  - `rubocop` and associated gems have had partial bumps
-  - Ensure users are using the patched form of `addressable`
-  - `capybara` now must be at least v3.31
-    ([luke-hill])
-
-### Fixed
 
 ## [4.0.3] - 2023-07-07
 ### Changed
