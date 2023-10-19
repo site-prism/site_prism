@@ -13,7 +13,11 @@ AllCops:
   TargetRubyVersion: 2.7
   NewCops: enable
 
-# We don't use MFA
+# Document gem dependencies in the gemspec
+Gemspec/DevelopmentDependencies:
+  Enabled: false
+
+# Don't use MFA
 Gemspec/RequireMFA:
   Enabled: false
 
