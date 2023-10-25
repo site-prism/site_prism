@@ -37,7 +37,11 @@ module SitePrism
       end
 
       def invalid_element_name?(name)
-        ENV.fetch('SITEPRISM_DSL_VALIDATION_ENABLED', 'true') == 'true' && name_invalid?(name)
+        dsl_validation_enabled? && name_invalid?(name)
+      end
+
+      def dsl_validation_enabled?
+        ENV.fetch('SITEPRISM_DSL_VALIDATION_ENABLED', 'true') == 'true'
       end
 
       def blank_element(name)
