@@ -10,7 +10,9 @@ module SitePrism
     # @api private
     #
     module Validator
-      def invalid?(name)
+      attr_accessor :dsl_name_error
+
+      def name_invalid?(name)
         prefix_invalid?(name) ||
           suffix_invalid?(name) ||
           characters_invalid?(name) ||
@@ -76,7 +78,7 @@ module SitePrism
       end
 
       def log_failure(name, type)
-        SitePrism.logger.error("DSL item: #{name} has an invalid #{type}")
+        self.dsl_name_error = "DSL item: #{name} has an invalid #{type}"
         SitePrism.logger.debug(debug_error(type))
       end
 

@@ -337,4 +337,16 @@ describe SitePrism::Section do
       expect(deeply_nested_section.parent_page).to eq(parent)
     end
   end
+
+  describe 'an invalid section' do
+    let(:section) do
+      Class.new(described_class) do
+        element :my_element_without_locator
+      end
+    end
+
+    it 'raises SitePrism::InvalidElementError' do
+      expect { section.new(SitePrism::Page.new, locator) }.to raise_error(SitePrism::InvalidElementError)
+    end
+  end
 end

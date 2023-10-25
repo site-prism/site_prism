@@ -15,35 +15,33 @@ module SitePrism
     #
     module Builder
       # Return a list of all mapped items on a SitePrism class instance (Page or Section)
-      # If legacy is set to false (Default) -> @return [Hash]
-      # If legacy is set to true (Old behaviour) -> @return [Array]
-      def mapped_items(legacy: false)
-        return legacy_mapped_items if legacy
-
+      #
+      # @return [Hash]
+      def mapped_items
         @mapped_items ||= { element: [], elements: [], section: [], sections: [], iframe: [] }
       end
 
       private
 
       def build(type, name, *find_args)
-        raise InvalidDSLNameError if ENV.fetch('SITEPRISM_DSL_VALIDATION_ENABLED', 'true') == 'true' && invalid?(name)
+        invalid_element_name if invalid_element_name?(name)
+        blank_element(name) if find_args.empty?
 
-        if find_args.empty?
-          create_error_method(name)
-        else
-          map_item(type, name)
-          yield
-        end
+        mapped_items[type] << name.to_sym
+        yield
         add_helper_methods(name, type, *find_args)
       end
 
-      def create_error_method(name)
-        SitePrism::Deprecator.deprecate(
-          'DSL definition with no find_args',
-          'DSL definition with at least 1 find_arg'
-        )
-        SitePrism.logger.error("#{name} has come from an item with no locators.")
-        define_method(name) { raise SitePrism::InvalidElementError }
+      def invalid_element_name
+        raise InvalidDSLNameError, dsl_name_error
+      end
+
+      def invalid_element_name?(name)
+        ENV.fetch('SITEPRISM_DSL_VALIDATION_ENABLED', 'true') == 'true' && name_invalid?(name)
+      end
+
+      def blank_element(name)
+        raise SitePrism::InvalidElementError, "#{name} has come from an item with no locators."
       end
 
       def add_helper_methods(name, _type, *find_args)
@@ -99,24 +97,9 @@ module SitePrism
       end
 
       def create_helper_method(proposed_method_name, *find_args)
-        return create_error_method(proposed_method_name) if find_args.empty?
+        return blank_element(proposed_method_name) if find_args.empty?
 
         yield
-      end
-
-      def legacy_mapped_items
-        @legacy_mapped_items ||= begin
-          SitePrism::Deprecator.deprecate(
-            '.mapped_items structure (internally), on a class',
-            'the new .mapped_items structure'
-          )
-          []
-        end
-      end
-
-      def map_item(type, name)
-        mapped_items(legacy: true) << { type => name }
-        mapped_items[type] << name.to_sym
       end
 
       def extract_section_options(args, &block)

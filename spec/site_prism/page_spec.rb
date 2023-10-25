@@ -139,8 +139,8 @@ describe SitePrism::Page do
       expect { page_with_load_validations.load(username: 'foobar') }.not_to raise_error
     end
 
-    it 'loads the html' do
-      expect { page_with_url.load('<html/>') }.not_to raise_error
+    it 'loads an in-line html fragment' do
+      expect { page.load('<html/>') }.not_to raise_error
     end
 
     context 'with Passing Load Validations' do
@@ -593,6 +593,18 @@ describe SitePrism::Page do
       swap_current_url('www.unsure.com')
 
       expect(page).not_to be_secure
+    end
+  end
+
+  describe 'an invalid page' do
+    let(:page) do
+      Class.new(described_class) do
+        element :my_element_without_locator
+      end
+    end
+
+    it 'raises SitePrism::InvalidElementError' do
+      expect { page.new }.to raise_error(SitePrism::InvalidElementError)
     end
   end
 

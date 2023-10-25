@@ -1,10 +1,10 @@
 .DS_Store
 .env
 .idea
-.yardoc
 
 Gemfile.lock
 
+.yardoc/
 coverage/*
 doc/*
 

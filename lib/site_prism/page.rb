@@ -170,6 +170,7 @@ module SitePrism
     end
 
     def load_html_string(string)
+      SitePrism::Deprecator.deprecate('Using an input fragment (Loading partials using html strings).')
       @page = Capybara.string(string)
       yield to_capybara_node if block_given?
     end

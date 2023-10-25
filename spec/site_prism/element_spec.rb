@@ -63,7 +63,7 @@ describe 'Element' do
       it 'only lists the SitePrism objects that are present on the page' do
         page.load
 
-        expect(page.elements_present).to eq(klass.expected_items)
+        expect(page.elements_present).to eq(klass.expected_items - [:missing_element])
       end
     end
 

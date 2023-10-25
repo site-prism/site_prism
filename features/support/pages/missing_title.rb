@@ -6,8 +6,6 @@ class MissingTitle < SitePrism::Page
 
   load_validation { has_message? }
 
-  element :element_without_selector
-  elements :elements_without_selector
   element :message, 'p'
   elements :missing_messages, 'br'
   sections :missing_sections, 'div' do
