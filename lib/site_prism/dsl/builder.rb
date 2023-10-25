@@ -25,7 +25,7 @@ module SitePrism
 
       def build(type, name, *find_args)
         invalid_element_name if invalid_element_name?(name)
-        invalid_element(name) if find_args.empty?
+        blank_element(name) if find_args.empty?
 
         mapped_items[type] << name.to_sym
         yield
@@ -40,7 +40,7 @@ module SitePrism
         ENV.fetch('SITEPRISM_DSL_VALIDATION_ENABLED', 'true') == 'true' && name_invalid?(name)
       end
 
-      def invalid_element(name)
+      def blank_element(name)
         raise SitePrism::InvalidElementError, "#{name} has come from an item with no locators."
       end
 
@@ -97,7 +97,7 @@ module SitePrism
       end
 
       def create_helper_method(proposed_method_name, *find_args)
-        return invalid_element(proposed_method_name) if find_args.empty?
+        return blank_element(proposed_method_name) if find_args.empty?
 
         yield
       end
