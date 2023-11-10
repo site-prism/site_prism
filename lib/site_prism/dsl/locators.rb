@@ -14,6 +14,7 @@ module SitePrism
       def _find(*find_args)
         kwargs = find_args.pop
         shadow_root = kwargs.delete(:shadow_root) { false }
+        check_capybara_version_if_creating_shadow_root if shadow_root
         to_capybara_node.find(*find_args, **kwargs).tap do |element|
           break element.shadow_root if shadow_root
         end
@@ -67,6 +68,18 @@ module SitePrism
         options.merge!(find_args.pop) if find_args.last.is_a? Hash
         options.merge!(runtime_args.pop) if runtime_args.last.is_a? Hash
         options[:wait] = Capybara.default_max_wait_time unless options.key?(:wait)
+      end
+
+      def check_capybara_version_if_creating_shadow_root
+        require_version = '3.37.0'
+        return if Capybara::VERSION >= require_version
+
+        SitePrism.logger.error(
+          "Shadow root support requires Capybara version >= #{require_version}. " \
+          "You are using #{Capybara::VERSION}."
+        )
+
+        raise SitePrism::UnsupportedGemVersionError
       end
     end
   end

@@ -50,4 +50,7 @@ module SitePrism
 
   # DSL items are not permitted to be named in certain ways
   class InvalidDSLNameError < AttributeValidationError; end
+
+  # The version of the target gem is unsupported, so using that feature is not possible
+  class UnsupportedGemVersionError < SitePrismError; end
 end

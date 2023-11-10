@@ -154,4 +154,5 @@ end
 
 Then('I can see elements from the section composed of a shadow root') do
   expect(@test_site.shadow_root.shadow_root_section).to have_some_text
+rescue SitePrism::UnsupportedGemVersionError
 end
