@@ -153,6 +153,9 @@ Then('I can see elements from the block') do
 end
 
 Then('I can see elements from the section composed of a shadow root') do
+  # Skip if using Capybara that does not support shadow_root
+  require_version = '3.37.0'
+  next if Capybara::VERSION < require_version
+
   expect(@test_site.shadow_root.shadow_root_section).to have_some_text
-rescue SitePrism::UnsupportedGemVersionError
 end
