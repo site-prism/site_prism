@@ -153,9 +153,7 @@ Then('I can see elements from the block') do
 end
 
 Then('I can see elements from the section composed of a shadow root') do
-  # Skip if using Capybara that does not support shadow_root
-  require_version = '3.37.0'
-  next if Capybara::VERSION < require_version
+  skip_this_scenario('Minimum Capybara version not reached. Scenario will not pass') if Capybara::VERSION < '3.37.0'
 
   expect(@test_site.shadow_root.shadow_root_section).to have_some_text
 end
