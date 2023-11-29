@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <script type="text/javascript">
+      function load() {
+        // insert a Shadow Root
+        let element = document.getElementById('shadow-root');
+        let shadow = element.attachShadow({mode: 'open'});
+        let para = document.createElement('p');
+        let node = document.createTextNode('Some text in a shadow-root');
+        para.appendChild(node);
+        shadow.appendChild(para);
+      }
+      window.onload = load;
+    </script>
+  </head>
+  <body>
+    <div id="shadow-root"></div>
+  </body>
+</html>

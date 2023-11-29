@@ -151,3 +151,9 @@ end
 Then('I can see elements from the block') do
   expect(@test_site.home.people).to have_headline_clone
 end
+
+Then('I can see elements from the section composed of a shadow root') do
+  skip_this_scenario('Minimum Capybara version not reached. Scenario will not pass') if Capybara::VERSION < '3.37.0'
+
+  expect(@test_site.shadow_root.shadow_root_section).to have_some_text
+end

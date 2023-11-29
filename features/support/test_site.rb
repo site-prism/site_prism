@@ -29,6 +29,10 @@ class TestSite
     @redirect ||= Redirect.new
   end
 
+  def shadow_root
+    @shadow_root ||= ShadowRoot.new
+  end
+
   def slow
     @slow ||= Slow.new
   end
