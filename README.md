@@ -1688,11 +1688,12 @@ end
 
 ## Shadow Root
 
-SitePrism allows you to interact with Shadow Root too.
+SitePrism allows you to interact with Shadow Roots too.
 
 ### Creating an Shadow Root
 
-You can use the `section` methods and provide the arguments. Specify the reference name for the Shadow Root, the CSS selector to locate it, and add the `:shadow_root` option. For example:
+You can use the `section` methods and provide the arguments. Specify the reference name for the Shadow Root,
+the CSS selector to locate it, and add the `:shadow_root` option. For example:
 
 ```ruby
 class Home < SitePrism::Page
@@ -1701,6 +1702,8 @@ class Home < SitePrism::Page
   end
 end
 ```
+
+NB: By default `shadow_root` will be set to false
 
 ## SitePrism Configuration
 
