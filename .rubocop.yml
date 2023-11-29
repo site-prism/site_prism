@@ -61,3 +61,8 @@ Style/Documentation:
 Style/RegexpLiteral:
   EnforcedStyle: slashes
   AllowInnerSlashes: true
+
+# False negative: https://github.com/rubocop/rubocop/issues/12423
+Style/YodaCondition:
+  Exclude:
+    - lib/site_prism/dsl/locators.rb
