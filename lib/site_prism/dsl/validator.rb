@@ -2,7 +2,7 @@
 
 module SitePrism
   module DSL
-    # [SitePrism::DSL::Validators]
+    # [SitePrism::DSL::Validator]
     #
     # This is the new validator module which will check all DSL items against a whitelist
     # for any entries which break specific rules
