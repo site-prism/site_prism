@@ -7,7 +7,7 @@
 
 ### Changed
 - **Breaking Change**: Any page or section must now have valid constructor names for the SitePrism DSL
-  (For more info see: [UPGRADING.md](./UPGRADING.md))
+  (For more info (Including ENV key name change to `SITEPRISM_DSL_VALIDATION_DISABLED`), see: [UPGRADING.md](./UPGRADING.md))
   ([luke-hill])
 
 - Version bumps
