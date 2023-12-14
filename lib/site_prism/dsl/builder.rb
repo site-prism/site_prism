@@ -37,10 +37,10 @@ module SitePrism
       end
 
       def invalid_element_name?(name)
-        dsl_validation_enabled? && name_invalid?(name)
+        !dsl_validation_disabled? && name_invalid?(name)
       end
 
-      def dsl_validation_enabled?
+      def dsl_validation_disabled?
         SitePrism.dsl_validation_disabled || ENV.key?('SITEPRISM_DSL_VALIDATION_DISABLED')
       end
 
