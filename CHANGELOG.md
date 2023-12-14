@@ -19,7 +19,7 @@
 
 ### Fixed
 
-## [5.0.beta] - Unreleased
+## [5.0.beta] - 2023-10-19
 ### Removed
 - Dev Update: All traces of legacy `webdrivers` gem are now replaced with Selenium Manager
   - Consequently some lower versions of gems are not tested on later rubies owing to CI issues 
@@ -1258,7 +1258,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v4.0.3...main
+[main]:       https://github.com/site-prism/site_prism/compare/v5.0.beta...main
+[5.0.beta]:   https://github.com/site-prism/site_prism/compare/v4.0.3...v5.0.beta
 [4.0.3]:      https://github.com/site-prism/site_prism/compare/v4.0.2...v4.0.3
 [4.0.2]:      https://github.com/site-prism/site_prism/compare/v4.0.1...v4.0.2
 [4.0.1]:      https://github.com/site-prism/site_prism/compare/v4.0...v4.0.1

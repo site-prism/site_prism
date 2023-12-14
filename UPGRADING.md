@@ -1,8 +1,33 @@
 # Upgrading from SitePrism 4.x to 5.x
 
-## Stuff TBD
+## DSL name validation
 
-TBD
+The work to ban invalid DSL names has been continued and extended. This is now enabled by default.
+
+Setting the env variable `SITEPRISM_DSL_VALIDATION_ENABLED` to anything other than `'true'` will disable these
+checks from being performed during the build metaprogram phase of suite execution.
+
+An additional piece of work to further amplify the gems logging has been done, so no additional work from the user
+is required to make these changes function or be diagnosable (Should something go wrong).
+
+## Shadow Root
+
+Initial work to support Shadow Root's has been added to the codebase.
+
+You can define a shadow root by setting `:shadow_root` to true when defining a `section` or `sections`
+
+## Input Fragments / Raw HTML testing
+
+SitePrism will no longer support interrogating html fragments or generating html on the fly using `Capybara.string`
+from version 6 onwards. Using it in v5 will throw a Deprecation warning.
+
+Ideally you would use a full page object generated in the standard way. A verbose page setup correctly is not that much
+more effort to create and is much more manipulable and re-usable than generating a `Capybara.string` on the fly.
+
+## Removal of `#page` method for `SitePrism::Page`
+
+This method has been removed, it was often used erroneously. If you want to interrogate the full page, it will now
+revert back to the default Capybara logic. The usage of this method on `SitePrism::Section` was removed in v4.
 
 # Upgrading from SitePrism 3.x to 4.x
 
@@ -26,7 +51,7 @@ that was an `:element`, `:elements` or `:sections` the overall resultant method 
 
 Now in `4.x` we ban these creations and will hard-fail instantly.
 
-## Removal of #page for SitePrism::Section
+## Removal of `#page` method for `SitePrism::Section`
 
 In SitePrism `3.x` (Specifically when using capybara < `3.29`), often people would want to obtain their "current" scope,
 either deliberately or by using a chained method. The way we used to do this was by calling `#page`, which would then
