@@ -41,8 +41,7 @@ module SitePrism
       end
 
       def dsl_validation_enabled?
-        ENV.fetch('SITEPRISM_DSL_VALIDATION_ENABLED', 'true') == 'true' ||
-          SitePrism.dsl_validation_enabled
+        SitePrism.dsl_validation_disabled || ENV.key?('SITEPRISM_DSL_VALIDATION_DISABLED')
       end
 
       def blank_element(name)
