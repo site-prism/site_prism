@@ -10,6 +10,9 @@
   (For more info (Including ENV key name change to `SITEPRISM_DSL_VALIDATION_DISABLED`), see: [UPGRADING.md](./UPGRADING.md))
   ([luke-hill])
 
+- The default level for the SitePrism logger is now set to `:WARN`
+  - (This was an oversight, but feels ok to switch in a major version for the v5 full release)
+
 - Version bumps
   - `site_prism-all_there` any version up to v3 can now be used
   - `rubocop` and associated gems have had partial bumps
