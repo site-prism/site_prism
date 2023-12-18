@@ -4,7 +4,7 @@
 
 The work to ban invalid DSL names has been continued and extended. This is now enabled by default.
 
-Setting the env variable `SITEPRISM_DSL_VALIDATION_ENABLED` to anything other than `'true'` will disable these
+Setting the env variable `SITEPRISM_DSL_VALIDATION_DISABLED` (Name has changed from v4), to anything will disable these
 checks from being performed during the build metaprogram phase of suite execution.
 
 An additional piece of work to further amplify the gems logging has been done, so no additional work from the user
