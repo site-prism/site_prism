@@ -22,6 +22,11 @@ require 'site_prism/waiter'
 # [SitePrism]
 module SitePrism
   class << self
+    # SitePrism will enforce strict validation on all generated DSL items i.e. `element`
+    # The validations are found inside the SitePrism::DSL::Validator module
+    # NB: To ensure no unwanted validation issues, this must be disabled BEFORE any page / section code is autoloaded
+    attr_accessor :dsl_validation_disabled
+
     def configure
       yield self
     end
