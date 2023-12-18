@@ -44,4 +44,22 @@ describe SitePrism::DSL::Validator do
       it { is_expected.to be_nil }
     end
   end
+
+  context 'when disabled' do
+    let(:invalid_page) do
+      Class.new(SitePrism::Page) do
+        element :no_im_not_valid, '.foo'
+      end
+    end
+
+    describe '.name_invalid?' do
+      before { allow(SitePrism).to receive(:dsl_validation_disabled).and_return(true) }
+
+      it 'is never called when invalid DSL names are permitted' do
+        expect(invalid_page).not_to receive(:name_invalid?)
+
+        invalid_page
+      end
+    end
+  end
 end
