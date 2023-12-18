@@ -22,18 +22,18 @@ describe SitePrism do
 
   describe '.logger' do
     context 'with default severity' do
-      it 'does not log messages below UNKNOWN' do
+      it 'does not log messages below WARN' do
         log_messages = capture_stdout do
           described_class.logger.debug('DEBUG')
-          described_class.logger.fatal('FATAL')
+          described_class.logger.info('INFO')
         end
 
         expect(log_messages).to be_empty
       end
 
-      it 'logs UNKNOWN level messages' do
+      it 'logs WARN level messages' do
         log_messages = capture_stdout do
-          described_class.logger.unknown('UNKNOWN')
+          described_class.logger.warn('WARN')
         end
 
         expect(lines(log_messages)).to eq(1)
@@ -91,7 +91,7 @@ describe SitePrism do
   describe '.log_level' do
     subject { described_class.log_level }
 
-    it { is_expected.to eq(:UNKNOWN) }
+    it { is_expected.to eq(:WARN) }
 
     context 'when changed to `INFO`' do
       before { described_class.log_level = :INFO }
