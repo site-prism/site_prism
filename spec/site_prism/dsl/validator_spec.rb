@@ -41,7 +41,7 @@ describe SitePrism::DSL::Validator do
     context 'with a valid string' do
       subject { validator.name_invalid?('abcdef123_XYZ') }
 
-      it { is_expected.to be_nil }
+      it { is_expected.to be false }
     end
   end
 
