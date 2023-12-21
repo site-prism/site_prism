@@ -13,10 +13,8 @@ module SitePrism
       base.extend(ClassMethods)
     end
 
-    # In certain circumstances, we cache that the page has already
-    # been confirmed to be loaded so that actions which
-    # call `loaded?` a second time do not need to perform
-    # the load_validation queries against the page a second time.
+    # In certain circumstances, we cache that the page or section has already been "loaded" so that actions which
+    # call `loaded?` a second time do not need to perform the load_validation queries against the page a second time.
     attr_accessor :loaded, :load_error
 
     # Executes the given block after the page is loaded.
@@ -27,8 +25,7 @@ module SitePrism
       # inside another when_loaded block.
       previously_loaded = loaded
 
-      # Within the block, check (and cache) loaded?, to see whether the
-      # page has indeed loaded according to the rules defined by the user.
+      # Within the block, check (and cache) loaded?, to see whether the page has indeed loaded according to the rules defined by the user.
       self.loaded = loaded?
 
       # If the page hasn't loaded. Then crash and return the error message.
@@ -68,13 +65,12 @@ module SitePrism
     end
 
     # [SitePrism::Loadable::ClassMethods]
-    # This exposes all of the DSL definitions users will use when generating "loadables"
+    # This exposes all of the DSL definitions users will use when generating "Loadables"
     #
-    # A "Loadable" is a definition whereby the page object once loaded must pass a boolean check
-    # These loadables are typically provided using the method `load_validation`
+    # A "Loadable" is a definition whereby the page/section object once loaded must pass a boolean check
+    # These Loadables are typically provided using the method `load_validation`
     module ClassMethods
-      # The list of load_validations.
-      # They will be executed in the order they are defined.
+      # The list of load_validations. They are executed in the order they are defined.
       #
       # @return [Array]
       def load_validations
@@ -85,21 +81,15 @@ module SitePrism
         end
       end
 
-      # Appends a load validation block to the page class.
+      # Appends a load validation block to the page/section class.
       #
-      # When `loaded?` is called, these blocks are instance_eval'd
-      # against the current page instance.
-      # This allows users to wait for specific events to occur on
-      # the page or certain elements to be loaded before performing
-      # any actions on the page.
+      # When `loaded?` is called, these blocks are instance_eval'd against the current page instance. This allows users to wait for
+      # specific events to occur on the page or certain elements to be loaded before performing any actions on the page.
       #
-      # @param block [&block] A block which returns true if the page
-      # loaded successfully, or false if it did not.
-      # This block can contain up to 2 elements in an array
-      # The first is the physical validation test to be truthily evaluated.
+      # @param block [&block] A block which returns true if the page loaded successfully, or false if it did not.
+      # This block can contain up to 2 elements in an array -> The first is the physical validation test to be truthily evaluated.
       #
-      # If this does not pass, then the 2nd item (if defined), is output
-      # as an error message to the +FailedLoadValidationError+ that is thrown
+      # If this does not pass, then the 2nd item (if defined), is output as an error message on the +FailedLoadValidationError+
       #
       # @return [Proc]
       def load_validation(&block)
