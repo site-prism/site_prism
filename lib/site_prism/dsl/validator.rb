@@ -2,7 +2,7 @@
 
 module SitePrism
   module DSL
-    # [SitePrism::DSL::Validators]
+    # [SitePrism::DSL::Validator]
     #
     # This is the new validator module which will check all DSL items against a whitelist
     # for any entries which break specific rules
@@ -22,25 +22,25 @@ module SitePrism
       private
 
       def prefix_invalid?(name)
-        return unless prefix_blacklist.any? { |prefix| name.start_with?(prefix) }
+        return false unless prefix_blacklist.any? { |prefix| name.start_with?(prefix) }
 
         log_failure(name, 'prefix')
       end
 
       def suffix_invalid?(name)
-        return unless suffix_blacklist.any? { |prefix| name.end_with?(prefix) }
+        return false unless suffix_blacklist.any? { |prefix| name.end_with?(prefix) }
 
         log_failure(name, 'suffix')
       end
 
       def characters_invalid?(name)
-        return if name.match?(regex_permission)
+        return false if name.match?(regex_permission)
 
         log_failure(name, 'character(s)')
       end
 
       def blacklisted?(name)
-        return unless blacklisted_names.include?(name)
+        return false unless blacklisted_names.include?(name)
 
         log_failure(name, 'name (blacklisted entry)')
       end

@@ -1,5 +1,3 @@
-inherit_from: .rubocop_todo.yml
-
 # This allows us to merge arrays for Exclude rules on AllCops or a specific cop
 inherit_mode:
   merge:

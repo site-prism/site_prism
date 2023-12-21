@@ -29,8 +29,8 @@ We have a brief set of setup docs [HERE](https://github.com/site-prism/site_pris
 
 ## Supported Rubies / Browsers
 
-SitePrism is built and tested to work on Ruby 2.6 - 3.1.
-If you are using SitePrism with Ruby 2.5-2.7 it is highly advisable to upgrade to a more modern
+SitePrism is built and tested to work on Ruby 2.7 - 3.2.
+If you are using SitePrism with Ruby 2.7 it is highly advisable to upgrade to a more modern
 Ruby (v3+), if for any other reason, to get a performance improvement!
 
 SitePrism should run on all major browsers. The gem's integration tests are run on Chrome and Firefox.
@@ -66,7 +66,7 @@ class SearchResults < SitePrism::Page
   end
 end
 
-# define sections used on multiple pages or multiple times on one page
+# Define sections that are used on multiple pages or multiple times on one page
 
 class Menu < SitePrism::Section
   element :search, 'a.search'
@@ -79,7 +79,7 @@ class SearchResults < SitePrism::Section
   element :blurb, 'span.result-description'
 end
 
-# now for some tests
+# Then we can write some tests
 
 When('I navigate to the google home page') do
   @home = Home.new
@@ -88,6 +88,7 @@ end
 
 Then('the home page should contain the menu and the search form') do
   @home.wait_until_menu_visible(wait: 5)
+  
   expect(@home).to have_menu
   expect(@home).to have_search_field
   expect(@home).to have_search_button
@@ -100,11 +101,13 @@ end
 
 Then('the search results page is displayed') do
   @results_page = SearchResults.new
+  
   expect(@results_page).to be_displayed
 end
 
 Then('the search results page contains 10 individual search results') do
   @results_page.wait_until_search_results_visible(wait: 5)
+  
   expect(@results_page).to have_search_results(count: 10)
 end
 
@@ -112,8 +115,6 @@ Then('the search results contain a link to the wikipedia sausages page') do
   expect(@results_page.search_result_links).to include('http://en.wikipedia.org/wiki/Sausage')
 end
 ```
-
-Now for the details...
 
 ## Setup
 
@@ -166,19 +167,15 @@ And again, as above, a sample driver is no different to a normal driver instanti
 
 ## Introduction to the Page Object Model
 
-The Page Object Model is a test automation pattern that aims to create
-an abstraction of your site's user interface that can be used in tests.
-The most common way to do this is to model each page as a class, and
-to then use instances of those classes in your tests.
+The Page Object Model is a test automation pattern that aims to create an abstraction of your sites user
+interface that can be used in tests. The most common way to do this is to model each page as a class and
+then to use instances of those classes in your tests.
 
-If a class represents a page then each element of the page is
-represented by a method that, when called, returns a reference to that
-element that can then be acted upon (clicked, type in some text), or
-queried (is it enabled? / visible?).
+If a class represents a page then each element of the page is represented by a method that, when called, returns a
+reference to that element that can then be acted upon (clicked, type in some text), or queried (is it enabled? / visible?).
 
-SitePrism is based around this concept, but goes further as you'll see
-below by also allowing modelling of repeated sections that appear on
-multiple pages, or many times on a page using the concept of sections.
+SitePrism is based around this concept, but goes further as you'll see below by also allowing modelling of
+repeated sections that appear on multiple pages, or many times on a page using the concept of sections.
 
 ## Pages
 
@@ -216,9 +213,8 @@ class Home < SitePrism::Page
 end
 ```
 
-Note that setting a URL is **optional** - you only need to set a url if you want to be able to
-navigate directly to that page. It makes sense to set the URL for a page model of a
-home page or a login page, but probably not a search results page.
+Note that setting a URL is **optional** - you only need to set a url if you want to be able to navigate directly to that page.
+It makes sense to set the URL for a page model of a home page or a login page, but probably not a search results page.
 
 #### Parametrized URLs
 
@@ -281,10 +277,9 @@ navigate to the URL set against that page's class.
 
 ### Verifying that a particular page is displayed
 
-Automated tests often need to verify that a particular page is
-displayed. SitePrism can automatically parse your URL template
-and verify that whatever components your template specifies match the
-currently viewed page. For example, with the following URL template:
+Automated tests often need to verify that a particular page is displayed. SitePrism can automatically parse
+your templated URL and verify that whatever components your template specifies match the currently viewed page.
+For example, with the following URL template:
 
 ```ruby
 class Account < SitePrism::Page
@@ -302,10 +297,9 @@ expect(@account_page.current_url).to end_with('/accounts/22?token=ca2786616a4285
 expect(@account_page).to be_displayed
 ```
 
-Calling `#displayed?` will return true if the browser's current URL
-matches the page's template and false if it doesn't. It will wait for
-`Capybara.default_max_wait_time` seconds or you can pass an explicit
-wait time in seconds as the first argument like this:
+Calling `#displayed?` will return true if the browser's current URL matches the page's template and false if
+it doesn't. It will wait for `Capybara.default_max_wait_time` seconds or you can pass an explicit wait time in
+seconds as the first argument like this:
 
 ```ruby
 @account_page.displayed?(10) # wait up to 10 seconds for display
@@ -346,9 +340,8 @@ expect(@account_page.url_matches.dig('query', 'token')).to eq('ca2786616a4285bc'
 
 #### Falling back to basic regexp matchers
 
-If SitePrism's built-in URL matching is not sufficient for your needs
-you can override and use SitePrism's previous support for regular expression-based
-URL matchers by it by calling `set_url_matcher`:
+If SitePrism's built-in URL matching is not sufficient for your needs you can override and use SitePrism's
+support for regular expression-based URL matchers by it by calling `set_url_matcher`:
 
 ```ruby
 class Account < SitePrism::Page
@@ -377,6 +370,7 @@ end
 
 @account = Account.new
 @account.current_url #=> "http://www.example.com/account/123"
+
 expect(@account.current_url).to include('example.com/account/')
 ```
 
@@ -394,10 +388,9 @@ end
 
 ### HTTP vs. HTTPS
 
-You can easily tell if the page is secure or not by checking to see if
-the current URL begins with 'https' or not. SitePrism provides the
-`secure?` method that will return true if the current url begins with
-'https' and false if it doesn't. For example:
+You can easily tell if the page is secure or not by checking to see if the current URL begins with 'https' or not.
+SitePrism provides the `#secure?` method that will return true if the current url begins with 'https' and false if it doesn't.
+For example:
 
 ```ruby
 class Account < SitePrism::Page
@@ -405,16 +398,15 @@ end
 
 @account = Account.new
 @account.secure? #=> true/false
+
 expect(@account).to be_secure
 ```
 
 ## Elements
 
-Pages are made up of elements (text fields, buttons, combo boxes, etc),
-either individual elements or groups of them. Examples of individual
-elements would be a search field or a company logo image; examples of
-element collections would be items in any sort of list, eg: menu items,
-images in a carousel, etc.
+Pages are made up of elements (text fields, buttons, combo boxes, etc), either individual elements or groups of
+them. Examples of individual elements would be a search field or a company logo image; examples of element collections would
+be items in any sort of list, eg: menu items,images in a carousel, etc.
 
 ### Individual Elements
 
@@ -508,18 +500,16 @@ Using the above example:
 
 ```ruby
 Then('the search field exists')do
-  expect(@home).to have_no_search_field #NB: NOT => expect(@home).not_to have_search_field
+  expect(@home).to have_no_search_field #NB: NOT THE SAME AS => expect(@home).not_to have_search_field
 end
 ```
 
 #### Waiting for an element to become visible
 
-A method that gets added by calling `element` is the
-`wait_until_<element_name>_visible` method.
+A method that gets added by calling `element` is the `wait_until_<element_name>_visible` method.
 This method delegates to [Capybara::Node::Matchers#has_selector?](https://www.rubydoc.info/github/teamcapybara/capybara/master/Capybara/Node/Matchers#has_selector%3F-instance_method).
-Calling this method will cause the test to wait for Capybara's default wait time for the element
-to become visible. You can customise the wait time by supplying a number
-of seconds to wait in-line or configuring the default wait time.
+Calling this method will cause the test to wait for Capybara's default wait time for the element to become visible. You can customise
+the wait time by supplying a number of seconds to wait in-line or configuring the default wait time.
 
 ```ruby
 @home.wait_until_search_field_visible # using the default wait time set
@@ -529,12 +519,10 @@ of seconds to wait in-line or configuring the default wait time.
 
 #### Waiting for an element to become invisible
 
-Another method added by calling `element` is the
-`wait_until_<element_name>_invisible` method.
+Another method added by calling `element` is the `wait_until_<element_name>_invisible` method.
 This method delegates to [Capybara::Node::Matchers#has_no_selector?](https://www.rubydoc.info/github/teamcapybara/capybara/master/Capybara/Node/Matchers#has_no_selector%3F-instance_method).
-Calling this method will cause the test to wait for Capybara's default
-wait time for the element to become invisible. You can as with the visibility
-waiter, customise the wait time in the same way.
+Calling this method will cause the test to wait for Capybara's default wait time for the element to become invisible.
+You can (as with the visibility waiter), customise the wait time in the same way.
 
 ```ruby
 @home.wait_until_search_field_invisible # using the default wait time set
@@ -544,9 +532,8 @@ waiter, customise the wait time in the same way.
 
 #### CSS Selectors vs. XPath Expressions
 
-While the above examples all use CSS selectors to find elements, it is
-possible to use XPath expressions too. In SitePrism, everywhere that you
-can use a CSS selector, you can use an XPath expression.
+While the above examples all use CSS selectors to find elements, it is possible to use XPath expressions too.
+In SitePrism, everywhere that you can use a CSS selector, you can use an XPath expression (Standard Capybara logic).
 
 An example:
 

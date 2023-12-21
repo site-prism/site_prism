@@ -11,7 +11,7 @@ describe SitePrism::Logger do
     end
 
     it 'has a default logging level' do
-      expect(logger.level).to eq(5)
+      expect(logger.level).to eq(2)
     end
   end
 end
