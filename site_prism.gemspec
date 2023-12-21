@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'addressable', '~> 2.8', '>= 2.8.1'
   s.add_dependency 'capybara', '~> 3.31'
-  s.add_dependency 'site_prism-all_there', '>= 2', '< 4'
+  s.add_dependency 'site_prism-all_there', '> 2', '< 5'
 
   s.add_development_dependency 'automation_helpers', '~> 4.0'
   s.add_development_dependency 'cucumber', '> 7', '< 10'

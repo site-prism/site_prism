@@ -36,7 +36,7 @@ module SitePrism
       # The specific url matcher that is used to validate the page is loaded.
       # When one hasn't been previously set, use the url that was set as a direct Regexp exact matcher
       #
-      # @return [Regexp]
+      # @return [Regexp || String]
       def url_matcher
         @url_matcher ||= url
       end

@@ -2,6 +2,13 @@
 ### Removed
 
 ### Added
+
+### Changed
+
+### Fixed
+
+## [5.0] - Unreleased
+### Added
 - Support for Shadow Root
   - You can define it by setting `:shadow_root` to true when defining a `section` ([souchan2000])
 
@@ -11,7 +18,7 @@
   ([luke-hill])
 
 - The default level for the SitePrism logger is now set to `:WARN`
-  - (This was an oversight, but feels ok to switch in a major version for the v5 full release)
+  - (This was an oversight, but ok to switch for the v5 full release)
 
 - Version bumps
   - `site_prism-all_there` any version up to v3 can now be used
@@ -20,22 +27,20 @@
   - `capybara` now must be at least v3.31
     ([luke-hill])
 
-### Fixed
-
 ## [5.0.beta] - 2023-10-19
 ### Removed
 - Dev Update: All traces of legacy `webdrivers` gem are now replaced with Selenium Manager
   - Consequently some lower versions of gems are not tested on later rubies owing to CI issues 
     ([luke-hill])
 
-- `SitePrism::Page#page` is now removed. 
+- `SitePrism::Page#page` is now removed
   - Use either `Capybara.current_session` or directly interrogate your input fragment (This is now deprecated)
 
 ### Changed
 - **Required Ruby Version is now 2.7+**
   ([luke-hill])
 
-- Internal change: All DSL code has been segregated and moved around. No method name changes
+- Internal change: All DSL code has been segregated and moved around (No method name changes)
   ([luke-hill])
 
 - **Breaking Change:** DSL Validation has moved `DSLValidator` -> `DSL::Validator` and is now implemented by default
@@ -1261,7 +1266,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v5.0.beta...main
+[main]:       https://github.com/site-prism/site_prism/compare/v5.0...HEAD
+[5.0]:        https://github.com/site-prism/site_prism/compare/v5.0.beta...v5.0
 [5.0.beta]:   https://github.com/site-prism/site_prism/compare/v4.0.3...v5.0.beta
 [4.0.3]:      https://github.com/site-prism/site_prism/compare/v4.0.2...v4.0.3
 [4.0.2]:      https://github.com/site-prism/site_prism/compare/v4.0.1...v4.0.2
