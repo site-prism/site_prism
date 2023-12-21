@@ -56,7 +56,7 @@ module SitePrism
     end
 
     def there?(name)
-      send("has_#{name}?")
+      send(:"has_#{name}?")
     end
   end
 end
