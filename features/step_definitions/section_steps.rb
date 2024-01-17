@@ -58,7 +58,7 @@ Then('access to elements is constrained to those within the section') do
   expect(@test_site.home.has_welcome_message?).to be true
 
   @test_site.home.people.within do |section|
-    expect(section).not_to have_css('.welcome')
+    expect(section).to have_no_css('.welcome')
 
     expect { section.has_welcome_message? }.to raise_error(NoMethodError)
   end
