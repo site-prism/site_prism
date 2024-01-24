@@ -1,4 +1,4 @@
-Copyright (c) 2011-2023, The SitePrism team
+Copyright (c) 2011, The SitePrism team
 
 All rights reserved.
 
