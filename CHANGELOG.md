@@ -7,7 +7,14 @@
 
 ### Fixed
 
-## [5.0] - Unreleased
+## [5.0.1] - 2024-01-24
+### Changed
+- Version bumps to various rubocop gems
+
+### Fixed
+- Performance issue with `ElementChecker` class
+
+## [5.0] - 2023-12-21
 ### Added
 - Support for Shadow Root
   - You can define it by setting `:shadow_root` to true when defining a `section` ([souchan2000])
@@ -1266,7 +1273,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v5.0...HEAD
+[main]:       https://github.com/site-prism/site_prism/compare/v5.0.1...HEAD
+[5.0.1]:      https://github.com/site-prism/site_prism/compare/v5.0...v5.0.1
 [5.0]:        https://github.com/site-prism/site_prism/compare/v5.0.beta...v5.0
 [5.0.beta]:   https://github.com/site-prism/site_prism/compare/v4.0.3...v5.0.beta
 [4.0.3]:      https://github.com/site-prism/site_prism/compare/v4.0.2...v4.0.3
