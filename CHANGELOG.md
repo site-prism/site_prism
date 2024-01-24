@@ -7,7 +7,14 @@
 
 ### Fixed
 
-## [5.0] - Unreleased
+## [5.0.1] - 2024-01-24
+### Changed
+- Version bumps to various rubocop gems ([luke-hill])
+
+### Fixed
+- Performance issue with `ElementChecker` class ([luke-hill])
+
+## [5.0] - 2023-12-21
 ### Added
 - Support for Shadow Root
   - You can define it by setting `:shadow_root` to true when defining a `section` ([souchan2000])
@@ -19,6 +26,7 @@
 
 - The default level for the SitePrism logger is now set to `:WARN`
   - (This was an oversight, but ok to switch for the v5 full release)
+    ([luke-hill])
 
 - Version bumps
   - `site_prism-all_there` any version up to v3 can now be used
@@ -35,6 +43,7 @@
 
 - `SitePrism::Page#page` is now removed
   - Use either `Capybara.current_session` or directly interrogate your input fragment (This is now deprecated)
+    ([luke-hill])
 
 ### Changed
 - **Required Ruby Version is now 2.7+**
@@ -1266,7 +1275,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v5.0...HEAD
+[main]:       https://github.com/site-prism/site_prism/compare/v5.0.1...HEAD
+[5.0.1]:      https://github.com/site-prism/site_prism/compare/v5.0...v5.0.1
 [5.0]:        https://github.com/site-prism/site_prism/compare/v5.0.beta...v5.0
 [5.0.beta]:   https://github.com/site-prism/site_prism/compare/v4.0.3...v5.0.beta
 [4.0.3]:      https://github.com/site-prism/site_prism/compare/v4.0.2...v4.0.3

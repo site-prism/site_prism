@@ -8,7 +8,7 @@ $ cd site_prism
 $ bundle
 ```
 
-Commands you may need whilst hacking on SitePrism are ...
+Commands you may need whilst contributing to SitePrism are ...
 
 ```bash
 $ bundle exec cucumber # Run feature tests on Chrome (Default browser)
