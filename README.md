@@ -25,7 +25,7 @@ then please do so. Visit the OpenCollective links above for more details.
 
 We love it when people want to get involved with our Open Source Project.
 
-We have a brief set of setup docs [HERE](https://github.com/site-prism/site_prism/blob/main/HACKING.md)
+We have a brief set of contribution documents [HERE](https://github.com/site-prism/site_prism/blob/main/CONTRIBUTING.md)
 
 ## Supported Rubies / Browsers
 
