@@ -89,7 +89,7 @@
 
 - Gem bumps to dev_dependencies
   - `webdrivers` is now pinned to v5 versions
-  - `rubocop` gems all bumped to latest ruby2.6 compliant version
+  - `rubocop` gems all bumped to latest ruby 2.6 compliant version
     ([luke-hill])
 
 ### Fixed
@@ -126,7 +126,7 @@
 
 - Gem bumps to dev_dependencies
   - `webdrivers` now can use all v5 revisions (helps with CI compatibility with selenium)
-  - `rubocop` gems all bumped to latest ruby2.5 compliant version
+  - `rubocop` gems all bumped to latest ruby 2.5 compliant version
     ([luke-hill])
 
 - `SitePrism::Page#page` is now deprecated
@@ -316,7 +316,7 @@
 
 ## [3.4.1] - 2019-09-26
 ### Changed
-- Update the `Gemfile.low_spec` as it was untouched in over 6months
+- Update the `Gemfile.low_spec` as it was untouched in over 6 months
 ([luke-hill])
 
 - Unlock `site_prism-all_there` to any `0.x` version higher than `0.3` now it is more stable
@@ -409,7 +409,7 @@ impending major rubocop release
 
 - Added new `#wait_until_displayed` method that sits alongside `#displayed?`
   - Initial `#displayed?` call has now been refactored to be a bit cleaner
-  - `#wait_until_displayed` will wait or crash (Not return a booleanlike `#displayed?`
+  - `#wait_until_displayed` will wait or crash (Not return a boolean like `#displayed?`
 ([TheSpartan1980] & [luke-hill])
 
 ### Changed
