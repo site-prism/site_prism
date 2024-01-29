@@ -1,4 +1,4 @@
-# SitePrism dev setup
+# SitePrism local setup
 
 To successfully get SitePrism running locally, you need to just fork the repo
 
@@ -20,10 +20,9 @@ $ bundle exec rubocop # Run RuboCop
 - Write your code. Make sure to add tests AND documentation (if appropriate)
 - Submit a pull request, ensuring it passes CI
 - If you encounter issues regarding not being able to perform browser tests check whether
-`geckodriver` and/or `chromedriver` have been downloaded (The `webdrivers` gem controls this).
+`geckodriver` and/or `chromedriver` have been downloaded (Selenium Manager controls this), or they
+are on your `$PATH`
 
 Happy Testing / Developing!
-
-Cheers,
 
 The SitePrism Team
