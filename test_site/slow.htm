@@ -22,26 +22,26 @@
       }
 
       function isEven(value){
-        return value%2 == 0;
+        return value % 2 == 0;
       }
 
       function create_5_links() {
-        for(var i=0; i<5; i++){
-          //create the link
+        for(var i = 0; i < 5; i++){
+          // create the link
           link = document.createElement("a");
-          //set the class/href/text
+          // set the class/href/text
           link.setAttribute("class", "slow");
           link.setAttribute("href", "slow.htm");
           link.innerText = "slow link" + i;
 
-          //add an extra conditional class
+          // add an extra conditional class
           if(isEven(i)) {
             link.setAttribute("class", "even");
           } else {
             link.setAttribute("class", "odd");
           }
 
-          //add the link to the page
+          // add the link to the page
           document.body.appendChild(link);
           document.body.append(" ");
         }

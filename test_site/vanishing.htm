@@ -7,16 +7,15 @@
       }
 
       function removeElements(elementArray) {
-        for (var i=0; i<elementArray.length; i++)
+        for (var i = 0; i < elementArray.length; i++)
         {
           elementArray[i].remove();
         }
       }
 
       function load() {
-        //find all of the divs that need to be automatically removed
+        // find all of the divs that need to be automatically removed
         auto_remove_divs = Array.from(document.getElementsByClassName('div_that_is_removed'));
-
         setTimeout("document.getElementById('will_become_invisible').style.display='none';", 175);
         setTimeout("removeElements(auto_remove_divs)", 175);
       }
