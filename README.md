@@ -1,4 +1,5 @@
 # SitePrism
+
 [![Gem Version](https://badge.fury.io/rb/site_prism.svg)](https://badge.fury.io/rb/site_prism)
 [![Build Status](https://github.com/site-prism/site_prism/actions/workflows/ci.yml/badge.svg)](https://github.com/site-prism/site_prism/actions/workflows/ci.yml)
 
@@ -154,7 +155,7 @@ end
 
 ### Using SitePrism with RSpec
 
-If you're using rspec instead, here's what needs requiring:
+If you're using rspec, here's what needs requiring:
 
 ```ruby
 require 'capybara'
@@ -177,12 +178,12 @@ reference to that element that can then be acted upon (clicked, type in some tex
 SitePrism is based around this concept, but goes further as you'll see below by also allowing modelling of
 repeated sections that appear on multiple pages, or many times on a page using the concept of sections.
 
-## Pages
+### Pages
 
 As you might be able to guess from the name, pages are fairly central to
 the Page Object Model. Here's how SitePrism models them:
 
-### Creating your first Page using the Page Object Model
+#### Creating your first Page using the Page Object Model
 
 The simplest page is one that has nothing defined in it. Here's an
 example of how to begin modelling a home page:
@@ -194,7 +195,7 @@ end
 
 The above has nothing useful defined, so to start with lets give it some properties.
 
-### Adding a URL
+#### Adding a URL
 
 A page usually has a URL. If you want to be able to navigate to a page,
 you'll need to set its URL. Here's how:
@@ -237,7 +238,7 @@ end
 
 See https://github.com/sporkmonger/addressable for more details on parameterized URLs.
 
-### Navigating to the Page
+### Navigating to a Page
 
 Once the URL has been set (using `set_url`), you can navigate directly to the page using `#load`:
 
