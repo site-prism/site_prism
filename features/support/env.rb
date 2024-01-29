@@ -28,7 +28,7 @@ options =
       opts.add_argument('--disable-gpu')
     end
   else
-    Selenium::WebDriver::Firefox::Options.new.tap { |opts| opts.add_argument('-headless') }
+    AutomationHelpers::Drivers::V4::Options.for(:firefox)
   end
 
 Capybara.register_driver :site_prism do |app|
