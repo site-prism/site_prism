@@ -6,6 +6,7 @@ require 'automation_helpers/drivers/local'
 require 'capybara'
 require 'capybara/cucumber'
 require 'selenium-webdriver'
+require 'webdrivers'
 
 $LOAD_PATH << './lib'
 
