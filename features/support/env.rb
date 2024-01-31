@@ -19,7 +19,8 @@ require_relative 'sections/all'
 
 SimpleCov.start if defined?(SimpleCov) && RUBY_VERSION < '3.1'
 
-browser = ENV.fetch('BROWSER', 'chrome').to_sym
+browser = ENV.fetch('BROWSER', 'firefox').to_sym
+ENV['HEADLESS'] = 'true'
 
 options =
   if browser == :chrome
@@ -30,7 +31,7 @@ options =
       opts.add_argument('--disable-gpu')
     end
   else
-    Selenium::WebDriver::Firefox::Options.new.tap { |opts| opts.add_argument('-headless') }
+    AutomationHelpers::Drivers::V4::Options.for(:firefox)
   end
 
 Capybara.register_driver :site_prism do |app|
