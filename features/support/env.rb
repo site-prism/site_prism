@@ -21,17 +21,16 @@ SimpleCov.start if defined?(SimpleCov) && RUBY_VERSION < '3.1'
 
 browser = ENV.fetch('BROWSER', 'firefox').to_sym
 ENV['HEADLESS'] = 'true'
+options = AutomationHelpers::Drivers::V4::Options.for(browser)
 
 options =
   if browser == :chrome
-    Selenium::WebDriver::Chrome::Options.new.tap do |opts|
+    options.tap do |opts|
       opts.add_argument('--headless=new')
       opts.add_argument('--no-sandbox')
       opts.add_argument('--disable-dev-shm-usage')
       opts.add_argument('--disable-gpu')
     end
-  else
-    AutomationHelpers::Drivers::V4::Options.for(:firefox)
   end
 
 Capybara.register_driver :site_prism do |app|
