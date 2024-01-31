@@ -19,7 +19,7 @@ require_relative 'sections/all'
 
 SimpleCov.start if defined?(SimpleCov) && RUBY_VERSION < '3.1'
 
-browser = ENV.fetch('BROWSER', 'firefox').to_sym
+browser = ENV.fetch('BROWSER', 'chrome').to_sym
 ENV['HEADLESS'] = 'true'
 options = AutomationHelpers::Drivers::V4::Options.for(browser)
 
