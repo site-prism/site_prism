@@ -23,14 +23,13 @@ browser = ENV.fetch('BROWSER', 'chrome').to_sym
 ENV['HEADLESS'] = 'true'
 options = AutomationHelpers::Drivers::V4::Options.for(browser)
 
-options =
-  if browser == :chrome
-    options.tap do |opts|
-      opts.add_argument('--headless=new')
-      opts.add_argument('--no-sandbox')
-      opts.add_argument('--disable-gpu')
-    end
+if browser == :chrome
+  options.tap do |opts|
+    opts.add_argument('--headless=new')
+    opts.add_argument('--no-sandbox')
+    opts.add_argument('--disable-gpu')
   end
+end
 
 Capybara.register_driver :site_prism do |app|
   Capybara::Selenium::Driver.new(
