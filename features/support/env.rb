@@ -19,15 +19,18 @@ require_relative 'sections/all'
 SimpleCov.start if defined?(SimpleCov) && RUBY_VERSION < '3.1'
 
 browser = ENV.fetch('BROWSER', 'chrome').to_sym
-options = AutomationHelpers::Drivers::V4::Options.for(browser)
 
-if browser == :chrome
-  options.tap do |opts|
-    opts.add_argument('--no-sandbox')
-    opts.add_argument('--disable-dev-shm-usage')
-    opts.add_argument('--disable-gpu')
+options =
+  if browser == :chrome
+    Selenium::WebDriver::Chrome::Options.new.tap do |opts|
+      opts.add_argument('--headless=new')
+      opts.add_argument('--no-sandbox')
+      opts.add_argument('--disable-dev-shm-usage')
+      opts.add_argument('--disable-gpu')
+    end
+  else
+    Selenium::WebDriver::Firefox::Options.new.tap { |opts| opts.add_argument('-headless') }
   end
-end
 
 Capybara.register_driver :site_prism do |app|
   Capybara::Selenium::Driver.new(
