@@ -37,7 +37,7 @@ module SitePrism
       end
 
       def invalid_element_name?(name)
-        !dsl_validation_disabled? && name_invalid?(name)
+        !dsl_validation_disabled? && name_invalid?(name.to_s)
       end
 
       def dsl_validation_disabled?
