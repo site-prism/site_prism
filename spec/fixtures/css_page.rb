@@ -16,8 +16,8 @@ class CSSPage < SitePrism::Page
 
   sections :sections_one, Blank, 'span.locator'
 
-  iframe :iframe, CSSIFrame, '.iframe'
+  iframe :an_iframe, CSSIFrame, '.iframe'
 
   # missing_element is here to provide negative testing
-  expected_elements :element_one, :element_two, :element_three, :elements_one, :section_one, :sections_one, :missing_element, :iframe
+  expected_elements :element_one, :element_two, :element_three, :elements_one, :section_one, :sections_one, :missing_element, :an_iframe
 end

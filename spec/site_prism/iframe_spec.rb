@@ -7,7 +7,7 @@ describe 'Iframe' do
     before { allow(iframe_class).to receive(:new).and_return(iframe_instance) }
 
     it 'cannot be called out of block context' do
-      expect { page.iframe }.to raise_error(SitePrism::MissingBlockError)
+      expect { page.an_iframe }.to raise_error(SitePrism::MissingBlockError)
     end
 
     describe 'A Page with an iFrame contained within' do
@@ -16,7 +16,7 @@ describe 'Iframe' do
 
         expect(Capybara.current_session).to receive(:within_frame).with(*iframe_caller_args)
 
-        page.iframe(&:element_one)
+        page.an_iframe(&:element_one)
       end
 
       it 'passes the caller arg to the frame instance to then perform the location check' do
@@ -24,7 +24,7 @@ describe 'Iframe' do
 
         expect(iframe_instance).to receive(:_find).with(*element_caller_args)
 
-        page.iframe(&:element_one)
+        page.an_iframe(&:element_one)
       end
     end
 
@@ -38,7 +38,7 @@ describe 'Iframe' do
 
         expect(Capybara.current_session).to receive(:within_frame).with(*iframe_caller_args)
 
-        page.section_one.iframe(&:element_one)
+        page.section_one.an_iframe(&:element_one)
       end
 
       it 'passes the caller arg to the frame instance to then perform the location check' do
@@ -46,7 +46,7 @@ describe 'Iframe' do
 
         expect(iframe_instance).to receive(:_find).with(*element_caller_args)
 
-        page.section_one.iframe(&:element_one)
+        page.section_one.an_iframe(&:element_one)
       end
     end
   end
