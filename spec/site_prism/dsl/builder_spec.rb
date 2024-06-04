@@ -3,17 +3,17 @@
 describe SitePrism::DSL::Builder do
   let(:invalid_dsl_prefix) do
     Class.new(SitePrism::Page) do
-      element :no_im_not_valid, '.foo'
+      element :no_at_start, '.foo'
     end
   end
   let(:invalid_dsl_suffix) do
     Class.new(SitePrism::Page) do
-      element :no_im_not_valid_, '.foo'
+      element :underscore_at_end_, '.foo'
     end
   end
   let(:invalid_dsl_characters) do
     Class.new(SitePrism::Page) do
-      element :no_im_not_perM1tEd_anywhere, '.foo'
+      element :Im_starting_with_UPpErCASE, '.foo'
     end
   end
   let(:blacklisted_name) do
