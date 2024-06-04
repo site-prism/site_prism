@@ -61,7 +61,7 @@ describe 'Iframe' do
     # Stop the $stdout process leaking cross-tests
     before { wipe_logger! }
 
-    it 'will throw a warning when creating an iFrame with an ambiguous locator' do
+    it 'throws a warning when creating an iFrame with an ambiguous locator' do
       log_messages = capture_stdout do
         SitePrism.log_level = :WARN
         invalid_class
