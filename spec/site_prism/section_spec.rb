@@ -53,15 +53,15 @@ describe SitePrism::Section do
 
       let(:page_with_section) do
         Class.new(SitePrism::Page) do
-          section :section, SitePrism::Section, '.section'
+          section :a_section, SitePrism::Section, '.section'
         end
       end
 
-      it { is_expected.to respond_to(:section) }
-      it { is_expected.to respond_to(:has_section?) }
-      it { is_expected.to respond_to(:has_no_section?) }
-      it { is_expected.to respond_to(:wait_until_section_visible) }
-      it { is_expected.to respond_to(:wait_until_section_invisible) }
+      it { is_expected.to respond_to(:a_section) }
+      it { is_expected.to respond_to(:has_a_section?) }
+      it { is_expected.to respond_to(:has_no_a_section?) }
+      it { is_expected.to respond_to(:wait_until_a_section_visible) }
+      it { is_expected.to respond_to(:wait_until_a_section_invisible) }
       it { is_expected.to respond_to(:all_there?) }
       it { is_expected.to respond_to(:within) }
     end
@@ -129,7 +129,7 @@ describe SitePrism::Section do
         section :section_using_defaults, section_with_default_arguments
         section :section_using_defaults_from_parent, section_with_default_arguments_for_parent
         section :section_with_locator, section_with_default_arguments, '.other-section'
-        sections :sections, section_with_default_arguments
+        sections :sections_with_default_arguments, section_with_default_arguments
       end.new
     end
     let(:default_search_arguments) { [:css, '.section'] }

@@ -27,6 +27,12 @@ Layout/LineLength:
     - ^When
     - ^Then
 
+# These scenarios need empty blocks to trigger an error for not permitting blocks
+Lint/EmptyBlock:
+  Exclude:
+    - spec/site_prism/element_spec.rb
+    - spec/site_prism/elements_spec.rb
+
 # Don't count long arrays/hashes/heredocs as long methods
 Metrics/MethodLength:
   CountAsOne: ['array', 'hash', 'heredoc']

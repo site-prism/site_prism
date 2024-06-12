@@ -6,7 +6,7 @@ Then('I can see a collection of sections') do
     expect(search_result.description.text).to eq("Result #{index}")
   end
 
-  expect(results.size).to eq(4)
+  expect(results.length).to eq(4)
 end
 
 Then('I can see a collection of anonymous sections') do
@@ -15,7 +15,7 @@ Then('I can see a collection of anonymous sections') do
     expect(section.heading.text).to eq("Section #{index}")
   end
 
-  expect(anonymous_sections.size).to eq(2)
+  expect(anonymous_sections.length).to eq(2)
 end
 
 Then('I can execute in the context of each section by passing a block to within') do
@@ -43,5 +43,5 @@ Then('I can execute in the context of each section by passing a block to within'
     expect(section).to have_text(/Result/)
   end
 
-  expect(block_inner_executions).to eq 6
+  expect(block_inner_executions).to eq(6)
 end

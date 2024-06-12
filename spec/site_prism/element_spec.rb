@@ -13,6 +13,10 @@ describe 'Element' do
       it 'can be set on `SitePrism::Section`' do
         expect(SitePrism::Section).to respond_to(:element)
       end
+
+      it 'cannot be defined with a build time block' do
+        expect { invalid_page }.to raise_error(SitePrism::UnsupportedBlockError)
+      end
     end
 
     it { is_expected.to respond_to(:element_one) }
@@ -36,7 +40,7 @@ describe 'Element' do
     end
 
     context 'when other classes have the overlapping methods defined' do
-      subject { anonymous_test_class.new }
+      subject(:page) { anonymous_test_class.new }
 
       let(:anonymous_test_class) do
         Class.new do
@@ -51,11 +55,11 @@ describe 'Element' do
       end
 
       it 'does not break the normal existence matcher behaviour' do
-        expect(subject).to have_element_one
+        expect(page).to have_element_one
       end
 
       it 'does not break the SitePrism defined negation matcher behaviour' do
-        expect(subject).not_to have_element_two
+        expect(page).not_to have_element_two
       end
     end
 
@@ -79,6 +83,12 @@ describe 'Element' do
 
     let(:page) { CSSPage.new }
     let(:klass) { CSSPage }
+    let(:invalid_page) do
+      Class.new(CSSPage) do
+        element :fail, 'span.not-found' do
+        end
+      end
+    end
 
     it_behaves_like 'an element'
   end
@@ -88,6 +98,12 @@ describe 'Element' do
 
     let(:page) { XPathPage.new }
     let(:klass) { XPathPage }
+    let(:invalid_page) do
+      Class.new(XPathPage) do
+        element :fail, '//span[@class="not-found"]' do
+        end
+      end
+    end
 
     it_behaves_like 'an element'
   end

@@ -8,6 +8,7 @@
 - Used a bit more of the `automation_helpers` gem in local browser configuration (Still a bit messy whilst we support pre-selenium-manager versions) ([luke-hill])
 
 ### Fixed
+- Fixed a bug where the name validator wouldn't work properly due to not checking the full name ([luke-hill])
 - Some stylistic linting was done to test pages ([luke-hill])
 
 ## [5.0.1] - 2024-01-24
