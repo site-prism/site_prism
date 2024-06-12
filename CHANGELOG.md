@@ -4,6 +4,11 @@
 ### Added
 
 ### Changed
+
+### Fixed
+
+## [5.0.2] - 2024-06-12
+### Changed
 - Version bumps to various rubocop gems ([luke-hill])
 - Used a bit more of the `automation_helpers` gem in local browser configuration (Still a bit messy whilst we support pre-selenium-manager versions) ([luke-hill])
 
