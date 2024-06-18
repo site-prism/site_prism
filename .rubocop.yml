@@ -40,11 +40,6 @@ RSpec/SpecFilePathFormat:
   CustomTransform:
     RSpecMatchers: rspec_matchers
 
-# This is a single standardised transform - DEPRECATED (Remove in rubocop-rspec v3)
-RSpec/FilePath:
-  CustomTransform:
-    RSpecMatchers: rspec_matchers
-
 # Stylistic preference
 RSpec/MessageSpies:
   EnforcedStyle: receive
