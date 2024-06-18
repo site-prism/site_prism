@@ -10,6 +10,8 @@ checks from being performed during the build metaprogram phase of suite executio
 An additional piece of work to further amplify the gems logging has been done, so no additional work from the user
 is required to make these changes function or be diagnosable (Should something go wrong).
 
+NB: `no` as a filename was erroneously banned in the early `5.0.x` versions
+
 ## Shadow Root
 
 Initial work to support Shadow Root's has been added to the codebase.
