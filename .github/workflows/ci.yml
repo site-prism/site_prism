@@ -9,7 +9,7 @@ on:
       - main
 jobs:
   test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -31,7 +31,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-          bundler: '2.4.12'
+          bundler: '2.4.22'
           bundler-cache: true
       - run: bundle exec rspec
       - run: bundle exec cucumber --publish-quiet
