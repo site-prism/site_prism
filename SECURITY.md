@@ -2,15 +2,12 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+`site_prism` is only supported in the latest major version of the gem (Security updates or otherwise)
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.x     | :white_check_mark: |
-| 4.x     | :x:                |
-| 3.7.x   | :white_check_mark: |
-| < 3.7.x | :x:                |
+| Version  | Supported          |
+|----------|--------------------|
+| 5.x      | :white_check_mark: |
+| < 5.x    | :x:                |
 
 ## Reporting a Vulnerability
 
