@@ -6,6 +6,7 @@
 ### Changed
 
 ### Fixed
+- `no` as a DSL name was incorrectly banned. This has now been fixed ([luke-hill])
 
 ## [5.0.2] - 2024-06-12
 ### Changed

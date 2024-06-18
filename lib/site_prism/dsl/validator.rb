@@ -67,7 +67,6 @@ module SitePrism
         %w[
           attributes
           html
-          no
           title
           element
           elements
@@ -78,7 +77,7 @@ module SitePrism
       end
 
       def log_failure(name, type)
-        self.dsl_name_error = "DSL item: #{name} has an invalid #{type}"
+        self.dsl_name_error = "DSL item: #{name} is invalid. Issue: #{type}"
         SitePrism.logger.debug(debug_error(type))
       end
 
