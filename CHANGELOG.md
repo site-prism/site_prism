@@ -6,6 +6,12 @@
 ### Changed
 
 ### Fixed
+
+## [5.0.3] - 2024-06-19
+### Changed
+- Minor gem bumps both to required runtime gems and dev gems ([luke-hill])
+
+### Fixed
 - `no` as a DSL name was incorrectly banned. This has now been fixed ([luke-hill])
 
 ## [5.0.2] - 2024-06-12
@@ -1285,7 +1291,9 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v5.0.1...HEAD
+[main]:       https://github.com/site-prism/site_prism/compare/v5.0.3...HEAD
+[5.0.3]:      https://github.com/site-prism/site_prism/compare/v5.0.2...v5.0.3
+[5.0.2]:      https://github.com/site-prism/site_prism/compare/v5.0.1...v5.0.2
 [5.0.1]:      https://github.com/site-prism/site_prism/compare/v5.0...v5.0.1
 [5.0]:        https://github.com/site-prism/site_prism/compare/v5.0.beta...v5.0
 [5.0.beta]:   https://github.com/site-prism/site_prism/compare/v4.0.3...v5.0.beta
