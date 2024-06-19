@@ -3,10 +3,9 @@
 source 'https://rubygems.org'
 
 gem 'addressable', '< 2.9'
-gem 'capybara', '< 3.36'
+gem 'capybara', '< 3.38'
 gem 'cucumber', '< 8'
-gem 'matrix' # Only needed until the minimum version of capybara is > 3.36
-gem 'nokogiri', '< 1.14'
+gem 'nokogiri', '< 1.15'
 gem 'selenium-webdriver', '< 4.9'
 
 gemspec path: '..'
