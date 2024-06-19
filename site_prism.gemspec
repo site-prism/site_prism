@@ -6,6 +6,7 @@ Gem::Specification.new do |s|
   s.name        = 'site_prism'
   s.version     = SitePrism::VERSION
   s.required_ruby_version = '>= 2.7'
+  s.required_rubygems_version = '>= 3.2.3'
   s.platform    = Gem::Platform::RUBY
   s.license     = 'BSD-3-Clause'
   s.authors     = ['Luke Hill', 'Nat Ritmeyer']
@@ -22,8 +23,8 @@ Gem::Specification.new do |s|
   s.files        = Dir.glob('lib/**/*') + %w[LICENSE.md README.md]
   s.require_path = 'lib'
 
-  s.add_dependency 'addressable', '~> 2.8', '>= 2.8.1'
-  s.add_dependency 'capybara', '~> 3.31'
+  s.add_dependency 'addressable', '~> 2.8', '>= 2.8.4'
+  s.add_dependency 'capybara', '~> 3.32'
   s.add_dependency 'site_prism-all_there', '> 2', '< 5'
 
   s.add_development_dependency 'automation_helpers', '~> 4.0'
