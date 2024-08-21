@@ -55,7 +55,7 @@ describe SitePrism::Loadable do
 
   describe '.load_validation' do
     it 'adds a single validation to the load_validations list' do
-      expect { loadable.load_validation { true } }.to change { loadable.load_validations.size }.by(1)
+      expect { loadable.load_validation { true } }.to change { loadable.load_validations.length }.by(1)
     end
   end
 
@@ -98,13 +98,10 @@ describe SitePrism::Loadable do
         loadable.load_validation { [true?, 'true? failed'] }
       end
 
-      it 'raises a `FailedLoadValidationError`' do
+      it 'raises a `FailedLoadValidationError` with a user-defined message' do
         expect { instance.when_loaded { :foo } }
           .to raise_error(SitePrism::FailedLoadValidationError)
-      end
-
-      it 'can be supplied with a user-defined message' do
-        expect { instance.when_loaded { :foo } }.to raise_error.with_message('false? failed')
+          .with_message('false? failed')
       end
 
       it 'raises an error immediately on the first validation failure' do
