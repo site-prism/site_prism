@@ -5,6 +5,16 @@
 
 _A Page Object Model DSL for Capybara_
 
+- [Intro](#intro)
+- [Support](#support)
+- [Developing / Contributing to SitePrism](#developing--contributing-to-siteprism)
+- [Supported Rubies / Browsers](#supported-rubies--browsers)
+- [Synopsis](#synopsis)
+- [Setup](#setup)
+  - [Installation](#installation)
+
+## Intro
+
 SitePrism gives you a simple, clean and semantic DSL for describing your site using the Page Object Model pattern,
 for use with Capybara in automated acceptance testing.
 
