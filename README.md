@@ -30,7 +30,7 @@ We have a brief set of contribution documents [HERE](https://github.com/site-pri
 
 ## Supported Rubies / Browsers
 
-SitePrism is built and tested to work on Ruby 2.7 - 3.2.
+SitePrism is built and tested to work on Ruby 2.7 - 3.3.
 If you are using SitePrism with Ruby 2.7 it is highly advisable to upgrade to a more modern
 Ruby (v3+), if for any other reason, to get a performance improvement!
 
