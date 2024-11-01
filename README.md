@@ -12,6 +12,34 @@ _A Page Object Model DSL for Capybara_
 - [Synopsis](#synopsis)
 - [Setup](#setup)
   - [Installation](#installation)
+  - [Using SitePrism with Cucumber](#using-siteprism-with-cucumber)
+  - [Using SitePrism with RSpec](#using-siteprism-with-rspec)
+- [Introduction to the Page Object Model](#introduction-to-the-page-object-model)
+  - [Pages](#pages)
+    - [Creating your first Page using the Page Object Model](#creating-your-first-page-using-the-page-object-model)
+    - [Adding a URL](#adding-a-url)
+    - [Parametrized URLs](#parametrized-urls)
+  - [Navigating to a Page](#navigating-to-a-page)
+    - [Navigating to a page with a parameterized URL](#navigating-to-a-page-with-a-parameterized-url)
+  - [Verifying that a particular page is displayed](#verifying-that-a-particular-page-is-displayed)
+    - [Specifying parameter values for templated URLs](#specifying-parameter-values-for-templated-urls)
+    - [Accessing specific matches from a templated URL in your tests](#accessing-specific-matches-from-a-templated-url-in-your-tests)
+    - [Falling back to basic regexp matchers](#falling-back-to-basic-regexp-matchers)
+    - [Testing for Page display](#testing-for-page-display)
+  - [Getting the Current Page's URL](#getting-the-current-pages-url)
+  - [Page Title](#page-title)
+  - [HTTP vs. HTTPS](#http-vs-https)
+- [Elements](#elements)
+  - [Individual Elements](#individual-elements)
+    - [Accessing the individual element](#accessing-the-individual-element)
+    - [Testing for the existence of the element](#testing-for-the-existence-of-the-element)
+    - [Testing that an element does not exist](#testing-that-an-element-does-not-exist)
+    - [Waiting for an element to become visible](#waiting-for-an-element-to-become-visible)
+    - [Waiting for an element to become invisible](#waiting-for-an-element-to-become-invisible)
+    - [CSS Selectors vs. XPath Expressions](#css-selectors-vs-xpath-expressions)
+    - [Summary of what the element method provides](#summary-of-what-the-element-method-provides)
+
+# row number 600/1860 done
 
 ## Intro
 
@@ -558,7 +586,7 @@ class Home < SitePrism::Page
 end
 ```
 
-#### Summary of what the element method provides:
+#### Summary of what the element method provides
 
 Given:
 
