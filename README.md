@@ -49,8 +49,17 @@ _A Page Object Model DSL for Capybara_
     - [Defining a Section](#defining-a-section)
     - [Adding a section to a page](#adding-a-section-to-a-page)
     - [Accessing a Page's section](#accessing-a-pages-section)
+    - [Adding elements to a section](#adding-elements-to-a-section)
+    - [Accessing section elements using a block](#accessing-section-elements-using-a-block)
+    - [Getting a section's parent](#getting-a-sections-parent)
+    - [Getting a section's parent page](#getting-a-sections-parent-page)
+    - [Testing for the existence of a section](#testing-for-the-existence-of-a-section)
+    - [Waiting for a section to become visible or invisible](#waiting-for-a-section-to-become-visible-or-invisible)
+    - [Sections within sections](#sections-within-sections)
+    - [Anonymous Sections](#anonymous-sections)
+  - [Section collections](#section-collections)
 
-# row number 900/1870 done
+# row number 1200/1870 done
 
 ## Intro
 
@@ -989,7 +998,7 @@ end
 ##### Accessing section elements using a block
 
 You can execute a block within the context of a Section. This is
-similar to Capybara's `within` method and allows for shorter test code
+similar to Capybara's `#within` method and allows for shorter test code
 particularly with nested sections. Test code that might have to repeat the block name can be shortened up this way.
 
 ```ruby
@@ -1003,9 +1012,9 @@ Then('the home page menu contains a link to the various search functions') do
 end
 ```
 
-Note that on an individual section it's possible to pass a block directly to the section without using `within`.
+Note that on an individual section it's possible to pass a block directly to the section without using `#within`.
 Because the block is executed only during `Section` initialization this won't work when accessing a single
-Section from an array of Sections. For that reason we recommend using `within` which works in either case.
+Section from an array of Sections. For that reason we recommend using `#within` which works in either case.
 
 ```ruby
 Then('the home page menu contains a link to the various search functions') do
