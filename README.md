@@ -38,8 +38,19 @@ _A Page Object Model DSL for Capybara_
     - [Waiting for an element to become invisible](#waiting-for-an-element-to-become-invisible)
     - [CSS Selectors vs. XPath Expressions](#css-selectors-vs-xpath-expressions)
     - [Summary of what the element method provides](#summary-of-what-the-element-method-provides)
+  - [Element Collections](#element-collections)
+    - [Accessing the elements](#accessing-the-elements)
+    - [Testing for the existence of the element collection](#testing-for-the-existence-of-the-element-collection)
+    - [Waiting for the elements to be visible or invisible](#waiting-for-the-elements-to-be-visible-or-invisible)
+  - [Checking that all mapped elements are present on the page](#checking-that-all-mapped-elements-are-present-on-the-page)
+  - [Getting the list of missing elements](#getting-the-list-of-missing-elements)
+- [Sections](#sections)
+  - [Individual Sections](#individual-sections)
+    - [Defining a Section](#defining-a-section)
+    - [Adding a section to a page](#adding-a-section-to-a-page)
+    - [Accessing a Page's section](#accessing-a-pages-section)
 
-# row number 600/1860 done
+# row number 900/1870 done
 
 ## Intro
 
@@ -902,7 +913,7 @@ will be used to find the root element of the section; this root node
 becomes the 'scope' of the section.
 
 The following shows that though the same section can appear on multiple
-pages, it can take a different root node:
+pages, it can have a different root element:
 
 ```ruby
 # define the section that appears on both pages
