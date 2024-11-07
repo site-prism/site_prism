@@ -42,7 +42,7 @@ module SitePrism
       def blacklisted?(name)
         return false unless blacklisted_names.include?(name)
 
-        log_failure(name, 'name (blacklisted entry)')
+        log_failure(name, "name (#{name} is a blacklisted entry)")
       end
 
       def regex_permission
@@ -77,7 +77,7 @@ module SitePrism
       end
 
       def log_failure(name, type)
-        self.dsl_name_error = "DSL item: #{name} is invalid. Issue: #{type}"
+        self.dsl_name_error = "DSL item: '#{name}' is invalid. Issue: #{type}"
         SitePrism.logger.debug(debug_error(type))
       end
 
@@ -85,8 +85,8 @@ module SitePrism
         case type
         when 'prefix';       then "Invalid Prefixes: #{prefix_blacklist.join(', ')}."
         when 'suffix';       then "Invalid Suffixes: #{suffix_blacklist.join(', ')}"
-        when 'character(s)'; then "Invalid DSL Names: #{blacklisted_names.join(', ')}"
-        else                      "DSL Charset REGEX: #{regex_permission.inspect}"
+        when 'character(s)'; then "DSL Charset REGEX: #{regex_permission.inspect}"
+        else                      "Invalid DSL Names: #{blacklisted_names.join(', ')}"
         end
       end
     end
