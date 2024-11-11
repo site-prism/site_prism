@@ -5,6 +5,64 @@
 
 _A Page Object Model DSL for Capybara_
 
+- [Intro](#intro)
+- [Support](#support)
+- [Developing / Contributing to SitePrism](#developing--contributing-to-siteprism)
+- [Supported Rubies / Browsers](#supported-rubies--browsers)
+- [Synopsis](#synopsis)
+- [Setup](#setup)
+  - [Installation](#installation)
+  - [Using SitePrism with Cucumber](#using-siteprism-with-cucumber)
+  - [Using SitePrism with RSpec](#using-siteprism-with-rspec)
+- [Introduction to the Page Object Model](#introduction-to-the-page-object-model)
+  - [Pages](#pages)
+    - [Creating your first Page using the Page Object Model](#creating-your-first-page-using-the-page-object-model)
+    - [Adding a URL](#adding-a-url)
+    - [Parametrized URLs](#parametrized-urls)
+  - [Navigating to a Page](#navigating-to-a-page)
+    - [Navigating to a page with a parameterized URL](#navigating-to-a-page-with-a-parameterized-url)
+  - [Verifying that a particular page is displayed](#verifying-that-a-particular-page-is-displayed)
+    - [Specifying parameter values for templated URLs](#specifying-parameter-values-for-templated-urls)
+    - [Accessing specific matches from a templated URL in your tests](#accessing-specific-matches-from-a-templated-url-in-your-tests)
+    - [Falling back to basic regexp matchers](#falling-back-to-basic-regexp-matchers)
+    - [Testing for Page display](#testing-for-page-display)
+  - [Getting the Current Page's URL](#getting-the-current-pages-url)
+  - [Page Title](#page-title)
+  - [HTTP vs. HTTPS](#http-vs-https)
+- [Elements](#elements)
+  - [Individual Elements](#individual-elements)
+    - [Accessing the individual element](#accessing-the-individual-element)
+    - [Testing for the existence of the element](#testing-for-the-existence-of-the-element)
+    - [Testing that an element does not exist](#testing-that-an-element-does-not-exist)
+    - [Waiting for an element to become visible](#waiting-for-an-element-to-become-visible)
+    - [Waiting for an element to become invisible](#waiting-for-an-element-to-become-invisible)
+    - [CSS Selectors vs. XPath Expressions](#css-selectors-vs-xpath-expressions)
+    - [Summary of what the element method provides](#summary-of-what-the-element-method-provides)
+  - [Element Collections](#element-collections)
+    - [Accessing the elements](#accessing-the-elements)
+    - [Testing for the existence of the element collection](#testing-for-the-existence-of-the-element-collection)
+    - [Waiting for the elements to be visible or invisible](#waiting-for-the-elements-to-be-visible-or-invisible)
+  - [Checking that all mapped elements are present on the page](#checking-that-all-mapped-elements-are-present-on-the-page)
+  - [Getting the list of missing elements](#getting-the-list-of-missing-elements)
+- [Sections](#sections)
+  - [Individual Sections](#individual-sections)
+    - [Defining a Section](#defining-a-section)
+    - [Adding a section to a page](#adding-a-section-to-a-page)
+    - [Accessing a Page's section](#accessing-a-pages-section)
+    - [Adding elements to a section](#adding-elements-to-a-section)
+    - [Accessing section elements using a block](#accessing-section-elements-using-a-block)
+    - [Getting a section's parent](#getting-a-sections-parent)
+    - [Getting a section's parent page](#getting-a-sections-parent-page)
+    - [Testing for the existence of a section](#testing-for-the-existence-of-a-section)
+    - [Waiting for a section to become visible or invisible](#waiting-for-a-section-to-become-visible-or-invisible)
+    - [Sections within sections](#sections-within-sections)
+    - [Anonymous Sections](#anonymous-sections)
+  - [Section collections](#section-collections)
+
+# row number 1200/1870 done
+
+## Intro
+
 SitePrism gives you a simple, clean and semantic DSL for describing your site using the Page Object Model pattern,
 for use with Capybara in automated acceptance testing.
 
@@ -30,7 +88,7 @@ We have a brief set of contribution documents [HERE](https://github.com/site-pri
 
 ## Supported Rubies / Browsers
 
-SitePrism is built and tested to work on Ruby 2.7 - 3.2.
+SitePrism is built and tested to work on Ruby 2.7 - 3.3.
 If you are using SitePrism with Ruby 2.7 it is highly advisable to upgrade to a more modern
 Ruby (v3+), if for any other reason, to get a performance improvement!
 
@@ -548,7 +606,7 @@ class Home < SitePrism::Page
 end
 ```
 
-#### Summary of what the element method provides:
+#### Summary of what the element method provides
 
 Given:
 
@@ -864,7 +922,7 @@ will be used to find the root element of the section; this root node
 becomes the 'scope' of the section.
 
 The following shows that though the same section can appear on multiple
-pages, it can take a different root node:
+pages, it can have a different root element:
 
 ```ruby
 # define the section that appears on both pages
@@ -940,7 +998,7 @@ end
 ##### Accessing section elements using a block
 
 You can execute a block within the context of a Section. This is
-similar to Capybara's `within` method and allows for shorter test code
+similar to Capybara's `#within` method and allows for shorter test code
 particularly with nested sections. Test code that might have to repeat the block name can be shortened up this way.
 
 ```ruby
@@ -954,9 +1012,9 @@ Then('the home page menu contains a link to the various search functions') do
 end
 ```
 
-Note that on an individual section it's possible to pass a block directly to the section without using `within`.
+Note that on an individual section it's possible to pass a block directly to the section without using `#within`.
 Because the block is executed only during `Section` initialization this won't work when accessing a single
-Section from an array of Sections. For that reason we recommend using `within` which works in either case.
+Section from an array of Sections. For that reason we recommend using `#within` which works in either case.
 
 ```ruby
 Then('the home page menu contains a link to the various search functions') do
