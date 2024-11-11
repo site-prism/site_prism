@@ -6,6 +6,7 @@
 ### Changed
 
 ### Fixed
+- The DSL Validator was returning an invalid debug message when using an invalid name ([luke-hill])
 
 ## [5.0.3] - 2024-06-19
 ### Changed
