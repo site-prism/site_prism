@@ -37,6 +37,15 @@ revert back to the default Capybara logic. The usage of this method on `SitePris
 
 An initial attempt to start banning invalid DSL names has been introduced through a `DSLValidator` module.
 
+Initial Validation will see DSL names banned that ...
+- Do not start with a lower case letter (Should be using Ruby formats for snake_case)
+- Start with `no_` or `_`. These will confuse some of the meta-programmed matchers
+- End with `_` or `?`. The ending with a `_` is a stylistic preference but ending in a `?` will yield a ruby error 
+- Match any of the following names which conflict with other DSL's
+  - `attributes` (This is a reserved testing word - both RSpec and Minitest need this)
+  - `html` / `title` (These are reserved Capybara DSL words)
+  - `element` / `elements` / `section` / `sections` / `iframe` (These are reserved SitePrism DSL words)
+
 For `4.x` this will be disabled by default. We may look to switch this to a default on/toggleable state further down
 the road, but for now this is experimental.
 
