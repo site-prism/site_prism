@@ -6,6 +6,9 @@
 ### Changed
 
 ### Fixed
+
+## [5.0.4] - 2024-11-25
+### Fixed
 - The DSL Validator was returning an invalid debug message when using an invalid name ([luke-hill])
 
 ## [5.0.3] - 2024-06-19
@@ -1292,7 +1295,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v5.0.3...HEAD
+[main]:       https://github.com/site-prism/site_prism/compare/v5.0.4...HEAD
+[5.0.4]:      https://github.com/site-prism/site_prism/compare/v5.0.3...v5.0.4
 [5.0.3]:      https://github.com/site-prism/site_prism/compare/v5.0.2...v5.0.3
 [5.0.2]:      https://github.com/site-prism/site_prism/compare/v5.0.1...v5.0.2
 [5.0.1]:      https://github.com/site-prism/site_prism/compare/v5.0...v5.0.1
