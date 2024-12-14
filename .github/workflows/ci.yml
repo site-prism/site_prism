@@ -17,10 +17,6 @@ jobs:
         browser: ['chrome', 'firefox']
         gemfile: ['Gemfile', 'gemfiles/low_spec.gemfile']
         rubygems: ['latest']
-#        include:
-#          - os: ubuntu-latest
-#            ruby: '2.7'
-#            rubygems: '3.2.3'
         exclude:
           # Low spec gemfiles are having issues post Selenium Manager release on GHA
           # Revisit these exclusions once low spec selenium is 4.10+ and chrome is v120+
