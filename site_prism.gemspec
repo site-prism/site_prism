@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = '>= 3.2.3'
   s.platform    = Gem::Platform::RUBY
   s.license     = 'BSD-3-Clause'
-  s.authors     = ['Luke Hill', 'Nat Ritmeyer']
-  s.email       = %w[lukehill_uk@hotmail.com nat@natontesting.com]
+  s.authors     = ['Luke Hill']
+  s.email       = %w[lukehill_uk@hotmail.com]
   s.homepage    = 'https://github.com/site-prism/site_prism'
   s.metadata = {
     'bug_tracker_uri' => 'https://github.com/site-prism/site_prism/issues',

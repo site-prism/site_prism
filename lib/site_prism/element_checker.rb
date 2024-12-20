@@ -31,8 +31,8 @@ module SitePrism
     # Default: 'none' => Perform no recursion when calling #all_there?
     # Override: 'one' => Perform one recursive dive into all section/sections
     # items and call #all_there? on all of those items too.
-    def all_there?(recursion: :none)
-      SitePrism::AllThere::RecursionChecker.new(self).all_there?(recursion: recursion)
+    def all_there?(recursion: :none, options: { wait: 0 })
+      SitePrism::AllThere::RecursionChecker.new(self).all_there?(recursion: recursion, options: options)
     end
 
     # Returns each element that is currently present inside the scope being tested
