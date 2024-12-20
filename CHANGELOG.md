@@ -4,6 +4,8 @@
 ### Added
 
 ### Changed
+- Permit `#all_there?` to be called with an options payload (Defaults to no waiting for now)
+  - Pass in keys to the `options` hash i.e. `options: { wait: 5 }` to wait for a specific time 
 
 ### Fixed
 
