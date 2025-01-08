@@ -4,16 +4,19 @@
 ### Added
 
 ### Changed
+
+### Fixed
+
+## [5.1] - 2025-01-08
+### Changed
 - Permit `#all_there?` to be called with an options payload (Defaults to no waiting for now)
-  - Pass in keys to the `options` hash i.e. `options: { wait: 5 }` to wait for a specific time 
+  - Pass in keys to the `options` hash i.e. `options: { wait: 5 }` to wait for a specific time ([luke-hill])
 
 - Version bumps
   - `site_prism-all_there` must be at least `3.0`
   - `rubocop` and associated gems have had partial bumps
   - `capybara` now must be at least `3.34`
-
-### Fixed
-
+  
 ## [5.0.4] - 2024-11-25
 ### Fixed
 - The DSL Validator was returning an invalid debug message when using an invalid name ([luke-hill])
