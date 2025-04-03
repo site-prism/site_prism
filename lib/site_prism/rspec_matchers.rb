@@ -16,12 +16,12 @@ module SitePrism
     # @return [Symbol]
     def _create_rspec_negated_existence_matchers
       SitePrism.logger.debug('Including all relevant matcher names / warnings in RSpec scope.')
-      create_rspec_negated_existence_matchers(matcher, object_method, negated_object_method, warning)
+      create_rspec_negated_existence_matchers(object_method, negated_object_method, warning)
     end
 
     private
 
-    def create_rspec_negated_existence_matchers(matcher, object_method, negated_object_method, warning)
+    def create_rspec_negated_existence_matchers(object_method, negated_object_method, warning)
       forward = forwarder(object_method)
       RSpec::Matchers.define(negated_matcher) do |*args, **options|
         match do |actual|
@@ -61,9 +61,9 @@ module SitePrism
     end
 
     def warning
-      "The RSpec matcher '#{matcher}' was added by SitePrism, but the object under test " \
-        "does not respond to '#{negated_object_method}' and is probably not a SitePrism object. " \
-        'Falling back to the default RSpec matcher.'
+      "The RSpec matcher '#{negated_matcher}' was originally added by SitePrism, but the object under test " \
+        "does not respond to '#{negated_object_method}' and is probably NOT a SitePrism object. " \
+        'Falling back to the default RSpec matcher of "does not match".'
     end
   end
 end
