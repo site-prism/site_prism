@@ -44,10 +44,6 @@ module SitePrism
       end
     end
 
-    def matcher
-      "have_#{element_name}"
-    end
-
     def negated_matcher
       "have_no_#{element_name}"
     end
