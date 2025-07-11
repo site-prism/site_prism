@@ -4,6 +4,20 @@ describe 'Element' do
   # Stop the $stdout process leaking cross-tests
   before { wipe_logger! }
 
+  before do
+    RSpec::Matchers.define :have_missing_elements_two do |expected|
+      match do |actual|
+        decrypt_cookie(actual)['flash']['flashes'].values.detect do |flash_message|
+          flash_message == expected
+        end
+      end
+
+      failure_message do |_actual|
+        "expected cookie to have a flash message '#{expected}' but it had none."
+      end
+    end
+  end
+
   shared_examples 'an element' do
     describe '.element' do
       it 'can be set on `SitePrism::Page`' do
@@ -32,6 +46,15 @@ describe 'Element' do
     end
 
     it 'calls the SitePrism matcher when using an rspec negated existence matcher' do
+      page.load
+
+      expect(page).to receive(:has_no_missing_elements_two?).once.and_call_original
+
+      expect(page).not_to have_missing_elements_two
+    end
+
+    it 'bugfix for issue on repo. RSpec.define clashing with metaprogram' do
+
       page.load
 
       expect(page).to receive(:has_no_missing_elements_two?).once.and_call_original

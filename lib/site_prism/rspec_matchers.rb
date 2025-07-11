@@ -7,8 +7,9 @@ module SitePrism
   class RSpecMatchers
     attr_reader :element_name
 
-    def initialize(element_name)
+    def initialize(element_name, caller)
       @element_name = element_name
+      @caller = caller
     end
 
     # Create the positive and negative rspec matchers that will use the SitePrism boolean methods
