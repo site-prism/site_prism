@@ -57,7 +57,7 @@ module SitePrism
         build(:section, name, *find_args) do
           define_method(name) do |*runtime_args, &runtime_block|
             section_element = _find(*merge_args(find_args, runtime_args))
-            section_class.new(self, section_element, &runtime_block)
+            section_class.new(self, section_element, name, &runtime_block)
           end
         end
       end
@@ -73,7 +73,7 @@ module SitePrism
           define_method(name) do |*runtime_args, &runtime_block|
             raise_if_runtime_block_supplied(self, name, runtime_block, :sections)
             _all(*merge_args(find_args, runtime_args)).map do |element|
-              section_class.new(self, element)
+              section_class.new(self, element, name)
             end
           end
         end

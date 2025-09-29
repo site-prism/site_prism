@@ -40,9 +40,10 @@ module SitePrism
       end
     end
 
-    def initialize(parent, root_element, &block)
+    def initialize(parent, root_element, element_name = nil, &block)
       @parent = parent
       @root_element = root_element
+      @element_name = element_name
       within(&block) if block
     end
 
@@ -80,6 +81,10 @@ module SitePrism
       candidate = parent
       candidate = candidate.parent until candidate.is_a?(SitePrism::Page)
       candidate
+    end
+
+    def wait_until_invisible(*args, **kwargs)
+      parent.public_send("wait_until_#{@element_name}_invisible", *args, **kwargs)
     end
   end
 end
