@@ -15,13 +15,21 @@ Feature: Waiting for a Section
     When I navigate to the home page
     Then an exception is raised when I wait for a section that won't appear
 
-  Scenario: Wait for Section Invisibility - Positive - Default Timeout
-    When I wait for the section that takes a while to vanish
+  Scenario Outline: Wait for Section Invisibility - Positive - Default Timeout
+    When I wait for the section that takes a while to vanish from <from> section
     Then the section is no longer visible
+    Examples:
+      | from   |
+      | this   |
+      | parent |
 
-  Scenario: Wait for Section Invisibility - Positive - Overridden Timeout
-    When I wait an overridden time for the section to vanish
+  Scenario Outline: Wait for Section Invisibility - Positive - Overridden Timeout
+    When I wait an overridden time for the section to vanish from <from> section
     Then the section is no longer visible
+    Examples:
+      | from   |
+      | this   |
+      | parent |
 
   @slow-test
   Scenario: Wait for Section Invisibility - Negative - Default Timeout

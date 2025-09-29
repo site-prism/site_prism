@@ -4,8 +4,14 @@ When('I wait an overridden time for the section that takes a while to appear') d
   @test_site.slow.first_section(wait: upper_bound_delay)
 end
 
-When('I wait for the section that takes a while to vanish') do
-  @test_site.vanishing.wait_until_delayed_section_invisible
+When(/^I wait for the section that takes a while to vanish from (parent|this) section$/) do |from|
+  @test_site.vanishing.tap do |vanishing|
+    if from == 'parent'
+      vanishing.wait_until_delayed_section_invisible
+    else
+      vanishing.delayed_section.wait_until_invisible
+    end
+  end
 end
 
 Then("an exception is raised when I wait for a section that won't appear") do
@@ -21,8 +27,14 @@ Then('the section is no longer visible') do
   expect(@test_site.vanishing.delayed_section).not_to be_visible
 end
 
-When('I wait an overridden time for the section to vanish') do
-  @test_site.vanishing.wait_until_delayed_section_invisible(wait: upper_bound_delay)
+When(/^I wait an overridden time for the section to vanish from (this|parent) section$/) do |from|
+  @test_site.vanishing.tap do |vanishing|
+    if from == 'parent'
+      vanishing.wait_until_delayed_section_invisible(wait: upper_bound_delay)
+    else
+      vanishing.delayed_section.wait_until_invisible(wait: upper_bound_delay)
+    end
+  end
 end
 
 Then('the slow section appears') do
