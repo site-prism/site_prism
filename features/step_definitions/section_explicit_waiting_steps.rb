@@ -4,9 +4,9 @@ When('I wait an overridden time for the section that takes a while to appear') d
   @test_site.slow.first_section(wait: upper_bound_delay)
 end
 
-When(/^I wait for the section that takes a while to vanish from (parent|this) section$/) do |from|
+When('I wait for the section that takes a while to vanish when calling from {is_parent_section} section') do |from_parent_section|
   @test_site.vanishing.tap do |vanishing|
-    if from == 'parent'
+    if from_parent_section
       vanishing.wait_until_delayed_section_invisible
     else
       vanishing.delayed_section.wait_until_invisible
@@ -19,17 +19,21 @@ Then("an exception is raised when I wait for a section that won't appear") do
     .to raise_error(Capybara::ElementNotFound)
 end
 
-Then('an error is raised when waiting for the section to vanish') do
-  expect { @test_site.vanishing.wait_until_container_invisible }.to raise_error(SitePrism::ElementInvisibilityTimeoutError)
+Then('an error is raised when waiting for the section to vanish when calling from {is_parent_section} section') do |from_parent_section|
+  expect do
+    @test_site.vanishing.then do |vanishing|
+      from_parent_section ? vanishing.wait_until_container_invisible : vanishing.delayed_section.wait_until_invisible
+    end
+  end.to raise_error(SitePrism::ElementInvisibilityTimeoutError)
 end
 
 Then('the section is no longer visible') do
   expect(@test_site.vanishing.delayed_section).not_to be_visible
 end
 
-When(/^I wait an overridden time for the section to vanish from (this|parent) section$/) do |from|
+When('I wait an overridden time for the section to vanish when calling from {is_parent_section} section') do |from_parent_section|
   @test_site.vanishing.tap do |vanishing|
-    if from == 'parent'
+    if from_parent_section
       vanishing.wait_until_delayed_section_invisible(wait: upper_bound_delay)
     else
       vanishing.delayed_section.wait_until_invisible(wait: upper_bound_delay)
@@ -41,9 +45,16 @@ Then('the slow section appears') do
   expect(@test_site.slow).to have_first_section
 end
 
-Then('an error is raised when waiting an overridden time for the section to vanish') do
-  expect { @test_site.vanishing.wait_until_container_invisible(wait: time_delay) }
-    .to raise_error(SitePrism::ElementInvisibilityTimeoutError)
+Then('an error is raised when waiting an overridden time for the section to vanish when calling from {is_parent_section} section') do |from_parent_section|
+  expect do
+    @test_site.vanishing.then do |vanishing|
+      if from_parent_section
+        vanishing.wait_until_container_invisible(wait: time_delay)
+      else
+        vanishing.container.wait_until_invisible(wait: time_delay)
+      end
+    end
+  end.to raise_error(SitePrism::ElementInvisibilityTimeoutError)
 end
 
 When('I wait for the collection of sections that takes a while to disappear') do

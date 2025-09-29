@@ -16,7 +16,7 @@ Feature: Waiting for a Section
     Then an exception is raised when I wait for a section that won't appear
 
   Scenario Outline: Wait for Section Invisibility - Positive - Default Timeout
-    When I wait for the section that takes a while to vanish from <from> section
+    When I wait for the section that takes a while to vanish when calling from <from> section
     Then the section is no longer visible
     Examples:
       | from   |
@@ -24,7 +24,7 @@ Feature: Waiting for a Section
       | parent |
 
   Scenario Outline: Wait for Section Invisibility - Positive - Overridden Timeout
-    When I wait an overridden time for the section to vanish from <from> section
+    When I wait an overridden time for the section to vanish when calling from <from> section
     Then the section is no longer visible
     Examples:
       | from   |
@@ -32,8 +32,17 @@ Feature: Waiting for a Section
       | parent |
 
   @slow-test
-  Scenario: Wait for Section Invisibility - Negative - Default Timeout
-    Then an error is raised when waiting for the section to vanish
+  Scenario Outline: : Wait for Section Invisibility - Negative - Default Timeout
+    Then an error is raised when waiting for the section to vanish when calling from <from> section
+    Examples:
+      | from   |
+      | this   |
+      | parent |
 
-  Scenario: Wait for Section Invisibility - Negative - Overridden Timeout
-    Then an error is raised when waiting an overridden time for the section to vanish
+  Scenario Outline: Wait for Section Invisibility - Negative - Overridden Timeout
+    Then an error is raised when waiting an overridden time for the section to vanish when calling from <from> section
+    Examples:
+      | from   |
+      | this   |
+      | parent |
+
