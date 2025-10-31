@@ -1567,6 +1567,7 @@ The following element methods allow Capybara options to be passed as arguments t
 @results_page.has_no_<element_or_section_name>?(text: 'Logout')
 @results_page.wait_until_<element_or_section_name>_visible(text: 'Some ajaxy text appears!')
 @results_page.wait_until_<element_or_section_name>_invisible(text: 'Some ajaxy text disappears!')
+@results_page.<section_name>.wait_until_invisible(text: 'Hi!')
 ```
 
 ## Test views with Page objects
