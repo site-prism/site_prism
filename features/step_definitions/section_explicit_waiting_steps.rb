@@ -47,9 +47,9 @@ end
 
 Then('an error is raised when waiting an overridden time for the section to vanish when calling from {word} section') do |location|
   if location == 'parent'
-    expect(@test_site.vanishing.wait_until_container_invisible(wait: time_delay)).to raise_error(SitePrism::ElementInvisibilityTimeoutError)
+    expect { @test_site.vanishing.wait_until_container_invisible(wait: time_delay) }.to raise_error(SitePrism::ElementInvisibilityTimeoutError)
   else
-    expect(@test_site.vanishing.container.wait_until_invisible(wait: time_delay)).to raise_error(SitePrism::ElementInvisibilityTimeoutError)
+    expect { @test_site.vanishing.container.wait_until_invisible(wait: time_delay) }.to raise_error(SitePrism::ElementInvisibilityTimeoutError)
   end
 end
 

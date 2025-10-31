@@ -34,7 +34,7 @@ Feature: Waiting for a Section
       | parent   |
 
   @slow-test
-  Scenario Outline: : Wait for Section Invisibility - Negative - Default Timeout
+  Scenario Outline: Wait for Section Invisibility - Negative - Default Timeout
     Then an error is raised when waiting for the section to vanish when calling from <location> section
 
     Examples:
