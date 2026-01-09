@@ -2,6 +2,7 @@
 ### Removed
 
 ### Added
+- `wait_until_invisible` method for the `SitePrism::Section` objects ([nikitenich])
 
 ### Changed
 
