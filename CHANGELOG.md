@@ -7,6 +7,10 @@
 
 ### Fixed
 
+## [5.1.1] - 2026-01-09
+### Changed
+- No public API changes, some minor tweaks to the codebase
+
 ## [5.1] - 2025-01-08
 ### Changed
 - Permit `#all_there?` to be called with an options payload (Defaults to no waiting for now)
@@ -1305,7 +1309,9 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v5.0.4...HEAD
+[main]:       https://github.com/site-prism/site_prism/compare/v5.1.1...HEAD
+[5.1.1]:      https://github.com/site-prism/site_prism/compare/v5.1...v5.1.1
+[5.1]:        https://github.com/site-prism/site_prism/compare/v5.0.4...v5.1
 [5.0.4]:      https://github.com/site-prism/site_prism/compare/v5.0.3...v5.0.4
 [5.0.3]:      https://github.com/site-prism/site_prism/compare/v5.0.2...v5.0.3
 [5.0.2]:      https://github.com/site-prism/site_prism/compare/v5.0.1...v5.0.2
