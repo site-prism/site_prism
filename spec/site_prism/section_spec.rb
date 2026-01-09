@@ -351,9 +351,10 @@ describe SitePrism::Section do
   end
 
   describe '#wait_until_invisible' do
+    subject { section }
+
     let(:parent) { SitePrism::Page.new }
     let(:section) { described_class.new(parent, '.locator', :section_name) }
-    subject { section }
 
     it { is_expected.to respond_to(:wait_until_invisible) }
   end

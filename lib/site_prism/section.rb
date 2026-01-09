@@ -84,7 +84,7 @@ module SitePrism
     end
 
     def wait_until_invisible(*args, **kwargs)
-      parent.public_send("wait_until_#{name}_invisible", *args, **kwargs)
+      parent.public_send(:"wait_until_#{name}_invisible", *args, **kwargs)
     end
   end
 end
