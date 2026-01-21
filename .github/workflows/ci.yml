@@ -18,8 +18,8 @@ jobs:
         gemfile: ['Gemfile', 'gemfiles/low_spec.gemfile']
         exclude:
           # low_spec.gemfile is having issues post Selenium Manager release on GHA
-          # Revisit these exclusions once low spec selenium is 4.10+ and chrome is v120+
-          - { ruby: '3.1', gemfile: 'gemfiles/low_spec.gemfile' }
+          # Revisit these exclusions once low spec selenium is 4.20+
+          - { gemfile: 'gemfiles/low_spec.gemfile' }
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
       BROWSER: ${{ matrix.browser }}
