@@ -6,7 +6,6 @@ require 'automation_helpers/drivers/local'
 require 'capybara'
 require 'capybara/cucumber'
 require 'selenium-webdriver'
-require 'webdrivers'
 
 $LOAD_PATH << './lib'
 
@@ -17,7 +16,7 @@ require_relative 'js_helper'
 require_relative 'time_helper'
 require_relative 'sections/all'
 
-SimpleCov.start if defined?(SimpleCov) && RUBY_VERSION < '3.1'
+SimpleCov.start
 
 browser = ENV.fetch('BROWSER', 'chrome').to_sym
 ENV['HEADLESS'] = 'true'
