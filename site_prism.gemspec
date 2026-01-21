@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
 
   s.add_dependency 'addressable', '~> 2.8', '>= 2.8.4'
+  s.add_dependency 'base64', '~> 0.3.0'
   s.add_dependency 'capybara', '~> 3.34'
   s.add_dependency 'site_prism-all_there', '> 3', '< 5'
 
