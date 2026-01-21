@@ -6,6 +6,8 @@ require 'automation_helpers/drivers/local'
 require 'capybara'
 require 'capybara/cucumber'
 require 'selenium-webdriver'
+# low_spec.gemfile is having issues post Selenium Manager release on GHA
+# Revisit this gems requirement once low spec selenium is 4.20+
 require 'webdrivers'
 
 $LOAD_PATH << './lib'
