@@ -7,8 +7,8 @@ module SitePrism
   class Timer
     attr_reader :wait_time
 
-    def self.run(wait_time, &block)
-      new(wait_time).run(&block)
+    def self.run(wait_time, &)
+      new(wait_time).run(&)
     end
 
     def initialize(wait_time)
