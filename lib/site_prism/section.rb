@@ -16,7 +16,7 @@ module SitePrism
     include DSL
     extend Forwardable
 
-    attr_reader :root_element, :parent
+    attr_reader :root_element, :parent, :name
 
     class << self
       def set_default_search_arguments(*args)
@@ -40,9 +40,10 @@ module SitePrism
       end
     end
 
-    def initialize(parent, root_element, &block)
+    def initialize(parent, root_element, name = nil, &block)
       @parent = parent
       @root_element = root_element
+      @name = name
       within(&block) if block
     end
 
@@ -80,6 +81,10 @@ module SitePrism
       candidate = parent
       candidate = candidate.parent until candidate.is_a?(SitePrism::Page)
       candidate
+    end
+
+    def wait_until_invisible(*args, **kwargs)
+      parent.public_send(:"wait_until_#{name}_invisible", *args, **kwargs)
     end
   end
 end

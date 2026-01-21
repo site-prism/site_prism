@@ -1059,9 +1059,10 @@ expect(@home).not_to have_menu
 Like an element, it is possible to wait for a section to become visible
 or invisible. Calling the `section` method creates two methods on the
 relevant page or section:
-`wait_until_<section_name>_visible` and
-`wait_until_<section_name>_invisible`. Using the above example, here's
-how they're used:
+* `wait_until_<section_name>_visible`
+* `wait_until_<section_name>_invisible`
+
+Using the above example, here's how they're used:
 
 ```ruby
 @home = Home.new
@@ -1077,6 +1078,17 @@ time to wait for visibility/invisibility of a section. Here's how:
 @home = Home.new
 @home.wait_until_menu_visible(wait: 5)
 # and...
+@home.wait_until_menu_invisible(wait: 3)
+```
+
+You can also call `wait_until_invisible` directly on a section object.
+```ruby
+@home = Home.new
+@home.menu.tap do |menu|
+  # some actions with a menu object
+  menu.wait_until_invisible(wait: 3)
+end
+# is the same as
 @home.wait_until_menu_invisible(wait: 3)
 ```
 
@@ -1555,6 +1567,7 @@ The following element methods allow Capybara options to be passed as arguments t
 @results_page.has_no_<element_or_section_name>?(text: 'Logout')
 @results_page.wait_until_<element_or_section_name>_visible(text: 'Some ajaxy text appears!')
 @results_page.wait_until_<element_or_section_name>_invisible(text: 'Some ajaxy text disappears!')
+@results_page.<section_name>.wait_until_invisible(text: 'Hi!')
 ```
 
 ## Test views with Page objects

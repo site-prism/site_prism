@@ -349,4 +349,13 @@ describe SitePrism::Section do
       expect { section.new(SitePrism::Page.new, locator) }.to raise_error(SitePrism::InvalidElementError)
     end
   end
+
+  describe '#wait_until_invisible' do
+    subject { section }
+
+    let(:parent) { SitePrism::Page.new }
+    let(:section) { described_class.new(parent, '.locator', :section_name) }
+
+    it { is_expected.to respond_to(:wait_until_invisible) }
+  end
 end
