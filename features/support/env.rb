@@ -6,6 +6,8 @@ require 'automation_helpers/drivers/local'
 require 'capybara'
 require 'capybara/cucumber'
 require 'selenium-webdriver'
+# low_spec.gemfile is having issues post Selenium Manager release on GHA
+# Revisit this gems requirement once low spec selenium is 4.20+
 require 'webdrivers'
 
 $LOAD_PATH << './lib'
@@ -17,7 +19,7 @@ require_relative 'js_helper'
 require_relative 'time_helper'
 require_relative 'sections/all'
 
-SimpleCov.start if defined?(SimpleCov) && RUBY_VERSION < '3.1'
+SimpleCov.start
 
 browser = ENV.fetch('BROWSER', 'chrome').to_sym
 ENV['HEADLESS'] = 'true'
