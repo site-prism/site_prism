@@ -30,12 +30,12 @@ We have a brief set of contribution documents [HERE](https://github.com/site-pri
 
 ## Supported Rubies / Browsers
 
-SitePrism is built and tested to work on Ruby 3.0-3.4
+SitePrism is built and tested to work on Ruby 3.1 - 4.0
 
-If you are using SitePrism with Ruby 2.7 it is highly advisable to upgrade to a more modern
-Ruby (v3+), if for any other reason, to get a performance improvement!
+If you are using SitePrism with Ruby 3.1 it is highly advisable to upgrade to a more modern
+Ruby (v3.3+), if for any other reason, to get a performance improvement!
 
-SitePrism should run on all major browsers. The gem's integration tests are run on Chrome and Firefox.
+SitePrism should run on all major browsers. The gem's integration tests are run on Chrome and Firefox
 
 If you find you cannot integrate nicely with SitePrism, please open an
 [issue request](https://github.com/site-prism/site_prism/issues/new)
