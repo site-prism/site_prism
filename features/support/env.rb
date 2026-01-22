@@ -5,6 +5,7 @@ require 'simplecov'
 require 'automation_helpers/drivers/local'
 require 'capybara'
 require 'capybara/cucumber'
+require 'rspec'
 require 'selenium-webdriver'
 require 'webdrivers'
 
