@@ -6,6 +6,6 @@ gem 'addressable', '< 2.9'
 gem 'capybara', '< 3.38'
 gem 'cucumber', '< 8'
 gem 'nokogiri', '< 1.15'
-gem 'selenium-webdriver', '< 4.9'
+gem 'selenium-webdriver', '< 4.15'
 
 gemspec path: '..'

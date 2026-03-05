@@ -13,16 +13,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: ['3.0', '3.1', '3.2', '3.3']
+        ruby: ['3.1', '3.2', '3.3', '3.4', '4.0']
         browser: ['chrome', 'firefox']
         gemfile: ['Gemfile', 'gemfiles/low_spec.gemfile']
         exclude:
-          # Low spec gemfiles are having issues post Selenium Manager release on GHA
-          # Revisit these exclusions once low spec selenium is 4.10+ and chrome is v120+
-          - { ruby: '3.0', gemfile: 'gemfiles/low_spec.gemfile' }
-          - { ruby: '3.1', gemfile: 'gemfiles/low_spec.gemfile' }
-          - { ruby: '3.2', gemfile: 'gemfiles/low_spec.gemfile' }
+          # low_spec.gemfile is having issues post Selenium Manager release on GHA
+          # Revisit these exclusions once low spec selenium is 4.20+
+          - { browser: 'chrome', gemfile: 'gemfiles/low_spec.gemfile' }
           - { ruby: '3.3', gemfile: 'gemfiles/low_spec.gemfile' }
+          - { ruby: '3.4', gemfile: 'gemfiles/low_spec.gemfile' }
+          - { ruby: '4.0', gemfile: 'gemfiles/low_spec.gemfile' }
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
       BROWSER: ${{ matrix.browser }}
@@ -32,7 +32,7 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           rubygems: ${{ matrix.rubygems }}
-          bundler: '2.5.23'
+          bundler: '2.6.9'
           bundler-cache: true
       - run: bundle exec rspec
       - run: bundle exec cucumber --publish-quiet

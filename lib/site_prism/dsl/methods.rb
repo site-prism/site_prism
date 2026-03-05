@@ -67,8 +67,8 @@ module SitePrism
       # Check the sections presence or non-presence -> @return [Boolean]
       # Wait for the sections to be present or not -> @return [TrueClass, SitePrism::Error]
       # Validate certain properties about the section
-      def sections(name, *args, &block)
-        section_class, find_args = extract_section_options(args, &block)
+      def sections(name, *args, &)
+        section_class, find_args = extract_section_options(args, &)
         build(:sections, name, *find_args) do
           define_method(name) do |*runtime_args, &runtime_block|
             raise_if_runtime_block_supplied(self, name, runtime_block, :sections)

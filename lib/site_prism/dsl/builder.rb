@@ -106,13 +106,13 @@ module SitePrism
         yield
       end
 
-      def extract_section_options(args, &block)
+      def extract_section_options(args, &)
         if args.first.is_a?(Class)
           klass = args.shift
           section_class = klass if klass <= SitePrism::Section
         end
 
-        section_class = deduce_section_class(section_class, &block)
+        section_class = deduce_section_class(section_class, &)
         arguments = deduce_search_arguments(section_class, args)
         [section_class, arguments]
       end

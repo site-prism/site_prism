@@ -58,14 +58,14 @@ module SitePrism
     # Runs load validations on the page, unless input is a string
     #
     # When calling #load, all the validations that are set will be ran in order
-    def load(expansion_or_html = {}, &block)
+    def load(expansion_or_html = {}, &)
       self.loaded = false
       SitePrism.logger.debug("Reset loaded state on #{self.class}.")
 
       return_yield = if expansion_or_html.is_a?(String)
-                       load_html_string(expansion_or_html, &block)
+                       load_html_string(expansion_or_html, &)
                      else
-                       load_html_website(expansion_or_html, &block)
+                       load_html_website(expansion_or_html, &)
                      end
 
       # Ensure that we represent that the page we loaded is now indeed loaded!
