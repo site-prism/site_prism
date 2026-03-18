@@ -33,7 +33,7 @@ module SitePrism
       end
 
       def invalid_element_name
-        raise InvalidDSLNameError, dsl_name_error
+        raise SitePrism::Error::InvalidDSLNameError, dsl_name_error
       end
 
       def invalid_element_name?(name)
@@ -45,7 +45,7 @@ module SitePrism
       end
 
       def blank_element(name)
-        raise SitePrism::InvalidElementError, "#{name} has come from an item with no locators."
+        raise SitePrism::Error::InvalidElementError, "#{name} has come from an item with no locators."
       end
 
       def add_helper_methods(name, _type, *find_args)
@@ -83,7 +83,7 @@ module SitePrism
             args = merge_args(find_args, runtime_args, visible: true)
             return true if element_exists?(*args)
 
-            raise SitePrism::ElementVisibilityTimeoutError
+            raise SitePrism::Error::ElementVisibilityTimeoutError
           end
         end
       end
@@ -95,7 +95,7 @@ module SitePrism
             args = merge_args(find_args, runtime_args, visible: true)
             return true if element_does_not_exist?(*args)
 
-            raise SitePrism::ElementInvisibilityTimeoutError
+            raise SitePrism::Error::ElementInvisibilityTimeoutError
           end
         end
       end
@@ -137,7 +137,8 @@ module SitePrism
 
       def invalidate_search_arguments!
         SitePrism.logger.error('Could not deduce search_arguments')
-        raise(ArgumentError, 'search arguments are needed in `section` definition or alternatively use `set_default_search_arguments`')
+
+        raise ArgumentError, 'search arguments are needed in `section` definition or alternatively use `set_default_search_arguments`'
       end
     end
   end

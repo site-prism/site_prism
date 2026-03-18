@@ -94,7 +94,7 @@ module SitePrism
     #
     # @return [Boolean]
     def wait_until_displayed(*args)
-      raise SitePrism::NoUrlMatcherForPageError unless url_matcher
+      raise SitePrism::Error::NoUrlMatcherForPageError unless url_matcher
 
       expected_mappings = args.last.is_a?(::Hash) ? args.pop : {}
       seconds = args&.first || Capybara.default_max_wait_time
@@ -153,7 +153,7 @@ module SitePrism
       elsif url_matcher.respond_to?(:to_str)
         url_matches_by_template?(expected_mappings)
       else
-        raise SitePrism::InvalidUrlMatcherError
+        raise SitePrism::Error::InvalidUrlMatcherError
       end
     end
 
@@ -178,7 +178,7 @@ module SitePrism
     def load_html_website(html, &block)
       with_validations = html.delete(:with_validations) { true }
       expanded_url = url(html)
-      raise SitePrism::NoUrlForPageError unless expanded_url
+      raise SitePrism::Error::NoUrlForPageError unless expanded_url
 
       visit expanded_url
       if with_validations

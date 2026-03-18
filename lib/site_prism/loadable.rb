@@ -30,7 +30,7 @@ module SitePrism
 
       # If the page hasn't loaded. Then crash and return the error message.
       # If one isn't defined, just return the Error code.
-      raise SitePrism::FailedLoadValidationError, load_error unless loaded
+      raise SitePrism::Error::FailedLoadValidationError, load_error unless loaded
 
       # Return the yield value of the block if one was supplied.
       yield self if block_given?

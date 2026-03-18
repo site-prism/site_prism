@@ -29,7 +29,7 @@ module SitePrism
 
       SitePrism.logger.debug("Type passed in: #{type}")
       SitePrism.logger.error("#{object.class}##{name} cannot accept runtime blocks")
-      raise SitePrism::UnsupportedBlockError
+      raise SitePrism::Error::UnsupportedBlockError
     end
   end
 end
