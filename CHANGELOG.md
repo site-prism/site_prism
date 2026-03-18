@@ -2,7 +2,6 @@
 ### Removed
 
 ### Added
-- `wait_until_invisible` method for the `SitePrism::Section` objects ([nikitenich])
 
 ### Changed
 - **Required Ruby Version is now 3.1+** ([luke-hill])
