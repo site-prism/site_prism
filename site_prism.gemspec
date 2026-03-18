@@ -25,16 +25,16 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'addressable', '~> 2.8', '>= 2.8.4'
   s.add_dependency 'base64', '~> 0.3.0'
-  s.add_dependency 'capybara', '~> 3.34'
+  s.add_dependency 'capybara', '~> 3.37'
   s.add_dependency 'logger', '~> 1.7'
   s.add_dependency 'site_prism-all_there', '> 3', '< 5'
 
   s.add_development_dependency 'automation_helpers', '> 5', '< 7'
   s.add_development_dependency 'cucumber', '> 7', '< 12'
   s.add_development_dependency 'rspec', '~> 3.13'
-  s.add_development_dependency 'rubocop', '~> 1.75.0'
-  s.add_development_dependency 'rubocop-performance', '~> 1.25.0'
-  s.add_development_dependency 'rubocop-rspec', '~> 3.5.0'
+  s.add_development_dependency 'rubocop', '~> 1.85.1'
+  s.add_development_dependency 'rubocop-performance', '~> 1.26.1'
+  s.add_development_dependency 'rubocop-rspec', '~> 3.8.0'
   s.add_development_dependency 'selenium-webdriver', '~> 4.18'
   s.add_development_dependency 'simplecov', '~> 0.21'
 end
