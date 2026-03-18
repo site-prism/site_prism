@@ -96,11 +96,11 @@ describe SitePrism::Page do
       Class.new(described_class) do
         set_url '/foo_page'
 
-        def must_be_true
+        def must_be_true?
           true
         end
 
-        def also_true
+        def also_true?
           true
         end
 
@@ -108,8 +108,8 @@ describe SitePrism::Page do
           true
         end
 
-        load_validation { [must_be_true, 'It is not true!'] }
-        load_validation { [also_true, 'It is not also true!'] }
+        load_validation { [must_be_true?, 'It is not true!'] }
+        load_validation { [also_true?, 'It is not also true!'] }
       end.new
     end
     let(:page_with_url) do
@@ -165,7 +165,7 @@ describe SitePrism::Page do
       end
 
       it 'does not call the load validations if they are disabled' do
-        expect(page_with_load_validations).not_to receive(:must_be_true)
+        expect(page_with_load_validations).not_to receive(:must_be_true?)
 
         page_with_load_validations.load(with_validations: false)
       end
@@ -177,7 +177,7 @@ describe SitePrism::Page do
 
     context 'with Failing Load Validations' do
       before do
-        allow(page_with_load_validations).to receive(:must_be_true).and_return(false)
+        allow(page_with_load_validations).to receive(:must_be_true?).and_return(false)
       end
 
       it 'raises an error' do
