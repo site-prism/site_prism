@@ -10,6 +10,9 @@
 ([luke-hill])
 
 ### Added
+- `#run_load_validations` method for the `SitePrism::Page` and `SitePrism::Section` objects ([luke-hill])
+  - This will run the validations ad-hoc to enable you to reuse the load validation concept for other purposes
+  (i.e. waiting for a page to re-appear once already loaded, or the same for a section)
 
 ### Changed
 
