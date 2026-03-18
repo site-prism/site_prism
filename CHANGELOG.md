@@ -9,6 +9,10 @@
 
 ### Fixed
 
+## [5.2] - 2026-03-04
+### Added
+- `wait_until_invisible` method for the `SitePrism::Section` objects ([nikitenich])
+
 ## [5.1.1] - 2026-01-09
 ### Changed
 - No public API changes, some minor tweaks to the codebase
@@ -1311,7 +1315,8 @@ impending major rubocop release
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v5.1.1...HEAD
+[main]:       https://github.com/site-prism/site_prism/compare/v5.2...HEAD
+[5.2]:        https://github.com/site-prism/site_prism/compare/v5.1.1...v5.2
 [5.1.1]:      https://github.com/site-prism/site_prism/compare/v5.1...v5.1.1
 [5.1]:        https://github.com/site-prism/site_prism/compare/v5.0.4...v5.1
 [5.0.4]:      https://github.com/site-prism/site_prism/compare/v5.0.3...v5.0.4
