@@ -20,11 +20,11 @@ end
 
 Then('I get an error when I wait for an element to vanish within the limit') do
   expect { @test_site.home.wait_until_header_invisible(wait: time_delay) }
-    .to raise_error(SitePrism::ElementInvisibilityTimeoutError)
+    .to raise_error(SitePrism::Error::ElementInvisibilityTimeoutError)
 end
 
 Then("an exception is raised when I wait for an element that won't vanish") do
-  expect { @test_site.home.wait_until_header_invisible }.to raise_error(SitePrism::ElementInvisibilityTimeoutError)
+  expect { @test_site.home.wait_until_header_invisible }.to raise_error(SitePrism::Error::ElementInvisibilityTimeoutError)
 end
 
 Then('I can wait a variable time for elements to disappear') do
@@ -37,13 +37,13 @@ Then('I get a timeout error when waiting for an element to become visible within
   start_time = Time.now
 
   expect { @test_site.slow.wait_until_invisible_visible(wait: time_delay) }
-    .to raise_error(SitePrism::ElementVisibilityTimeoutError)
+    .to raise_error(SitePrism::Error::ElementVisibilityTimeoutError)
 
   expect(Time.now - start_time).to be_between(time_delay, upper_bound_delay)
 end
 
 Then('I get a timeout error when waiting for an element with default limit') do
-  expect { @test_site.slow.wait_until_invisible_visible }.to raise_error(SitePrism::ElementVisibilityTimeoutError)
+  expect { @test_site.slow.wait_until_invisible_visible }.to raise_error(SitePrism::Error::ElementVisibilityTimeoutError)
 end
 
 When('I wait until a particular element is visible') do
