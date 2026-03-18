@@ -84,7 +84,7 @@ module SitePrism
     # @return [Boolean]
     def displayed?(*args)
       wait_until_displayed(*args)
-    rescue SitePrism::TimeoutError
+    rescue SitePrism::Error::TimeoutError
       false
     end
 

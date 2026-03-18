@@ -66,15 +66,15 @@ describe SitePrism::Page do
   end
 
   it 'raises an exception if passing a block to an element' do
-    expect { CSSPage.new.element_one { :foo } }.to raise_error(SitePrism::UnsupportedBlockError)
+    expect { CSSPage.new.element_one { :foo } }.to raise_error(SitePrism::Error::UnsupportedBlockError)
   end
 
   it 'raises an exception if passing a block to elements' do
-    expect { CSSPage.new.elements_one { :any_old_block } }.to raise_error(SitePrism::UnsupportedBlockError)
+    expect { CSSPage.new.elements_one { :any_old_block } }.to raise_error(SitePrism::Error::UnsupportedBlockError)
   end
 
   it 'raises an exception if passing a block to sections' do
-    expect { CSSPage.new.sections_one { :foo } }.to raise_error(SitePrism::UnsupportedBlockError)
+    expect { CSSPage.new.sections_one { :foo } }.to raise_error(SitePrism::Error::UnsupportedBlockError)
   end
 
   it { is_expected.to respond_to(*Capybara::Session::DSL_METHODS) }
@@ -124,7 +124,7 @@ describe SitePrism::Page do
     end
 
     it "does not allow loading if the url hasn't been set" do
-      expect { page.load }.to raise_error(SitePrism::NoUrlForPageError)
+      expect { page.load }.to raise_error(SitePrism::Error::NoUrlForPageError)
     end
 
     it 'allows loading if the url has been set' do
@@ -182,13 +182,13 @@ describe SitePrism::Page do
 
       it 'raises an error' do
         expect { page_with_load_validations.load }
-          .to raise_error(SitePrism::FailedLoadValidationError)
+          .to raise_error(SitePrism::Error::FailedLoadValidationError)
           .with_message('It is not true!')
       end
 
       it 'still raises an error when passed a truthy block' do
         expect { page_with_load_validations.load { puts 'foo' } }
-          .to raise_error(SitePrism::FailedLoadValidationError)
+          .to raise_error(SitePrism::Error::FailedLoadValidationError)
           .with_message('It is not true!')
       end
 
@@ -220,7 +220,7 @@ describe SitePrism::Page do
     end
 
     it 'raises an exception if called before the matcher has been set' do
-      expect { page.displayed? }.to raise_error(SitePrism::NoUrlMatcherForPageError)
+      expect { page.displayed? }.to raise_error(SitePrism::Error::NoUrlMatcherForPageError)
     end
 
     it 'delegates through #wait_until_displayed' do
@@ -357,7 +357,7 @@ describe SitePrism::Page do
       end
 
       it 'raises an InvalidUrlMatcherError' do
-        expect { page.displayed? }.to raise_error(SitePrism::InvalidUrlMatcherError)
+        expect { page.displayed? }.to raise_error(SitePrism::Error::InvalidUrlMatcherError)
       end
     end
   end
@@ -381,49 +381,49 @@ describe SitePrism::Page do
       it "doesn't match with a non-matching fragment" do
         swap_current_url('https://joe:bump@bla.org:443/foo?bar=baz&bar=boof#otherfr')
 
-        expect { wait_for_page }.to raise_error(SitePrism::TimeoutError)
+        expect { wait_for_page }.to raise_error(SitePrism::Error::TimeoutError)
       end
 
       it "doesn't match with a missing param" do
         swap_current_url('https://joe:bump@bla.org:443/foo?bar=baz#frag')
 
-        expect { wait_for_page }.to raise_error(SitePrism::TimeoutError)
+        expect { wait_for_page }.to raise_error(SitePrism::Error::TimeoutError)
       end
 
       it "doesn't match with wrong path" do
         swap_current_url('https://joe:bump@bla.org:443/not_foo?bar=baz&bar=boof#frag')
 
-        expect { wait_for_page }.to raise_error(SitePrism::TimeoutError)
+        expect { wait_for_page }.to raise_error(SitePrism::Error::TimeoutError)
       end
 
       it "doesn't match with wrong host" do
         swap_current_url('https://joe:bump@blabber.org:443/foo?bar=baz&bar=boof#frag')
 
-        expect { wait_for_page }.to raise_error(SitePrism::TimeoutError)
+        expect { wait_for_page }.to raise_error(SitePrism::Error::TimeoutError)
       end
 
       it "doesn't match with wrong user" do
         swap_current_url('https://joseph:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
 
-        expect { wait_for_page }.to raise_error(SitePrism::TimeoutError)
+        expect { wait_for_page }.to raise_error(SitePrism::Error::TimeoutError)
       end
 
       it "doesn't match with wrong password" do
         swap_current_url('https://joe:bean@bla.org:443/foo?bar=baz&bar=boof#frag')
 
-        expect { wait_for_page }.to raise_error(SitePrism::TimeoutError)
+        expect { wait_for_page }.to raise_error(SitePrism::Error::TimeoutError)
       end
 
       it "doesn't match with wrong scheme" do
         swap_current_url('http://joe:bump@bla.org:443/foo?bar=baz&bar=boof#frag')
 
-        expect { wait_for_page }.to raise_error(SitePrism::TimeoutError)
+        expect { wait_for_page }.to raise_error(SitePrism::Error::TimeoutError)
       end
 
       it "doesn't match with wrong port" do
         swap_current_url('https://joe:bump@bla.org:8000/foo?bar=baz&bar=boof#frag')
 
-        expect { wait_for_page }.to raise_error(SitePrism::TimeoutError)
+        expect { wait_for_page }.to raise_error(SitePrism::Error::TimeoutError)
       end
     end
 
@@ -481,7 +481,7 @@ describe SitePrism::Page do
       it 'fails with incorrect expected_mappings provided' do
         swap_current_url('http://localhost:3000/foos/28')
 
-        expect { page.wait_until_displayed(id: 17) }.to raise_error(SitePrism::TimeoutError)
+        expect { page.wait_until_displayed(id: 17) }.to raise_error(SitePrism::Error::TimeoutError)
       end
     end
 
@@ -493,7 +493,7 @@ describe SitePrism::Page do
       end
 
       it 'raises InvalidUrlMatcherError' do
-        expect { wait_for_page }.to raise_error(SitePrism::InvalidUrlMatcherError)
+        expect { wait_for_page }.to raise_error(SitePrism::Error::InvalidUrlMatcherError)
       end
     end
   end
@@ -555,7 +555,7 @@ describe SitePrism::Page do
       end
 
       it 'raises InvalidUrlMatcherError' do
-        expect { url_matches }.to raise_error(SitePrism::InvalidUrlMatcherError)
+        expect { url_matches }.to raise_error(SitePrism::Error::InvalidUrlMatcherError)
       end
     end
   end
@@ -604,7 +604,7 @@ describe SitePrism::Page do
     end
 
     it 'raises SitePrism::InvalidElementError' do
-      expect { page.new }.to raise_error(SitePrism::InvalidElementError)
+      expect { page.new }.to raise_error(SitePrism::Error::InvalidElementError)
     end
   end
 

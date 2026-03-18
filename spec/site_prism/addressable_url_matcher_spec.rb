@@ -141,7 +141,7 @@ describe SitePrism::AddressableUrlMatcher do
     end
 
     it 'raises an error on templated port' do
-      expect { matches?('//bazzle.com:{port}') }.to raise_error(SitePrism::InvalidUrlMatcherError)
+      expect { matches?('//bazzle.com:{port}') }.to raise_error(SitePrism::Error::InvalidUrlMatcherError)
     end
 
     def expect_matches(*args)

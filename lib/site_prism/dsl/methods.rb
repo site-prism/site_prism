@@ -99,7 +99,7 @@ module SitePrism
 
         SitePrism.logger.debug("Type passed in: #{type}")
         SitePrism.logger.error("#{name} has been defined as a '#{type}' item in #{parent_object}. It does not accept build-time blocks.")
-        raise SitePrism::UnsupportedBlockError
+        raise SitePrism::Error::UnsupportedBlockError
       end
 
       def deduce_iframe_element_find_args(args)

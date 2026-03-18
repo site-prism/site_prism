@@ -23,18 +23,18 @@ describe SitePrism::DSL::Builder do
   end
 
   it 'does not build pages with invalid DSL prefixes' do
-    expect { invalid_dsl_prefix }.to raise_error(SitePrism::InvalidDSLNameError)
+    expect { invalid_dsl_prefix }.to raise_error(SitePrism::Error::InvalidDSLNameError)
   end
 
   it 'does not build pages with invalid DSL suffixes' do
-    expect { invalid_dsl_suffix }.to raise_error(SitePrism::InvalidDSLNameError)
+    expect { invalid_dsl_suffix }.to raise_error(SitePrism::Error::InvalidDSLNameError)
   end
 
   it 'does not build pages with names that are not snake_cased' do
-    expect { invalid_dsl_characters }.to raise_error(SitePrism::InvalidDSLNameError)
+    expect { invalid_dsl_characters }.to raise_error(SitePrism::Error::InvalidDSLNameError)
   end
 
   it 'does not build pages with blacklisted DSL names' do
-    expect { blacklisted_name }.to raise_error(SitePrism::InvalidDSLNameError)
+    expect { blacklisted_name }.to raise_error(SitePrism::Error::InvalidDSLNameError)
   end
 end
