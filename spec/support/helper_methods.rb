@@ -18,13 +18,13 @@ module SitePrism
 
       def swallow_bad_validation
         yield
-      rescue SitePrism::FailedLoadValidationError
+      rescue SitePrism::Error::FailedLoadValidationError
         :no_op
       end
 
       def swallow_timeout
         yield
-      rescue SitePrism::TimeoutError
+      rescue SitePrism::Error::TimeoutError
         :no_op
       end
 

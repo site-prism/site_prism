@@ -85,7 +85,7 @@ module SitePrism
         scope_find_args = deduce_iframe_scope_find_args(args)
         build(:iframe, name, *element_find_args) do
           define_method(name) do |&block|
-            raise MissingBlockError unless block
+            raise SitePrism::Error::MissingBlockError unless block
 
             within_frame(*scope_find_args) { block.call(klass.new) }
           end
