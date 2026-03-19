@@ -1,9 +1,13 @@
 ## [main] - Unreleased
 ### Breaking Changes
 - Required Ruby Version is now `3.1` ([luke-hill])
+- All Error classes have now had their namespaces changed `SitePrism::` -> `SitePrism::Error::`
+  - A few unused error classes have been removed in the process
+  ([luke-hill])
 
 ### Removed
 - Guard logic for shadow root (Now capybara minimum version is above 3.37 which has native support for shadow root)
+([luke-hill])
 
 ### Added
 
@@ -22,13 +26,15 @@
 ## [5.1] - 2025-01-08
 ### Changed
 - Permit `#all_there?` to be called with an options payload (Defaults to no waiting for now)
-  - Pass in keys to the `options` hash i.e. `options: { wait: 5 }` to wait for a specific duration ([luke-hill])
+  - Pass in keys to the `options` hash i.e. `options: { wait: 5 }` to wait for a specific duration
+  ([luke-hill])
 
 - Version bumps
   - `site_prism-all_there` must be at least `3.0`
   - `rubocop` and associated gems have had partial bumps
   - `capybara` now must be at least `3.34`
-  
+  ([luke-hill])
+
 ## [5.0.4] - 2024-11-25
 ### Fixed
 - The DSL Validator was returning an invalid debug message when using an invalid name ([luke-hill])
