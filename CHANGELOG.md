@@ -226,7 +226,7 @@ key name change to `SITEPRISM_DSL_VALIDATION_DISABLED`), see: [UPGRADING.md](./U
 - Switched CI from defunct travis to GitHub Actions (GHA) ([luke-hill])
 
 ### Fixed
-- All referencess to time delays in feature tests now reference a single set of methods (DRYed up) ([luke-hill])
+- All references to time delays in feature tests now reference a single set of methods (DRYed up) ([luke-hill])
 
 ## [3.7.2] - 2021-08-23
 ### Changed
