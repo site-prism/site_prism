@@ -1,5 +1,6 @@
 ## [main] - Unreleased
 ### Breaking Changes
+- Required Ruby Version is now `3.1` ([luke-hill])
 
 ### Removed
 - Guard logic for shadow root (Now capybara minimum version is above 3.37 which has native support for shadow root)
@@ -7,7 +8,6 @@
 ### Added
 
 ### Changed
-- **Required Ruby Version is now 3.1+** ([luke-hill])
 
 ### Fixed
 
