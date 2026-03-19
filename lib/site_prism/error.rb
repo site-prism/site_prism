@@ -25,11 +25,11 @@ module SitePrism
 
     # The wait_until_*_visible meta-programmed method didn't evaluate to true
     # within the prescribed time limit
-    class ElementVisibilityTimeoutError < SitePrismError; end
+    class ElementVisibilityTimeoutError < TimeoutError; end
 
     # The wait_until_*_invisible meta-programmed method didn't evaluate to true
     # within the prescribed time limit
-    class ElementInvisibilityTimeoutError < SitePrismError; end
+    class ElementInvisibilityTimeoutError < TimeoutError; end
 
     # A Block was passed to the method, which it cannot interpret
     class UnsupportedBlockError < SitePrismError; end
