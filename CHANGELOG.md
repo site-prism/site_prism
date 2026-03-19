@@ -1,5 +1,6 @@
 ## [main] - Unreleased
 ### Removed
+- Guard logic for shadow root (Now capybara minimum version is above 3.37 which has native support for shadow root)
 
 ### Added
 
