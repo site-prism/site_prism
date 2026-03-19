@@ -16,7 +16,7 @@ Make sure to add your project/company to https://github.com/site-prism/site_pris
 
 Support us with a monthly donation and help us continue our activities by supporting us as a [backer](https://opencollective.com/site-prism#backer)
 
-Become a sponsor and get your logo on our README on GitHub with a link to your site [How to Sponsor SitePrism?](https://opencollective.com/site-prism#sponsor)
+Become a sponsor and get your logo on our README on GitHub with a link to your site: [How to Sponsor SitePrism?](https://opencollective.com/site-prism#sponsor)
 
 Free Open Source software can only be maintained with the support of you. If you and/or your company find
 value in SitePrism and would like to contribute financially to its ongoing maintenance and development, 
