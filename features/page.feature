@@ -65,13 +65,13 @@ Feature: Page Properties
     When I navigate to a page with no title
     Then all missing elements are returned
 
-  Scenario: Reload a Page - Positive
+  Scenario: Re-run load validations on a page - Positive
     When I navigate to the letter "A" page
-    When I navigate to the home page
+    And I navigate to the home page
     And I click the link for the letter "A" page
-    Then re-running load validations works (for letter "A" page)
+    Then no error is raised when re-running load validations for the dynamic page
 
-  Scenario: Reload a Page - Negative
+  Scenario: Re-run load validations on a page - Negative
     When I navigate to the letter "A" page
-    When I navigate to the home page
-    Then re-running load validations does not work (for letter "A" page)
+    And I navigate to the home page
+    Then a load validation error is raised when re-running load validations for the dynamic page

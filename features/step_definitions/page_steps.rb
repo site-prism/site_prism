@@ -4,6 +4,10 @@ When('I execute some javascript on the page to set a value') do
   @test_site.nested_sections.first_search_result = 'wibble'
 end
 
+When('I click the link for the letter {string} page') do |_letter|
+  @test_site.home.a_link.click
+end
+
 Then('I can see an expected bit of the html') do
   expect(@test_site.home.html).to include('<span class="welcome">This is the home page')
 end
@@ -66,4 +70,12 @@ Then('not all mapped elements are present') do
   mapped_item_names = @test_site.home.class.mapped_items.values.flatten
 
   expect(@test_site.home.elements_present).not_to match_array(mapped_item_names)
+end
+
+Then('no error is raised when re-running load validations for the dynamic page') do
+  expect { @test_site.dynamic.run_load_validations }.not_to raise_error
+end
+
+Then('a load validation error is raised when re-running load validations for the dynamic page') do
+  expect { @test_site.dynamic.run_load_validations }.not_to raise_error
 end
