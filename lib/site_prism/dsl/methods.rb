@@ -67,8 +67,8 @@ module SitePrism
       # Check the sections presence or non-presence -> @return [Boolean]
       # Wait for the sections to be present or not -> @return [TrueClass, SitePrism::Error]
       # Validate certain properties about the section
-      def sections(name, *args, &block)
-        section_class, find_args = extract_section_options(args, &block)
+      def sections(name, *args, &)
+        section_class, find_args = extract_section_options(args, &)
         build(:sections, name, *find_args) do
           define_method(name) do |*runtime_args, &runtime_block|
             raise_if_runtime_block_supplied(self, name, runtime_block, :sections)
@@ -85,7 +85,7 @@ module SitePrism
         scope_find_args = deduce_iframe_scope_find_args(args)
         build(:iframe, name, *element_find_args) do
           define_method(name) do |&block|
-            raise MissingBlockError unless block
+            raise SitePrism::Error::MissingBlockError unless block
 
             within_frame(*scope_find_args) { block.call(klass.new) }
           end
@@ -99,7 +99,7 @@ module SitePrism
 
         SitePrism.logger.debug("Type passed in: #{type}")
         SitePrism.logger.error("#{name} has been defined as a '#{type}' item in #{parent_object}. It does not accept build-time blocks.")
-        raise SitePrism::UnsupportedBlockError
+        raise SitePrism::Error::UnsupportedBlockError
       end
 
       def deduce_iframe_element_find_args(args)

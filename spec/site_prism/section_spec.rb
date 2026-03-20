@@ -346,7 +346,7 @@ describe SitePrism::Section do
     end
 
     it 'raises SitePrism::InvalidElementError' do
-      expect { section.new(SitePrism::Page.new, locator) }.to raise_error(SitePrism::InvalidElementError)
+      expect { section.new(SitePrism::Page.new, locator) }.to raise_error(SitePrism::Error::InvalidElementError)
     end
   end
 

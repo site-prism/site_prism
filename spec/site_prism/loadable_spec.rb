@@ -100,7 +100,7 @@ describe SitePrism::Loadable do
 
       it 'raises a `FailedLoadValidationError` with a user-defined message' do
         expect { instance.when_loaded { :foo } }
-          .to raise_error(SitePrism::FailedLoadValidationError)
+          .to raise_error(SitePrism::Error::FailedLoadValidationError)
           .with_message('false? failed')
       end
 

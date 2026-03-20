@@ -15,7 +15,7 @@ module SitePrism
 
           sleep(sleep_duration)
         end
-        raise SitePrism::TimeoutError, "Timed out after #{wait_time}s."
+        raise SitePrism::Error::TimeoutError, "Timed out after #{wait_time}s."
       end
     end
   end

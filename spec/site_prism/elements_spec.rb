@@ -12,7 +12,7 @@ describe 'Elements' do
       end
 
       it 'cannot be defined with a build time block' do
-        expect { invalid_page }.to raise_error(SitePrism::UnsupportedBlockError)
+        expect { invalid_page }.to raise_error(SitePrism::Error::UnsupportedBlockError)
       end
     end
 

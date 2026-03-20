@@ -1,8 +1,15 @@
 ## [main] - Unreleased
+### Breaking Changes
+- Required Ruby Version is now `3.1` ([luke-hill])
+- All Error classes have now had their namespaces changed `SitePrism::` -> `SitePrism::Error::`
+  - A few unused error classes have been removed in the process
+  ([luke-hill])
+
 ### Removed
+- Guard logic for shadow root (Now capybara minimum version is above 3.37 which has native support for shadow root)
+([luke-hill])
 
 ### Added
-- `wait_until_invisible` method for the `SitePrism::Section` objects ([nikitenich])
 
 ### Changed
 
@@ -14,18 +21,20 @@
 
 ## [5.1.1] - 2026-01-09
 ### Changed
-- No public API changes, some minor tweaks to the codebase
+- No public API changes, some minor refactors to the internal structure (No public facing changes) ([luke-hill])
 
 ## [5.1] - 2025-01-08
 ### Changed
 - Permit `#all_there?` to be called with an options payload (Defaults to no waiting for now)
-  - Pass in keys to the `options` hash i.e. `options: { wait: 5 }` to wait for a specific time ([luke-hill])
+  - Pass in keys to the `options` hash i.e. `options: { wait: 5 }` to wait for a specific duration
+  ([luke-hill])
 
 - Version bumps
   - `site_prism-all_there` must be at least `3.0`
   - `rubocop` and associated gems have had partial bumps
   - `capybara` now must be at least `3.34`
-  
+  ([luke-hill])
+
 ## [5.0.4] - 2024-11-25
 ### Fixed
 - The DSL Validator was returning an invalid debug message when using an invalid name ([luke-hill])
@@ -39,67 +48,66 @@
 
 ## [5.0.2] - 2024-06-12
 ### Changed
-- Version bumps to various rubocop gems ([luke-hill])
-- Used a bit more of the `automation_helpers` gem in local browser configuration (Still a bit messy whilst we support pre-selenium-manager versions) ([luke-hill])
+- Version bumps to various `rubocop` gems ([luke-hill])
+
+- Used a bit more of the `automation_helpers` gem in local browser configuration (Still a bit messy whilst we
+support pre-selenium-manager versions) ([luke-hill])
 
 ### Fixed
 - Fixed a bug where the name validator wouldn't work properly due to not checking the full name ([luke-hill])
+
 - Some stylistic linting was done to test pages ([luke-hill])
 
 ## [5.0.1] - 2024-01-24
 ### Changed
-- Version bumps to various rubocop gems ([luke-hill])
+- Version bumps to various `rubocop` gems ([luke-hill])
 
 ### Fixed
 - Performance issue with `ElementChecker` class ([luke-hill])
 
 ## [5.0] - 2023-12-21
+### Breaking Changes
+- Any page or section must now have valid constructor names for the SitePrism DSL (For more info (Including ENV
+key name change to `SITEPRISM_DSL_VALIDATION_DISABLED`), see: [UPGRADING.md](./UPGRADING.md))
+  ([luke-hill])
+
 ### Added
 - Support for Shadow Root
   - You can define it by setting `:shadow_root` to true when defining a `section` ([souchan2000])
 
 ### Changed
-- **Breaking Change**: Any page or section must now have valid constructor names for the SitePrism DSL
-  (For more info (Including ENV key name change to `SITEPRISM_DSL_VALIDATION_DISABLED`), see: [UPGRADING.md](./UPGRADING.md))
-  ([luke-hill])
-
 - The default level for the SitePrism logger is now set to `:WARN`
   - (This was an oversight, but ok to switch for the v5 full release)
-    ([luke-hill])
+  ([luke-hill])
 
 - Version bumps
   - `site_prism-all_there` any version up to v3 can now be used
   - `rubocop` and associated gems have had partial bumps
   - Ensure users are using the patched form of `addressable`
-  - `capybara` now must be at least v3.31
-    ([luke-hill])
+  - `capybara` now must be at least `3.31`
+  ([luke-hill])
 
 ## [5.0.beta] - 2023-10-19
-### Removed
-- Dev Update: All traces of legacy `webdrivers` gem are now replaced with Selenium Manager
-  - Consequently some lower versions of gems are not tested on later rubies owing to CI issues 
-    ([luke-hill])
+### Breaking Changes
+- Required Ruby Version is now `2.7` ([luke-hill])
 
+- DSL Validation has moved `DSLValidator` -> `DSL::Validator` and is now implemented by default
+  - To opt out of this set the environment key `SITEPRISM_DSL_VALIDATION_ENABLED="false"`
+  ([luke-hill])
+
+### Removed
 - `SitePrism::Page#page` is now removed
-  - Use either `Capybara.current_session` or directly interrogate your input fragment (This is now deprecated)
-    ([luke-hill])
+  - Use either `Capybara.current_session` or directly interrogate your input fragment (Which is now deprecated)
+  ([luke-hill])
 
 ### Changed
-- **Required Ruby Version is now 2.7+**
-  ([luke-hill])
-
-- Internal change: All DSL code has been segregated and moved around (No method name changes)
-  ([luke-hill])
-
-- **Breaking Change:** DSL Validation has moved `DSLValidator` -> `DSL::Validator` and is now implemented by default
-  - To opt out of this set the environment key `SITEPRISM_DSL_VALIDATION_ENABLED="false"`
-    ([luke-hill])
+- **Internal Breaking Change**: All DSL code has been segregated and moved around (No method name changes) ([luke-hill])
 
 ## [4.0.3] - 2023-07-07
 ### Changed
-- The unit tests now by default use a proper rack app and test using a mocked html response
-  (No more hard-coded mocked responses, meaning our unit tests are **much more** realistic!)
-    ([luke-hill])
+- The unit tests now by default use a proper rack app and test using a mocked HTML response
+  - No more hard-coded mocked responses, meaning our unit tests are **much more** realistic!
+  ([luke-hill])
 
 - Optimised some recursion logic to use the `site_prism-all_there` sub-gem ([luke-hill])
 
@@ -108,45 +116,39 @@
 
 ## [4.0.2] - 2023-05-23
 ### Fixed
-- Fixing loading issue where SitePrism would crash if `capybara/dsl` wasn't preloaded
-  ([leoarnold])
+- Fixing loading issue where SitePrism would crash if `capybara/dsl` wasn't preloaded ([leoarnold])
 
-- Fixing bug with Ruby 3 keyword arguments
-  ([diego-aslz] & [luke-hill])
+- Fixing bug with Ruby 3 keyword arguments ([diego-aslz] & [luke-hill])
 
 ## [4.0.1] - 2023-05-11
 ### Added
-- CI now runs the low-spec gemfile on old rubies (Capybara versions are out of the unsupported window)
-  ([luke-hill])
+- CI now runs the low-spec gemfile on old rubies (Capybara versions that are out of the support window) ([luke-hill])
 
 ### Changed
-- `Autoload` is now removed from all remaining support classes that used it
-  ([luke-hill])
+- `Autoload` is now removed from all remaining support classes that used it ([luke-hill])
 
-- Fixed the `SitePrism::Timer` class to be api-private
-  ([luke-hill])
+- Fixed the `SitePrism::Timer` class to be api-private ([luke-hill])
 
-- Gem bumps to dev_dependencies
+- Gem bumps to dev dependencies
   - `webdrivers` is now pinned to v5 versions
-  - `rubocop` gems all bumped to latest ruby 2.6 compliant version
+  - `rubocop` gems all bumped to latest ruby `2.6` compliant version
     ([luke-hill])
 
 ### Fixed
-- Lots of cross leaked items in RSpec have now been fixed and isolated
-  ([luke-hill])
+- Lots of cross leaked items in RSpec have now been fixed and isolated ([luke-hill])
 
-- Lots of spam from deprecation messages (that are auto-triggered), have now been reduce
+- Lots of spam from deprecation messages (that are auto-triggered), have now been reduced
   - They are now memoized and fire just once when they're initially invoked
-    ([luke-hill])
+  ([luke-hill])
 
 ## [4.0] - 2023-04-19
-### Removed
-- Removed a load of redundant code from README
-  ([luke-hill])
+### Breaking Changes
+- Required Ruby Version is now `2.6` ([luke-hill])
 
-- Removed some redundant legacy tests for `#all_there?`
-  - These are now tested in the sub-gem and the responsibility lies there
-    ([luke-hill])
+### Removed
+- Removed a load of redundant information from `README.md` ([luke-hill])
+
+- Removed some redundant legacy tests for `#all_there?`. These are now tested in `site_prism-all_there` ([luke-hill])
 
 ### Added
 - Added in dependabot to keep ontop of all package updates
@@ -155,46 +157,46 @@
   ([luke-hill])
 
 ### Changed
-- **Required Ruby Version is now 2.6+**
-  ([luke-hill])
-
 - All soft deprecations have now been changed / amended into full deprecations
   - You now get a full deprecation when attempting to build DSL items without finders
   - `.mapped_items` now by default is structured the new hash-way
   ([luke-hill])
 
-- Gem bumps to dev_dependencies
+- Gem bumps to dev dependencies
   - `webdrivers` now can use all v5 revisions (helps with CI compatibility with selenium)
   - `rubocop` gems all bumped to latest ruby 2.5 compliant version
-    ([luke-hill])
+  ([luke-hill])
 
 - `SitePrism::Page#page` is now deprecated
-  - Use either `Capybara.current_session` or directly interrogate your input fragment
+  - Use `Capybara.current_session` or directly interrogate your input fragment
   - Any method calls have already been delegated using `#to_capybara_node`
-    ([luke-hill])
-
-- Internal RSpec matcher class renamed from `RspecMatchers` to `RSpecMatchers`
   ([luke-hill])
 
-- Massively updated the internal documentation of the codebase
-  ([luke-hill])
+- Internal RSpec matcher class renamed from `RspecMatchers` to `RSpecMatchers` ([luke-hill])
+
+- Massively updated the internal documentation of the codebase ([luke-hill])
 
 ### Fixed
-- iFrames also ban redundant blocks from being passed in at build time
-  ([luke-hill])
+- iFrames also ban redundant blocks from being passed in at build time ([luke-hill])
 
-- Prevent calls to `#to_capybara_node` happening internally from triggering deprecation messages
-  ([luke-hill])
+- Prevent calls to `#to_capybara_node` happening internally from triggering deprecation messages ([luke-hill])
 
 ## [4.0.beta] - 2022-11-28
+### Breaking Changes
+- Required Ruby Version is now `2.5` ([luke-hill])
+- Passing non-required blocks is now not permitted
+  - Passing a build-time block to `element` or `elements` will now throw an error on initial thread execution
+  - Passing a runtime block to `element`, `elements` or `sections` will now throw an error when called
+  ([luke-hill])
+
 ### Removed
 - Configuration parameter `.use_all_there_gem`
   - This is now enabled by default. The sub-gem is automatically required when you `require 'site_prism'`
   ([luke-hill])
 
 - You are no longer able to call `#page` inside a `SitePrism::Section` to obtain the current scope.
-  - Either use it implicitly via calls which will be scoped using capybara
-  - Or use `self.root_element` to obtain your current scope
+  - Use it implicitly via calls which will be scoped using capybara
+  - Use `self.root_element` to obtain your current scope
   ([luke-hill])
 
 ### Added
@@ -204,31 +206,21 @@
   ([luke-hill])
 
 ### Changed
-- **Breaking Change**: Passing non-required blocks is now not permitted
-  - Passing a build-time block to `element` or `elements` will now throw an error on initial thread execution
-  - Passing a runtime block to `element`, `elements` or `sections` will now throw an error when called
-  ([luke-hill])
+- `Waiter.wait_until_true` can now set an optional `sleep_duration` ([teyamagu])
 
-- **Required Ruby Version is now 2.5+**
-([luke-hill])
-
-- `Waiter.wait_until_true` can now set an optional `sleep_duration`
-([teyamagu])
-
-- Gem bumps to dev_dependencies
+- Gem bumps to dev dependencies
   - `cucumber` must now be v6+
   - `rubocop` and `rubocop-rspec` have had large version updates. `rubocop-performance` a small bump in version
   ([luke-hill])
 
 ### Fixed
-- Ensure `Forwardable` module is verbosely required in the gem requirements
-([Be-brand])
+- Ensure `Forwardable` module is verbosely required in the gem requirements ([Be-brand])
 
 ## [3.7.3] - 2021-09-20
 ### Changed
 - The internal DSL mapping methods which map the locators/booleans now always use `#to_capybara_node`
-  - This is a long-standing change that was needed and now means the gem is fully conformant to all
-  capybara guides. It should also dramatically reduce Deprecation WARNINGS in the SitePrism logger
+  - This is a long-standing change that was needed and now means the gem is fully conformant to all capybara standards
+  - It should also dramatically reduce deprecation warnings in the SitePrism logger
   ([luke-hill])
 
 - Gem bumps to dependencies
@@ -237,20 +229,16 @@
   - `rubocop` and `rubocop-rspec` have been bumped a major version (Still a healthy amount behind latest)
   ([luke-hill])
 
-- Switched CI from defunct travis to Github Actions
-  ([luke-hill])
+- Switched CI from defunct travis to GitHub Actions (GHA) ([luke-hill])
 
 ### Fixed
-- All referencess to time delays in feature tests now reference a single set of methods (DRYed up)
-  ([luke-hill])
+- All references to time delays in feature tests now reference a single set of methods (DRYed up) ([luke-hill])
 
 ## [3.7.2] - 2021-08-23
 ### Changed
-- Bumped a whole raft of dev dependencies
-([luke-hill])
+- Bumped a whole raft of dev dependencies ([luke-hill])
 
-- Minor lib/spec optimisations from `rubocop-performance` / `rubocop-rspec`
-([luke-hill])
+- Minor lib/spec optimisations from `rubocop-performance` / `rubocop-rspec` ([luke-hill])
 
 ## [3.7.1] - 2021-02-19
 ### Added
@@ -260,14 +248,11 @@
 ([luke-hill])
 
 ### Changed
-- Minor refactors
-  - Updated some internal DSL code
-  - Updated development dependencies to be something more reasonable
-([luke-hill])
+- Minor refactors - Internal DSL code & development dependencies ([luke-hill])
 
 ## [3.7] - 2020-10-15
 ### Added
-- Updated README to clarify `displayed?` wait behavior and finder method delegation ([asavageiv])
+- Updated `README.md` to clarify `displayed?` wait behavior and finder method delegation ([asavageiv])
 
 ### Changed
 - **Internal Breaking Change**: Performed a massive refactor of internal SitePrism logic
@@ -279,18 +264,19 @@
 ([twalpole] & [ineverov] & [luke-hill])
 
 - Gem bumps to dev dependencies
-  - `rubocop` now must be 0.83.x which permits the NewCops param
+  - `rubocop` now must be `0.83` which permits the NewCops parameter
   - `selenium-webdriver` minimum supported version is now `3.11`
 ([luke-hill])
 
 ## [3.6] - 2020-08-17
+### Breaking Changes
+- Required Ruby Version is now `2.4` ([luke-hill])
+
 ### Added
 - Added `#elements_missing` method which returns all missing elements from the expected_elements list ([ineverov])
 
 ### Changed
-- **Required Ruby Version is now 2.4+**
-  - Alongside this, initial support will be offered for `selenium-webdriver` in alpha versions
-([luke-hill])
+- Initial support for `selenium-webdriver` in alpha versions ([luke-hill])
 
 - Refined SitePrism's `Waiter.wait_until_true` logic
   - SitePrism can now be used with `Timecop.freeze` and Rails' `travel_to`
@@ -298,16 +284,16 @@
 ([sos4nt])
 
 ### Fixed
-- SitePrism's RSpec matchers fall back to behaviour matching that of the standard RSpec
-  built-in matchers when called on anything that is not a SitePrism object.
+- SitePrism's RSpec matchers fall back to behaviour matching that of the standard RSpec built-in matchers when
+called on anything that is not a SitePrism object
 ([lparry] & [luke-hill])
 
-- Fixed up a bunch more RSpec cop offenses and updated the minimum dev requirement of rubocop to `0.81` as it was ancient!
+- Fixed up a bunch more RSpec cop offenses and updated the minimum dev requirement of rubocop to `0.81`
 ([luke-hill])
 
 ## [3.5] - 2020-06-04
 ### Added
-- Added new logging that will notify users (And team!), when a user creates a name with a `no_` prefix
+- Added new logging that will notify users when a user creates a name with a `no_` prefix
   - This will cause race condition conflicts which are intractable, and as such will be banned in a later release
 ([anuj-ssharma] & [luke-hill])
 
@@ -316,8 +302,7 @@
   - The official explanation of keyword arguments in Ruby 2.7 can be found [HERE](https://www.ruby-lang.org/en/news/2019/12/12/separation-of-positional-and-keyword-arguments-in-ruby-3-0/)
 ([oieioi])
 
-- Generic suite fixes for making tests more robust
-([ineverov])
+- Generic suite fixes for making tests more robust ([ineverov])
 
 - Fixed an issue where block syntax wouldn't work properly for a singular DSL item (element / section)
   - If using one of these items, the block syntax would only work on initialization, as such it is advised to
@@ -327,60 +312,47 @@
 
 ## [3.4.2] - 2020-01-30
 ### Added
-- Simplecov now triggers for both local and CI builds
-([luke-hill])
+- Simplecov now triggers for both local and CI builds ([luke-hill])
 
 ### Changed
 - All internal SitePrism tests now will enable `site_prism-all_there` gem by default
-  - Note there are still a couple of tests that make use of not using this
-  (Whilst the gem is still optional)
-  - During the `v3.x` series this gem will slowly move more into mainstream and will become the default
-  option for `v4.0`
+  - Note there are still a couple of tests that make use of not using this (Whilst the gem is still optional)
+  - During the `v3.x` series this gem will slowly move more into mainstream and will become the default option for `v4.0`
 ([luke-hill])
 
-- Travis now builds on ruby `2.7` instead of `ruby-head`
-([luke-hill])
+- Travis now builds on ruby `2.7` instead of `ruby-head` ([luke-hill])
 
 - gemspec now forces version `0.3.1` minimum of `site_prism-all_there`
   - This will include the latest bug-fix required to make the gem fully operational
   - All versions up to `< 1` are permitted to future-proof it against further tweaks
 ([luke-hill])
 
-- v13 of `rake` can now be used
-([luke-hill])
-
 ### Fixed
-- Fixed up some RSpec cop offenses & Added reasons for rule definitions
-([luke-hill])
+- Fixed up some RSpec cop offenses & added reasons for rule definitions ([luke-hill])
 
 ## [3.4.1] - 2019-09-26
 ### Changed
-- Update the `Gemfile.low_spec` as it was untouched in over 6 months
-([luke-hill])
+- Update the `Gemfile.low_spec` as it was untouched in over 6 months ([luke-hill])
 
-- Unlock `site_prism-all_there` to any `0.x` version higher than `0.3` now it is more stable
-([luke-hill])
+- Unlock `site_prism-all_there` to any `0.x` version higher than `0.3` now it is more stable ([luke-hill])
 
-- Added more rubocop rule definitions
-([luke-hill])
+- Added more rubocop rule definitions ([luke-hill])
 
 ### Fixed
-- Fixed up some RSpec cop offenses
-([luke-hill])
+- Fixed up some RSpec cop offenses ([luke-hill])
 
 ## [3.4] - 2019-08-01
 ### Added
-- Added first bunch of Feature Deprecation notices for users to advise of the items which
-will either be changing for version4 or being removed entirely.
-  - This also advises of a couple of areas that had some minor bugs in the codebase in the DSL
-  creation phase (These will be fixed going forwards in v4)
+- Added the first bunch of deprecation notices for users to advise of the items which will either be changing for
+v4 or being removed entirely
+  - This also advises of a couple of areas that had some minor bugs in the codebase in the DSL creation phase
+(These will be fixed going forwards in v4)
 ([luke-hill])
 
-- Added `rubocop-rspec` and regenerated the `.rubocop_todo.yml` file, fixing up some cops in the process
-([luke-hill])
+- Added `rubocop-rspec` and regenerated the `.rubocop_todo.yml` file, fixing up some cops in the process ([luke-hill])
 
 ### Changed
-- `#all_there?` now can be used both internally by site_prism and by the all_there gem
+- `#all_there?` now can be used both internally by `site_prism` and by the `site_prism-all_there` gem
   - Users can set `SitePrism.use_all_there_gem` to use the latest bleeding edge logic
   - Note this also requires users to use the `0.2` version of the new gem
   - Users need to manually add `require site_prism-all_there` whilst this gem is still under
@@ -394,11 +366,9 @@ will either be changing for version4 or being removed entirely.
 ([luke-hill])
 
 ### Fixed
-- Fixed all legacy links to ([natritmeyer])'s Github page. They all now point here.
-([luke-hill] & [igas])
+- Fixed all legacy links to ([natritmeyer])'s GitHub page. They all now point here ([luke-hill] & [igas])
 
-- Fixed up / Improved some dead documentation links on the README, warning about outdated plugins
-([luke-hill])
+- Fixed up / Improved some dead documentation links on the `README.md`, warning about outdated plugins ([luke-hill])
 
 ## [3.3] - 2019-07-01
 ### Added
@@ -411,25 +381,21 @@ will either be changing for version4 or being removed entirely.
   **NB: This is very much a working prototype, and additional refactors / tweaks will be forthcoming**
 ([luke-hill])
 
-- Added a feature deprecator to allow easier deprecation / removal of obsolete or old parts of
-the codebase
-([luke-hill])
+- Added a feature deprecator to allow easier deprecation / removal of obsolete or old parts of the codebase ([luke-hill])
 
 ### Changed
-- SitePrism is now hosted in it's own individual organisation! Special thanks to everyone who has helped
-out in the past, but now we're looking to host multiple co-dependent gems from this new organisation
+- SitePrism is now hosted in its own individual organisation! Special thanks to everyone who has helped out in the
+past, but now we're looking to host multiple co-dependent gems from this new organisation
 ([luke-hill])
 
-- Capybara dependency has been slightly bumped from `3.2+` to `3.3+` to mitigate against a minor
-locator reference issue (None reported, but future-proofing)
+- Capybara dependency has been slightly bumped from `3.2+` to `3.3+` to mitigate against a minor locator reference issue
+(None reported, but future-proofing)
 ([luke-hill])
 
 ### Fixed
-- README fixes
-([andyw8] & [TheSpartan1980])
+- `README.md` fixes ([andyw8] & [TheSpartan1980])
 
-- Fix an issue where chrome wasn't building successfully due to the migration to W3C capabilities
-([luke-hill])
+- Fix an issue where chrome wasn't building successfully due to the migration to W3C capabilities ([luke-hill])
 
 ## [3.2] - 2019-05-14
 ### Added
@@ -438,8 +404,7 @@ locator reference issue (None reported, but future-proofing)
   - If not passed in or set to `true` the previous behaviour is retained (Validations running)
 ([JanStevens])
 
-- `rubocop-performance` has been added as a development dependency to future-proof against
-impending major rubocop release
+- `rubocop-performance` has been added as a development dependency to future-proof against impending major rubocop release
 ([luke-hill])
 
 - When using rspec matchers, the `.not_to` matcher will now use the `has_no_<element>?` method call
@@ -452,15 +417,12 @@ impending major rubocop release
 ([TheSpartan1980] & [luke-hill])
 
 ### Changed
-- `rubocop` rules regarding formatting (To bring it more in-line with the 21st century!)
-([luke-hill])
+- `rubocop` rules regarding formatting (To bring it more in-line with the 21st century!) ([luke-hill])
 
 ### Fixed
-- Travis now uses `webdrivers` gem to build and mitigate driver issues
-([luke-hill])
+- Travis now uses `webdrivers` gem to build and mitigate driver issues ([luke-hill])
 
-- SitePrism can now detect if Time has been frozen (i.e. with Timecop), whilst using `.wait_until_true`
-([dkniffin])
+- SitePrism can now detect if Time has been frozen (i.e. with Timecop), whilst using `.wait_until_true` ([dkniffin])
 
 ## [3.1] - 2019-03-26
 ### Added
@@ -468,12 +430,11 @@ impending major rubocop release
   - In particular how to deal with adding `wait` keys to `wait_until_*` methods
 ([tgaff])
 
-- Added gem version badge to `README.md`
-([luke-hill])
+- Added gem version badge to `README.md` ([luke-hill])
 
-- Some of the README docs surrounding how to setup site_prism have been improved
-  - Distinction between how to layout the `require` statements in cucumber / rspec stacks
-  - Open ended statements about further optimisations are available dependent on the stack
+- Some of the README docs surrounding how to set up site_prism have been improved
+  - Distinction between how to lay out the `require` statements in cucumber / rspec stacks
+  - Open-ended statements about further optimisations are available dependent on the stack
 ([luke-hill])
 
 - XPath vs CSS iFrame inconsistency (There was the potential for an xpath iFrame to be "read" as CSS)
@@ -489,25 +450,20 @@ impending major rubocop release
 ([luke-hill])
 
 ### Changed
-- Travis now uses `xenial` Ubuntu in the Docker VM Tests, bringing it more up to date
-([luke-hill])
+- Travis now uses `xenial` Ubuntu in the Docker VM Tests, bringing it more up to date ([luke-hill])
 
-- Travis now will build on some more (older), permutations of gems to increase test coverage
-([luke-hill])
+- Travis now will build on some more (older), permutations of gems to increase test coverage ([luke-hill])
 
-- The `HISTORY.md` document has now moved to `CHANGELOG.md` to try keep it in-line with other OSS repos
-([luke-hill])
+- The `HISTORY.md` document has now moved to `CHANGELOG.md` to try keep it in-line with other OSS repos ([luke-hill])
 
 ### Fixed
-- During DSL Map phase, ensure all items are cast to symbol to ensure type-standardisation
-([luke-hill])
+- During DSL Map phase, ensure all items are cast to symbol to ensure type-standardisation ([luke-hill])
 
 - In some unit tests the XPath iFrame was created using CSS, this has now been fixed
   - This has also enabled the Mock Pages to be a little more extensible going forwards
 ([luke-hill])
 
-- Added waiter methods for iFrame's that were previously missing, bringing them in-line with other DSL items
-([luke-hill])
+- Added waiter methods for iFrame's that were previously missing, bringing them in-line with other DSL items ([luke-hill])
 
 ## [3.0.3] - 2019-02-20
 ### Changed
@@ -529,7 +485,7 @@ impending major rubocop release
 ([luke-hill])
 
 - Load Validations
-  - Are now slightly optimised making 2 less checks per batch (One less check per initial run)
+  - Are now slightly optimised making 2 fewer checks per batch (One less check per initial run)
   - Actually perform the checks they were documented to (They didn't run against a url without a block)
   - Fix `#loaded` `attr_accessor` to actually cache - It never did! (This speeds up `#loaded?` calls)
   - Add a couple more specs and a bunch of new scenarios to cover these missing edge cases
@@ -537,11 +493,10 @@ impending major rubocop release
 
 ## [3.0.2] - 2019-01-21
 ### Added
-- Travis now runs on Ruby `2.6` and `ruby-head`
-([tadashi0713])
+- Travis now runs on Ruby `2.6` and `ruby-head` ([tadashi0713])
 
 ### Changed
-- Completely altered the namespace of the SitePrism DSL
+- **Internal Breaking Change**: Completely altered the namespace of the SitePrism DSL
   - Now fed from `SitePrism::DSL` (Nearly all is still package private)
   - Began to add documentation for `ElementChecker` introducing recursion
 ([luke-hill])
@@ -559,7 +514,7 @@ impending major rubocop release
 
 ### Changed
 - Local Testing Page improvements
-  - Cleared out all javascript from Section Experiments and simplified the page
+  - Cleared out all JavaScript from Section Experiments and simplified the page
   - Added the Slow / Vanishing pages into consumption, so we now have a bit more Single Responsibility in tests
 ([luke-hill])
 
@@ -587,11 +542,9 @@ impending major rubocop release
   - This is due to `simplecov` caching dual results
 ([luke-hill])
 
-- Stopped Ruby `2.5` users getting spammed with warnings about uninitialised instance variables
-([menge101])
+- Stopped Ruby `2.5` users getting spammed with warnings about uninitialised instance variables ([menge101])
 
-- Updated user documentation to not advise using now removed methods!
-([TheSpartan1980])
+- Updated user documentation to not advise using now removed methods! ([TheSpartan1980])
 
 ## [3.0] - 2018-10-12
 ### Removed
@@ -600,17 +553,15 @@ impending major rubocop release
 ([luke-hill])
 
 ### Added
-- `.simplecov` configuration file to allow easier configuration of the suite going forward
-([luke-hill])
+- `.simplecov` configuration file to allow easier configuration of the suite going forward ([luke-hill])
 
 - A base SitePrism logger that wraps the Ruby Logger library
   - For now this will only output to `$stdout` and can only be configured as ON/OFF
   - Logger can be enabled with `SitePrism.enable_logging = true` (Default set to `false`)
-  - Initial set of logger messages have been setup to debug / warn users when calling methods
+  - Initial set of logger messages have been set up to debug / warn users when calling methods
 ([luke-hill])
 
-- A new set of unconsumed leaner html pages which will in time replace the muddled ones
-([luke-hill])
+- A new set of unconsumed leaner HTML pages to begin to replace the muddled ones ([luke-hill])
 
 ### Changed
 - Upped Version Dependencies
@@ -625,8 +576,7 @@ impending major rubocop release
   - Added timings document to give us a set of goalposts to aim for
 ([luke-hill])
 
-- Some of the `ElementContainer` module has been rewritten to be a little more concise
-([luke-hill])
+- Some of the `ElementContainer` module has been rewritten to be a little more concise ([luke-hill])
 
 - All of the existing feature tests have now been adapted to fit to the aims of v3
   - Some of the new feature tests have been migrated to test implicit waiting logic
@@ -649,8 +599,7 @@ impending major rubocop release
 ([luke-hill])
 
 ### Added
-- An UPGRADING.md document to help facilitate the switch from SitePrism v2 to v3
-([luke-hill])
+- An `UPGRADING.md` document to help facilitate the switch from SitePrism v2 to v3 ([luke-hill])
 
 ### Changed
 - Most error message classes have been re-written into a more Ruby naming scheme (Ending in Error)
@@ -658,15 +607,12 @@ impending major rubocop release
   - The `error.rb` file details the previous names to help with the transition
 ([luke-hill])
 
-- Upped Version Dependency of `selenium-webdriver` to `~> 3.6`
-([luke-hill])
+- Upped Version Dependency of `selenium-webdriver` to `~> 3.6` ([luke-hill])
 
-- SitePrism will now use the configured Capybara wait time to implicitly wait at all times
-([luke-hill])
+- SitePrism will now use the configured Capybara wait time to implicitly wait at all times ([luke-hill])
 
 ### Fixed
-- The names/locations of some waiting tests, which were testing implicit instead of explicit waits
-([luke-hill])
+- The names/locations of some waiting tests, which were testing implicit instead of explicit waits ([luke-hill])
 
 ## [2.17.1] - 2018-09-15
 ### Fixed
@@ -674,21 +620,21 @@ impending major rubocop release
   - This fixes travis and other CI environments throwing an abnormally large number of warnings
 ([luke-hill])
 
-- Fixed a name collision for a private method in `ElementChecker` that conflicted with ActiveRecord
-([Systho])
+- Fixed a name collision for a private method in `ElementChecker` that conflicted with ActiveRecord ([Systho])
 
 ## [2.17] - 2018-09-07
 ### Removed
-- `collection` has been removed from the SitePrism DSL (Was just an alias of `sections`)
-([luke-hill])
+- `collection` has been removed from the SitePrism DSL (Was just an alias of `sections`) ([luke-hill])
 
 ### Changed
-- Made all configuration options throw deprecation warnings
-([luke-hill])
-- Advised users of a better way to use in-line waiting keys instead of `wait_for_*` methods (Deprecated)
-([luke-hill])
+- Made all configuration options throw deprecation warnings ([luke-hill])
+
+- Advised users of a better way to use in-line waiting keys instead of `wait_for_*` methods (Deprecated) ([luke-hill])
 
 ## [2.16] - 2018-08-22
+### Breaking Changes
+- Required Ruby Version is now `2.2` ([luke-hill])
+
 ### Added
 - A configuration switch to toggle the default Page Load Validation behaviours (By default set to on)
 ([luke-hill])
@@ -700,14 +646,11 @@ impending major rubocop release
 - Upped Version Dependencies
   - `capybara` must be at least `2.15`
   - `selenium-webdriver ~> 3.5`
-  - **Required Ruby Version is now 2.2+**
 ([luke-hill])
 
-- Altered `HISTORY.md` into more hyperlinked and declarative format
-([luke-hill] & [JaniJegoroff])
+- Altered `HISTORY.md` into more hyperlinked and declarative format ([luke-hill] & [JaniJegoroff])
 
-- Tidied up the Sample HTML files so they had less un-required information
-([luke-hill])
+- Tidied up the Sample HTML files so they had less un-required information ([luke-hill])
 
 - Refactored the way the `wait` key is assigned for all meta-programmed methods
   - Now assigned in a consistent way across all methods
@@ -715,70 +658,53 @@ impending major rubocop release
 ([luke-hill])
 
 ### Fixed
-- Spec locations (All are now in correct files)
-([luke-hill])
+- Spec locations (All are now in correct files) ([luke-hill])
 
-- README / rubocop fixes
-([luke-hill])
+- `README.md` / `rubocop` fixes ([luke-hill])
 
 ## [2.15.1] - 2018-07-20
 ### Added
-- Initial backwards compatible work for rewriting the Error protocols for site_prism 3.0
+- Initial backwards compatible work for rewriting the Error protocols for next `site_prism` major release
   - All Error Classes inherit from one common Error Class
   - All names have suffix `Error`
 ([luke-hill])
 
 ### Changed
-- Add ability to test multiple gemfiles in travis
-([luke-hill])
+- Add ability to test multiple gemfiles in travis ([luke-hill])
 
-- Removed all constants aside from `VERSION`
-([luke-hill])
+- Removed all constants aside from `VERSION` ([luke-hill])
 
-- Improve runtime of cucumber tests by around 30% overall by tweaking some internal JS code
-([luke-hill])
+- Improve runtime of cucumber tests by around 30% overall by tweaking some internal JS code ([luke-hill])
 
-- Upped Capybara Version Dependency `capybara >= 2.14, < 3.3`
-([luke-hill])
+- Upped Capybara Version Dependency `capybara >= 2.14, < 3.3` ([luke-hill])
 
-- Altered travis config to test for lowest gem configuration permissible in site_prism
-([luke-hill])
+- Altered travis config to test for lowest gem configuration permissible in `site_prism` ([luke-hill])
 
 ### Fixed
-- Fixed up some unit tests to cover pages defined with differing selectors
-([luke-hill])
+- Fixed up some unit tests to cover pages defined with differing selectors ([luke-hill])
 
-- README fixes
-([luke-hill])
+- `README.md` fixes ([luke-hill])
 
-- Fix scoping issue that prevented iFrames / JS methods defined inside a `section` working
-([ineverov])
+- Fix scoping issue that prevented iFrames / JS methods defined inside a `section` working ([ineverov])
 
 ## [2.15] - 2018-07-09
 ### Added
-- Added more gem metadata into the `.gemspec` file to be read by RubyGems (Changelog e.t.c.)
-([luke-hill])
+- Added more gem metadata into the `.gemspec` file to be read by RubyGems (`CHANGELOG.md` e.t.c.) ([luke-hill])
 
-- Enabled support for Capybara 3. Making sure suite is backwards compatible
-([luke-hill])
+- Enabled support for Capybara 3. Making sure suite is backwards compatible ([luke-hill])
 
-- Added a huge portion of new feature tests to validate timings RE implicit/explicit waits
-([tgaff])
+- Added a huge portion of new feature tests to validate timings RE implicit/explicit waits ([tgaff])
 
 ### Fixed
-- rubocop fixes
-([ineverov])
+- `rubocop` fixes ([ineverov])
 
-- Fix implicit waiting not working for some DSL defined methods
-([luke-hill] & [tgaff])
+- Fix implicit waiting not working for some DSL defined methods ([luke-hill] & [tgaff])
 
-- Add better error message when iFrame's are called without a block (Than a stacktrace)
-([luke-hill] & [mdesantis])
+- Add better error message when iFrame's are called without a block (Than a stacktrace) ([luke-hill] & [mdesantis])
 
 ## [2.14] - 2018-06-22
 ### Removed
-- Previously deprecated `Waiter.default_wait_time` (As this just called the Capybara method)
-([luke-hill])
+- Previously deprecated `Waiter.default_wait_time` (As this just called the Capybara method) ([luke-hill])
 
 ### Added
 - Introduced new sister method to `#expected_elements` - `#elements_present`
@@ -790,49 +716,42 @@ impending major rubocop release
   - If unset / overridden. You are able to still define them in-line using the DSL
 ([ineverov])
 
-- Testing for Ruby 2.5 on Travis
-([luke-hill])
+- Testing for Ruby 2.5 on Travis ([luke-hill])
 
 ### Changed
-- Tidied up specs and made Code Coverage 100% compliant
-([luke-hill])
+- Tidied up specs and made Code Coverage 100% compliant ([luke-hill])
 
 - Upped Development Version Dependencies
   - `selenium-webdriver ~> 3.4`
   - `rubocop ~> 52.0`
 ([luke-hill])
 
-- Rewrite `ElementContainer` by using `klass.extend`, removing several `self.class` calls
-([ineverov])
+- Rewrite `ElementContainer` by using `klass.extend`, removing several `self.class` calls ([ineverov])
 
-- Added positive and negative timing tests to several scenarios in `waiting.feature`
-([luke-hill])
+- Added positive and negative timing tests to several scenarios in `waiting.feature` ([luke-hill])
 
 ### Fixed
 - Fixed waiting bug that caused `Waiter.default_wait_time` not to wait the correct duration
   - Bug only seemed to be present when implicit waits were toggled on
 ([luke-hill])
 
-- Removed references to `Timeout.timeout` as this isn't threadsafe
-([twalpole])
+- Removed references to `Timeout.timeout` as this isn't threadsafe ([twalpole])
 
-- Fixed issue where multiple runtime arguments weren't set at run-time (ignored by Capybara)
-([twalpole])
+- Fixed issue where multiple runtime arguments weren't set at run-time (ignored by Capybara) ([twalpole])
 
-- rubocop fixes
-([ineverov] & [jgs731])
+- `rubocop` fixes ([ineverov] & [jgs731])
 
 ## [2.13] - 2018-05-21
+### Breaking Changes
+- Required Ruby Version is now `2.1` ([luke-hill])
+
 ### Removed
-- Removed testing for Ruby `2.0` on Travis
-([luke-hill])
+- Removed testing for Ruby `2.0` on Travis ([luke-hill])
 
 ### Added
-- Added new development docs to aid new and existing contributors
-([luke-hill])
+- Added new development docs to aid new and existing contributors ([luke-hill])
 
-- Added Feature to wait for non-existence of element/section
-([ricmatsui])
+- Added Feature to wait for non-existence of element/section ([ricmatsui])
 
 - Introduced configuration to raise an Exception after running `wait_for` methods
   - These aren't in sync with others, and this configuration option will be removed in time!
@@ -844,9 +763,6 @@ impending major rubocop release
   - deprecated `.default_wait_time`
 ([luke-hill])
 
-- Updated Suite Ruby Requirements (**Minimum Ruby is now `2.1`**)
-([luke-hill])
-
 - Internal testing tweaks
   - Updated cucumber dependency to `3.0.1` (Allowing new syntax testing)
   - Cleaned up cucumber tests into more granular structure
@@ -854,52 +770,40 @@ impending major rubocop release
   - Unlock testing on Selenium up to `3.10`
 ([luke-hill])
 
-- Use `shared_examples` in RSpec tests to enhance coverage and check xpath selectors
-([luke-hill])
+- Use `shared_examples` in RSpec tests to enhance coverage and check xpath selectors ([luke-hill])
 
 ### Fixed
-- `README.md` fixes
-([robd])
+- `README.md` fixes ([robd])
 
 ## [2.12] - 2018-04-20
 ### Added
-- Added Ruby `2.4` testing to Travis
-([luke-hill])
+- Added Ruby `2.4` testing to Travis ([luke-hill])
 
-- Update Travis Environment to now test on Chrome and Firefox
-([RustyNail] & [luke-hill])
+- Update Travis Environment to now test on Chrome and Firefox ([RustyNail] & [luke-hill])
 
 ### Changed
-- Updated development dependencies to be a little more up to date
-([luke-hill])
+- Updated development dependencies to be a little more up to date ([luke-hill])
 
-- Allow iFrames to be specified using any selector (ID / Class / XPath / Index)
-([ricmatsui])
+- Allow iFrames to be specified using any selector (ID / Class / XPath / Index) ([ricmatsui])
 
-- Upped Development Dependency of Selenium (3.4 - 3.8)
-([luke-hill])
+- Upped Development Dependency of Selenium (`3.4` - `3.8`) ([luke-hill])
 
-- Expose the `#native` method on Section Objects
-([luke-hill])
+- Expose the `#native` method on Section Objects ([luke-hill])
 
 ### Fixed
-- `README.md` / rubocop / Test / TODO fixes
-([luke-hill])
+- `README.md` / `rubocop` / Test / TODO fixes ([luke-hill])
 
-- Fix suite incidentally masking several issues due to incorrect cucumber setup
-([luke-hill])
+- Fix suite incidentally masking several issues due to incorrect cucumber setup ([luke-hill])
 
 - Fix issue where within a section, we lose our scoping
   - This is due to leveraging `Capybara::DSL`. We need to rescope `#page` to `#root_element`
 ([ilyasgaraev])
 
-- Performed a suite-wide cleanup of Gherkin. Made everything a lot more organised
-([luke-hill])
+- Performed a suite-wide cleanup of Gherkin. Made everything a lot more organised ([luke-hill])
 
 ## [2.11] - 2018-03-07
 ### Added
-- Re-enable Rubocop compliance from PR signoff (Including fixing up some offences)
-([RustyNail])
+- Re-enable `rubocop` compliance from PR signoff (Including fixing up some offences) ([RustyNail])
 
 - Allow `#all_there?` to be extended in the DSL with `#expected_elements`
   - This Allows pages to stipulate that some elements may not be there
@@ -907,38 +811,31 @@ impending major rubocop release
 ([TheMetalCode])
 
 ### Changed
-- Use the `.gemspec` file for all gem versions and remove any references to gems in `Gemfile`
-([luke-hill] & [tgaff])
+- Use the `.gemspec` file for all gem versions and remove any references to gems in `Gemfile` ([luke-hill] & [tgaff])
 
-- Compressed `Rakefile` into smaller tasks for Increased Verbosity on Failures
-([luke-hill])
+- Compressed `Rakefile` into smaller tasks for Increased Verbosity on Failures ([luke-hill])
 
-- Update Travis to test on a variety of rubies: `2.0 -> 2.3`, using the latest geckodriver
-([luke-hill])
+- Update Travis to test on a variety of rubies: `2.0 -> 2.3`, using the latest geckodriver ([luke-hill])
 
-- Refactored SitePrism's Addressable library so its slightly less confusing to debug
-([luke-hill])
+- Refactored SitePrism's Addressable library so its slightly less confusing to debug ([luke-hill])
 
 ### Fixed
-- Fix bug where SitePrism failed load-validation's when passed Block Parameters with no URL
-([kei2100])
+- Fix bug where SitePrism failed load-validation's when passed Block Parameters with no URL ([kei2100])
 
-- README / rubocop fixes
-([luke-hill])
+- `README.md` / `rubocop` fixes ([luke-hill])
 
 ## [2.10] - 2018-02-23
+### Breaking Changes
+- Required Ruby Version is now `2.0+` ([luke-hill])
+
 ### Removed
-- Disable Rubocop compliance from PR signoff whilst suite is still being reworked
+- Disable `rubocop` compliance from PR signoff whilst suite is still being reworked
   - Fixes coming soon to future releases
   - Will be switched on once the suite is stabilised
 ([luke-hill])
 
 ### Added
-- Added base contributing / issue templates
-([luke-hill])
-
-- Established Roadmap of items to be fixed in coming months
-([luke-hill])
+- Added base contributing / issue templates ([luke-hill])
 
 - Reworked specs / developmental code to read better
   - Established a base "correct syntax"
@@ -949,7 +846,6 @@ impending major rubocop release
 - Upped Version Dependencies
   - `capybara ~> 2.3`
   - `rspec ~> 3.2`
-  - Required Ruby Version is now 2.0+
 ([luke-hill])
 
 - Capped Development dependencies for `cucumber (2.4)` and `selenium-webdriver (3.4)`
@@ -957,8 +853,7 @@ impending major rubocop release
   - Suite is still being reworked (So unsure of what results to expect)
 ([luke-hill])
 
-- Reworked all text files into Markdown structure to allow formatting
-([luke-hill])
+- Reworked all text files into Markdown structure to allow formatting ([luke-hill])
 
 ### Fixed
 - Travis Fixes
@@ -966,41 +861,31 @@ impending major rubocop release
   - Ubuntu container migrated to `trusty` from `precise`
 ([RustyNail])
 
-- Allow `#all_there?` to use in-line configured implicit wait (Still defaulted to false)
-([RustyNail])
+- Allow `#all_there?` to use in-line configured implicit wait (Still defaulted to `false`) ([RustyNail])
 
-- README / rubocop fixes
-([luke-hill] & [iwollmann])
+- `README.md` / `rubocop` fixes ([luke-hill] & [iwollmann])
 
 ## [2.9.1] - 2018-02-20
 ### Removed
-- Travis tests for EOL Rubies (`2.0` / `2.1` / `2.2`)
-([natritmeyer])
+- Travis tests for EOL Rubies (`2.0` / `2.1` / `2.2`) ([natritmeyer])
 
-- Codebase cleanup of non-used config files
-([luke-hill])
+- Codebase cleanup of non-used config files ([luke-hill])
 
 ### Changed
-- Bumped Travis Ruby version from `2.2` to `2.3`
-([natritmeyer])
+- Bumped Travis Ruby version from `2.2` to `2.3` ([natritmeyer])
 
-- Upped Version Dependency of `addressable` to `~> 2.4`
-([luke-hill])
+- Upped Version Dependency of `addressable` to `~> 2.4` ([luke-hill])
 
 ### Fixed
-- README / rubocop fixes
-([whoojemaflip] & [natritmeyer] & [luke-hill])
+- `README.md` / `rubocop` fixes ([whoojemaflip] & [natritmeyer] & [luke-hill])
 
-- Fixed namespace clashes with sections and rspec
-([tobithiel])
+- Fixed namespace clashes with sections and rspec ([tobithiel])
 
-- Improved Codecoverage pass-rate from `85%` to `99%` (1 outstanding item)
-([luke-hill])
+- Improved Codecoverage pass-rate from `85%` to `99%` (1 outstanding item) ([luke-hill])
 
 ## [2.9] - 2016-03-29
 ### Removed
-- Travis tests for Ruby `1.9.x` versions, Travis only tests on 2.0+
-([natritmeyer])
+- Travis tests for Ruby `1.9.x` versions, Travis only tests on `2.0+` ([natritmeyer])
 
 ### Added
 - Implement new `Loadable` behaviour for pages and sections
@@ -1008,24 +893,19 @@ impending major rubocop release
   - Also checks that the page is displayed before continuing
 ([tmertens])
 
-- Added ability to use block syntax inside a `section` (Previously only iFrames could)
-([tgaff])
+- Added ability to use block syntax inside a `section` (Previously only iFrames could) ([tgaff])
 
 ### Fixed
-- README / rubocop fixes
-([nitinsurfs] & [cantonic] & [bhaibel] & [natritmeyer])
+- `README.md` / `rubocop` fixes ([nitinsurfs] & [cantonic] & [bhaibel] & [natritmeyer])
 
-- Fix a Section Element calling `#text` incorrectly returning the full page text
-([ddzz])
+- Fix a Section Element calling `#text` incorrectly returning the full page text ([ddzz])
 
 ## [2.8] - 2015-10-30
 ### Removed
-- `reek` as we have `rubocop`
-([natritmeyer])
+- `reek` as we have `rubocop` ([natritmeyer])
 
 ### Added
-- Add ruby 2.2 to rubies used in Travis
-([natritmeyer])
+- Add ruby `2.2` to rubies used in Travis ([natritmeyer])
 
 ### Changed
 - Use the latest version of Capybara's waiting time method
@@ -1033,64 +913,50 @@ impending major rubocop release
   - `#default_wait_time` for 2.4 and below
 ([tpbowden] & [mnohai-mdsol] & [tmertens])
 
-- Simplified `#secure?` method
-([benlovell])
+- Simplified `#secure?` method ([benlovell])
 
 ### Fixed
-- Fix up rubocop issues from suite updates
-([tgaff])
+- Fix up `rubocop` issues from suite updates ([tgaff])
 
-- README doc fixes
-([khaidpham])
+- `README.md` doc fixes ([khaidpham])
 
 ## [2.7] - 2015-04-23
 ### Added
-- Allow `#load` to be passed an HTML block to facilitate cleaner view tests
-([rugginoso])
+- Allow `#load` to be passed an HTML block to facilitate cleaner view tests ([rugginoso])
 
-- Spring clean of the code, integrated suite with `rubocop`
-([jonathanchrisp])
+- Spring-clean of the code, integrated suite with `rubocop` ([jonathanchrisp])
 
-- Test on ruby 2.1 as an additional part of sign-off procedure in Travis
-([natritmeyer])
+- Test on ruby `2.1` as an additional part of sign-off procedure in Travis ([natritmeyer])
 
 - SitePrism can now leverage URL component parts during the matching process
   - Substituting all parts of url_matcher into the relevant types (port/fragment e.t.c.)
   - Only pass the matching test after each component part matches the `url_matcher` set
 ([jmileham])
 
-- Added check for block being passed to page (Will raise error accordingly)
-([sponte])
+- Added check for block being passed to page (Will raise error accordingly) ([sponte])
 
 ### Changed
-- Altered legacy RSpec syntax in favour of `expect` in tests
-([petergoldstein])
+- Altered legacy RSpec syntax in favour of `expect` in tests ([petergoldstein])
 
-- Extend `#displayed?` to work when a `url_matcher` is templated
-([jmileham])
+- Extend `#displayed?` to work when a `url_matcher` is templated ([jmileham])
 
 ### Fixed
-- README doc fixes
-([vanburg] & [csgavino])
+- `README.md` doc fixes ([vanburg] & [csgavino])
 
-- Amended issues that occurred on RSpec 3 by making the suite agnostic to the version used
-([tgaff] & [natritmeyer])
+- Amended issues that occurred on RSpec 3 by making the suite agnostic to the version used ([tgaff] & [natritmeyer])
 
-- Internal test suite altered to avoid conflicting with Capybara's `#title` method
-([tgaff])
+- Internal test suite altered to avoid conflicting with Capybara's `#title` method ([tgaff])
 
 ## [2.6] - 2014-02-11
 ### Added
-- Added anonymous sections (That need no explicit Class declaration)
-([bassneck])
+- Added anonymous sections (That need no explicit class declaration) ([bassneck])
 
 ### Changed
 - Upped Version Dependency of rspec to `< 4.0`, and altered it to be a development dependency
 ([soulcutter] & [KarthikDot] & [natritmeyer])
 
 ### Fixed
-- README / License data inconsistencies
-([dnesteryuk] & [natritmeyer])
+- `README.md` / `LICENSE.md` data inconsistencies ([dnesteryuk] & [natritmeyer])
 
 - Using runtime options but not specifying a wait time would throw a Type mismatch error
   - This will now default to `Capybara.default_max_wait_time` if implicit waiting is enabled
@@ -1099,37 +965,27 @@ impending major rubocop release
 
 ## [2.5] - 2013-10-28
 ### Added
-- Allowed iFrames to be selected by index
-([mikekelly])
+- Allowed iFrames to be selected by index ([mikekelly])
 
-- Integrated a Rack App into the suite to allow for enhanced spec testing
-([natritmeyer])
+- Integrated a Rack App into the suite to allow for enhanced spec testing ([natritmeyer])
 
-- `site_prism` gem now does lazy loading
-([mrsutter])
+- `site_prism` gem now does lazy loading ([mrsutter])
 
-- `SitePrism::Waiter.wait_until_true` class method now re-evaluates blocks until they pass as true
-([tmertens])
+- `SitePrism::Waiter.wait_until_true` class method now re-evaluates blocks until they pass as true ([tmertens])
 
-- Improved `capybara` integration to allow runtime arguments to be passed into methods
-([tmertens])
+- Improved `capybara` integration to allow runtime arguments to be passed into methods ([tmertens])
 
-- Added configuration for the entire Suite to use implicit waits (Default configured off)
-([tmertens])
+- Added configuration for the entire Suite to use implicit waits (Default configured off) ([tmertens])
 
 ### Changed
-- README tweaks relevant to the new version of the gem
-([abotalov] & [natritmeyer] & [tommyh])
+- `README.md` tweaks relevant to the new version of the gem ([abotalov] & [natritmeyer] & [tommyh])
 
 ### Fixed
-- README inconsistencies fixed
-([antonio] & [LukasMac] & [Mustang949])
+- `README.md` inconsistencies fixed ([antonio] & [LukasMac] & [Mustang949])
 
-- Allow `#displayed?` test used in load validations to use newly made `Waiter` class to avoid false failures
-([tmertens])
+- Allow `#displayed?` test used in load validations to use newly made `Waiter` class to avoid false failures ([tmertens])
 
-- Changed `#set_url` to convert its input to a string - fixing method inconsistencies
-([modsognir])
+- Changed `#set_url` to convert its input to a string - fixing method inconsistencies ([modsognir])
 
 ## [2.4] - 2013-05-18
 ### Added
@@ -1137,21 +993,16 @@ impending major rubocop release
 ([johnwake])
 
 ### Changed
-- `site_prism` now uses `Capybara::Node::Finders#find` instead of `#first` to locate an element / section
-([natritmeyer])
+- `site_prism` now uses `Capybara::Node::Finders#find` instead of `#first` to locate an element / section ([natritmeyer])
 
-- Upped Version Dependency of capybara to `~> 2.1`
-([natritmeyer])
+- Upped Version Dependency of capybara to `~> 2.1` ([natritmeyer])
 
-- `SitePrism::Page#title` now returns `""` instead of `nil` when there is no title
-([natritmeyer])
+- `SitePrism::Page#title` now returns `""` instead of `nil` when there is no title ([natritmeyer])
 
-- Altered suite configuration to ignore hidden elements in internal feature testing
-([natritmeyer])
+- Altered suite configuration to ignore hidden elements in internal feature testing ([natritmeyer])
 
 ### Fixed
-- Improved the waiting logic for visible / invisible waiters to avoid false failures
-([j16r])
+- Improved the waiting logic for visible / invisible waiters to avoid false failures ([j16r])
 
 ## [2.3] - 2013-04-05
 ### Added
@@ -1160,155 +1011,125 @@ impending major rubocop release
   - Allows templating of URL parameters to be passed in as KVP's
 ([therabidbanana])
 
-- Added Yard Rake task to dynamically generate documentation on gem
-([natritmeyer])
+- Added Yard Rake task to dynamically generate documentation on gem ([natritmeyer])
 
 ## [2.2] - 2013-03-12
 ### Added
 - Added `#parent` and `#parent_page` to `SitePrism::Section` that will find a Sections Parent, and their Parent Page respectively
 ([dnesteryuk])
 
-- Ruby 1.9 Code cleanup (Hash / gemspec)
-([abotalov])
+- Ruby 1.9 Code cleanup (Hash / gemspec) ([abotalov])
 
-- Travis integration on repository
-([abotalov])
+- Travis integration on repository ([abotalov])
 
 ### Changed
-- Required ruby version now 1.9.3+
-([abotalov])
+- Required ruby version now 1.9.3+ ([abotalov])
 
 ### Fixed
-- Various visibility and waiting bug fixes
-([dnesteryuk])
+- Various visibility and waiting bug fixes ([dnesteryuk])
 
 ## [2.1] - 2013-02-06
 ### Added
-- Added xpath support
-([3coins])
+- Added xpath support ([3coins])
 
-- Added `reek` to the suite to try clean up some code-smells
-([natritmeyer])
+- Added `reek` to the suite to try clean up some code-smells ([natritmeyer])
 
 ## [2.0] - 2013-01-15
+### Breaking Changes
+- `site_prism` now depends on Ruby `1.9`; `1.8` is deprecated (`capybara` no longer supports 1.8) ([natritmeyer])
+
 ### Added
-- Added rake-tasks to suite for `rspec` and `cucumber` tests
-([natritmeyer])
+- Added rake-tasks to suite for `rspec` and `cucumber` tests ([natritmeyer])
 
 ### Changed
-- Upped Version Dependency of `capybara` to `~> 2.0`
-([natritmeyer])
-
-- `site_prism` gem now depends on Ruby 1.9; 1.8 is deprecated (`capybara` no longer supports 1.8)
-([natritmeyer])
+- Upped Version Dependency of `capybara` to `~> 2.0` ([natritmeyer])
 
 ## [1.4] - 2012-11-20
-### Changed
-- Changed all references of 'locator' to 'selector' in the code / documentation
+### Breaking Changes
+- Internal API Changes:
+  - `#element_names` is now `#mapped_items` in `SitePrism::Page` and `SitePrism::Section`
+  - We now use a `build` method to decide what methods are created for each element/section and in what order
 ([natritmeyer])
+
+- External API Change: `NoLocatorForElement` is now `NoSelectorForElement` ([natritmeyer])
+
+### Changed
+- Changed all references of 'locator' to 'selector' in the code / documentation ([natritmeyer])
 
 - Upped Version Dependencies
   - `capybara ~> 1.1`
   - `rspec ~> 2.0`
 ([natritmeyer])
 
-- Internal API Changes:
-  - `#element_names` is now `#mapped_items` in `SitePrism::Page` and `SitePrism::Section`
-  - We now use a `build` method to decide what methods are created for each element/section and in what order
-([natritmeyer])
-
-- External API Change (Probably breaking change):
-  - `NoLocatorForElement` is now `NoSelectorForElement`
-([natritmeyer])
-
 ### Fixed
-- README typo sweep done. Errors fixed
-([nathanbain])
+- README typo sweep done. Errors fixed ([nathanbain])
 
 ## [1.3] - 2012-07-29
 ### Added
-- Added `wait_until_<element_name>_visible` / `wait_until_<element_name>_invisible` for elements and sections
-([natritmeyer])
+- Added `wait_until_<element_name>_visible` / `wait_until_<element_name>_invisible` for elements and sections ([natritmeyer])
 
-- Added `simplecov` to the suite to give some internal usage statistics
-([natritmeyer])
+- Added `simplecov` to the suite to give some internal usage statistics ([natritmeyer])
 
 ## [1.2] - 2012-07-02
 ### Added
-- Added ability to interact with iFrames
-([natritmeyer])
+- Added ability to interact with iFrames ([natritmeyer])
 
 ## [1.1.1] - 2012-06-17
-
 ### Fixed
-- Added ruby 1.8.* support that was broken in [1.1]
-([remi])
+- Added ruby 1.8.* support that was broken in [1.1] ([remi])
 
 ## [1.1] - 2012-06-14
 ### Added
-- Added `page.secure?` method
-([natritmeyer])
+- Added `page.secure?` method ([natritmeyer])
 
 ## [1.0] - 2012-04-19
 - First public release!
 
 ### Added
-- Added `README.md`
-([natritmeyer])
+- Added `README.md` ([natritmeyer])
 
 ### Fixed
-- Fixed issue where cucumber tests wouldn't run due to hardcoded test path
-([andyw8])
+- Fixed issue where cucumber tests wouldn't run due to hardcoded test path ([andyw8])
 
 ## [0.9.9] - 2012-03-24
 ### Added
-- Base History document
-([natritmeyer])
+- Base History document ([natritmeyer])
 
 ### Fixed
-- Fixed bug where `wait_for_` didn't work in sections
-([natritmeyer])
+- Fixed bug where `wait_for_` didn't work in sections ([natritmeyer])
 
 ## [0.9.8] - 2012-03-16
 ### Added
-- Added ability to call `execute_javascript` and `evaluate_javascript` inside a `section`
-([natritmeyer])
+- Added ability to call `execute_javascript` and `evaluate_javascript` inside a `section` ([natritmeyer])
 
 ## [0.9.7] - 2012-03-11
 ### Added
-- Added ability to have pending elements, ie: elements declared without locators
-([natritmeyer])
+- Added ability to have pending elements, ie: elements declared without locators ([natritmeyer])
 
 ## [0.9.6] - 2012-03-06
 ### Changed
-- Refactored parameterised `wait_for_` to accept an overriden wait time
-([natritmeyer])
+- Refactored parameterised `wait_for_` to accept an overriden wait time ([natritmeyer])
 
 ## [0.9.5] - 2012-03-05
 ### Changed
-- Refactored `all_there?` to run faster
-([natritmeyer])
+- Refactored `all_there?` to run faster ([natritmeyer])
 
 ## [0.9.4] - 2012-03-01
 ### Added
 - Added `all_there?` method
-  - Returns `true` if all mapped elements and sections are present, `false` otherwise
-([natritmeyer])
+  - Returns `true` if all mapped elements and sections are present, `false` otherwise ([natritmeyer])
 
 ## [0.9.3] - 2012-02-11
 ### Added
-- Added `wait_for_` functionality to pages and sections
-([natritmeyer])
+- Added `wait_for_` functionality to pages and sections ([natritmeyer])
 
 ## [0.9.2] - 2012-01-11
 ### Added
-- Added ability to access a section's `root_element`
-([natritmeyer])
+- Added ability to access a section's `root_element` ([natritmeyer])
 
 ## [0.9.1] - 2012-01-11
 ### Added
-- Added `visible?` to section
-([natritmeyer])
+- Added `visible?` to section ([natritmeyer])
 
 ## [0.9] - 2011-12-22
 - First release!

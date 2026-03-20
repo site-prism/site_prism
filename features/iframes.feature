@@ -1,4 +1,4 @@
-Feature: IFrame interaction
+Feature: iFrame interaction
 
   I want to be able to scope my operations to an iFrame
   So I can query for elements within it

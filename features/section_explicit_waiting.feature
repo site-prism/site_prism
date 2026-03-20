@@ -49,4 +49,3 @@ Feature: Waiting for a Section
       | location |
       | this     |
       | parent   |
-

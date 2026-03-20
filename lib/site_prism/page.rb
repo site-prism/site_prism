@@ -58,14 +58,14 @@ module SitePrism
     # Runs load validations on the page, unless input is a string
     #
     # When calling #load, all the validations that are set will be ran in order
-    def load(expansion_or_html = {}, &block)
+    def load(expansion_or_html = {}, &)
       self.loaded = false
       SitePrism.logger.debug("Reset loaded state on #{self.class}.")
 
       return_yield = if expansion_or_html.is_a?(String)
-                       load_html_string(expansion_or_html, &block)
+                       load_html_string(expansion_or_html, &)
                      else
-                       load_html_website(expansion_or_html, &block)
+                       load_html_website(expansion_or_html, &)
                      end
 
       # Ensure that we represent that the page we loaded is now indeed loaded!
@@ -84,7 +84,7 @@ module SitePrism
     # @return [Boolean]
     def displayed?(*args)
       wait_until_displayed(*args)
-    rescue SitePrism::TimeoutError
+    rescue SitePrism::Error::TimeoutError
       false
     end
 
@@ -94,7 +94,7 @@ module SitePrism
     #
     # @return [Boolean]
     def wait_until_displayed(*args)
-      raise SitePrism::NoUrlMatcherForPageError unless url_matcher
+      raise SitePrism::Error::NoUrlMatcherForPageError unless url_matcher
 
       expected_mappings = args.last.is_a?(::Hash) ? args.pop : {}
       seconds = args&.first || Capybara.default_max_wait_time
@@ -153,7 +153,7 @@ module SitePrism
       elsif url_matcher.respond_to?(:to_str)
         url_matches_by_template?(expected_mappings)
       else
-        raise SitePrism::InvalidUrlMatcherError
+        raise SitePrism::Error::InvalidUrlMatcherError
       end
     end
 
@@ -178,7 +178,7 @@ module SitePrism
     def load_html_website(html, &block)
       with_validations = html.delete(:with_validations) { true }
       expanded_url = url(html)
-      raise SitePrism::NoUrlForPageError unless expanded_url
+      raise SitePrism::Error::NoUrlForPageError unless expanded_url
 
       visit expanded_url
       if with_validations
