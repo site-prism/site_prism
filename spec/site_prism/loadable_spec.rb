@@ -184,19 +184,19 @@ describe SitePrism::Loadable do
         allow(instance).to receive(:when_loaded)
       end
 
-      it 'will reset the `loaded` state' do
+      it 'resets the `loaded` state' do
         expect(instance).to receive(:loaded=).with(false).once
 
         instance.run_load_validations
       end
 
-      it 'will reset the `load_error` state' do
+      it 'resets the `load_error` state' do
         expect(instance).to receive(:load_error=).with(nil).once
 
         instance.run_load_validations
       end
 
-      it 'will re-call the `#when_loaded` method to determine if the instance has loaded correctly' do
+      it 're-calls the `#when_loaded` method to determine if the instance has loaded correctly' do
         expect(instance).to receive(:when_loaded).once
 
         instance.run_load_validations
@@ -209,19 +209,19 @@ describe SitePrism::Loadable do
         allow(instance).to receive(:when_loaded)
       end
 
-      it 'will reset the `loaded` state' do
+      it 'resets the `loaded` state' do
         expect(instance).to receive(:loaded=).with(false).once
 
         instance.run_load_validations
       end
 
-      it 'will reset the `load_error` state' do
+      it 'resets the `load_error` state' do
         expect(instance).to receive(:load_error=).with(nil).once
 
         instance.run_load_validations
       end
 
-      it 'will re-call the `#when_loaded` method to determine if the instance has loaded correctly' do
+      it 're-calls the `#when_loaded` method to determine if the instance has loaded correctly' do
         expect(instance).to receive(:when_loaded).once
 
         instance.run_load_validations
