@@ -8,7 +8,7 @@ Feature: Page Navigation
     Then I am on the home page
 
   Scenario: Load dynamic page
-    When I navigate to the letter A page
+    When I navigate to the letter "A" page
     Then I am on a dynamic page
 
   Scenario: Load redirecting page

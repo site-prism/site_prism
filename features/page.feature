@@ -46,7 +46,7 @@ Feature: Page Properties
     Then not all elements are present
 
   Scenario: All Elements Present (With Recursion) - Positive
-    When I navigate to the letter A page
+    When I navigate to the letter "A" page
     Then all elements and first-generation descendants are present
 
   Scenario: All Elements Present (With Recursion) - Negative
@@ -54,7 +54,7 @@ Feature: Page Properties
     Then all elements and first-generation descendants are not present
 
   Scenario: Elements Present - Positive
-    When I navigate to the letter A page
+    When I navigate to the letter "A" page
     Then all mapped elements are present
 
   @slow-test
@@ -64,3 +64,14 @@ Feature: Page Properties
   Scenario: Missing Elements
     When I navigate to a page with no title
     Then all missing elements are returned
+
+  Scenario: Reload a Page - Positive
+    When I navigate to the letter "A" page
+    When I navigate to the home page
+    And I click the link for the letter "A" page
+    Then re-running load validations works (for letter "A" page)
+
+  Scenario: Reload a Page - Negative
+    When I navigate to the letter "A" page
+    When I navigate to the home page
+    Then re-running load validations does not work (for letter "A" page)
