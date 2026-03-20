@@ -6,6 +6,26 @@ When('I wait for the element that takes a while to appear') do
   @duration = Time.now - start_time
 end
 
+When('I wait for a specific amount of time until an element is visible') do
+  start_time = Time.now
+  @test_site.slow.wait_until_last_link_visible(wait: upper_bound_delay)
+  @duration = Time.now - start_time
+end
+
+When('I wait until a particular element is visible') do
+  start_time = Time.now
+  @test_site.slow.wait_until_last_link_visible
+  @duration = Time.now - start_time
+end
+
+When('I wait for an element to become invisible') do
+  @test_site.vanishing.wait_until_delayed_invisible
+end
+
+When('I wait a specific amount of time for a particular element to vanish') do
+  @test_site.vanishing.wait_until_delayed_invisible(wait: upper_bound_delay)
+end
+
 Then('the slow element appears') do
   expect(@test_site.slow).to have_last_link
 end
@@ -46,28 +66,8 @@ Then('I get a timeout error when waiting for an element with default limit') do
   expect { @test_site.slow.wait_until_invisible_visible }.to raise_error(SitePrism::Error::ElementVisibilityTimeoutError)
 end
 
-When('I wait until a particular element is visible') do
-  start_time = Time.now
-  @test_site.slow.wait_until_last_link_visible
-  @duration = Time.now - start_time
-end
-
 Then('the previously invisible element is visible') do
   expect(@test_site.slow.last_link).to be_visible
-end
-
-When('I wait for a specific amount of time until an element is visible') do
-  start_time = Time.now
-  @test_site.slow.wait_until_last_link_visible(wait: upper_bound_delay)
-  @duration = Time.now - start_time
-end
-
-When('I wait for an element to become invisible') do
-  @test_site.vanishing.wait_until_delayed_invisible
-end
-
-When('I wait a specific amount of time for a particular element to vanish') do
-  @test_site.vanishing.wait_until_delayed_invisible(wait: upper_bound_delay)
 end
 
 Then('I am not made to wait for the full default duration') do

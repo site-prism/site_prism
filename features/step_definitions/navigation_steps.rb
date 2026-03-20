@@ -4,8 +4,8 @@ When('I navigate to the home page') do
   @test_site.home.load
 end
 
-When('I navigate to the letter A page') do
-  @test_site.dynamic.load(letter: 'a')
+When('I navigate to the letter {string} page') do |letter|
+  @test_site.dynamic.load(letter: letter.downcase)
 end
 
 When('I navigate to the redirect page') do

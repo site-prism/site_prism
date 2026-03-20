@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+When('I execute some javascript to set a value') do
+  @test_site.nested_sections.search_results.first.first_search_result = 'wibble'
+end
+
 Then('I can see elements in the section') do
   expect(@test_site.home).to have_people
 
@@ -96,10 +100,6 @@ end
 
 Then('I can access the sections root element') do
   expect(@test_site.home.people.root_element.class).to eq(Capybara::Node::Element)
-end
-
-When('I execute some javascript to set a value') do
-  @test_site.nested_sections.search_results.first.first_search_result = 'wibble'
 end
 
 Then('I can evaluate some javascript to get the value') do
