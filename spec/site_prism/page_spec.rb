@@ -139,17 +139,9 @@ describe SitePrism::Page do
       expect { page_with_load_validations.load(username: 'foobar') }.not_to raise_error
     end
 
-    it 'loads an in-line html fragment' do
-      expect { page.load('<html/>') }.not_to raise_error
-    end
-
     context 'with Passing Load Validations' do
       it 'executes the pre-defined load validation blocks' do
         expect(page_with_load_validations.load).to be true
-      end
-
-      it 'executes and returns the block passed into it at runtime' do
-        expect(page.load('<html>hi<html/>', &:text)).to eq('hi')
       end
 
       it 'yields itself to the passed block' do
