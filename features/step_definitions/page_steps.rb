@@ -77,5 +77,7 @@ Then('no error is raised when re-running load validations for the dynamic page')
 end
 
 Then('a load validation error is raised when re-running load validations for the dynamic page') do
-  expect { @test_site.dynamic.run_load_validations }.not_to raise_error
+  expect { @test_site.dynamic.run_load_validations }
+    .to raise_error(SitePrism::Error::FailedLoadValidationError)
+    .with_message('Dynamic page failed to load correctly')
 end

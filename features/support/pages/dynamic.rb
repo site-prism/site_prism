@@ -5,7 +5,10 @@ class Dynamic < SitePrism::Page
   set_url_matcher(/\w\.htm$/)
 
   load_validation do
-    has_dummy_section? && has_dummy_element_two?
+    [
+      has_dummy_section? && has_dummy_element_two?,
+      'Dynamic page failed to load correctly'
+    ]
   end
 
   section :dummy_section, '.first' do
