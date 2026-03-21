@@ -51,13 +51,13 @@ module SitePrism
 
     # Loads the page.
     # @param expansion_or_html
-    # @param block [&block] An optional block to run once the page is loaded.
+    # @param & An optional block to run once the page is loaded.
     # The page will yield the block if defined.
     #
     # Executes the block, if given.
     # Runs load validations on the page, unless input is a string
     #
-    # When calling #load, all the validations that are set will be ran in order
+    # When calling #load, all the validations that are set will be run in order
     def load(expansion_or_html = {}, &)
       self.loaded = false
       SitePrism.logger.debug("Reset loaded state on #{self.class}.")

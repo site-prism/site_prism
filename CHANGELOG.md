@@ -1145,7 +1145,8 @@ past, but now we're looking to host multiple co-dependent gems from this new org
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v5.2...HEAD
+[main]:       https://github.com/site-prism/site_prism/compare/v6.0...HEAD
+[6.0]:        https://github.com/site-prism/site_prism/compare/v5.2...v6.0
 [5.2]:        https://github.com/site-prism/site_prism/compare/v5.1.1...v5.2
 [5.1.1]:      https://github.com/site-prism/site_prism/compare/v5.1...v5.1.1
 [5.1]:        https://github.com/site-prism/site_prism/compare/v5.0.4...v5.1
