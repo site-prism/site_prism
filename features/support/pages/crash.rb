@@ -5,7 +5,10 @@ class Crash < SitePrism::Page
   set_url_matcher(/slow\.htm$/)
 
   load_validation do
-    has_never_here?(wait: 0.05)
+    [
+      has_never_here?(wait: 0.05),
+      'The Crashed page failed to load correctly'
+    ]
   end
 
   element :never_here, 'strong'

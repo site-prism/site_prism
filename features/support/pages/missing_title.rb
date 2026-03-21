@@ -4,7 +4,12 @@ class MissingTitle < SitePrism::Page
   set_url '/missing_title.htm'
   set_url_matcher(/missing_title\.htm$/)
 
-  load_validation { has_message? }
+  load_validation do
+    [
+      has_message?,
+      'Missing Title page did not load correctly'
+    ]
+  end
 
   element :message, 'p'
   elements :missing_messages, 'br'

@@ -46,7 +46,7 @@ Feature: Page Properties
     Then not all elements are present
 
   Scenario: All Elements Present (With Recursion) - Positive
-    When I navigate to the letter A page
+    When I navigate to the letter "A" page
     Then all elements and first-generation descendants are present
 
   Scenario: All Elements Present (With Recursion) - Negative
@@ -54,7 +54,7 @@ Feature: Page Properties
     Then all elements and first-generation descendants are not present
 
   Scenario: Elements Present - Positive
-    When I navigate to the letter A page
+    When I navigate to the letter "A" page
     Then all mapped elements are present
 
   @slow-test

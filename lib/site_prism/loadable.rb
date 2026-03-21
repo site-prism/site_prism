@@ -20,6 +20,9 @@ module SitePrism
     # Executes the given block after the page is loaded.
     #
     # The loadable object instance is yielded into the block.
+    #
+    # NB: This will only trigger load validations if the page is already **not** loaded. If you want to verbosely trigger
+    # the load validations irrespective, use `#run_load_validations`; which will clear any previous cache and then re-run the validations
     def when_loaded
       # Get original loaded value, in case we are nested
       # inside another when_loaded block.
@@ -51,6 +54,18 @@ module SitePrism
       return true if loaded
 
       load_validations_pass?
+    end
+
+    # Executes the `when_loaded` check to determine if the page is loaded, but also clears any previous cache
+    # of the loaded state and load error
+    #
+    # This is useful if you want to re-run the load validations irrespective of whether the page was previously loaded or not
+    #
+    # The loadable object instance is yielded into the block.
+    def run_load_validations
+      self.loaded = false
+      self.load_error = nil
+      when_loaded
     end
 
     private

@@ -1,5 +1,13 @@
 # frozen_string_literal: true
 
+When('I execute some javascript on the page to set a value') do
+  @test_site.nested_sections.first_search_result = 'wibble'
+end
+
+When('I click the link for the letter {string} page') do |_letter|
+  @test_site.home.a_link.click
+end
+
 Then('I can see an expected bit of the html') do
   expect(@test_site.home.html).to include('<span class="welcome">This is the home page')
 end
@@ -22,10 +30,6 @@ end
 
 Then('the page has no title') do
   expect(@test_site.missing_title.title).to eq('')
-end
-
-When('I execute some javascript on the page to set a value') do
-  @test_site.nested_sections.first_search_result = 'wibble'
 end
 
 Then('I can evaluate some javascript on the page to get the value') do

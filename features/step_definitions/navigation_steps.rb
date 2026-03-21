@@ -4,8 +4,8 @@ When('I navigate to the home page') do
   @test_site.home.load
 end
 
-When('I navigate to the letter A page') do
-  @test_site.dynamic.load(letter: 'a')
+When('I navigate to the letter {string} page') do |letter|
+  @test_site.dynamic.load(letter: letter.downcase)
 end
 
 When('I navigate to the redirect page') do
@@ -85,14 +85,24 @@ Then('I am made to wait to continue') do
   expect(@duration).to be > time_delay
 end
 
-Then('the page will not be marked as loaded') do
-  expect(@test_site.crash).not_to be_loaded
+Then('the {word} page will not be marked as loaded') do |page_name|
+  expect(@test_site.send(page_name)).not_to be_loaded
 end
 
-When('no error is thrown when loading a page') do
+When('no error is thrown when loading a page whilst skipping load validations') do
   expect { @test_site.crash.load(with_validations: false) }.not_to raise_error
 end
 
-Then('the page will be marked as loaded') do
-  expect(@test_site.crash).to be_loaded
+Then('the {word} page will be marked as loaded') do |page_name|
+  expect(@test_site.send(page_name)).to be_loaded
+end
+
+Then('no error is raised when re-running load validations for the dynamic page') do
+  expect { @test_site.dynamic.run_load_validations }.not_to raise_error
+end
+
+Then('a load validation error is raised when re-running load validations for the dynamic page') do
+  expect { @test_site.dynamic.run_load_validations }
+    .to raise_error(SitePrism::Error::FailedLoadValidationError)
+    .with_message('Dynamic page failed to load correctly')
 end

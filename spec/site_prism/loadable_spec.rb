@@ -99,9 +99,7 @@ describe SitePrism::Loadable do
       end
 
       it 'raises a `FailedLoadValidationError` with a user-defined message' do
-        expect { instance.when_loaded { :foo } }
-          .to raise_error(SitePrism::Error::FailedLoadValidationError)
-          .with_message('false? failed')
+        expect { instance.when_loaded }.to raise_error(SitePrism::Error::FailedLoadValidationError).with_message('false? failed')
       end
 
       it 'raises an error immediately on the first validation failure' do
@@ -171,6 +169,63 @@ describe SitePrism::Loadable do
       instance.loaded?
 
       expect(instance.load_error).to eq('fubar')
+    end
+  end
+
+  describe '#run_load_validations' do
+    let(:instance) { inheriting_loadable.new }
+    let(:inheriting_loadable) { Class.new(loadable) }
+
+    before { inheriting_loadable.load_validation { [true?, 'true? failed'] } }
+
+    context 'when already loaded' do
+      before do
+        instance.loaded = true
+        allow(instance).to receive(:when_loaded)
+      end
+
+      it 'resets the `loaded` state' do
+        expect(instance).to receive(:loaded=).with(false).once
+
+        instance.run_load_validations
+      end
+
+      it 'resets the `load_error` state' do
+        expect(instance).to receive(:load_error=).with(nil).once
+
+        instance.run_load_validations
+      end
+
+      it 're-calls the `#when_loaded` method to determine if the instance has loaded correctly' do
+        expect(instance).to receive(:when_loaded).once
+
+        instance.run_load_validations
+      end
+    end
+
+    context 'when not already loaded' do
+      before do
+        instance.loaded = nil
+        allow(instance).to receive(:when_loaded)
+      end
+
+      it 'resets the `loaded` state' do
+        expect(instance).to receive(:loaded=).with(false).once
+
+        instance.run_load_validations
+      end
+
+      it 'resets the `load_error` state' do
+        expect(instance).to receive(:load_error=).with(nil).once
+
+        instance.run_load_validations
+      end
+
+      it 're-calls the `#when_loaded` method to determine if the instance has loaded correctly' do
+        expect(instance).to receive(:when_loaded).once
+
+        instance.run_load_validations
+      end
     end
   end
 end
