@@ -78,7 +78,7 @@ current `Capybara::Session`.
 
 **However ...** This is also not advisable, and as such this is now deprecated
 
-Instead if you want to obtain your full page scope. Use `#parent_page` to get to your top level page, or simply using
+Instead, if you want to obtain your full page scope. Use `#parent_page` to get to your top level page, or simply using
 `#parent` will get you to go up one level of scoping. If you're already on the `SitePrism::Page` instance, calling `Capybara.current_session`
 will return you in the current session scope.
 

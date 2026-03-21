@@ -8,8 +8,7 @@ module SitePrism
   # Instances of this class represent a full web page that can either be dynamically navigated to
   # through clicking buttons or filling in fields, or verbosely loaded by using the `#load` method
   #
-  # All method calls made whilst on a page are scoped using `#to_capybara_node` which defaults to the
-  # current Capybara session or the `@page` that has been loaded in-line
+  # All method calls made whilst on a page are scoped using `#to_capybara_node` which defaults to the current Capybara session
   class Page
     include Capybara::DSL
     include ElementChecker
@@ -44,29 +43,24 @@ module SitePrism
 
     # This scopes our calls inside Page correctly to the `Capybara::Session`
     #
-    # @return [Capybara::Node::Simple || Capybara::Session]
+    # @return Capybara::Session
     def to_capybara_node
-      (defined?(@page) && @page) || Capybara.current_session
+      Capybara.current_session
     end
 
     # Loads the page.
-    # @param expansion_or_html
-    # @param & An optional block to run once the page is loaded.
-    # The page will yield the block if defined.
+    # @param params - An optional set of parameters
+    # @param & - An optional block to run once the page is loaded
+    # The page will yield the block if defined
     #
-    # Executes the block, if given.
-    # Runs load validations on the page, unless input is a string
+    # Executes the block, if given
     #
     # When calling #load, all the validations that are set will be run in order
-    def load(expansion_or_html = {}, &)
+    def load(params = {}, &)
       self.loaded = false
       SitePrism.logger.debug("Reset loaded state on #{self.class}.")
 
-      return_yield = if expansion_or_html.is_a?(String)
-                       load_html_string(expansion_or_html, &)
-                     else
-                       load_html_website(expansion_or_html, &)
-                     end
+      return_yield = load_html_website(params, &)
 
       # Ensure that we represent that the page we loaded is now indeed loaded!
       # This ensures that future calls to #loaded? do not perform the
@@ -169,15 +163,9 @@ module SitePrism
       @matcher_template ||= AddressableUrlMatcher.new(url_matcher)
     end
 
-    def load_html_string(string)
-      SitePrism::Deprecator.deprecate('Using an input fragment (Loading partials using html strings).')
-      @page = Capybara.string(string)
-      yield to_capybara_node if block_given?
-    end
-
-    def load_html_website(html, &block)
-      with_validations = html.delete(:with_validations) { true }
-      expanded_url = url(html)
+    def load_html_website(params, &block)
+      with_validations = params.delete(:with_validations) { true }
+      expanded_url = url(params)
       raise SitePrism::Error::NoUrlForPageError unless expanded_url
 
       visit expanded_url
