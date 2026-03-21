@@ -35,8 +35,21 @@ Feature: Page Navigation
 
   Scenario: Load a Page that has failing load validations
     Then an error is thrown when loading a page with failing validations
-    And the page will not be marked as loaded
+    And the crash page will not be marked as loaded
 
   Scenario: Load a Page that has failing load validations without validations
-    Then no error is thrown when loading a page
-    And the page will be marked as loaded
+    Then no error is thrown when loading a page whilst skipping load validations
+    And the crash page will be marked as loaded
+
+  Scenario: Re-run load validations on a page - Positive
+    When I navigate to the letter "A" page
+    And I navigate to the home page
+    And I click the link for the letter "A" page
+    Then no error is raised when re-running load validations for the dynamic page
+    And the dynamic page will be marked as loaded
+
+  Scenario: Re-run load validations on a page - Negative
+    When I navigate to the letter "A" page
+    And I navigate to the home page
+    Then a load validation error is raised when re-running load validations for the dynamic page
+    And the dynamic page will not be marked as loaded

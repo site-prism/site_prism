@@ -64,14 +64,3 @@ Feature: Page Properties
   Scenario: Missing Elements
     When I navigate to a page with no title
     Then all missing elements are returned
-
-  Scenario: Re-run load validations on a page - Positive
-    When I navigate to the letter "A" page
-    And I navigate to the home page
-    And I click the link for the letter "A" page
-    Then no error is raised when re-running load validations for the dynamic page
-
-  Scenario: Re-run load validations on a page - Negative
-    When I navigate to the letter "A" page
-    And I navigate to the home page
-    Then a load validation error is raised when re-running load validations for the dynamic page
