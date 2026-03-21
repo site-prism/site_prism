@@ -1,3 +1,13 @@
+# Upgrading from SitePrism 5.x to 6.x
+
+## Input Fragments / Raw HTML testing
+
+If you're using SitePrism with `Capybara.string` for testing raw HTML fragments - you will need to change these.
+
+These were deprecated in v5 and have now been removed in v6. If you were using these, you will need to refactor your
+tests to use a full page object instead of generating partial HTML on the fly. This will yield more maintainable
+and reusable code in the long run - and is going to be removed from `capybara` in the future as well.
+
 # Upgrading from SitePrism 4.x to 5.x
 
 ## DSL name validation
@@ -10,7 +20,7 @@ checks from being performed during the build metaprogram phase of suite executio
 An additional piece of work to further amplify the gems logging has been done, so no additional work from the user
 is required to make these changes function or be diagnosable (Should something go wrong).
 
-NB: `no` as a DSL item name was erroneously banned in the early `5.0.x` versions
+NB: `no` as a DSL item name was erroneously banned in the early `5.0.x` versions.
 
 ## Shadow Root
 
@@ -20,7 +30,7 @@ You can define a shadow root by setting `:shadow_root` to true when defining a `
 
 ## Input Fragments / Raw HTML testing
 
-SitePrism will no longer support interrogating html fragments or generating html on the fly using `Capybara.string`
+SitePrism will no longer support interrogating HTML fragments or generating HTML on the fly using `Capybara.string`
 from version 6 onwards. Using it in v5 will throw a Deprecation warning.
 
 Ideally you would use a full page object generated in the standard way. A verbose page setup correctly is not that much
@@ -69,7 +79,7 @@ either deliberately or by using a chained method. The way we used to do this was
 return your scope. From later versions of capybara they implemented a `#to_capybara_node` method which would be called
 and pre-chained to ensure your scope was correct.
 
-At SitePrism, we left in the legacy method. However in the v4 beta the method will crash with a
+At SitePrism, we left in the legacy method. However, in the v4 beta the method will crash with a
 fatal error (And this will be removed entirely in the v4 proper -> so you'll get a standard Ruby `NoMethodError`).
 
 When operating on a regular `SitePrism::Page` object the call to `#page` will still work and it
@@ -78,7 +88,7 @@ current `Capybara::Session`.
 
 **However ...** This is also not advisable, and as such this is now deprecated
 
-Instead if you want to obtain your full page scope. Use `#parent_page` to get to your top level page, or simply using
+Instead, if you want to obtain your full page scope. Use `#parent_page` to get to your top level page, or simply using
 `#parent` will get you to go up one level of scoping. If you're already on the `SitePrism::Page` instance, calling `Capybara.current_session`
 will return you in the current session scope.
 

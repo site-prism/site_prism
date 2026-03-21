@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module SitePrism
-  VERSION = '5.2'
+  VERSION = '6.0'
 end

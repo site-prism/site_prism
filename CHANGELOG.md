@@ -1,22 +1,32 @@
 ## [main] - Unreleased
 ### Breaking Changes
+
+### Removed
+
+### Added
+
+### Changed
+
+### Fixed
+
+## [6.0] - 2026-03-21
+### Breaking Changes
 - Required Ruby Version is now `3.1` ([luke-hill])
 - All Error classes have now had their namespaces changed `SitePrism::` -> `SitePrism::Error::`
   - A few unused error classes have been removed in the process
   ([luke-hill])
 
 ### Removed
-- Guard logic for shadow root (Now capybara minimum version is above 3.37 which has native support for shadow root)
+- Guard logic for shadow root (Now capybara minimum version is above `3.37` which has native support for shadow root)
+([luke-hill])
+
+- SitePrism no longer supports interrogating HTML fragments or generating HTML on the fly using `Capybara.string`
 ([luke-hill])
 
 ### Added
 - `#run_load_validations` method for the `SitePrism::Page` and `SitePrism::Section` objects ([luke-hill])
   - This will run the validations ad-hoc to enable you to reuse the load validation concept for other purposes
   (i.e. waiting for a page to re-appear once already loaded, or the same for a section)
-
-### Changed
-
-### Fixed
 
 ## [5.2] - 2026-03-04
 ### Added
@@ -90,6 +100,10 @@ key name change to `SITEPRISM_DSL_VALIDATION_DISABLED`), see: [UPGRADING.md](./U
   - `capybara` now must be at least `3.31`
   ([luke-hill])
 
+- SitePrism will no longer support interrogating HTML fragments or generating HTML on the fly using `Capybara.string`
+  - Using it in v5 will throw a Deprecation warning and it will be removed in v6
+  ([luke-hill])
+
 ## [5.0.beta] - 2023-10-19
 ### Breaking Changes
 - Required Ruby Version is now `2.7` ([luke-hill])
@@ -135,7 +149,7 @@ key name change to `SITEPRISM_DSL_VALIDATION_DISABLED`), see: [UPGRADING.md](./U
 - Gem bumps to dev dependencies
   - `webdrivers` is now pinned to v5 versions
   - `rubocop` gems all bumped to latest ruby `2.6` compliant version
-    ([luke-hill])
+  ([luke-hill])
 
 ### Fixed
 - Lots of cross leaked items in RSpec have now been fixed and isolated ([luke-hill])
@@ -1138,7 +1152,8 @@ past, but now we're looking to host multiple co-dependent gems from this new org
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v5.2...HEAD
+[main]:       https://github.com/site-prism/site_prism/compare/v6.0...HEAD
+[6.0]:        https://github.com/site-prism/site_prism/compare/v5.2...v6.0
 [5.2]:        https://github.com/site-prism/site_prism/compare/v5.1.1...v5.2
 [5.1.1]:      https://github.com/site-prism/site_prism/compare/v5.1...v5.1.1
 [5.1]:        https://github.com/site-prism/site_prism/compare/v5.0.4...v5.1
