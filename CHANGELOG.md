@@ -20,6 +20,9 @@
 - Guard logic for shadow root (Now capybara minimum version is above `3.37` which has native support for shadow root)
 ([luke-hill])
 
+- SitePrism no longer supports interrogating HTML fragments or generating HTML on the fly using `Capybara.string`
+([luke-hill])
+
 ### Added
 - `#run_load_validations` method for the `SitePrism::Page` and `SitePrism::Section` objects ([luke-hill])
   - This will run the validations ad-hoc to enable you to reuse the load validation concept for other purposes
@@ -97,6 +100,10 @@ key name change to `SITEPRISM_DSL_VALIDATION_DISABLED`), see: [UPGRADING.md](./U
   - `capybara` now must be at least `3.31`
   ([luke-hill])
 
+- SitePrism will no longer support interrogating HTML fragments or generating HTML on the fly using `Capybara.string`
+  - Using it in v5 will throw a Deprecation warning and it will be removed in v6
+  ([luke-hill])
+
 ## [5.0.beta] - 2023-10-19
 ### Breaking Changes
 - Required Ruby Version is now `2.7` ([luke-hill])
@@ -142,7 +149,7 @@ key name change to `SITEPRISM_DSL_VALIDATION_DISABLED`), see: [UPGRADING.md](./U
 - Gem bumps to dev dependencies
   - `webdrivers` is now pinned to v5 versions
   - `rubocop` gems all bumped to latest ruby `2.6` compliant version
-    ([luke-hill])
+  ([luke-hill])
 
 ### Fixed
 - Lots of cross leaked items in RSpec have now been fixed and isolated ([luke-hill])
