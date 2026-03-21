@@ -1,22 +1,29 @@
 ## [main] - Unreleased
 ### Breaking Changes
+
+### Removed
+
+### Added
+
+### Changed
+
+### Fixed
+
+## [6.0] - 2026-03-21
+### Breaking Changes
 - Required Ruby Version is now `3.1` ([luke-hill])
 - All Error classes have now had their namespaces changed `SitePrism::` -> `SitePrism::Error::`
   - A few unused error classes have been removed in the process
   ([luke-hill])
 
 ### Removed
-- Guard logic for shadow root (Now capybara minimum version is above 3.37 which has native support for shadow root)
+- Guard logic for shadow root (Now capybara minimum version is above `3.37` which has native support for shadow root)
 ([luke-hill])
 
 ### Added
 - `#run_load_validations` method for the `SitePrism::Page` and `SitePrism::Section` objects ([luke-hill])
   - This will run the validations ad-hoc to enable you to reuse the load validation concept for other purposes
   (i.e. waiting for a page to re-appear once already loaded, or the same for a section)
-
-### Changed
-
-### Fixed
 
 ## [5.2] - 2026-03-04
 ### Added
