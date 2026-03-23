@@ -24,8 +24,8 @@ module SitePrism
     # NB: This will only trigger load validations if the page is already **not** loaded. If you want to verbosely trigger
     # the load validations irrespective, use `#run_load_validations`; which will clear any previous cache and then re-run the validations
     #
-    # @param previously_loaded [Boolean]
-    #   Original loaded value, in case we are nested inside another when_loaded block or called prior from `#run_load_validations`
+    # @param previously_loaded [Boolean, nil]
+    #   Original loaded value (which may be nil), in case we are nested inside another when_loaded block or called prior from `#run_load_validations`
     def when_loaded(previously_loaded = loaded)
       # Within the block, check (and cache) loaded?, to see whether the page has indeed loaded according to the rules defined by the user.
       self.loaded = loaded?
