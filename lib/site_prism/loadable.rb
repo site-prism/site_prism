@@ -65,6 +65,7 @@ module SitePrism
     def run_load_validations(&block)
       self.loaded = false
       self.load_error = nil
+      # TODO: Copilot add test for when_loaded passing a block
       when_loaded(&block)
     end
 
