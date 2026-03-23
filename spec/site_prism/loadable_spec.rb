@@ -227,5 +227,23 @@ describe SitePrism::Loadable do
         instance.run_load_validations
       end
     end
+
+    context 'when a block is provided' do
+      before { instance.loaded = nil }
+
+      it 'forwards and executes the block after successful load validation' do
+        expect(instance).to receive(:foo)
+
+        instance.run_load_validations(&:foo)
+      end
+
+      it 'yields itself to the block' do
+        yielded_instance = nil
+
+        instance.run_load_validations { |i| yielded_instance = i }
+
+        expect(yielded_instance).to eq(instance)
+      end
+    end
   end
 end

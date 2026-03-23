@@ -66,7 +66,6 @@ module SitePrism
 
       self.loaded = false
       self.load_error = nil
-      # TODO: Copilot add test for when_loaded passing a block
       when_loaded(previously_loaded, &block)
     end
 
