@@ -63,12 +63,12 @@ module SitePrism
     # This is useful if you want to re-run the load validations irrespective of whether the page was previously loaded or not
     #
     # The loadable object instance is yielded into the block.
-    def run_load_validations(&block)
+    def run_load_validations(&)
       previously_loaded = loaded
 
       self.loaded = false
       self.load_error = nil
-      when_loaded(previously_loaded, &block)
+      when_loaded(previously_loaded, &)
     end
 
     private
