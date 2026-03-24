@@ -37,7 +37,8 @@ module SitePrism
       # Return the yield value of the block if one was supplied.
       yield self if block_given?
     ensure
-      self.loaded = previously_loaded unless load_error
+      # Restore the previous loaded state only if validations passed (i.e., loaded? was true).
+      self.loaded = previously_loaded if loaded
     end
 
     # Check if the page is loaded.
