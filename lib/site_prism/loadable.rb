@@ -26,7 +26,7 @@ module SitePrism
     #
     # @param previously_loaded [Boolean, nil]
     #   Original loaded value (which may be nil), in case we are nested inside another `#when_loaded` block or called
-    #   prior from the `#run_load_validations` invocation
+    #   prior to the `#run_load_validations` invocation
     def when_loaded(previously_loaded = loaded)
       # Within the block, check (and cache) loaded?, to see whether the page has indeed loaded according to the rules defined by the user.
       self.loaded = loaded?
