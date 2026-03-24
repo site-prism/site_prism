@@ -23,11 +23,11 @@ module SitePrism
     #
     # NB: This will only trigger load validations if the page is already **not** loaded. If you want to verbosely trigger
     # the load validations irrespective, use `#run_load_validations`; which will clear any previous cache and then re-run the validations
-    def when_loaded
-      # Get original loaded value, in case we are nested
-      # inside another when_loaded block.
-      previously_loaded = loaded
-
+    #
+    # @param previously_loaded [Boolean, nil]
+    #   Original loaded value (which may be nil), in case we are nested inside another `#when_loaded` block or called
+    #   prior to the `#run_load_validations` invocation
+    def when_loaded(previously_loaded = loaded)
       # Within the block, check (and cache) loaded?, to see whether the page has indeed loaded according to the rules defined by the user.
       self.loaded = loaded?
 
@@ -38,7 +38,8 @@ module SitePrism
       # Return the yield value of the block if one was supplied.
       yield self if block_given?
     ensure
-      self.loaded = previously_loaded
+      # Restore the previous loaded state only if validations passed (i.e., loaded? was true).
+      self.loaded = previously_loaded if loaded
     end
 
     # Check if the page is loaded.
@@ -56,16 +57,18 @@ module SitePrism
       load_validations_pass?
     end
 
-    # Executes the `when_loaded` check to determine if the page is loaded, but also clears any previous cache
-    # of the loaded state and load error
+    # Executes the `#when_loaded` check to determine if the page is loaded, but also temporarily clears any previously cached
+    # loaded state / load error(s), to ensure load validations are re-ran fully
     #
     # This is useful if you want to re-run the load validations irrespective of whether the page was previously loaded or not
     #
     # The loadable object instance is yielded into the block.
-    def run_load_validations
+    def run_load_validations(&)
+      previously_loaded = loaded
+
       self.loaded = false
       self.load_error = nil
-      when_loaded
+      when_loaded(previously_loaded, &)
     end
 
     private
