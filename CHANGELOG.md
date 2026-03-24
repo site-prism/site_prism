@@ -8,6 +8,9 @@
 ### Changed
 
 ### Fixed
+- `#run_load_validations` was incorrectly resolving / caching `loaded` states for pages and sections, this has now
+been fixed to use the previous state unless there was an issue
+([luke-hill])
 
 ## [6.0] - 2026-03-21
 ### Breaking Changes
