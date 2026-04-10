@@ -13,7 +13,8 @@ been fixed to use the previous state unless there was an issue
 ([luke-hill])
 
 - Implement a Regex timeout feature to avoid a potential DoS or infinite regex loop when using addressable functionality
-([luke-hill])
+  - **NB:** This is a feature that will only activate on SitePrism when using Ruby 3.2 or above
+  ([luke-hill])
 
 ## [6.0] - 2026-03-21
 ### Breaking Changes

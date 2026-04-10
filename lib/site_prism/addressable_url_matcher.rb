@@ -102,7 +102,11 @@ module SitePrism
     end
 
     def slugs
-      pattern.scan(Regexp.new('{[^}]+}', timeout: 5))
+      if RUBY_VERSION >= '3.2'
+        pattern.scan(Regexp.new('{[^}]+}', timeout: 5))
+      else
+        pattern.scan(/{[^}]+}/)
+      end
     end
 
     def all_expected_mappings_match?(expected_mappings, actual_mappings)
