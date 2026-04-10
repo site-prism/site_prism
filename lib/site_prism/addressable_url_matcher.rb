@@ -102,7 +102,7 @@ module SitePrism
     end
 
     def slugs
-      pattern.scan(/{[^}]+}/)
+      pattern.scan(Regexp.new('{[^}]+}', timeout: 5))
     end
 
     def all_expected_mappings_match?(expected_mappings, actual_mappings)
