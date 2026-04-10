@@ -12,6 +12,9 @@
 been fixed to use the previous state unless there was an issue
 ([luke-hill])
 
+- Implement a Regex timeout feature to avoid a potential DoS or infinite regex loop when using addressable functionality
+([luke-hill])
+
 ## [6.0] - 2026-03-21
 ### Breaking Changes
 - Required Ruby Version is now `3.1` ([luke-hill])
