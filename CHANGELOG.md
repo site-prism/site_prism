@@ -16,6 +16,9 @@ been fixed to use the previous state unless there was an issue
   - **NB:** This is a feature that will only activate on SitePrism when using Ruby 3.2 or above
   ([luke-hill])
 
+### Security
+- Add dependency cooldowns for all automated updates
+
 ## [6.0] - 2026-03-21
 ### Breaking Changes
 - Required Ruby Version is now `3.1` ([luke-hill])
