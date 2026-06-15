@@ -9,10 +9,10 @@ For us to try to help you with your issue, we require certain information. Pleas
 - How you're interacting with the Framework (Cucumber Tests / RSpec Units / Minitest)
 - Browser/s Driver/s being used - with version numbers
 
-## Expected Behavior
+## Expected Behaviour
 What behaviour were you expecting?
 
-## Actual Behavior
+## Actual Behaviour
 What behaviour did you observe?
 
 ## Steps to reproduce
