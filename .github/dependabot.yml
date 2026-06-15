@@ -1,14 +1,20 @@
 version: 2
 updates:
-  - package-ecosystem: "bundler"
-    directory: "/"
+  - package-ecosystem: bundler
+    directory: '/'
     schedule:
-      interval: "daily"
+      interval: daily
+    cooldown:
+      semver-major-days: 30
+      semver-minor-days: 14
+      semver-patch-days: 7
     ignore:
-      # We don't pin capybara/selenium-webdriver as plenty of people might need old(er) versions
-      - dependency-name: "capybara"
-      - dependency-name: "selenium-webdriver"
-  - package-ecosystem: "github-actions"
-    directory: "/"
+      # We don't pin capybara or selenium-webdriver as plenty of people might need old(er), versions
+      - dependency-name: capybara
+      - dependency-name: selenium-webdriver
+  - package-ecosystem: github-actions
+    directory: '/'
     schedule:
-      interval: "weekly"
+      interval: weekly
+    cooldown:
+      default-days: 14
