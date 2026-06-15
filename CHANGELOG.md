@@ -17,6 +17,8 @@ been fixed to use the previous state unless there was an issue
   ([luke-hill])
 
 ### Security
+- Use workflow SHA refs instead of verbose versions
+  - This is to mitigate against supply chain attacks on GitHub Actions workflows
 - Add dependency cooldowns for all automated updates
 
 ## [6.0] - 2026-03-21
