@@ -8,6 +8,11 @@
 ### Changed
 
 ### Fixed
+
+### Security
+
+## [6.0] - 2026-06-25
+### Fixed
 - `#run_load_validations` was incorrectly resolving / caching `loaded` states for pages and sections, this has now
 been fixed to use the previous state unless there was an issue
 ([luke-hill])
@@ -1164,7 +1169,8 @@ past, but now we're looking to host multiple co-dependent gems from this new org
 - First release!
 
 <!-- Releases -->
-[main]:       https://github.com/site-prism/site_prism/compare/v6.0...HEAD
+[main]:       https://github.com/site-prism/site_prism/compare/v6.0.1...HEAD
+[6.0.1]:      https://github.com/site-prism/site_prism/compare/v6.0...v6.0.1
 [6.0]:        https://github.com/site-prism/site_prism/compare/v5.2...v6.0
 [5.2]:        https://github.com/site-prism/site_prism/compare/v5.1.1...v5.2
 [5.1.1]:      https://github.com/site-prism/site_prism/compare/v5.1...v5.1.1
