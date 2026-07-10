@@ -11,7 +11,7 @@
 
 ### Security
 
-## [6.0] - 2026-06-25
+## [6.0.1] - 2026-06-25
 ### Fixed
 - `#run_load_validations` was incorrectly resolving / caching `loaded` states for pages and sections, this has now
 been fixed to use the previous state unless there was an issue
