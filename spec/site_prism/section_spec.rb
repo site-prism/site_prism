@@ -36,7 +36,7 @@ describe SitePrism::Section do
         page_instance.plural_sections_with_defaults
       end
     end
-    
+
     it 'can be set on `SitePrism::Page`' do
       expect(SitePrism::Page).to respond_to(:sections)
     end
