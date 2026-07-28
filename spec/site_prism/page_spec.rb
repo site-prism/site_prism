@@ -179,7 +179,7 @@ describe SitePrism::Page do
       end
 
       it 'still raises an error when passed a truthy block' do
-        expect { page_with_load_validations.load { puts 'foo' } }
+        expect { page_with_load_validations.load { :foo } }
           .to raise_error(SitePrism::Error::FailedLoadValidationError)
           .with_message('It is not true!')
       end
